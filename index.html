@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MYCHAL SMP – Minecraft Server</title>
+  <meta name="description"
+    content="MYCHAL SMP – komunitní Minecraft SMP server. Zjisti jak se připojit, přečti si pravidla a podívej se na galerii ze serveru." />
+  <link rel="icon" type="image/webp" href="imgs/mychalSMP-SERVERICONtestv2 (1).webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" onclick="showTab('home'); return false;">
+        <img src="imgs/mychalSMP-SERVERICONtestv2 (1).webp" alt="MYCHAL SMP Logo" class="nav-logo-img" />
+        <span class="nav-logo-text">MYCHAL <span class="nav-logo-accent">SMP</span></span>
+      </a>
+      <div class="nav-links">
+        <button id="tab-btn-home" class="nav-link active" onclick="showTab('home')">🏠 Domů</button>
+        <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">🔗 Jak se připojit</button>
+        <button id="tab-btn-rules" class="nav-link" onclick="showTab('rules')">📜 Pravidla</button>
+        <button id="tab-btn-gallery" class="nav-link" onclick="showTab('gallery')">🖼️ Galerie</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <button class="nav-link" onclick="showTab('home');toggleMenu()">🏠 Domů</button>
+      <button class="nav-link" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
+      <button class="nav-link" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
+      <button class="nav-link" onclick="showTab('gallery');toggleMenu()">🖼️ Galerie</button>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <section id="tab-home" class="tab-section active">
+    <div class="hero">
+      <div class="hero-bg">
+        <img src="imgs/2026-07-03_00.51.06.webp" alt="MYCHAL SMP server" class="hero-bg-img" />
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <img src="imgs/mychalSMP-SERVERICONtestv2 (2).webp" alt="Logo" class="hero-logo" />
+        <h1 class="hero-title">MYCHAL <span class="hero-title-accent">SMP</span></h1>
+        <p class="hero-subtitle">Komunitní Minecraft server plný dobrodružství, stavění a zábavy.</p>
+        <div class="hero-ip-box">
+          <span class="ip-label">IP adresa serveru</span>
+          <div class="ip-copy-row">
+            <code class="ip-text" id="server-ip">land-wars.gl.joinmc.link</code>
+            <button class="copy-btn" id="copy-btn" onclick="copyIP()" aria-label="Kopírovat IP">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              Kopírovat
+            </button>
+          </div>
+        </div>
+        <div class="hero-cta-row">
+          <button class="btn-primary" onclick="showTab('join')">🔗 Jak se připojit</button>
+          <button class="btn-secondary" onclick="showTab('gallery')">🖼️ Galerie</button>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <div class="scroll-arrow"></div>
+      </div>
+    </div>
+
+    <!-- STATS SECTION -->
+    <div class="stats-section">
+      <div class="container">
+        <div class="stats-row">
+          <div class="stat-card">
+            <span class="stat-num">70+</span>
+            <span class="stat-label">Whitelistovaných hráčů</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-card">
+            <span class="stat-num">26.1.2</span>
+            <span class="stat-label">Verze serveru</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-card">
+            <span class="stat-num">24/7</span>
+            <span class="stat-label">Server online</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-card stat-card--link">
+            <a href="https://map.6767111.xyz" target="_blank" rel="noopener" class="stat-map-link" id="stat-map-btn">
+              <span class="stat-num stat-num--map">🗺️</span>
+              <span class="stat-label">Mapa světa</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVER INFO -->
+    <div class="info-section">
+      <div class="container">
+        <div class="info-grid">
+          <div class="info-main">
+            <span class="info-eyebrow">O serveru</span>
+            <h2 class="info-heading">Co je <span class="accent-red">MYCHAL SMP</span>?</h2>
+            <p class="info-body">MYCHAL SMP je komunitní Minecraft SMP server, kde chceme zůstat <strong>co nejvíce
+                vanilla</strong> – žádné přepisy ekonomiky, žádné pay-to-win. Přesto přidáváme příkazy usnadňující život
+              hráčů: <strong>/home</strong>, <strong>/rtp</strong>, <strong>/warp</strong> a vanilla shop kde se
+              obchoduje s <strong>přírodními minerály</strong> ze světa. Přibyla nová funkce <strong>/duel</strong> -
+              vstup do duelu a bojuj 1v1 s ostatními hráči.
+            </p>
+            <p class="info-body">Hráči spolu souperí, staví krásné stavby a tvoří vlastní kus světa. Server běží na
+              <strong>Java Edition</strong> a je chráněn whitelistem – jen hráči, kteří splňují podmínky, se sem
+              dostanou.
+            </p>
+            <div class="info-tags-row">
+              <span class="info-chip">🌿 Vanilla-first</span>
+              <span class="info-chip">⚔️ Survival PvP</span>
+              <span class="info-chip">🏠 /home, /rtp, /warp, /duel</span>
+              <span class="info-chip">🛒 Vanilla shop</span>
+              <span class="info-chip">🔒 Whitelist only</span>
+              <span class="info-chip">☕ Java Edition</span>
+            </div>
+            <div class="info-actions">
+              <button class="btn-primary" onclick="showTab('join')" id="info-join-btn">🔗 Jak se připojit</button>
+              <a href="https://map.6767111.xyz" target="_blank" rel="noopener" class="btn-secondary"
+                id="info-map-btn">🗺️ Mapa světa</a>
+            </div>
+          </div>
+          <div class="info-imgs">
+            <div class="info-img-stack">
+              <img src="imgs/2026-07-03_00.56.31.webp" alt="Server screenshot" class="info-img info-img--top"
+                onclick="openLightbox(this.src)" />
+              <img src="imgs/2026-07-03_00.55.19.webp" alt="Server screenshot" class="info-img info-img--bot"
+                onclick="openLightbox(this.src)" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section id="tab-join" class="tab-section">
+    <div class="container join-container">
+      <br>
+      <!-- Image banner between steps and FAQ -->
+      <div class="join-img-banner">
+        <img src="imgs/2026-07-03_00.57.30.webp" alt="MYCHAL SMP noční les" class="join-banner-img" />
+        <div class="join-banner-overlay">
+          <div class="join-banner-text">
+            <span class="join-banner-label">Čeká na tebe svět</span>
+            <h2>Přidej se k MYCHAL SMP</h2>
+            <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener" class="btn-primary"
+              id="banner-whitelist-link">Požádat o whitelist →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="join-faq">
+        <h2 class="section-title">Časté otázky</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFAQ(this)">Jak dlouho trvá schválení whitelistu? <span
+                class="faq-chevron">▾</span></button>
+            <div class="faq-a">Schválení probíhá automaticky po zadání nicku.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFAQ(this)">Jaká verze Minecraftu? <span
+                class="faq-chevron">▾</span></button>
+            <div class="faq-a">Server běží na verzi Minecraft Java Edition 26.1.2.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFAQ(this)">Je server 24/7? <span class="faq-chevron">▾</span></button>
+            <div class="faq-a">Ano, server běží 24 hodin denně, 7 dní v týdnu s minimální odstávkou na údržbu.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFAQ(this)">Kde najdu Discord? <span
+                class="faq-chevron">▾</span></button>
+            <div class="faq-a">Odkaz na Discord najdeš na stránce s whitelistem whitelistu. Podívej se také na naše
+              sociální sítě.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RULES -->
+  <section id="tab-rules" class="tab-section">
+    <!-- Page hero with background image -->
+    <div class="page-hero page-hero--img" style="--page-bg: url('imgs/2026-07-03_01.07.11.webp')">
+      <div class="page-hero-overlay page-hero-overlay--red"></div>
+      <div class="container page-hero-content">
+        <h1 class="page-title">📜 Pravidla serveru</h1>
+        <p class="page-subtitle">Přečti si pravidla než se připojíš. Porušení = ban.</p>
+      </div>
+    </div>
+
+    <div class="container rules-container">
+      <div class="rules-intro">
+        <p>Chceme, aby byl MYCHAL SMP místem kde se baví <strong>každý</strong>. Proto máme jednoduchá, ale přísně
+          dodržovaná pravidla. Jejich porušení může vést k varování, kicku nebo permanentnímu banu.</p>
+      </div>
+      <div class="rules-grid">
+        <div class="rule-card rule-card--critical">
+          <div class="rule-header">
+            <span class="rule-icon">💻</span>
+            <div>
+              <span class="rule-badge rule-badge--ban">Permanentní ban</span>
+              <h3>Cheaty &amp; Hacky</h3>
+            </div>
+          </div>
+          <p>Jakýkoliv cheat client, hack nebo modifikace dávající neférovou výhodu je přísně zakázána.</p>
+          <ul class="rule-list">
+            <li>❌ Cheat klienty (Wurst, Meteor…)</li>
+            <li>❌ Autoclickery a makra</li>
+            <li>❌ Neautorizované modifikace</li>
+          </ul>
+        </div>
+        <div class="rule-card rule-card--critical">
+          <div class="rule-header">
+            <span class="rule-icon">🔍</span>
+            <div>
+              <span class="rule-badge rule-badge--ban">Permanentní ban</span>
+              <h3>X-Ray</h3>
+            </div>
+          </div>
+          <p>Využívání x-ray modů, texture packů nebo bugů k vidění skrze bloky je zakázáno.</p>
+          <ul class="rule-list">
+            <li>❌ X-Ray mody a texture packy</li>
+            <li>❌ Cave finder aplikace</li>
+            <li>❌ Entity ESP a podobné</li>
+          </ul>
+        </div>
+        <div class="rule-card rule-card--warning">
+          <div class="rule-header">
+            <span class="rule-icon">🕳️</span>
+            <div>
+              <span class="rule-badge rule-badge--warn">Varování / Ban</span>
+              <h3>Glitch Exploiting</h3>
+            </div>
+          </div>
+          <p>Záměrné využívání herních bugů pro vlastní prospěch není povoleno. Nalezené bugy nahlásit adminovi.</p>
+          <ul class="rule-list">
+            <li>❌ Duplication glitche</li>
+            <li>❌ Out-of-map exploity</li>
+            <li>❌ Zneužití herních mechanik</li>
+          </ul>
+        </div>
+        <div class="rule-card rule-card--critical">
+          <div class="rule-header">
+            <span class="rule-icon">💥</span>
+            <div>
+              <span class="rule-badge rule-badge--ban">Varování / Ban</span>
+              <h3>Griefing</h3>
+            </div>
+          </div>
+          <p>Úmyslné ničení, krádež nebo poškozování cizích staveb a majetku je přísně zakázáno.</p>
+          <ul class="rule-list">
+            <li>❌ Ničení cizích staveb</li>
+            <li>❌ Lava casty</li>
+            <li>❌ Lag machine</li>
+            <li>❌ Krádež z truhel</li>
+          </ul>
+        </div>
+        <div class="rule-card rule-card--warning">
+          <div class="rule-header">
+            <span class="rule-icon">🗣️</span>
+            <div>
+              <span class="rule-badge rule-badge--warn">Varování / Ban</span>
+              <h3>Toxické chování</h3>
+            </div>
+          </div>
+          <p>Respekt je základ. Chceme příjemnou komunitu pro všechny hráče.</p>
+          <ul class="rule-list">
+            <li>❌ Šikana a harassment</li>
+            <li>❌ Spam v chatu</li>
+            <li>❌ Záměrné provokování</li>
+            <li>❌ Diskriminace</li>
+          </ul>
+        </div>
+        <div class="rule-card rule-card--warning">
+          <div class="rule-header">
+            <span class="rule-icon">🤬</span>
+            <div>
+              <span class="rule-badge rule-badge--warn">Varování / Kick</span>
+              <h3>Sprosté slova</h3>
+            </div>
+          </div>
+          <p>Udržuj chat čistý a přátelský. Nadávky a vulgarity jsou na serveru zakázány.</p>
+          <ul class="rule-list">
+            <li>❌ Vulgarismy v chatu</li>
+            <li>❌ Urážení hráčů</li>
+            <li>❌ NSFW obsah</li>
+          </ul>
+        </div>
+      </div>
+      <br>
+
+      <!-- Full-width image break between rules and footer -->
+      <div class="rules-img-break">
+        <img src="imgs/2026-07-03_00.58.55.webp" alt="Server screenshot" class="rules-break-img" />
+        <div class="rules-break-overlay"></div>
+        <div class="rules-break-text">
+          <span>Dodržuj pravidla a buď součástí naší komunity</span>
+        </div>
+      </div>
+
+      <div class="rules-footer">
+        <div class="rules-summary">
+          <h3>🤝 Zlaté pravidlo</h3>
+          <p>Chovej se k ostatním tak, jak chceš, aby se oni chovali k tobě. Respekt, fair-play a zábava pro všechny –
+            to je MYCHAL SMP.</p>
+        </div>
+        <div class="rules-cta">
+          <p>Souhlasíš s pravidly? Požádej o whitelist!</p>
+          <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener" class="btn-primary"
+            id="rules-whitelist-btn">Požádat o whitelist →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="tab-gallery" class="tab-section">
+    <!-- Page hero with background image -->
+    <div class="container gallery-container">
+
+      <div class="gallery-grid" id="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.54.49.webp')"><img
+            src="imgs/2026-07-03_00.54.49.webp" alt="Nether portál" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.55.19.webp')"><img
+            src="imgs/2026-07-03_00.55.19.webp" alt="Screenshot" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.56.31.webp')"><img
+            src="imgs/2026-07-03_00.56.31.webp" alt="Screenshot" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.56.41.webp')"><img
+            src="imgs/2026-07-03_00.56.41.webp" alt="Screenshot" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.56.43.webp')"><img
+            src="imgs/2026-07-03_00.56.43.webp" alt="Screenshot" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.57.30.webp')"><img
+            src="imgs/2026-07-03_00.57.30.webp" alt="Noční les" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.57.44.webp')"><img
+            src="imgs/2026-07-03_00.57.44.webp" alt="Screenshot" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.58.55.webp')"><img
+            src="imgs/2026-07-03_00.58.55.webp" alt="Podvodní portál" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.59.19.webp')"><img
+            src="imgs/2026-07-03_00.59.19.webp" alt="Screenshot" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_01.07.11.webp')"><img
+            src="imgs/2026-07-03_01.07.11.webp" alt="Screenshot" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_01.07.35.webp')"><img
+            src="imgs/2026-07-03_01.07.35.webp" alt="Screenshot" loading="lazy" />
+          <div class="gallery-overlay"><span>🔍</span></div>
+        </div>
+      </div>
+
+      <div class="gallery-cta">
+        <p>Chceš být na serveru a fotit své stavby?</p>
+        <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener" class="btn-primary"
+          id="gallery-whitelist-btn">🌐 Požádat o whitelist</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Zavřít">✕</button>
+    <button class="lightbox-prev" onclick="lightboxPrev(event)" aria-label="Předchozí">&#8249;</button>
+    <img id="lightbox-img" src="" alt="Screenshot" onclick="event.stopPropagation()" />
+    <button class="lightbox-next" onclick="lightboxNext(event)" aria-label="Další">&#8250;</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <img src="imgs/mychalSMP-SERVERICONtestv2 (1).webp" alt="Logo" class="footer-logo" />
+        <div>
+          <p class="footer-title">MYCHAL SMP</p>
+          <p class="footer-ip">land-wars.gl.joinmc.link</p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener">🌐 Whitelist žádost</a>
+        <button onclick="showTab('rules')" class="footer-link-btn">📜 Pravidla</button>
+        <button onclick="showTab('gallery')" class="footer-link-btn">🖼️ Galerie</button>
+      </div>
+      <p class="footer-copy">© 2026 MYCHAL SMP &nbsp;·&nbsp; Minecraft není spojený s Mojang Studios.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

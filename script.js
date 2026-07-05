@@ -129,9 +129,33 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.feature-card, .step-card, .rule-card, .gallery-item').forEach(el => {
+document.querySelectorAll('.feature-card, .step-card, .rule-card, .gallery-item, .join-step').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(24px)';
   el.style.transition = 'opacity .5s ease, transform .5s ease';
   observer.observe(el);
 });
+
+// ---- FETCH DYNAMIC STATS ----
+async function loadStats() {
+  try {
+    const res = await fetch('https://api.6767111.xyz/api/public-stats');
+    if (!res.ok) return;
+    const data = await res.json();
+    
+    if (data.whitelist_count !== undefined) {
+      document.getElementById('stat-whitelist').textContent = data.whitelist_count + '+';
+    }
+    if (data.discord_members !== undefined) {
+      document.getElementById('stat-discord').textContent = data.discord_members + '+';
+    }
+    if (data.playtime_hours !== undefined) {
+      document.getElementById('stat-playtime').textContent = data.playtime_hours + '+';
+    }
+  } catch (err) {
+    console.warn('Failed to load dynamic stats:', err);
+  }
+}
+
+// Load stats on page load
+document.addEventListener('DOMContentLoaded', loadStats);

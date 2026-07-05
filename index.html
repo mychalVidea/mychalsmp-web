@@ -83,17 +83,17 @@
       <div class="container">
         <div class="stats-row">
           <div class="stat-card">
-            <span class="stat-num">80+</span>
+            <span class="stat-num" id="stat-whitelist">80+</span>
             <span class="stat-label">Whitelistovaných hráčů</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-card">
-            <span class="stat-num">300+</span>
+            <span class="stat-num" id="stat-discord">300+</span>
             <span class="stat-label">Discord členů</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-card">
-            <span class="stat-num">1500+</span>
+            <span class="stat-num" id="stat-playtime">1500+</span>
             <span class="stat-label">Odehraných hodin</span>
           </div>
           <div class="stat-divider"></div>
@@ -153,21 +153,76 @@
 
   <!-- JOIN -->
   <section id="tab-join" class="tab-section">
-    <div class="container join-container">
-      <br>
-      <!-- Image banner between steps and FAQ -->
-      <div class="join-img-banner">
-        <img src="imgs/2026-07-03_00.57.30.webp" alt="MYCHAL SMP noční les" class="join-banner-img" />
-        <div class="join-banner-overlay">
-          <div class="join-banner-text">
-            <span class="join-banner-label">Čeká na tebe svět</span>
-            <h2>Přidej se k MYCHAL SMP</h2>
-            <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener" class="btn-primary"
-              id="banner-whitelist-link">Požádat o whitelist →</a>
+    <!-- Hero pro připojení s obrázkem na pozadí -->
+    <div class="join-hero">
+      <div class="join-hero-bg">
+        <img src="imgs/2026-07-03_00.57.30.webp" alt="MYCHAL SMP noční les" class="join-hero-img" />
+        <div class="join-hero-overlay"></div>
+      </div>
+      <div class="join-hero-content">
+        <img src="imgs/mychalSMP-SERVERICONtestv2 (2).webp" alt="Logo" class="join-hero-logo" />
+        <h1 class="join-hero-title">Jak se <span class="accent-red">připojit</span>?</h1>
+        <p class="join-hero-sub">Pro připojení na server stačí splnit 3 jednoduché kroky. Celý proces zabere sotva
+          minutu.</p>
+        <div class="join-hero-ip">
+          <code>land-wars.gl.joinmc.link</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kroky připojení -->
+    <div class="join-steps-section">
+      <!-- Krok 1 -->
+      <div class="join-step join-step--img" style="--step-bg: url('imgs/2026-07-03_00.58.55.webp')">
+        <div class="join-step-overlay join-step-overlay--blue"></div>
+        <div class="join-step-body">
+          <div class="join-step-num">01</div>
+          <div class="join-step-text">
+            <h2>Požádej o Whitelist</h2>
+            <p>Náš server je plně soukromý a chráněný. Pro vstup musíš nejprve požádat o přidání na whitelist. Můžeš to
+              udělat s propojením na Discord (pro prefix a 5 domovů) nebo anonymně bez Discordu (3 domovy).</p>
+            <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener" class="btn-primary">🌐 Otevřít
+              Whitelist Web →</a>
           </div>
         </div>
       </div>
 
+      <!-- Krok 2 -->
+      <div class="join-step join-step--img join-step--right" style="--step-bg: url('imgs/2026-07-03_00.56.31.webp')">
+        <div class="join-step-overlay join-step-overlay--dark"></div>
+        <div class="join-step-body">
+          <div class="join-step-num">02</div>
+          <div class="join-step-text">
+            <h2>Zkopíruj si IP adresu</h2>
+            <p>Zkopíruj si naši herní IP adresu, kterou zadáš v Minecraft klientu.</p>
+            <div class="join-ip-box">
+              <div class="ip-copy-row" style="margin: 0;">
+                <code class="ip-text" style="font-size: 1rem; color: #fff;">land-wars.gl.joinmc.link</code>
+                <button class="copy-btn" id="copy-btn-join" onclick="copyIP()"
+                  style="padding: 6px 12px; font-size: 0.85rem;">Kopírovat</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Krok 3 -->
+      <div class="join-step join-step--img" style="--step-bg: url('imgs/2026-07-03_01.07.11.webp')">
+        <div class="join-step-overlay join-step-overlay--blue"></div>
+        <div class="join-step-body">
+          <div class="join-step-num">03</div>
+          <div class="join-step-text">
+            <h2>Spusť hru a hraj</h2>
+            <p>Spusť Minecraft Java Edition ve verzi <strong>26.1.2</strong>. Jdi do sekce Multiplayer (Hra více hráčů),
+              přidej náš server a připoj se do hry. Těšíme se na tebe!</p>
+            <span class="join-step-badge">☕ Podpora Java Edition</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="container join-container" style="margin-top: 60px;">
       <div class="join-faq">
         <h2 class="section-title">Časté otázky</h2>
         <div class="faq-list">
@@ -188,7 +243,7 @@
           <div class="faq-item">
             <button class="faq-q" onclick="toggleFAQ(this)">Kde najdu Discord? <span
                 class="faq-chevron">▾</span></button>
-            <div class="faq-a">Odkaz na Discord najdeš na stránce s whitelistem whitelistu. Podívej se také na naše
+            <div class="faq-a">Odkaz na Discord najdeš přímo na stránce s whitelistem. Podívej se také na naše
               sociální sítě.
             </div>
           </div>
@@ -296,7 +351,7 @@
             <span class="rule-icon">🤬</span>
             <div>
               <span class="rule-badge rule-badge--warn">Varování / Kick</span>
-              <h3>Sprosté slova</h3>
+              <h3>Sprostá slova</h3>
             </div>
           </div>
           <p>Udržuj chat čistý a přátelský. Nadávky a vulgarity jsou na serveru zakázány.</p>
@@ -417,7 +472,7 @@
         <button onclick="showTab('gallery')" class="footer-link-btn">🖼️ Galerie</button>
       </div>
       <p class="footer-copy">© 2026 mychalVidea &nbsp;·&nbsp; Tento server/web není oficiálním produktem Minecraftu a
-        není schválen ani spojen se společností Mojang Studios .</p>
+        není schválen ani spojen se společností Mojang Studios.</p>
     </div>
   </footer>
 

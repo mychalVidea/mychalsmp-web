@@ -29,7 +29,7 @@
         <button id="tab-btn-home" class="nav-link active" onclick="showTab('home')">🏠 Domů</button>
         <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">🔗 Jak se připojit</button>
         <button id="tab-btn-rules" class="nav-link" onclick="showTab('rules')">📜 Pravidla</button>
-        <button id="tab-btn-gallery" class="nav-link" onclick="showTab('gallery')">🖼️ Galerie</button>
+        <button id="tab-btn-smp-plus" class="nav-link" onclick="showTab('smp-plus')">👑 SMP+</button>
       </div>
       <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
         <span></span><span></span><span></span>
@@ -39,7 +39,7 @@
       <button class="nav-link" onclick="showTab('home');toggleMenu()">🏠 Domů</button>
       <button class="nav-link" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
       <button class="nav-link" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
-      <button class="nav-link" onclick="showTab('gallery');toggleMenu()">🖼️ Galerie</button>
+      <button class="nav-link" onclick="showTab('smp-plus');toggleMenu()">👑 SMP+</button>
     </div>
   </nav>
 
@@ -70,7 +70,7 @@
         </div>
         <div class="hero-cta-row">
           <button class="btn-primary" onclick="showTab('join')">🔗 Jak se připojit</button>
-          <button class="btn-secondary" onclick="showTab('gallery')">🖼️ Galerie</button>
+          <button class="btn-secondary btn-smp-hero" onclick="showTab('smp-plus')">👑 SMP+ Předplatné</button>
         </div>
       </div>
       <div class="scroll-hint">
@@ -388,62 +388,130 @@
     </div>
   </section>
 
-  <!-- GALLERY -->
-  <section id="tab-gallery" class="tab-section">
-    <!-- Page hero with background image -->
-    <div class="container gallery-container">
+  <!-- SMP+ SUBSCRIPTION -->
+  <section id="tab-smp-plus" class="tab-section">
+    <!-- Page hero with background image & Split Layout -->
+    <div class="smp-hero">
+      <div class="smp-hero-bg">
+        <div class="smp-hero-overlay"></div>
+      </div>
+      <div class="container smp-hero-container">
+        <div class="smp-hero-left">
+          <div class="smp-premium-badge">👑 PREMIUM RANK</div>
+          <h1 class="smp-hero-title">Předplatné <span class="smp-text-blue">SMP</span><span
+              class="smp-text-gold">+</span></h1>
+          <p class="smp-hero-subtitle">Podpoř chod serveru MYCHAL SMP a odemkni exkluzivní výhody, rychlejší teleporty,
+            barevný nick a speciální prefix v chatu.</p>
 
-      <div class="gallery-grid" id="gallery-grid">
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.54.49.webp')"><img
-            src="imgs/2026-07-03_00.54.49.webp" alt="Nether portál" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
+          <div class="smp-features-list">
+            <div class="smp-feat-item">
+              <span class="smp-check">✓</span>
+              <span>Prefix: <span class="smp-bracket" style="color: #7f7f7f;">[</span><span class="smp-text-blue"
+                  style="font-weight: 700;">SMP</span><span class="smp-text-gold"
+                  style="font-weight: 700;">+</span><span class="smp-bracket" style="color: #7f7f7f;">]</span></span>
+            </div>
+            <div class="smp-feat-item">
+              <span class="smp-check">✓</span>
+              <span>Změna barvy nicku v chatu a tablistu přes <code>/cc</code></span>
+            </div>
+            <div class="smp-feat-item">
+              <span class="smp-check">✓</span>
+              <span>Teleportace za 3s a okamžitý návrat příkazem <code>/back</code></span>
+            </div>
+            <div class="smp-feat-item">
+              <span class="smp-check">✓</span>
+              <span>Ender Truhla zvětšená o 6. řádek s automatickým trezorem</span>
+            </div>
+            <div class="smp-feat-item">
+              <span class="smp-check">✓</span>
+              <span>Rozšířená tržnice (15 slotů) a zakázky (4 sloty)</span>
+            </div>
+          </div>
         </div>
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.55.19.webp')"><img
-            src="imgs/2026-07-03_00.55.19.webp" alt="Screenshot" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.56.31.webp')"><img
-            src="imgs/2026-07-03_00.56.31.webp" alt="Screenshot" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.56.41.webp')"><img
-            src="imgs/2026-07-03_00.56.41.webp" alt="Screenshot" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.56.43.webp')"><img
-            src="imgs/2026-07-03_00.56.43.webp" alt="Screenshot" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.57.30.webp')"><img
-            src="imgs/2026-07-03_00.57.30.webp" alt="Noční les" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.57.44.webp')"><img
-            src="imgs/2026-07-03_00.57.44.webp" alt="Screenshot" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.58.55.webp')"><img
-            src="imgs/2026-07-03_00.58.55.webp" alt="Podvodní portál" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_00.59.19.webp')"><img
-            src="imgs/2026-07-03_00.59.19.webp" alt="Screenshot" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_01.07.11.webp')"><img
-            src="imgs/2026-07-03_01.07.11.webp" alt="Screenshot" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
-        </div>
-        <div class="gallery-item" onclick="openLightbox('imgs/2026-07-03_01.07.35.webp')"><img
-            src="imgs/2026-07-03_01.07.35.webp" alt="Screenshot" loading="lazy" />
-          <div class="gallery-overlay"><span>🔍</span></div>
+
+        <div class="smp-hero-right">
+          <!-- Main Purchase Box immediately visible at the top -->
+          <div class="smp-checkout-card">
+            <div class="smp-checkout-header">
+              <div class="smp-price-tag">
+                <span class="smp-price-num">2.99 €</span>
+                <span class="smp-price-period">/ měsíc</span>
+              </div>
+            </div>
+
+            <div class="smp-divider"></div>
+
+            <!-- Live Preview of Rank -->
+            <div class="smp-preview-box">
+              <span class="smp-preview-label">Náhled v herním chatu:</span>
+              <div class="smp-chat-preview">
+                <span class="smp-bracket" style="color: #7f7f7f;">[</span><span class="smp-preview-blue">SMP</span><span
+                  class="smp-preview-gold">+</span><span class="smp-bracket" style="color: #7f7f7f;">]</span> <span
+                  class="smp-preview-name" id="smp-preview-name">Hráč</span><span class="smp-chat-colon">:</span> <span
+                  class="smp-chat-text">Ahoj na serveru!</span>
+              </div>
+            </div>
+
+            <!-- Nickname Input Form -->
+            <div class="nickname-form">
+              <label for="mc-username" class="nickname-label">Tvůj Minecraft nick:</label>
+              <div class="nickname-input-wrapper">
+                <input type="text" id="mc-username" class="nickname-input" placeholder="Tvůj herní nick..." required
+                  oninput="updatePreviewName(this.value)" />
+              </div>
+              <button class="btn-primary btn-purchase" onclick="checkoutSMP()">Aktivovat přes Tebex →</button>
+              <p class="nickname-tip">Zabezpečená platba přes Tebex. Aktivace trvá do 5 minut.</p>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
 
-      <div class="gallery-cta">
-        <p>Chceš být na serveru a fotit své stavby?</p>
-        <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener" class="btn-primary"
-          id="gallery-whitelist-btn">🌐 Požádat o whitelist</a>
+    <!-- Detailed Features List below -->
+    <div class="container smp-details-container">
+      <h2 class="smp-details-title">Detailní přehled všech výhod</h2>
+      <div class="smp-grid">
+        <!-- Benefit Card 1: Name Color -->
+        <div class="smp-card">
+          <div class="smp-card-icon">🎨</div>
+          <h3>Barevné jméno ve hře</h3>
+          <p>Přístup k příkazu <code>/cc</code> nebo <code>/changecolor</code>. Vyber si z 24 unikátních barev pro svůj
+            nick v chatu i tablistu!</p>
+        </div>
+        <!-- Benefit Card 2: Faster Teleportation -->
+        <div class="smp-card">
+          <div class="smp-card-icon">⚡</div>
+          <h3>Rychlé teleporty</h3>
+          <p>Teleportace na warpy, spawn a TPA za pouhé <strong>3 sekundy</strong>. Teleport zpět přes
+            <code>/back</code> je okamžitý bez čekání!
+          </p>
+        </div>
+        <!-- Benefit Card 3: Row 6 Ender Chest -->
+        <div class="smp-card">
+          <div class="smp-card-icon">🎒</div>
+          <h3>Větší Ender Truhla</h3>
+          <p>Zpřístupní se ti celý <strong>6. řádek (9 slotů)</strong> ender truhly. Pokud VIP vyprší, věci ti bezpečně
+            přesuneme do Trezoru v <code>/shop</code>.</p>
+        </div>
+        <!-- Benefit Card 4: Extra Home Slot -->
+        <div class="smp-card">
+          <div class="smp-card-icon">🏠</div>
+          <h3>7. Domov (/home)</h3>
+          <p>Odemkni dodatečný 7. slot pro domov, abys mohl mít uložených ještě více důležitých míst.</p>
+        </div>
+        <!-- Benefit Card 5: Extra Personal Warp Slot -->
+        <div class="smp-card">
+          <div class="smp-card-icon">📍</div>
+          <h3>4. Osobní Warp</h3>
+          <p>Navýšený limit pro příkaz <code>/setwarp</code>. Vytvoř si až 4 osobní warpy v sekci "Moje warpy".</p>
+        </div>
+        <!-- Benefit Card 6: Market & Orders Boost -->
+        <div class="smp-card">
+          <div class="smp-card-icon">🛒</div>
+          <h3>Tržnice &amp; Zakázky</h3>
+          <p>Možnost vystavit až <strong>15 nabídek</strong> v <code>/shop</code> současně a plnit až <strong>4
+              zakázky</strong> v <code>/orders</code> naráz.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -463,13 +531,13 @@
         <img src="imgs/mychalSMP-SERVERICONtestv2 (1).webp" alt="Logo" class="footer-logo" />
         <div>
           <p class="footer-title">MYCHAL SMP</p>
-          <p class="footer-ip">land-wars.gl.joinmc.link</p>
+          <p class="footer-ip">ᴍʏᴄʜᴀʟꜱᴍᴘ.xʏᴢ</p>
         </div>
       </div>
       <div class="footer-links">
         <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener">🌐 Whitelist žádost</a>
         <button onclick="showTab('rules')" class="footer-link-btn">📜 Pravidla</button>
-        <button onclick="showTab('gallery')" class="footer-link-btn">🖼️ Galerie</button>
+        <button onclick="showTab('smp-plus')" class="footer-link-btn">👑 SMP+</button>
       </div>
       <p class="footer-copy">© 2026 mychalVidea &nbsp;·&nbsp; Tento server/web není oficiálním produktem Minecraftu a
         není schválen ani spojen se společností Mojang Studios.</p>

@@ -1929,3 +1929,464 @@ body {
     font-size: 3rem;
   }
 }
+
+/* ===================== SMP+ PAGE STYLING ===================== */
+.smp-hero {
+  position: relative;
+  min-height: 80vh;
+  padding-top: 120px;
+  padding-bottom: 80px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 80% 20%, rgba(10, 103, 229, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(241, 196, 15, 0.08) 0%, transparent 50%),
+              var(--bg);
+}
+
+.smp-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.smp-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(13, 13, 18, 0.4) 0%, var(--bg) 100%);
+}
+
+.smp-hero-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.smp-hero-left {
+  flex: 1.1;
+  max-width: 620px;
+}
+
+.smp-hero-right {
+  flex: 0.9;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 380px;
+}
+
+/* Premium branding texts */
+.smp-text-blue {
+  color: var(--blue);
+  text-shadow: 0 0 15px rgba(10, 103, 229, 0.4);
+}
+
+.smp-text-gold {
+  color: #f1c40f;
+  text-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+}
+
+.smp-premium-badge {
+  display: inline-block;
+  background: rgba(10, 103, 229, 0.15);
+  border: 1px solid rgba(10, 103, 229, 0.3);
+  color: #8bb4f9;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  padding: 6px 16px;
+  border-radius: 99px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.smp-hero-title {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.smp-hero-subtitle {
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 36px;
+}
+
+.smp-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.smp-feat-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 1.05rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.smp-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(10, 103, 229, 0.2);
+  border: 1px solid rgba(10, 103, 229, 0.4);
+  color: #8bb4f9;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(10, 103, 229, 0.25);
+}
+
+/* Beautiful Checkout Card */
+.smp-checkout-card {
+  background: rgba(30, 30, 42, 0.45);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--trans), box-shadow var(--trans);
+}
+
+.smp-checkout-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue) 0%, #f1c40f 100%);
+}
+
+.smp-checkout-card:hover {
+  border-color: rgba(10, 103, 229, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+              0 0 40px rgba(10, 103, 229, 0.1),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.smp-checkout-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.smp-price-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.smp-price-num {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+
+.smp-price-period {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.smp-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin-bottom: 24px;
+}
+
+/* Minecraft Chat Preview Component */
+.smp-preview-box {
+  margin-bottom: 28px;
+}
+
+.smp-preview-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+
+.smp-chat-preview {
+  background: #09090d;
+  border-left: 3px solid var(--blue);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  color: var(--white);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-left: 3px solid var(--blue);
+}
+
+.smp-bracket {
+  color: #7f7f7f;
+}
+
+.smp-preview-blue {
+  color: var(--blue);
+  font-weight: bold;
+}
+
+.smp-preview-gold {
+  color: #f1c40f;
+  font-weight: bold;
+}
+
+.smp-preview-name {
+  color: var(--white);
+  font-weight: 500;
+  transition: color var(--trans);
+}
+
+.smp-chat-colon {
+  color: #ffffff;
+}
+
+.smp-chat-text {
+  color: #ffffff;
+}
+
+/* Form Styles */
+.nickname-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nickname-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nickname-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.nickname-input {
+  width: 100%;
+  background: rgba(13, 13, 18, 0.8);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--white);
+  padding: 16px 20px;
+  font-family: var(--font);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color var(--trans), box-shadow var(--trans);
+}
+
+.nickname-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 15px rgba(10, 103, 229, 0.2);
+}
+
+.btn-purchase {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--white);
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(10, 103, 229, 0.35);
+  transition: transform var(--trans), box-shadow var(--trans), filter var(--trans);
+}
+
+.btn-purchase:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10, 103, 229, 0.5);
+  filter: brightness(1.1);
+}
+
+.nickname-tip {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* Detailed Grid */
+.smp-details-container {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.smp-details-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--white);
+  text-align: center;
+  margin-bottom: 48px;
+  letter-spacing: -0.01em;
+}
+
+.smp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.smp-card {
+  background: rgba(30, 30, 42, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
+  padding: 32px;
+  transition: transform var(--trans), border-color var(--trans), box-shadow var(--trans);
+  position: relative;
+  overflow: hidden;
+}
+
+.smp-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue) 0%, #f1c40f 100%);
+  opacity: 0;
+  transition: opacity var(--trans);
+}
+
+.smp-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(10, 103, 229, 0.25);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.smp-card:hover::before {
+  opacity: 1;
+}
+
+.smp-card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  display: inline-block;
+  background: linear-gradient(135deg, var(--white), var(--text-muted));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.smp-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.smp-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.smp-card code {
+  background: rgba(10, 103, 229, 0.15);
+  color: #8bb4f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+.btn-smp-hero {
+  border-color: rgba(10, 103, 229, 0.4) !important;
+  color: var(--white) !important;
+  background: rgba(10, 103, 229, 0.08) !important;
+  box-shadow: 0 0 15px rgba(10, 103, 229, 0.1);
+  transition: background var(--trans), box-shadow var(--trans), border-color var(--trans);
+}
+
+.btn-smp-hero:hover {
+  background: rgba(10, 103, 229, 0.18) !important;
+  border-color: rgba(10, 103, 229, 0.7) !important;
+  box-shadow: 0 0 25px rgba(10, 103, 229, 0.25);
+}
+
+/* Custom Responsive Styles */
+@media (max-width: 992px) {
+  .smp-hero-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+  
+  .smp-hero-left {
+    max-width: 100%;
+  }
+
+  .smp-features-list {
+    align-items: center;
+  }
+
+  .smp-hero-right {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .smp-checkout-card {
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 576px) {
+  .smp-hero {
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+
+  .smp-hero-title {
+    font-size: 2.4rem;
+  }
+
+  .smp-checkout-card {
+    padding: 24px;
+  }
+
+  .smp-price-num {
+    font-size: 2.6rem;
+  }
+}

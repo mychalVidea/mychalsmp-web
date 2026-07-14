@@ -129,7 +129,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.feature-card, .step-card, .rule-card, .gallery-item, .join-step').forEach(el => {
+document.querySelectorAll('.feature-card, .step-card, .rule-card, .gallery-item, .join-step, .smp-card, .smp-checkout-card, .smp-hero-left').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(24px)';
   el.style.transition = 'opacity .5s ease, transform .5s ease';
@@ -142,7 +142,7 @@ async function loadStats() {
     const res = await fetch('https://api.6767111.xyz/api/public-stats');
     if (!res.ok) return;
     const data = await res.json();
-    
+
     if (data.whitelist_count !== undefined) {
       document.getElementById('stat-whitelist').textContent = data.whitelist_count + '+';
     }
@@ -154,6 +154,60 @@ async function loadStats() {
     }
   } catch (err) {
     console.warn('Failed to load dynamic stats:', err);
+  }
+}
+
+// ---- TEBEX CHECKOUT CONFIG ----
+async function checkoutSMP() {
+  const nickInput = document.getElementById('mc-username');
+  const nickname = nickInput.value.trim();
+  if (!nickname) {
+    alert('Prosím, zadej svůj Minecraft nick!');
+    nickInput.focus();
+    return;
+  }
+
+  // Simple nick format check
+  if (!/^[a-zA-Z0-9_]{2,16}$/.test(nickname)) {
+    alert('Tento herní nick vypadá neplatně! Použij pouze písmena, čísla a podtržítka (délka 2-16).');
+    return;
+  }
+
+  const btn = document.querySelector('.btn-purchase');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '⌛ Generuji košík...';
+  btn.disabled = true;
+
+  try {
+    const response = await fetch('https://api.6767111.xyz/api/tebex/checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nickname })
+    });
+
+    const data = await response.json();
+    if (data.success && data.url) {
+      window.open(data.url, '_blank');
+    } else {
+      alert('Chyba: ' + (data.message || 'Nepodařilo se vytvořit checkout odkaz. Zkontroluj konfiguraci v .env.'));
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Chyba při komunikaci se serverem.');
+  } finally {
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }
+}
+
+// ---- LIVE CHAT PREVIEW ----
+function updatePreviewName(val) {
+  const preview = document.getElementById('smp-preview-name');
+  if (preview) {
+    const cleanVal = val.trim();
+    preview.textContent = cleanVal ? cleanVal : 'Hráč';
   }
 }
 

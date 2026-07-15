@@ -267,7 +267,7 @@ async function checkMediaStatus() {
   statusBox.style.display = 'block';
   applyForm.style.display = 'none';
   loginBox.style.display = 'none';
-  statusBox.innerHTML = '<div class="spinner-circle"></div><p style="text-align:center;">Ověřuji stav tvé žádosti...</p>';
+  statusBox.innerHTML = '<div class="media-status-center"><div class="status-pending-icon"><span class="status-question">?</span><div class="status-spinner"></div></div><p style="text-align:center; margin-top:12px;">Ověřuji stav tvé žádosti...</p></div>';
   
   try {
     const res = await fetch('https://api.6767111.xyz/api/media/status', {
@@ -283,50 +283,73 @@ async function checkMediaStatus() {
     }
     
     const data = await res.json();
-    if (!data.success || !data.request) {
+    // If user has no request — show the form
+    if (!data.success || !data.hasRequest) {
       statusBox.style.display = 'none';
       applyForm.style.display = 'block';
       loginBox.style.display = 'none';
       return;
     }
-    
-    const req = data.request;
-    if (req.status === 'pending') {
+
+    const status = data.status;
+    const youtubeUrl = data.youtubeUrl;
+    const kickUrl = data.kickUrl;
+    const tiktokUrl = data.tiktokUrl;
+    const twitchUrl = data.twitchUrl;
+    const reason = data.reason;
+    const daysLeft = data.daysLeft || 0;
+
+    if (status === 'pending') {
       statusBox.innerHTML = `
-        <div class="media-status-card">
-          <div class="status-icon">⏳</div>
+        <div class="media-status-card media-status--pending">
+          <div class="media-status-center">
+            <div class="status-pending-icon"><span class="status-question">?</span><div class="status-spinner"></div></div>
+          </div>
           <h3>Žádost se posuzuje</h3>
-          <p>Tvoje žádost o Media Rank byla úspěšně odeslána a čeká na schválení administrátorem.</p>
+          <p>Tvoje žádost o Media Rank byla odeslána a čeká na schválení administrátorem.</p>
           <div class="status-details">
-            <div><strong>YouTube:</strong> ${req.youtube_url || 'Nepřipojeno'}</div>
-            <div><strong>Kick:</strong> ${req.kick_url || 'Nepřipojeno'}</div>
-            <div><strong>TikTok:</strong> ${req.tiktok_url || 'Nepřipojeno'}</div>
-            <div><strong>Twitch:</strong> ${req.twitch_url || 'Nepřipojeno'}</div>
+            <div><strong>YouTube:</strong> ${youtubeUrl || 'Nepřipojeno'}</div>
+            <div><strong>Kick:</strong> ${kickUrl || 'Nepřipojeno'}</div>
+            <div><strong>TikTok:</strong> ${tiktokUrl || 'Nepřipojeno'}</div>
+            <div><strong>Twitch:</strong> ${twitchUrl || 'Nepřipojeno'}</div>
           </div>
         </div>
       `;
-    } else if (req.status === 'approved') {
+    } else if (status === 'approved') {
       statusBox.innerHTML = `
-        <div class="media-status-card">
-          <div class="status-icon">🎉</div>
+        <div class="media-status-card media-status--approved">
+          <div class="media-status-center">
+            <div class="status-approved-icon">✓</div>
+          </div>
           <h3>Žádost Schválena!</h3>
           <p>Gratulujeme! Tvoje žádost o Media Rank byla schválena. Rank máš aktivní ve hře i na Discordu.</p>
-          <div style="margin-top: 20px; padding: 15px; background: rgba(241, 196, 15, 0.1); border-left: 4px solid #f1c40f; border-radius: 4px; text-align: left;">
-            <strong style="color: #f1c40f; display: block; margin-bottom: 8px;">⚠️ DŮLEŽITÉ UPOZORNĚNÍ:</strong>
-            Pro udržení Media ranku musíte v popiscích videí a streamů uvádět IP/odkaz <strong>join.mychalsmp.xyz</strong> nebo <strong>mychalsmp.xyz</strong> a používat hashtag <strong>#mychalsmp</strong>. Aktivita je pravidelně kontrolována naším botem.
+          <div style="margin-top: 20px; padding: 15px; background: rgba(10, 167, 100, 0.06); border-left: 4px solid #16a34a; border-radius: 4px; text-align: left;">
+            <strong style="color: #16a34a; display: block; margin-bottom: 8px;">✅ UPOZORNĚNÍ:</strong>
+            Pro udržení Media ranku uváděj v popiscích IP <strong>join.mychalsmp.xyz</strong> nebo <strong>mychalsmp.xyz</strong> a používej hashtag <strong>#mychalsmp</strong>.
           </div>
         </div>
       `;
-    } else if (req.status === 'rejected') {
-      statusBox.innerHTML = `
-        <div class="media-status-card">
-          <div class="status-icon">❌</div>
-          <h3>Žádost Zamítnuta</h3>
-          <p>Tvoje žádost o Media Rank byla zamítnuta.</p>
-          <div class="reject-reason"><strong>Důvod zamítnutí:</strong> ${req.reason || 'Neuveden'}</div>
-          <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zkusit znovu zažádat</button>
-        </div>
-      `;
+    } else if (status === 'rejected') {
+      // If server returned daysLeft > 0, show rejected state with countdown; otherwise allow reapply (show form)
+      if (daysLeft > 0) {
+        statusBox.innerHTML = `
+          <div class="media-status-card media-status--rejected">
+            <div class="media-status-center">
+              <div class="status-rejected-icon">✕</div>
+            </div>
+            <h3>Žádost Zamítnuta</h3>
+            <p>Tvoje žádost o Media Rank byla zamítnuta.</p>
+            <div class="reject-reason"><strong>Důvod zamítnutí:</strong> ${reason || 'Neuveden'}</div>
+            <div style="margin-top:12px; color: var(--text-muted);">Znovu můžeš požádat za <strong>${daysLeft} dní</strong>.</div>
+          </div>
+        `;
+      } else {
+        // allow reapply
+        statusBox.style.display = 'none';
+        applyForm.style.display = 'block';
+        loginBox.style.display = 'none';
+        return;
+      }
     }
   } catch (err) {
     statusBox.innerHTML = '<p class="error-text" style="color: #ef4444; text-align: center;">Chyba při komunikaci se serverem.</p>';

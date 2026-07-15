@@ -798,6 +798,118 @@ body {
   filter: brightness(1.1);
 }
 
+/* ===== MEDIA STATUS VISUALS ===== */
+.media-status-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.status-pending-icon {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 2px dashed rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.status-pending-icon .status-question {
+  font-size: 42px;
+  color: var(--text);
+  font-weight: 800;
+  z-index: 2;
+}
+.status-pending-icon .status-spinner {
+  position: absolute;
+  inset: -6px;
+  border: 4px solid rgba(255,255,255,0.03);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  width: 104px;
+  height: 104px;
+  animation: spin 1.2s linear infinite;
+  z-index: 1;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.status-approved-icon {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(22,163,74,0.95), rgba(16,148,62,0.9));
+  color: #fff;
+  font-size: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 30px rgba(22,163,74,0.35), 0 0 40px rgba(22,163,74,0.18);
+}
+
+.status-rejected-icon {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(245,21,21,0.95), rgba(184,15,15,0.9));
+  color: #fff;
+  font-size: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 30px rgba(245,21,21,0.35), 0 0 40px rgba(245,21,21,0.18);
+}
+
+.media-status-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid var(--border);
+  padding: 18px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.media-check-detail {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+/* Enhanced status animations and polish */
+.media-status--approved .status-approved-icon {
+  animation: approvedGlow 2.6s ease-in-out infinite;
+  transform: translateZ(0);
+}
+
+@keyframes approvedGlow {
+  0% { box-shadow: 0 8px 30px rgba(22,163,74,0.28), 0 0 20px rgba(22,163,74,0.12); transform: scale(1); }
+  50% { box-shadow: 0 18px 50px rgba(22,163,74,0.42), 0 0 60px rgba(22,163,74,0.22); transform: scale(1.04); }
+  100% { box-shadow: 0 8px 30px rgba(22,163,74,0.28), 0 0 20px rgba(22,163,74,0.12); transform: scale(1); }
+}
+
+.media-status--rejected .status-rejected-icon {
+  animation: rejectedPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes rejectedPulse {
+  0% { transform: scale(1); box-shadow: 0 8px 30px rgba(245,21,21,0.28); }
+  50% { transform: scale(1.03); box-shadow: 0 18px 50px rgba(245,21,21,0.42); }
+  100% { transform: scale(1); box-shadow: 0 8px 30px rgba(245,21,21,0.28); }
+}
+
+.status-pending-icon { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.media-status--pending .status-pending-icon { transform: scale(1); }
+.media-status--pending .status-pending-icon:hover { transform: scale(1.04); box-shadow: 0 8px 30px rgba(10,103,229,0.08); }
+
+.status-pending-icon .status-question { display: inline-block; transform-origin: center; animation: questionWobble 2.4s ease-in-out infinite; }
+@keyframes questionWobble { 0%{ transform: rotate(0) } 20%{ transform: rotate(-6deg) } 40%{ transform: rotate(6deg) } 60%{ transform: rotate(-4deg) } 80%{ transform: rotate(4deg) } 100%{ transform: rotate(0) } }
+
+.media-status-card { transition: transform 0.22s ease, box-shadow 0.22s ease; }
+.media-status-card:hover { transform: translateY(-4px); box-shadow: 0 18px 60px rgba(0,0,0,0.45); }
+
+.media-status-card h3 { margin-top: 6px; margin-bottom: 6px; }
+.media-status-card p { color: var(--text-muted); }
+
+
 /* ===================== PAGE HERO – with background image ===================== */
 .page-hero {
   position: relative;

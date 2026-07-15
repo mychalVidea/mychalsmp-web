@@ -154,6 +154,7 @@ async function loadStats() {
     const res = await fetch('https://api.6767111.xyz/api/public-stats');
     if (!res.ok) return;
     const data = await res.json();
+    console.log('[MEDIA APPLY] response:', data);
 
     if (data.whitelist_count !== undefined) {
       document.getElementById('stat-whitelist').textContent = data.whitelist_count + '+';
@@ -461,8 +462,10 @@ async function submitMediaApplication(event) {
       await sleep(1000);
       const checksDetails = (data.checks || []).map(check => {
         const countLabel = check.count === null ? 'neznámý' : check.count.toString();
-        const statusLabel = check.count !== null && check.count >= check.required ? 'OK' : 'Nesplněno';
-        return `<div class="media-check-detail"><strong>${check.platform}:</strong> ${countLabel} / ${check.required} (${statusLabel})</div>`;
+        const ok = (check.count !== null && check.count >= check.required);
+        const statusLabel = ok ? 'OK' : 'Nesplněno';
+        const color = ok ? '#16a34a' : '#ef4444';
+        return `<div class="media-check-detail"><strong>${check.platform}:</strong> <span style="color:${color};">${countLabel} / ${check.required} — ${statusLabel}</span></div>`;
       }).join('');
       statusBox.innerHTML = `
         <div class="media-status-card">
@@ -471,6 +474,7 @@ async function submitMediaApplication(event) {
           <p style="color: #ef4444; font-weight: bold; margin-bottom: 15px;">${data.error || 'Nebyly splněny požadavky pro Media Rank.'}</p>
           <p>Ujisti se, že máš dostatečný počet odběratelů/sledujících a zadal jsi správné odkazy.</p>
           ${checksDetails ? `<div class="media-checks-list" style="margin-top: 12px; text-align:left;">${checksDetails}</div>` : ''}
+          ${data && data.raw ? `<pre style="text-align:left; margin-top:10px; background:rgba(0,0,0,0.12); padding:10px; border-radius:8px; overflow:auto; max-height:180px;">${JSON.stringify(data.raw, null, 2)}</pre>` : ''}
           <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zpět na formulář</button>
         </div>
       `;

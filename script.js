@@ -351,9 +351,14 @@ async function submitMediaApplication(event) {
   const tt = document.getElementById('media-tt').value.trim();
   const twitch = document.getElementById('media-twitch').value.trim();
   const kick = document.getElementById('media-kick').value.trim();
+  const ageConfirm = document.getElementById('media-age-confirm')?.checked;
   
   if (!yt && !tt && !twitch && !kick) {
     alert('Vyplň aspoň jeden kanál k ověření!');
+    return;
+  }
+  if (!ageConfirm) {
+    alert('Pro podání žádosti potvrď, že je ti více než 10 let.');
     return;
   }
   
@@ -406,7 +411,8 @@ async function submitMediaApplication(event) {
         youtubeUrl: yt,
         tiktokUrl: tt,
         twitchUrl: twitch,
-        kickUrl: kick
+        kickUrl: kick,
+        ageConfirm: ageConfirm
       })
     });
     
@@ -430,12 +436,18 @@ async function submitMediaApplication(event) {
     } else {
       document.getElementById('step-scrape').className = 'verification-step-item failed';
       await sleep(1000);
+      const checksDetails = (data.checks || []).map(check => {
+        const countLabel = check.count === null ? 'neznámý' : check.count.toString();
+        const statusLabel = check.count !== null && check.count >= check.required ? 'OK' : 'Nesplněno';
+        return `<div class="media-check-detail"><strong>${check.platform}:</strong> ${countLabel} / ${check.required} (${statusLabel})</div>`;
+      }).join('');
       statusBox.innerHTML = `
         <div class="media-status-card">
           <div class="status-icon">❌</div>
           <h3>Ověření selhalo</h3>
           <p style="color: #ef4444; font-weight: bold; margin-bottom: 15px;">${data.error || 'Nebyly splněny požadavky pro Media Rank.'}</p>
           <p>Ujisti se, že máš dostatečný počet odběratelů/sledujících a zadal jsi správné odkazy.</p>
+          ${checksDetails ? `<div class="media-checks-list" style="margin-top: 12px; text-align:left;">${checksDetails}</div>` : ''}
           <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zpět na formulář</button>
         </div>
       `;

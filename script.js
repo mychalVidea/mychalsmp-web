@@ -13,6 +13,10 @@ function showTab(name) {
   if (btn) btn.classList.add('active');
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (name === 'media') {
+    checkMediaStatus();
+  }
 }
 
 // ---- MOBILE MENU ----
@@ -48,14 +52,22 @@ function copyText(text, el) {
 
 // ---- FAQ TOGGLE ----
 function toggleFAQ(btn) {
-  const answer = btn.nextElementSibling;
-  const isOpen = answer.classList.contains('open');
-  // close all
-  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
-  document.querySelectorAll('.faq-q').forEach(b => b.classList.remove('open'));
-  if (!isOpen) {
-    answer.classList.add('open');
-    btn.classList.add('open');
+  const card = btn.closest('.faq-card');
+  if (!card) return;
+  const content = card.querySelector('.faq-content');
+  const isActive = card.classList.contains('active');
+  
+  // Close all cards
+  document.querySelectorAll('.faq-card').forEach(c => {
+    c.classList.remove('active');
+    const cc = c.querySelector('.faq-content');
+    if (cc) cc.style.maxHeight = '0px';
+  });
+  
+  // Toggle the clicked one
+  if (!isActive && content) {
+    card.classList.add('active');
+    content.style.maxHeight = content.scrollHeight + 'px';
   }
 }
 
@@ -212,4 +224,232 @@ function updatePreviewName(val) {
 }
 
 // Load stats on page load
-document.addEventListener('DOMContentLoaded', loadStats);
+document.addEventListener('DOMContentLoaded', () => {
+  loadStats();
+  
+  // Check for token in URL (Discord Auth callback redirect)
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token');
+  if (token) {
+    localStorage.setItem('auth_token', token);
+    window.history.replaceState({}, document.title, window.location.pathname);
+    showTab('media');
+  }
+});
+
+// ---- DISCORD LOGIN ----
+function loginViaDiscord() {
+  window.location.href = 'https://api.6767111.xyz/api/auth/discord?from=' + encodeURIComponent(window.location.href);
+}
+
+// ---- GET AUTH HEADERS ----
+function getAuthHeaders() {
+  const token = localStorage.getItem('auth_token');
+  return token ? { 'Authorization': token } : {};
+}
+
+// ---- CHECK MEDIA STATUS ----
+async function checkMediaStatus() {
+  const token = localStorage.getItem('auth_token');
+  const statusBox = document.getElementById('media-status-box');
+  const applyForm = document.getElementById('media-apply-form');
+  const loginBox = document.getElementById('media-login-box');
+  
+  if (!statusBox || !applyForm || !loginBox) return;
+  
+  if (!token) {
+    statusBox.style.display = 'none';
+    applyForm.style.display = 'none';
+    loginBox.style.display = 'block';
+    return;
+  }
+  
+  statusBox.style.display = 'block';
+  applyForm.style.display = 'none';
+  loginBox.style.display = 'none';
+  statusBox.innerHTML = '<div class="spinner-circle"></div><p style="text-align:center;">Ověřuji stav tvé žádosti...</p>';
+  
+  try {
+    const res = await fetch('https://api.6767111.xyz/api/media/status', {
+      headers: getAuthHeaders()
+    });
+    
+    if (res.status === 401) {
+      localStorage.removeItem('auth_token');
+      statusBox.style.display = 'none';
+      applyForm.style.display = 'none';
+      loginBox.style.display = 'block';
+      return;
+    }
+    
+    const data = await res.json();
+    if (!data.success || !data.request) {
+      statusBox.style.display = 'none';
+      applyForm.style.display = 'block';
+      loginBox.style.display = 'none';
+      return;
+    }
+    
+    const req = data.request;
+    if (req.status === 'pending') {
+      statusBox.innerHTML = `
+        <div class="media-status-card">
+          <div class="status-icon">⏳</div>
+          <h3>Žádost se posuzuje</h3>
+          <p>Tvoje žádost o Media Rank byla úspěšně odeslána a čeká na schválení administrátorem.</p>
+          <div class="status-details">
+            <div><strong>YouTube:</strong> ${req.youtube_url || 'Nepřipojeno'}</div>
+            <div><strong>Kick:</strong> ${req.kick_url || 'Nepřipojeno'}</div>
+            <div><strong>TikTok:</strong> ${req.tiktok_url || 'Nepřipojeno'}</div>
+            <div><strong>Twitch:</strong> ${req.twitch_url || 'Nepřipojeno'}</div>
+          </div>
+        </div>
+      `;
+    } else if (req.status === 'approved') {
+      statusBox.innerHTML = `
+        <div class="media-status-card">
+          <div class="status-icon">🎉</div>
+          <h3>Žádost Schválena!</h3>
+          <p>Gratulujeme! Tvoje žádost o Media Rank byla schválena. Rank máš aktivní ve hře i na Discordu.</p>
+          <div style="margin-top: 20px; padding: 15px; background: rgba(241, 196, 15, 0.1); border-left: 4px solid #f1c40f; border-radius: 4px; text-align: left;">
+            <strong style="color: #f1c40f; display: block; margin-bottom: 8px;">⚠️ DŮLEŽITÉ UPOZORNĚNÍ:</strong>
+            Pro udržení Media ranku musíte v popiscích videí a streamů uvádět IP/odkaz <strong>join.mychalsmp.xyz</strong> nebo <strong>mychalsmp.xyz</strong> a používat hashtag <strong>#mychalsmp</strong>. Aktivita je pravidelně kontrolována naším botem.
+          </div>
+        </div>
+      `;
+    } else if (req.status === 'rejected') {
+      statusBox.innerHTML = `
+        <div class="media-status-card">
+          <div class="status-icon">❌</div>
+          <h3>Žádost Zamítnuta</h3>
+          <p>Tvoje žádost o Media Rank byla zamítnuta.</p>
+          <div class="reject-reason"><strong>Důvod zamítnutí:</strong> ${req.reason || 'Neuveden'}</div>
+          <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zkusit znovu zažádat</button>
+        </div>
+      `;
+    }
+  } catch (err) {
+    statusBox.innerHTML = '<p class="error-text" style="color: #ef4444; text-align: center;">Chyba při komunikaci se serverem.</p>';
+  }
+}
+
+function resetMediaForm() {
+  const statusBox = document.getElementById('media-status-box');
+  const applyForm = document.getElementById('media-apply-form');
+  if (statusBox && applyForm) {
+    statusBox.style.display = 'none';
+    applyForm.style.display = 'block';
+    applyForm.reset();
+  }
+}
+
+// ---- SUBMIT MEDIA APPLICATION (WITH ADVANCED ANIMATION) ----
+async function submitMediaApplication(event) {
+  event.preventDefault();
+  
+  const yt = document.getElementById('media-yt').value.trim();
+  const tt = document.getElementById('media-tt').value.trim();
+  const twitch = document.getElementById('media-twitch').value.trim();
+  const kick = document.getElementById('media-kick').value.trim();
+  
+  if (!yt && !tt && !twitch && !kick) {
+    alert('Vyplň aspoň jeden kanál k ověření!');
+    return;
+  }
+  
+  const statusBox = document.getElementById('media-status-box');
+  const applyForm = document.getElementById('media-apply-form');
+  
+  applyForm.style.display = 'none';
+  statusBox.style.display = 'block';
+  
+  // Render step-by-step checking animation
+  statusBox.innerHTML = `
+    <div class="verification-progress-box">
+      <div class="spinner-circle"></div>
+      <h3>Ověřování kanálů</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Scrapuji sociální sítě a načítám data...</p>
+      
+      <div class="verification-steps">
+        <div id="step-connect" class="verification-step-item checking">
+          <span class="step-icon-status"></span>
+          <span>Navazování spojení se serverem...</span>
+        </div>
+        <div id="step-scrape" class="verification-step-item pending">
+          <span class="step-icon-status"></span>
+          <span>Analýza zadaných odkazů...</span>
+        </div>
+        <div id="step-db" class="verification-step-item pending">
+          <span class="step-icon-status"></span>
+          <span>Odesílání k posouzení...</span>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  
+  await sleep(1200);
+  document.getElementById('step-connect').className = 'verification-step-item success';
+  document.getElementById('step-scrape').className = 'verification-step-item checking';
+  
+  await sleep(1500);
+  
+  try {
+    const res = await fetch('https://api.6767111.xyz/api/media/apply', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders()
+      },
+      body: JSON.stringify({
+        youtubeUrl: yt,
+        tiktokUrl: tt,
+        twitchUrl: twitch,
+        kickUrl: kick
+      })
+    });
+    
+    const data = await res.json();
+    
+    if (data.success) {
+      document.getElementById('step-scrape').className = 'verification-step-item success';
+      document.getElementById('step-db').className = 'verification-step-item checking';
+      await sleep(1200);
+      document.getElementById('step-db').className = 'verification-step-item success';
+      await sleep(800);
+      
+      statusBox.innerHTML = `
+        <div class="media-status-card">
+          <div class="status-icon">🎉</div>
+          <h3>Žádost odeslána!</h3>
+          <p>Tvoje kanály byly úspěšně ověřeny. Žádost byla odeslána administrátorům ke schválení.</p>
+          <button onclick="checkMediaStatus()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zobrazit stav</button>
+        </div>
+      `;
+    } else {
+      document.getElementById('step-scrape').className = 'verification-step-item failed';
+      await sleep(1000);
+      statusBox.innerHTML = `
+        <div class="media-status-card">
+          <div class="status-icon">❌</div>
+          <h3>Ověření selhalo</h3>
+          <p style="color: #ef4444; font-weight: bold; margin-bottom: 15px;">${data.error || 'Nebyly splněny požadavky pro Media Rank.'}</p>
+          <p>Ujisti se, že máš dostatečný počet odběratelů/sledujících a zadal jsi správné odkazy.</p>
+          <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zpět na formulář</button>
+        </div>
+      `;
+    }
+  } catch (err) {
+    document.getElementById('step-scrape').className = 'verification-step-item failed';
+    await sleep(1000);
+    statusBox.innerHTML = `
+      <div class="media-status-card">
+        <div class="status-icon">❌</div>
+        <h3>Chyba spojení</h3>
+        <p>Nepodařilo se navázat spojení s ověřovacím serverem. Zkus to prosím později.</p>
+        <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zpět na formulář</button>
+      </div>
+    `;
+  }
+}

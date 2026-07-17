@@ -351,8 +351,27 @@ async function checkMediaStatus() {
         loginBox.style.display = 'none';
         return;
       }
+    } else if (status === 'removed') {
+      // Admin odebrán rank - může znovu podat
+      statusBox.innerHTML = `
+        <div class="media-status-card media-status--rejected">
+          <div class="media-status-center">
+            <div class="status-rejected-icon" style="background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.5); color: #f59e0b; font-size: 1.8rem;">!</div>
+          </div>
+          <h3 style="color: #f59e0b;">Media Rank Odebrán</h3>
+          <p>Tvůj Media rank byl odebrán administrátorem.</p>
+          ${reason ? `<div class="reject-reason"><strong>Důvod:</strong> ${reason}</div>` : ''}
+          <div style="margin-top:16px;">
+            <button class="btn-primary" onclick="
+              document.getElementById('media-status-box').style.display='none';
+              document.getElementById('media-apply-form').style.display='block';
+            " style="background: linear-gradient(135deg, #f59e0b, #d97706); border: none; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1rem;">🔄 Podat žádost znovu</button>
+          </div>
+        </div>
+      `;
     }
   } catch (err) {
+
     statusBox.innerHTML = '<p class="error-text" style="color: #ef4444; text-align: center;">Chyba při komunikaci se serverem.</p>';
   }
 }

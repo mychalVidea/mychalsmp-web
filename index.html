@@ -571,29 +571,31 @@
 
         <!-- 3. Form Box -->
         <form id="media-apply-form" style="display: none;" onsubmit="submitMediaApplication(event)">
-          <h2 style="font-size: 1.6rem; color: #fff; margin-bottom: 12px; text-align: center;">🎬 Podat žádost</h2>
-          <p style="color: var(--text-muted); margin-bottom: 25px; text-align: center; font-size: 0.95rem;">
+          <h2 style="font-size: 1.8rem; color: #fff; margin-bottom: 12px; text-align: center;">🎬 Podat žádost</h2>
+          <p style="color: var(--text-muted); margin-bottom: 30px; text-align: center; font-size: 0.95rem;">
             Vyplň aspoň jeden kanál. Náš systém automaticky zkontroluje počet odběratelů/sledujících.
           </p>
 
-          <div class="media-form-group">
-            <label for="media-yt"><i class="fa-brands fa-youtube" style="color:#ff0000;"></i> YouTube odkaz / @kanal</label>
-            <input type="text" id="media-yt" class="media-input" placeholder="https://youtube.com/@TvujKanal">
-          </div>
+          <div class="media-form-grid">
+            <div class="media-form-group">
+              <label for="media-yt"><i class="fa-brands fa-youtube" style="color:#ff0000;"></i> YouTube odkaz / @kanal</label>
+              <input type="text" id="media-yt" class="media-input" placeholder="https://youtube.com/@TvujKanal">
+            </div>
 
-          <div class="media-form-group">
-            <label for="media-kick"><i class="fa-brands fa-kickstarter" style="color:#53fc18;"></i> Kick odkaz</label>
-            <input type="text" id="media-kick" class="media-input" placeholder="https://kick.com/TvujKanal">
-          </div>
+            <div class="media-form-group">
+              <label for="media-kick"><i class="fa-brands fa-kickstarter" style="color:#53fc18;"></i> Kick odkaz</label>
+              <input type="text" id="media-kick" class="media-input" placeholder="https://kick.com/TvujKanal">
+            </div>
 
-          <div class="media-form-group">
-            <label for="media-tt"><i class="fa-brands fa-tiktok" style="color:#fff;"></i> TikTok odkaz / @jmeno</label>
-            <input type="text" id="media-tt" class="media-input" placeholder="https://tiktok.com/@TvujProfil">
-          </div>
+            <div class="media-form-group">
+              <label for="media-tt"><i class="fa-brands fa-tiktok" style="color:#fff;"></i> TikTok odkaz / @jmeno</label>
+              <input type="text" id="media-tt" class="media-input" placeholder="https://tiktok.com/@TvujProfil">
+            </div>
 
-          <div class="media-form-group">
-            <label for="media-twitch"><i class="fa-brands fa-twitch" style="color:#9146ff;"></i> Twitch odkaz</label>
-            <input type="text" id="media-twitch" class="media-input" placeholder="https://twitch.tv/TvujKanal">
+            <div class="media-form-group">
+              <label for="media-twitch"><i class="fa-brands fa-twitch" style="color:#9146ff;"></i> Twitch odkaz</label>
+              <input type="text" id="media-twitch" class="media-input" placeholder="https://twitch.tv/TvujKanal">
+            </div>
           </div>
 
           <div class="media-form-group media-checkbox-group">

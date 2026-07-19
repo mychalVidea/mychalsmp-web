@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#121218" />
   <title>MYCHAL SMP – Minecraft Server</title>
   <meta name="description"
     content="MYCHAL SMP – komunitní Minecraft SMP server. Zjisti jak se připojit, přečti si pravidla a podívej se na galerii ze serveru." />
@@ -28,7 +31,7 @@
       </a>
       <div class="nav-links">
         <button id="tab-btn-home" class="nav-link active" onclick="showTab('home')">🏠 Domů</button>
-        <button id="tab-btn-smp-plus" class="nav-link" onclick="showTab('smp-plus')">👑 VIP</button>
+        <button id="tab-btn-smp-plus" class="nav-link" onclick="showTab('smp-plus')">👑 SMP+</button>
         <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">🔗 Jak se připojit</button>
         <button id="tab-btn-rules" class="nav-link" onclick="showTab('rules')">📜 Pravidla</button>
         <button id="tab-btn-media" class="nav-link" onclick="showTab('media')">🎬 Media</button>
@@ -39,7 +42,7 @@
     </div>
     <div class="mobile-menu" id="mobile-menu">
       <button class="nav-link" onclick="showTab('home');toggleMenu()">🏠 Domů</button>
-      <button class="nav-link" onclick="showTab('smp-plus');toggleMenu()">👑 VIP</button>
+      <button class="nav-link" onclick="showTab('smp-plus');toggleMenu()">👑 SMP+</button>
       <button class="nav-link" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
       <button class="nav-link" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
       <button class="nav-link" onclick="showTab('media');toggleMenu()">🎬 Media</button>
@@ -53,6 +56,7 @@
         <img src="imgs/2026-07-03_00.51.06.webp" alt="MYCHAL SMP server" class="hero-bg-img" />
         <div class="hero-overlay"></div>
       </div>
+      <canvas id="hero-particles-canvas"></canvas>
       <div class="hero-content">
         <img src="imgs/mychalSMP-SERVERICONtestv2 (2).webp" alt="Logo" class="hero-logo" />
         <h1 class="hero-title">MYCHAL <span class="hero-title-accent">SMP</span></h1>
@@ -61,7 +65,7 @@
           <span class="ip-label">IP adresa serveru</span>
           <div class="ip-copy-row">
             <code class="ip-text" id="server-ip">mychalsmp.xyz</code>
-            <button class="copy-btn" id="copy-btn" onclick="copyIP()" aria-label="Kopírovat IP">
+            <button class="copy-btn" id="copy-btn" onclick="copyIP(event)" aria-label="Kopírovat IP">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <rect x="9" y="9" width="13" height="13" rx="2" />
@@ -86,25 +90,23 @@
       <div class="container">
         <div class="stats-row">
           <div class="stat-card">
-            <span class="stat-num" id="stat-whitelist">80+</span>
+            <span class="stat-num" id="stat-whitelist" data-target="80">0</span>
             <span class="stat-label">Whitelistovaných hráčů</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-card">
-            <span class="stat-num" id="stat-discord">300+</span>
+            <span class="stat-num" id="stat-discord" data-target="300">0</span>
             <span class="stat-label">Discord členů</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-card">
-            <span class="stat-num" id="stat-playtime">1500+</span>
+            <span class="stat-num" id="stat-playtime" data-target="1500">0</span>
             <span class="stat-label">Odehraných hodin</span>
           </div>
           <div class="stat-divider"></div>
-          <div class="stat-card stat-card--link">
-            <a href="https://map.6767111.xyz" target="_blank" rel="noopener" class="stat-map-link" id="stat-map-btn">
-              <span class="stat-num stat-num--map">🗺️</span>
-              <span class="stat-label">Mapa světa</span>
-            </a>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-deaths" data-target="100">0</span>
+            <span class="stat-label">Celkem úmrtí</span>
           </div>
         </div>
       </div>
@@ -116,7 +118,8 @@
         <div class="info-grid">
           <div class="info-main">
             <span class="info-eyebrow">O serveru</span>
-            <h2 class="info-heading">Co je <span class="accent-red">MYCHAL SMP</span>?</h2>
+            <h2 class="info-heading"><img src="imgs/icons/minecraft-world-icon-14.webp" alt="Minecraft Grass Block"
+                class="inline-game-icon" /> Co je <span class="accent-red">MYCHAL SMP</span>?</h2>
             <p class="info-body">MYCHAL SMP je komunitní Minecraft SMP server, kde chceme zůstat <strong>co nejvíce
                 vanilla</strong> – žádné přepisy ekonomiky, žádné pay-to-win. Přesto přidáváme příkazy usnadňující život
               hráčů: <strong>/home</strong>, <strong>/rtp</strong>, <strong>/warp</strong> a vanilla shop kde se
@@ -155,16 +158,16 @@
   </section>
 
   <!-- JOIN -->
-  <section id="tab-join" class="tab-section">
-    <!-- Hero pro připojení s obrázkem na pozadí -->
-    <div class="smp-hero page-hero--img" style="--page-bg: url('imgs/2026-07-03_00.57.30.webp'); padding: 80px 0;">
-      <div class="smp-hero-overlay"></div>
-      <div class="container page-hero-content text-center" style="z-index: 10; position: relative;">
-        <h1 class="page-title">Jak se <span class="smp-text-blue">připojit</span>?</h1>
-        <p class="page-subtitle">Pro připojení na server stačí splnit 3 jednoduché kroky. Celý proces zabere sotva
-          minutu.</p>
-        <div class="join-ip-container" onclick="copyIP()">
-          <span class="join-ip-label">HERNÍ IP ADRESA:</span>
+  <section id="tab-join" class="tab-section join-section-ambient">
+    <!-- Kompaktní transparentní hlavička -->
+    <div class="join-header text-center">
+      <h1 class="page-title">Jak se <span class="smp-text-blue">připojit</span>?</h1>
+      <p class="page-subtitle">Pro připojení na server stačí splnit 3 jednoduché kroky. Celý proces zabere sotva minutu.
+      </p>
+
+      <div class="join-ip-box-wrapper">
+        <div class="join-ip-container" onclick="copyIP(event)">
+          <span class="join-ip-label">IP ADRESA:</span>
           <div class="join-ip-value">
             <span id="ip-address-text">mychalsmp.xyz</span>
             <button class="join-ip-copy-btn">📋 Kopírovat</button>
@@ -173,12 +176,17 @@
       </div>
     </div>
 
-    <!-- Kroky připojení -->
+    <!-- Kroky připojení (Prémiová verze s časovou osou) -->
     <div class="container join-steps-container">
-      <div class="join-timeline">
+      <div class="join-timeline-wrapper">
+        <!-- Connecting Line -->
+        <div class="join-timeline-progress-bar">
+          <div class="join-timeline-progress-fill"></div>
+        </div>
+
         <!-- Step 1 -->
-        <div class="join-timeline-item">
-          <div class="join-timeline-num">1</div>
+        <div class="join-timeline-row row-left" id="join-step-1">
+          <div class="join-timeline-dot">1</div>
           <div class="join-timeline-card">
             <h3>Požádej o Whitelist</h3>
             <p>Náš server je plně soukromý a chráněný. Pro vstup musíš nejprve požádat o přidání na whitelist. Můžeš to
@@ -191,12 +199,12 @@
         </div>
 
         <!-- Step 2 -->
-        <div class="join-timeline-item">
-          <div class="join-timeline-num">2</div>
+        <div class="join-timeline-row row-right" id="join-step-2">
+          <div class="join-timeline-dot">2</div>
           <div class="join-timeline-card">
             <h3>Zkopíruj si IP adresu</h3>
-            <p>Zkopíruj si naši herní IP adresu a ulož si ji do svého Minecraft klienta pro rychlý přístup.</p>
-            <div class="join-timeline-ip" onclick="copyIP()">
+            <p>Zkopíruj si naši IP adresu a ulož si ji do svého Minecraft klienta pro rychlý přístup.</p>
+            <div class="join-timeline-ip" onclick="copyIP(event)">
               <code>mychalsmp.xyz</code>
               <span class="join-copy-indicator">Kliknutím zkopíruješ</span>
             </div>
@@ -204,8 +212,8 @@
         </div>
 
         <!-- Step 3 -->
-        <div class="join-timeline-item">
-          <div class="join-timeline-num">3</div>
+        <div class="join-timeline-row row-left" id="join-step-3">
+          <div class="join-timeline-dot">3</div>
           <div class="join-timeline-card">
             <h3>Spusť hru a hraj</h3>
             <p>Spusť Minecraft Java Edition ve verzi <strong>26.2</strong>. Jdi do sekce Multiplayer (Hra více hráčů),
@@ -218,7 +226,8 @@
 
     <!-- FAQ Accordion -->
     <div class="container join-faq-container">
-      <h2 class="smp-details-title">Časté dotazy (FAQ)</h2>
+      <h2 class="smp-details-title"><img src="imgs/icons/6559_villager.webp" alt="Villager Icon"
+          class="inline-title-icon" /> Časté dotazy (FAQ)</h2>
       <div class="faq-accordion">
         <div class="faq-card">
           <button class="faq-header" onclick="toggleFAQ(this)">
@@ -263,16 +272,12 @@
   </section>
 
   <!-- RULES -->
-  <section id="tab-rules" class="tab-section">
-    <!-- Page hero with background image -->
-    <div class="smp-hero page-hero--img" style="--page-bg: url('imgs/2026-07-03_01.07.11.webp'); padding: 80px 0;">
-      <div class="smp-hero-overlay"
-        style="background: linear-gradient(180deg, rgba(239, 68, 68, 0.1) 0%, var(--bg) 100%);"></div>
-      <div class="container page-hero-content text-center" style="z-index: 10; position: relative;">
-        <h1 class="page-title">📜 Pravidla serveru</h1>
-        <p class="page-subtitle">Přečti si pravidla než se připojíš. Chceme udržet bezpečné a zábavné prostředí pro
-          všechny.</p>
-      </div>
+  <section id="tab-rules" class="tab-section rules-section-ambient">
+    <!-- Kompaktní transparentní hlavička pravidel -->
+    <div class="rules-header text-center">
+      <h1 class="page-title">📜 Pravidla serveru</h1>
+      <p class="page-subtitle">Přečti si pravidla než se připojíš. Chceme udržet bezpečné a zábavné prostředí pro
+        všechny.</p>
     </div>
 
     <div class="container rules-container">
@@ -285,7 +290,7 @@
       <div class="rules-grid">
         <!-- Rule 1 -->
         <div class="rule-card rule-card--ban">
-          <div class="rule-badge">CRITICAL BAN</div>
+          <div class="rule-badge">BAN</div>
           <h3>Cheaty &amp; Hacky</h3>
           <p>Jakýkoliv cheat client, hack nebo modifikace dávající neférovou výhodu je přísně zakázána.</p>
           <ul class="rule-bullet-list">
@@ -297,7 +302,7 @@
 
         <!-- Rule 2 -->
         <div class="rule-card rule-card--ban">
-          <div class="rule-badge">CRITICAL BAN</div>
+          <div class="rule-badge">BAN</div>
           <h3>X-Ray &amp; ESP</h3>
           <p>Využívání x-ray modů, texture packů nebo bugů k vidění skrze bloky je zakázáno.</p>
           <ul class="rule-bullet-list">
@@ -311,7 +316,7 @@
         <div class="rule-card rule-card--warning">
           <div class="rule-badge">VAROVÁNÍ / BAN</div>
           <h3>Zneužívání bugů</h3>
-          <p>Záměrné využívání herních bugů pro vlastní prospěch není povoleno. Nalezené bugy nahlásit adminovi.</p>
+          <p>Záměrné využívání bugů pro vlastní prospěch není povoleno. Nalezené bugy nahlásit adminovi.</p>
           <ul class="rule-bullet-list">
             <li>Duplikační glitche předmětů</li>
             <li>Prostupování texturami</li>
@@ -321,13 +326,12 @@
 
         <!-- Rule 4 -->
         <div class="rule-card rule-card--ban">
-          <div class="rule-badge">CRITICAL BAN</div>
+          <div class="rule-badge">BAN</div>
           <h3>Griefing &amp; Krádeže</h3>
           <p>Úmyslné ničení, krádež nebo poškozování cizích staveb a majetku je přísně zakázána.</p>
           <ul class="rule-bullet-list">
             <li>Ničení cizích staveb</li>
-            <li>Lava casting a ničení krajiny</li>
-            <li>Krádež z truhel bez povolení</li>
+            <li>Lava casting</li>
           </ul>
         </div>
 
@@ -359,7 +363,8 @@
       <!-- Consent banner -->
       <div class="rules-footer-box">
         <div class="rules-footer-left">
-          <h3>🤝 Zlaté pravidlo</h3>
+          <h3><img src="imgs/icons/Heart.webp" alt="Minecraft Heart" class="inline-game-icon animate-pulse" /> Zlaté
+            pravidlo</h3>
           <p>Chovej se k ostatním tak, jak chceš, aby se oni chovali k tobě. Respekt, fair-play a zábava pro všechny –
             to je MYCHAL SMP.</p>
         </div>
@@ -380,7 +385,8 @@
       </div>
       <div class="container smp-hero-container">
         <div class="smp-hero-left">
-          <div class="smp-premium-badge">👑 PREMIUM RANK</div>
+          <div class="smp-premium-badge"><img src="imgs/icons/trophy.webp" alt="Trophy Icon"
+              class="inline-badge-icon" /> PREMIUM RANK</div>
           <h1 class="smp-hero-title">Předplatné <span class="smp-text-blue">SMP</span><span
               class="smp-text-gold">+</span></h1>
           <p class="smp-hero-subtitle">Podpoř chod serveru MYCHAL SMP a odemkni exkluzivní výhody, rychlejší teleporty,
@@ -430,8 +436,8 @@
               <div class="smp-chat-preview">
                 <span class="smp-bracket" style="color: #7f7f7f;">[</span><span class="smp-preview-blue">SMP</span><span
                   class="smp-preview-gold">+</span><span class="smp-bracket" style="color: #7f7f7f;">]</span> <span
-                  class="smp-preview-name" id="smp-preview-name">Hráč</span><span class="smp-chat-colon">:</span> <span
-                  class="smp-chat-text">Ahoj jak se máš!</span>
+                  class="smp-preview-name" id="smp-preview-name">Hrac</span><span class="smp-chat-colon">:</span> <span
+                  class="smp-chat-text">Ahoj jak se mas!</span>
               </div>
             </div>
 
@@ -439,7 +445,7 @@
             <div class="nickname-form">
               <label for="mc-username" class="nickname-label">Tvůj Minecraft nick:</label>
               <div class="nickname-input-wrapper">
-                <input type="text" id="mc-username" class="nickname-input" placeholder="Tvůj herní nick..." required
+                <input type="text" id="mc-username" class="nickname-input" placeholder="Tvůj nick..." required
                   oninput="updatePreviewName(this.value)" />
               </div>
               <button class="btn-primary btn-purchase" onclick="checkoutSMP()">Aktivovat přes Tebex →</button>
@@ -510,17 +516,56 @@
   </section>
 
   <!-- MEDIA -->
-  <section id="tab-media" class="tab-section">
-    <div class="media-hero-section">
-      <div class="container">
-        <h1 class="media-hero-title">Žádost o <span>Media Rank</span></h1>
-        <p class="media-hero-subtitle">Tvoříš obsah z našeho serveru? Získej speciální výhody, propagační podporu a
-          exkluzivní roli ve hře i na Discordu.</p>
-      </div>
+  <section id="tab-media" class="tab-section media-section-ambient">
+    <!-- Kompaktní transparentní hlavička media -->
+    <div class="media-header text-center">
+      <h1 class="media-hero-title">Žádost o <span>Media</span> Rank</h1>
+      <p class="media-hero-subtitle">Tvoříš obsah z našeho serveru? Získej speciální výhody, propagační podporu a
+        exkluzivní roli ve hře i na Discordu.</p>
     </div>
 
     <div class="container">
-      <!-- Requirements cards -->
+      <!-- Výhody Media -->
+      <h2 class="media-benefits-title">Výhody <span>Media</span> Ranku</h2>
+      <div class="media-benefits-grid">
+        <div class="media-benefit-card">
+          <div class="media-benefit-icon">🎭</div>
+          <h3>Custom Nickname (/nick)</h3>
+          <p>Možnost skrýt svou pravou identitu pod libovolným jménem – ideální pro natáčení videí bez stalkingu a
+            vyrušování.</p>
+        </div>
+        <div class="media-benefit-card">
+          <div class="media-benefit-icon">👀</div>
+          <h3>Lepší dohlednost</h3>
+          <p>Maximální vykreslovací vzdálenost zvýšená na <strong>15 chunků</strong> pro ty nejhezčí cinematic záběry ze
+            hry.</p>
+        </div>
+        <div class="media-benefit-card">
+          <div class="media-benefit-icon">🛒</div>
+          <h3>Rozšířená Tržnice</h3>
+          <p>Možnost vystavit až <strong>15 nabídek</strong> v <code>/shop</code> současně.</p>
+        </div>
+        <div class="media-benefit-card">
+          <div class="media-benefit-icon">🎬</div>
+          <h3>Speciální Prefix</h3>
+          <p>Získáš výraznou roli a ikonu <code>[MEDIA]</code> před tvým jménem v tablistu i chatu.</p>
+        </div>
+        <div class="media-benefit-card"
+          style="border-color: rgba(241, 196, 15, 0.3); background: linear-gradient(135deg, rgba(30, 30, 42, 0.6) 0%, rgba(241, 196, 15, 0.05) 100%);">
+          <div class="media-benefit-icon"
+            style="color: #f1c40f; border-color: rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.15); box-shadow: 0 0 15px rgba(241, 196, 15, 0.15);">
+            ⭐</div>
+          <h3 style="color: #f1c40f;">Vylepšení na Media+</h3>
+          <p>Dokoupením <strong>SMP+</strong> k roli Media získáš exkluzivní rank <strong>Media+</strong>, který ti
+            odemkne všechny SMP+ výhody (včetně změny barvy nicku <code>/cc</code>, teleportu <code>/back</code> a
+            dalších domovů/warpů).</p>
+        </div>
+      </div>
+
+      <div class="media-section-divider"></div>
+
+      <!-- Podmínky pro získání -->
+      <h2 class="media-req-section-title">Podmínky pro <span>získání</span></h2>
       <div class="media-req-grid">
         <div class="media-req-card">
           <div class="media-req-icon">🎥</div>
@@ -548,7 +593,10 @@
         </div>
       </div>
 
+      <div class="media-section-divider"></div>
+
       <!-- Main action panel -->
+      <h2 class="media-apply-section-title">Odeslat <span>Žádost</span></h2>
       <div class="media-card-panel">
         <!-- 1. Not Logged In Box -->
         <div id="media-login-box" class="media-login-box">
@@ -578,7 +626,8 @@
 
           <div class="media-form-grid">
             <div class="media-form-group">
-              <label for="media-yt"><i class="fa-brands fa-youtube" style="color:#ff0000;"></i> YouTube odkaz / @kanal</label>
+              <label for="media-yt"><i class="fa-brands fa-youtube" style="color:#ff0000;"></i> YouTube odkaz /
+                @kanal</label>
               <input type="text" id="media-yt" class="media-input" placeholder="https://youtube.com/@TvujKanal">
             </div>
 
@@ -588,7 +637,8 @@
             </div>
 
             <div class="media-form-group">
-              <label for="media-tt"><i class="fa-brands fa-tiktok" style="color:#fff;"></i> TikTok odkaz / @jmeno</label>
+              <label for="media-tt"><i class="fa-brands fa-tiktok" style="color:#fff;"></i> TikTok odkaz /
+                @jmeno</label>
               <input type="text" id="media-tt" class="media-input" placeholder="https://tiktok.com/@TvujProfil">
             </div>
 
@@ -638,6 +688,30 @@
         není schválen ani spojen se společností Mojang Studios.</p>
     </div>
   </footer>
+
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <div class="bottom-nav" id="bottom-nav">
+    <button class="bottom-nav-item active" id="btn-nav-home" onclick="showTab('home')">
+      <i class="fa-solid fa-house"></i>
+      <span>Domů</span>
+    </button>
+    <button class="bottom-nav-item" id="btn-nav-smp-plus" onclick="showTab('smp-plus')">
+      <i class="fa-solid fa-crown"></i>
+      <span>VIP</span>
+    </button>
+    <button class="bottom-nav-item" id="btn-nav-join" onclick="showTab('join')">
+      <i class="fa-solid fa-link"></i>
+      <span>Připojit</span>
+    </button>
+    <button class="bottom-nav-item" id="btn-nav-rules" onclick="showTab('rules')">
+      <i class="fa-solid fa-scroll"></i>
+      <span>Pravidla</span>
+    </button>
+    <button class="bottom-nav-item" id="btn-nav-media" onclick="showTab('media')">
+      <i class="fa-solid fa-video"></i>
+      <span>Media</span>
+    </button>
+  </div>
 
   <script src="script.js"></script>
 </body>

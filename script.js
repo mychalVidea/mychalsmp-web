@@ -979,11 +979,53 @@ function triggerEpicVipTransition(callback) {
   }, 2350);
 }
 
+function handleBugImagesChange(input) {
+  const preview = document.getElementById('bug-images-preview');
+  if (!preview) return;
+  if (!input.files || input.files.length === 0) {
+    preview.style.display = 'none';
+    preview.innerHTML = '';
+    return;
+  }
+
+  if (input.files.length > 2) {
+    showToast('⚠️ Můžeš vybrat maximálně 2 obrázky!');
+    input.value = '';
+    preview.style.display = 'none';
+    return;
+  }
+
+  const names = [];
+  for (let i = 0; i < input.files.length; i++) {
+    const file = input.files[i];
+    if (file.size > 10 * 1024 * 1024) {
+      showToast(`⚠️ Obrázek "${file.name}" přesahuje limit 10 MB!`);
+      input.value = '';
+      preview.style.display = 'none';
+      return;
+    }
+    names.push(file.name);
+  }
+
+  preview.style.display = 'block';
+  preview.innerHTML = `📷 Vybrané fotky (${input.files.length}/2): ${names.join(', ')}`;
+}
+
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file);
+  });
+}
+
 // ---- BUG REPORTING ----
 async function submitBugReport(e) {
   e.preventDefault();
   const nickInput = document.getElementById('bug-nick');
   const descInput = document.getElementById('bug-desc');
+  const imagesInput = document.getElementById('bug-images');
   const submitBtn = document.getElementById('btn-bug-submit');
   const statusDiv = document.getElementById('bug-response-status');
 
@@ -993,8 +1035,31 @@ async function submitBugReport(e) {
   const bug = descInput.value.trim();
 
   if (!nick || !bug) {
-    showToast('⚠️ Vyplň prosím všechna pole!');
+    showToast('⚠️ Vyplň prosím všechna povinná pole!');
     return;
+  }
+
+  const images = [];
+  if (imagesInput && imagesInput.files && imagesInput.files.length > 0) {
+    if (imagesInput.files.length > 2) {
+      showToast('⚠️ Můžeš přiložit maximálně 2 obrázky!');
+      return;
+    }
+    for (let i = 0; i < imagesInput.files.length; i++) {
+      const file = imagesInput.files[i];
+      if (file.size > 10 * 1024 * 1024) {
+        showToast(`⚠️ Soubor "${file.name}" přesahuje limit 10 MB!`);
+        return;
+      }
+      try {
+        const base64Data = await readFileAsBase64(file);
+        images.push({ name: file.name, data: base64Data });
+      } catch (err) {
+        console.error('Error reading file:', err);
+        showToast('❌ Chyba při načítání obrázku.');
+        return;
+      }
+    }
   }
 
   submitBtn.disabled = true;
@@ -1004,7 +1069,7 @@ async function submitBugReport(e) {
     const res = await fetch('https://api.6767111.xyz/api/report-bug', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nick, bug })
+      body: JSON.stringify({ nick, bug, images })
     });
 
     const data = await res.json();
@@ -1012,6 +1077,10 @@ async function submitBugReport(e) {
       showToast('✅ Bug byl úspěšně nahlášen!');
       nickInput.value = '';
       descInput.value = '';
+      if (imagesInput) imagesInput.value = '';
+      const preview = document.getElementById('bug-images-preview');
+      if (preview) { preview.style.display = 'none'; preview.innerHTML = ''; }
+
       if (statusDiv) {
         statusDiv.style.display = 'block';
         statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Děkujeme! Tvoje nahlášení bylo odesláno do systému ke kontrole. Po posouzení obdržíš odměnu přímo ve hře!</div>';

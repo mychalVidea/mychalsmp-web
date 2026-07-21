@@ -35,6 +35,7 @@
         <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">🔗 Jak se připojit</button>
         <button id="tab-btn-rules" class="nav-link" onclick="showTab('rules')">📜 Pravidla</button>
         <button id="tab-btn-media" class="nav-link" onclick="showTab('media')">🎬 Media</button>
+        <button id="tab-btn-bugs" class="nav-link" onclick="showTab('bugs')">🐛 Bugy</button>
       </div>
       <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
         <span></span><span></span><span></span>
@@ -43,9 +44,10 @@
     <div class="mobile-menu" id="mobile-menu">
       <button class="nav-link" onclick="showTab('home');toggleMenu()">🏠 Domů</button>
       <button class="nav-link" onclick="showTab('smp-plus');toggleMenu()">👑 SMP+</button>
-      <button class="nav-link" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
-      <button class="nav-link" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
       <button class="nav-link" onclick="showTab('media');toggleMenu()">🎬 Media</button>
+      <button class="nav-link" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
+      <button class="nav-link" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
+      <button class="nav-link" onclick="showTab('bugs');toggleMenu()">🐛 Bugy</button>
     </div>
   </nav>
 
@@ -126,16 +128,14 @@
               obchoduje s <strong>přírodními minerály</strong> ze světa. Přibyla nová funkce <strong>/duel</strong> -
               vstup do duelu a bojuj 1v1 s ostatními hráči.
             </p>
-            <p class="info-body">Hráči spolu souperí, staví krásné stavby a tvoří vlastní kus světa. Server běží na
-              <strong>Java Edition</strong> a je chráněn whitelistem – jen hráči, kteří splňují podmínky, se sem
-              dostanou.
+            <p class="info-body">Hráči spolu soupeří, staví krásné stavby a tvoří vlastní kus světa. Server běží na
+              <strong>Java Edition</strong>.
             </p>
             <div class="info-tags-row">
               <span class="info-chip">🌿 Vanilla-first</span>
               <span class="info-chip">⚔️ Survival PvP</span>
               <span class="info-chip">🏠 /home, /rtp, /warp, /duel</span>
               <span class="info-chip">🛒 Vanilla shop</span>
-              <span class="info-chip">🔒 Whitelist only</span>
               <span class="info-chip">☕ Java Edition</span>
             </div>
             <div class="info-actions">
@@ -188,12 +188,12 @@
         <div class="join-timeline-row row-left" id="join-step-1">
           <div class="join-timeline-dot">1</div>
           <div class="join-timeline-card">
-            <h3>Požádej o Whitelist</h3>
-            <p>Náš server je plně soukromý a chráněný. Pro vstup musíš nejprve požádat o přidání na whitelist. Můžeš to
-              udělat s propojením na Discord (pro prefix a 5 domovů) nebo anonymně bez Discordu (3 domovy).</p>
+            <h3>Propoj se s Discordem pro výhody</h3>
+            <p>Připoj se na náš Discord server a získej VIP výhody, přístup ke komunitním událostem, možnost propojování
+              účtu a bonusové domovy!</p>
             <div class="join-timeline-action">
-              <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener" class="btn-primary">🌐 Otevřít
-                Whitelist Web →</a>
+              <a href="https://discord.gg/HwZUGWGVD9" target="_blank" rel="noopener" class="btn-primary">💬 Připojit se
+                na Discord →</a>
             </div>
           </div>
         </div>
@@ -231,11 +231,12 @@
       <div class="faq-accordion">
         <div class="faq-card">
           <button class="faq-header" onclick="toggleFAQ(this)">
-            <span>Jak dlouho trvá schválení whitelistu?</span>
+            <span>Potřebuji pro hraní whitelist?</span>
             <span class="faq-icon-chevron">+</span>
           </button>
           <div class="faq-content">
-            <p>Schválení probíhá automaticky po zadání nicku na našem webu.</p>
+            <p>Není potřeba žádný whitelist! Náš server je plně veřejný pro všechny hráče. Stačí v Minecraftu zadat IP
+              mychalsmp.xyz a připojit se ve verzi 26.2.</p>
           </div>
         </div>
         <div class="faq-card">
@@ -264,7 +265,8 @@
             <span class="faq-icon-chevron">+</span>
           </button>
           <div class="faq-content">
-            <p>Odkaz na Discord najdeš přímo na stránce s whitelistem nebo na našich sociálních sítích.</p>
+            <p>Odkaz na Discord najdeš v tlačítkách na webu nebo použij přímou pozvánku: https://discord.gg/HwZUGWGVD9.
+            </p>
           </div>
         </div>
       </div>
@@ -369,8 +371,7 @@
             to je MYCHAL SMP.</p>
         </div>
         <div class="rules-footer-right">
-          <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener" class="btn-primary">Rozumím a chci hrát
-            →</a>
+          <button onclick="showTab('join')" class="btn-primary">Rozumím a chci hrát →</button>
         </div>
       </div>
     </div>
@@ -660,6 +661,58 @@
     </div>
   </section>
 
+  <!-- BUGS -->
+  <section id="tab-bugs" class="tab-section media-section-ambient">
+    <div class="media-header text-center">
+      <h1 class="media-hero-title">Nahlášení <span>Bugu</span></h1>
+      <p class="media-hero-subtitle">Našel jsi na serveru chybu nebo nefungující věc? Nahlás ji do systému a za schválené nahlášení získej odměnu přímo ve hře!</p>
+    </div>
+
+    <div class="container" style="max-width: 800px;">
+      <!-- REWARD & TIPS PANEL -->
+      <div class="bug-tips-panel" style="background: linear-gradient(135deg, rgba(22, 22, 34, 0.85) 0%, rgba(46, 204, 113, 0.08) 100%); border-color: rgba(46, 204, 113, 0.25);">
+        <div class="bug-tips-icon" style="color: #2ecc71; background: rgba(46, 204, 113, 0.12); border-color: rgba(46, 204, 113, 0.3);">🎁</div>
+        <div>
+          <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 10px;">
+            <span>Odměna ve hře</span>
+            <span style="font-size: 0.75rem; font-weight: 700; color: #2ecc71; background: rgba(46, 204, 113, 0.15); border: 1px solid rgba(46, 204, 113, 0.3); padding: 3px 10px; border-radius: 20px;">Za schválený bug</span>
+          </h3>
+          <div class="bug-tips-list">
+            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Uveď svůj přesný Minecraft nick</div>
+            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Popiš přesný postup, jak chybu vyvolat</div>
+            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Připoj odkaz na fotku/video, pokud máš</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bug-form-wrapper">
+        <form id="bug-report-form" onsubmit="submitBugReport(event)">
+          <h2 style="font-size: 1.8rem; color: #fff; margin-bottom: 12px; text-align: center;">🐛 Nahlásit problém</h2>
+          <p style="color: var(--text-muted); margin-bottom: 30px; text-align: center; font-size: 0.95rem;">
+            Zadej svůj Minecraft nick a detailní popis problému. Nahlášení bude posouzeno v systému a po schválení obdržíš odměnu.
+          </p>
+
+          <div style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+            <div class="media-form-group">
+              <label for="bug-nick"><i class="fa-solid fa-user" style="color:#3498db;"></i> Tvůj Minecraft Nick</label>
+              <input type="text" id="bug-nick" class="media-input" placeholder="Zadej svůj přesný nick ve hře..." required>
+            </div>
+
+            <div class="media-form-group">
+              <label for="bug-desc"><i class="fa-solid fa-bug" style="color:#e74c3c;"></i> Popis bugu / problému</label>
+              <textarea id="bug-desc" class="media-input"
+                style="height: 120px; resize: vertical; font-family: inherit; line-height: 1.5; padding: 12px 16px;"
+                placeholder="Popiš kde se bug nachází, jak ho vyvolat a co se přesně děje..." required></textarea>
+            </div>
+
+            <button type="submit" id="btn-bug-submit" class="btn-media-verify" style="margin-top: 10px;">🐛 Odeslat nahlášení</button>
+          </div>
+        </form>
+        <div id="bug-response-status" style="display: none; margin-top: 20px; text-align: center;"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
     <button class="lightbox-close" onclick="closeLightbox()" aria-label="Zavřít">✕</button>
@@ -679,7 +732,7 @@
         </div>
       </div>
       <div class="footer-links">
-        <a href="https://whitelist.6767111.xyz" target="_blank" rel="noopener">🌐 Whitelist žádost</a>
+        <button onclick="showTab('bugs')" class="footer-link-btn">🐛 Nahlásit bug</button>
         <button onclick="showTab('rules')" class="footer-link-btn">📜 Pravidla</button>
         <button onclick="showTab('smp-plus')" class="footer-link-btn">👑 SMP+</button>
         <button onclick="showTab('media')" class="footer-link-btn">🎬 Media</button>
@@ -710,6 +763,10 @@
     <button class="bottom-nav-item" id="btn-nav-media" onclick="showTab('media')">
       <i class="fa-solid fa-video"></i>
       <span>Media</span>
+    </button>
+    <button class="bottom-nav-item" id="btn-nav-bugs" onclick="showTab('bugs')">
+      <i class="fa-solid fa-bug"></i>
+      <span>Bugy</span>
     </button>
   </div>
 

@@ -978,3 +978,57 @@ function triggerEpicVipTransition(callback) {
     overlay.remove();
   }, 2350);
 }
+
+// ---- BUG REPORTING ----
+async function submitBugReport(e) {
+  e.preventDefault();
+  const nickInput = document.getElementById('bug-nick');
+  const descInput = document.getElementById('bug-desc');
+  const submitBtn = document.getElementById('btn-bug-submit');
+  const statusDiv = document.getElementById('bug-response-status');
+
+  if (!nickInput || !descInput || !submitBtn) return;
+
+  const nick = nickInput.value.trim();
+  const bug = descInput.value.trim();
+
+  if (!nick || !bug) {
+    showToast('⚠️ Vyplň prosím všechna pole!');
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '⏳ Odesílám...';
+
+  try {
+    const res = await fetch('https://api.6767111.xyz/api/report-bug', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nick, bug })
+    });
+
+    const data = await res.json();
+    if (res.ok && data.success) {
+      showToast('✅ Bug byl úspěšně nahlášen!');
+      nickInput.value = '';
+      descInput.value = '';
+      if (statusDiv) {
+        statusDiv.style.display = 'block';
+        statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Děkujeme! Tvoje nahlášení bylo odesláno do systému ke kontrole. Po posouzení obdržíš odměnu přímo ve hře!</div>';
+      }
+    } else {
+      showToast('❌ ' + (data.error || 'Chyba při odesílání'));
+      if (statusDiv) {
+        statusDiv.style.display = 'block';
+        statusDiv.innerHTML = `<div style="color:#e74c3c; font-weight:600; padding:15px; background:rgba(231,76,60,0.1); border-radius:10px; border: 1px solid rgba(231,76,60,0.3);">❌ ${data.error || 'Nepodařilo se odeslat bug.'}</div>`;
+      }
+    }
+  } catch (err) {
+    console.error('Error submitting bug:', err);
+    showToast('❌ Chyba při spojení se serverem');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '🐛 Odeslat nahlášení';
+  }
+}
+

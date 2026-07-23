@@ -937,20 +937,23 @@ function triggerEpicVipTransition(callback) {
   const gateRight = document.createElement('div');
   gateRight.className = 'vip-portal-gate gate-right';
 
+  const beam = document.createElement('div');
+  beam.className = 'vip-portal-beam';
+
   const content = document.createElement('div');
   content.className = 'vip-portal-content';
 
   const crown = document.createElement('div');
-  crown.className = 'vip-portal-crown';
-  crown.innerHTML = '👑';
+  crown.className = 'vip-portal-crown-badge';
+  crown.innerHTML = '<i class="fa-solid fa-crown"></i>';
 
   const title = document.createElement('div');
   title.className = 'vip-portal-title';
-  title.innerHTML = 'SMP+ PŘEDPLATNÉ';
+  title.innerHTML = 'SMP<span class="gold-plus">+</span> ACCESS';
 
   const subtitle = document.createElement('div');
   subtitle.className = 'vip-portal-subtitle';
-  subtitle.innerHTML = 'Exkluzivní výhody čekají';
+  subtitle.innerHTML = 'Exkluzivní výhody a prémiové funkce';
 
   content.appendChild(crown);
   content.appendChild(title);
@@ -958,6 +961,7 @@ function triggerEpicVipTransition(callback) {
 
   overlay.appendChild(gateLeft);
   overlay.appendChild(gateRight);
+  overlay.appendChild(beam);
   overlay.appendChild(content);
 
   document.body.appendChild(overlay);
@@ -968,15 +972,15 @@ function triggerEpicVipTransition(callback) {
 
   setTimeout(() => {
     if (callback) callback();
-  }, 850);
+  }, 420);
 
   setTimeout(() => {
     overlay.classList.add('exiting');
-  }, 1550);
+  }, 920);
 
   setTimeout(() => {
     overlay.remove();
-  }, 2350);
+  }, 1380);
 }
 
 function handleBugImagesChange(input) {

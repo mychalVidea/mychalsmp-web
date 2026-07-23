@@ -122,26 +122,24 @@
             <span class="info-eyebrow">O serveru</span>
             <h2 class="info-heading"><img src="imgs/icons/minecraft-world-icon-14.webp" alt="Minecraft Grass Block"
                 class="inline-game-icon" /> Co je <span class="accent-red">MYCHAL SMP</span>?</h2>
-            <p class="info-body">MYCHAL SMP je komunitní Minecraft SMP server, kde chceme zůstat <strong>co nejvíce
-                vanilla</strong> – žádné přepisy ekonomiky, žádné pay-to-win. Přesto přidáváme příkazy usnadňující život
-              hráčů: <strong>/home</strong>, <strong>/rtp</strong>, <strong>/warp</strong> a vanilla shop kde se
-              obchoduje s <strong>přírodními minerály</strong> ze světa. Přibyla nová funkce <strong>/duel</strong> -
-              vstup do duelu a bojuj 1v1 s ostatními hráči.
+            <p class="info-body">MYCHAL SMP je komunitní Minecraft server, který nabízí dva unikátní herní světy:
+              <strong>nový akční SMP svět (/smp)</strong> bez claimů s permanentním PvP a <strong>klasický stavitelství
+                Survival (/survival)</strong> s rezidencemi a bezpečným stavěním!
             </p>
-            <p class="info-body">Hráči spolu soupeří, staví krásné stavby a tvoří vlastní kus světa. Server běží na
-              <strong>Java Edition</strong>.
+            <p class="info-body">Hráči spolu soupeří, obchodují na tržnici přes <strong>/shop</strong>, plní zakázky
+              <strong>/orders</strong> a budují vlastní komunitní projekty. Server běží na <strong>Java
+                Edition</strong>.
             </p>
             <div class="info-tags-row">
-              <span class="info-chip">🌿 Vanilla-first</span>
-              <span class="info-chip">⚔️ Survival PvP</span>
-              <span class="info-chip">🏠 /home, /rtp, /warp, /duel</span>
-              <span class="info-chip">🛒 Vanilla shop</span>
+              <span class="info-chip">⚔️ Nové SMP (/smp)</span>
+              <span class="info-chip">🌲 Klasika (/survival)</span>
+              <span class="info-chip">🔥 Perma PvP na SMP</span>
+              <span class="info-chip">🛒 Shop &amp; Orders</span>
               <span class="info-chip">☕ Java Edition</span>
             </div>
             <div class="info-actions">
               <button class="btn-primary" onclick="showTab('join')" id="info-join-btn">🔗 Jak se připojit</button>
-              <a href="https://map.6767111.xyz" target="_blank" rel="noopener" class="btn-secondary"
-                id="info-map-btn">🗺️ Mapa světa</a>
+              <button class="btn-secondary" onclick="showTab('smp-plus')">👑 Získat SMP+</button>
             </div>
           </div>
           <div class="info-imgs">
@@ -151,6 +149,120 @@
               <img src="imgs/2026-07-03_00.55.19.webp" alt="Server screenshot" class="info-img info-img--bot"
                 onclick="openLightbox(this.src)" />
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAMEMODES SHOWCASE -->
+    <div class="gamemodes-section">
+      <div class="container">
+        <div class="section-title-box text-center">
+          <span class="info-eyebrow">DVA UNIKÁTNÍ SVĚTY</span>
+          <h2 class="section-heading">Vyber si svůj <span class="accent-red">herní svět</span></h2>
+          <p class="section-subheading">Ať už hledáš nekompromisní akční SMP nebo klidný stavitelský Survival s
+            rezidencemi, na MYCHAL SMP si přijdeš na své.</p>
+        </div>
+
+        <div class="gamemodes-grid">
+          <!-- Card 1: SMP Gamemode -->
+          <div class="gamemode-card gamemode-card--smp">
+            <div class="gamemode-badge">🔥 NOVÝ GAMEMODE</div>
+            <div class="gamemode-header">
+              <div class="gamemode-icon">⚔️</div>
+              <div>
+                <h3 class="gamemode-title">Nové Akční <span class="smp-text-blue">SMP</span></h3>
+                <span class="gamemode-cmd">Příkaz pro vstup: <code>/smp</code></span>
+              </div>
+            </div>
+            <p class="gamemode-desc">Zcela nový svět s vlastním seedem, novým Netherem i Endem pro všechny, kteří chtějí
+              čistý survival bez zbytečných omezení!</p>
+            <ul class="gamemode-features">
+              <li><i class="fa-solid fa-fire text-red"></i> <strong>Bez rezidencí &amp; claimů:</strong> Žádné
+                zakazování vstupu – čisté survival dobrodružství.</li>
+              <li><i class="fa-solid fa-skull text-red"></i> <strong>PvP trvale zapnuto:</strong> Akce na každém kroku.
+                PvP nelze vypnout přes /pvp.</li>
+              <li><i class="fa-solid fa-box text-blue"></i> <strong>Oddělený inventář &amp; EnderChest:</strong> Tvé
+                věci na SMP zůstávají bezpečně na SMP.</li>
+              <li><i class="fa-solid fa-plane text-yellow"></i> <strong>Padající Airdropy:</strong> Cenné truhly s
+                lootem padají přímo do akčního světa.</li>
+            </ul>
+          </div>
+
+          <!-- Card 2: Classic Survival -->
+          <div class="gamemode-card gamemode-card--survival">
+            <div class="gamemode-badge gamemode-badge--green">🌲 KLASIKA</div>
+            <div class="gamemode-header">
+              <div class="gamemode-icon">🛡️</div>
+              <div>
+                <h3 class="gamemode-title">Klasický <span class="text-green">Survival</span></h3>
+                <span class="gamemode-cmd">Příkaz pro vstup: <code>/survival</code></span>
+              </div>
+            </div>
+            <p class="gamemode-desc">Původní osvědčený svět s rezidencemi a volitelným PvP pro bezpečné stavění a
+              dlouhodobé projekty.</p>
+            <ul class="gamemode-features">
+              <li><i class="fa-solid fa-shield-halved text-green"></i> <strong>Ochrana stavění (Claimy):</strong> Chraň
+                své stavby a majetek pomocí GriefPrevention.</li>
+              <li><i class="fa-solid fa-toggle-on text-green"></i> <strong>Volitelné PvP:</strong> Přepínej si PvP
+                status podle nálady přes <code>/pvp</code>.</li>
+              <li><i class="fa-solid fa-monument text-blue"></i> <strong>Stavitelské projekty:</strong> Tradiční svět s
+                velkou historií a komunitou.</li>
+              <li><i class="fa-solid fa-shop text-yellow"></i> <strong>Tržnice &amp; Zakázky:</strong> Obchoduj s
+                ostatními hráči přes <code>/shop</code> a <code>/orders</code>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMANDS SHOWCASE -->
+    <div class="commands-section">
+      <div class="container">
+        <div class="section-title-box text-center">
+          <span class="info-eyebrow">PŘÍKAZY SERVERU</span>
+          <h2 class="section-heading">Užitečné <span class="smp-text-blue">příkazy</span> pro hráče</h2>
+        </div>
+        <div class="commands-grid">
+          <div class="command-card">
+            <code>/smp</code>
+            <span>Teleport a náhodný výsadek na novém SMP světe (5s odpočet)</span>
+          </div>
+          <div class="command-card">
+            <code>/survival</code>
+            <span>Teleport a návrat na klasický Survival svět (5s odpočet)</span>
+          </div>
+          <div class="command-card">
+            <code>/rtp</code>
+            <span>Náhodný teleport v rámci tvého aktuálního světa</span>
+          </div>
+          <div class="command-card">
+            <code>/srtp</code>
+            <span>RTP na Survival svět ze Spawnu</span>
+          </div>
+          <div class="command-card">
+            <code>/spawn</code>
+            <span>Teleport na hlavní serverový Spawn</span>
+          </div>
+          <div class="command-card">
+            <code>/home</code>
+            <span>Správa a teleport na tvoje domovy (odděleno per-svět)</span>
+          </div>
+          <div class="command-card">
+            <code>/shop</code>
+            <span>Hráčská tržnice pro nákup a prodej předmětů</span>
+          </div>
+          <div class="command-card">
+            <code>/orders</code>
+            <span>Hráčské zakázky pro poptávku surovin</span>
+          </div>
+          <div class="command-card">
+            <code>/playtime</code>
+            <span>Zobrazení tvého odehraného času na daném světě</span>
+          </div>
+          <div class="command-card">
+            <code>/cc</code>
+            <span>Změna barvy jména pro členy SMP+</span>
           </div>
         </div>
       </div>
@@ -665,22 +777,31 @@
   <section id="tab-bugs" class="tab-section media-section-ambient">
     <div class="media-header text-center">
       <h1 class="media-hero-title">Nahlášení <span>Bugu</span></h1>
-      <p class="media-hero-subtitle">Našel jsi na serveru chybu nebo nefungující věc? Nahlás ji do systému a za schválené nahlášení získej odměnu přímo ve hře!</p>
+      <p class="media-hero-subtitle">Našel jsi na serveru chybu nebo nefungující věc? Nahlás ji do systému a za
+        schválené nahlášení získej odměnu přímo ve hře!</p>
     </div>
 
     <div class="container" style="max-width: 800px;">
       <!-- REWARD & TIPS PANEL -->
-      <div class="bug-tips-panel" style="background: linear-gradient(135deg, rgba(22, 22, 34, 0.85) 0%, rgba(46, 204, 113, 0.08) 100%); border-color: rgba(46, 204, 113, 0.25);">
-        <div class="bug-tips-icon" style="color: #2ecc71; background: rgba(46, 204, 113, 0.12); border-color: rgba(46, 204, 113, 0.3);">🎁</div>
+      <div class="bug-tips-panel"
+        style="background: linear-gradient(135deg, rgba(22, 22, 34, 0.85) 0%, rgba(46, 204, 113, 0.08) 100%); border-color: rgba(46, 204, 113, 0.25);">
+        <div class="bug-tips-icon"
+          style="color: #2ecc71; background: rgba(46, 204, 113, 0.12); border-color: rgba(46, 204, 113, 0.3);">🎁</div>
         <div>
-          <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 10px;">
+          <h3
+            style="font-size: 1.15rem; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 10px;">
             <span>Odměna ve hře</span>
-            <span style="font-size: 0.75rem; font-weight: 700; color: #2ecc71; background: rgba(46, 204, 113, 0.15); border: 1px solid rgba(46, 204, 113, 0.3); padding: 3px 10px; border-radius: 20px;">Za schválený bug</span>
+            <span
+              style="font-size: 0.75rem; font-weight: 700; color: #2ecc71; background: rgba(46, 204, 113, 0.15); border: 1px solid rgba(46, 204, 113, 0.3); padding: 3px 10px; border-radius: 20px;">Za
+              schválený bug</span>
           </h3>
           <div class="bug-tips-list">
-            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Uveď svůj přesný Minecraft nick</div>
-            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Popiš přesný postup, jak chybu vyvolat</div>
-            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Připoj až 2 snímky obrazovky (max 10 MB)</div>
+            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Uveď svůj přesný
+              Minecraft nick</div>
+            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Popiš přesný postup, jak
+              chybu vyvolat</div>
+            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Připoj až 2 snímky
+              obrazovky (max 10 MB)</div>
           </div>
         </div>
       </div>
@@ -689,13 +810,15 @@
         <form id="bug-report-form" onsubmit="submitBugReport(event)">
           <h2 style="font-size: 1.8rem; color: #fff; margin-bottom: 12px; text-align: center;">🐛 Nahlásit problém</h2>
           <p style="color: var(--text-muted); margin-bottom: 30px; text-align: center; font-size: 0.95rem;">
-            Zadej svůj Minecraft nick a detailní popis problému. Nahlášení bude posouzeno v systému a po schválení obdržíš odměnu.
+            Zadej svůj Minecraft nick a detailní popis problému. Nahlášení bude posouzeno v systému a po schválení
+            obdržíš odměnu.
           </p>
 
           <div style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
             <div class="media-form-group">
               <label for="bug-nick"><i class="fa-solid fa-user" style="color:#3498db;"></i> Tvůj Minecraft Nick</label>
-              <input type="text" id="bug-nick" class="media-input" placeholder="Zadej svůj přesný nick ve hře..." required>
+              <input type="text" id="bug-nick" class="media-input" placeholder="Zadej svůj přesný nick ve hře..."
+                required>
             </div>
 
             <div class="media-form-group">
@@ -706,12 +829,17 @@
             </div>
 
             <div class="media-form-group">
-              <label for="bug-images"><i class="fa-solid fa-image" style="color:#f1c40f;"></i> Přiložit snímky / fotky <span style="font-weight: normal; opacity: 0.7; font-size: 0.85rem;">(Volitelné, max 2 obrázky, každý max 10 MB)</span></label>
-              <input type="file" id="bug-images" class="media-input" accept="image/*" multiple style="padding: 10px; cursor: pointer;" onchange="handleBugImagesChange(this)">
-              <div id="bug-images-preview" style="display: none; margin-top: 8px; font-size: 0.85rem; color: #2ecc71; font-weight: 500;"></div>
+              <label for="bug-images"><i class="fa-solid fa-image" style="color:#f1c40f;"></i> Přiložit snímky / fotky
+                <span style="font-weight: normal; opacity: 0.7; font-size: 0.85rem;">(Volitelné, max 2 obrázky, každý
+                  max 10 MB)</span></label>
+              <input type="file" id="bug-images" class="media-input" accept="image/*" multiple
+                style="padding: 10px; cursor: pointer;" onchange="handleBugImagesChange(this)">
+              <div id="bug-images-preview"
+                style="display: none; margin-top: 8px; font-size: 0.85rem; color: #2ecc71; font-weight: 500;"></div>
             </div>
 
-            <button type="submit" id="btn-bug-submit" class="btn-media-verify" style="margin-top: 10px;">🐛 Odeslat nahlášení</button>
+            <button type="submit" id="btn-bug-submit" class="btn-media-verify" style="margin-top: 10px;">🐛 Odeslat
+              nahlášení</button>
           </div>
         </form>
         <div id="bug-response-status" style="display: none; margin-top: 20px; text-align: center;"></div>

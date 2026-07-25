@@ -241,6 +241,24 @@ document.querySelectorAll('.feature-card, .step-card, .rule-card, .gallery-item,
   observer.observe(el);
 });
 
+function formatCompactNumber(num) {
+  if (!num || isNaN(num)) return '0';
+  const val = Math.round(num);
+  if (val >= 1000000000) {
+    const formatted = (val / 1000000000).toFixed(1).replace(/\.0$/, '');
+    return formatted + 'B';
+  }
+  if (val >= 1000000) {
+    const formatted = (val / 1000000).toFixed(1).replace(/\.0$/, '');
+    return formatted + 'M';
+  }
+  if (val >= 1000) {
+    const formatted = (val / 1000).toFixed(1).replace(/\.0$/, '');
+    return formatted + 'k';
+  }
+  return val.toString();
+}
+
 // ---- FETCH DYNAMIC STATS ----
 async function loadStats() {
   try {
@@ -260,6 +278,9 @@ async function loadStats() {
     }
     if (data.total_deaths !== undefined) {
       updateStat('stat-deaths', data.total_deaths);
+    }
+    if (data.total_money !== undefined) {
+      updateStat('stat-money', data.total_money);
     }
   } catch (err) {
     console.warn('Failed to load dynamic stats:', err);
@@ -291,13 +312,22 @@ function animateCounter(el, targetValue) {
     const easeProgress = progress * (2 - progress);
     const currentValue = Math.floor(start + easeProgress * (targetValue - start));
 
-    const suffix = el.id === 'stat-deaths' ? '' : '+';
-    el.textContent = currentValue + suffix;
+    if (el.id === 'stat-money') {
+      el.textContent = '$' + formatCompactNumber(currentValue);
+    } else {
+      const suffix = el.id === 'stat-deaths' ? '' : '+';
+      el.textContent = currentValue + suffix;
+    }
 
     if (progress < 1) {
       requestAnimationFrame(update);
     } else {
-      el.textContent = targetValue + suffix;
+      if (el.id === 'stat-money') {
+        el.textContent = '$' + formatCompactNumber(targetValue);
+      } else {
+        const suffix = el.id === 'stat-deaths' ? '' : '+';
+        el.textContent = targetValue + suffix;
+      }
     }
   }
   requestAnimationFrame(update);

@@ -4,12 +4,6 @@
 
 // ---- TAB SWITCHING ----
 function showTab(name) {
-  if (name === 'smp-plus' && !document.getElementById('tab-smp-plus').classList.contains('active')) {
-    triggerEpicVipTransition(() => {
-      executeTabSwitch('smp-plus');
-    });
-    return;
-  }
   executeTabSwitch(name);
 }
 
@@ -309,25 +303,66 @@ function animateCounter(el, targetValue) {
   requestAnimationFrame(update);
 }
 
+let skinDebounceTimer = null;
+
+// ---- LIVE CHAT PREVIEW & REALTIME SKIN AVATAR ----
+function updatePreviewName(val) {
+  const preview = document.getElementById('smp-preview-name');
+  const previewHead = document.getElementById('smp-preview-head');
+  const inputHead = document.getElementById('nickname-input-head');
+
+  const cleanVal = val.trim();
+  if (preview) {
+    preview.textContent = cleanVal ? cleanVal : 'Hrac';
+  }
+
+  // Debounce skin lookup to avoid spamming mc-heads
+  clearTimeout(skinDebounceTimer);
+  skinDebounceTimer = setTimeout(() => {
+    const targetNick = (cleanVal && /^[a-zA-Z0-9_]{2,16}$/.test(cleanVal)) ? cleanVal : 'MHF_Question';
+    const avatarUrl = `https://mc-heads.net/avatar/${encodeURIComponent(targetNick)}/28`;
+
+    [previewHead, inputHead].forEach(head => {
+      if (head) {
+        head.src = avatarUrl;
+        head.classList.remove('avatar-pop');
+        void head.offsetWidth; // Trigger reflow for animation restart
+        head.classList.add('avatar-pop');
+      }
+    });
+  }, 280);
+}
+
 // ---- TEBEX CHECKOUT CONFIG ----
 async function checkoutSMP() {
   const nickInput = document.getElementById('mc-username');
-  const nickname = nickInput.value.trim();
+  const nickname = nickInput ? nickInput.value.trim() : '';
+
   if (!nickname) {
-    alert('Prosím, zadej svůj Minecraft nick!');
-    nickInput.focus();
+    showToast('⚠️ Zadej nejprve svůj Minecraft nick!');
+    if (nickInput) {
+      nickInput.focus();
+      nickInput.classList.remove('shake-input');
+      void nickInput.offsetWidth;
+      nickInput.classList.add('shake-input');
+    }
     return;
   }
 
   // Simple nick format check
   if (!/^[a-zA-Z0-9_]{2,16}$/.test(nickname)) {
-    alert('Tento nick vypadá neplatně! Použij pouze písmena, čísla a podtržítka (délka 2-16).');
+    showToast('⚠️ Neplatný nick! Použij 2-16 znaků (a-z, 0-9, _).');
+    if (nickInput) {
+      nickInput.classList.remove('shake-input');
+      void nickInput.offsetWidth;
+      nickInput.classList.add('shake-input');
+    }
     return;
   }
 
   const btn = document.querySelector('.btn-purchase');
   const originalText = btn.innerHTML;
-  btn.innerHTML = '⌛ Generuji košík...';
+  btn.innerHTML = '<span class="btn-spinner"></span> Načítám košík...';
   btn.disabled = true;
 
   try {
@@ -351,15 +386,6 @@ async function checkoutSMP() {
   } finally {
     btn.innerHTML = originalText;
     btn.disabled = false;
-  }
-}
-
-// ---- LIVE CHAT PREVIEW ----
-function updatePreviewName(val) {
-  const preview = document.getElementById('smp-preview-name');
-  if (preview) {
-    const cleanVal = val.trim();
-    preview.textContent = cleanVal ? cleanVal : 'Hrac';
   }
 }
 
@@ -414,40 +440,82 @@ document.addEventListener('DOMContentLoaded', () => {
   const timelineRows = document.querySelectorAll('.join-timeline-row');
 
   if (timelineWrapper && progressFill) {
+    let currentFillPercent = 0;
+    let targetFillPercent = 0;
+    let fillAnimFrame = null;
+
+    // Smooth LERP loop for liquid spring inertia effect on the glowing ball & line
+    const runFillLerpLoop = () => {
+      const diff = targetFillPercent - currentFillPercent;
+      // 0.07 step = smooth liquid inertia delay with ease-out curve!
+      currentFillPercent += diff * 0.07;
+
+      if (progressFill) {
+        progressFill.style.height = currentFillPercent.toFixed(2) + '%';
+      }
+
+      const glowHead = progressFill ? progressFill.querySelector('.join-timeline-glow-head') : null;
+      if (glowHead) {
+        const ratio = currentFillPercent / 100;
+        glowHead.style.opacity = ratio > 0.015 && ratio < 0.985 ? '1' : '0';
+      }
+
+      if (Math.abs(diff) > 0.01) {
+        fillAnimFrame = requestAnimationFrame(runFillLerpLoop);
+      } else {
+        fillAnimFrame = null;
+      }
+    };
+
     const handleTimelineScroll = () => {
       const rect = timelineWrapper.getBoundingClientRect();
       const viewHeight = window.innerHeight;
 
-      // Progress calculation based on window scrolling position relative to timeline
-      const startPoint = viewHeight * 0.75;
+      // Overall timeline progress calculation (0 to 1)
+      const startOffset = viewHeight * 0.75;
       const totalHeight = rect.height || 1;
-      const currentPos = startPoint - rect.top;
+      const currentPos = startOffset - rect.top;
+      const progressRatio = Math.min(Math.max(currentPos / totalHeight, 0), 1);
 
-      let progressPercent = Math.min(Math.max(currentPos / totalHeight, 0), 1) * 100;
-      progressFill.style.height = progressPercent + '%';
+      targetFillPercent = progressRatio * 100;
 
+      if (!fillAnimFrame) {
+        fillAnimFrame = requestAnimationFrame(runFillLerpLoop);
+      }
+
+      // Continuous Apple-style interpolation per row
       timelineRows.forEach(row => {
         const rowRect = row.getBoundingClientRect();
-        if (rowRect.top < viewHeight * 0.75) {
+        const rowCenter = rowRect.top + rowRect.height / 2;
+        const screenCenter = viewHeight * 0.55;
+
+        // Distance from active center zone
+        const distFromCenter = (rowCenter - screenCenter) / (viewHeight * 0.5);
+
+        if (rowRect.top < viewHeight * 0.92 && rowRect.bottom > 0) {
           row.classList.add('visible');
-          row.classList.add('active');
+
+          // Active focus highlight when near center
+          if (Math.abs(distFromCenter) < 0.45) {
+            row.classList.add('active');
+          } else {
+            row.classList.remove('active');
+          }
         } else {
+          row.classList.remove('visible');
           row.classList.remove('active');
         }
       });
     };
 
-    window.addEventListener('scroll', handleTimelineScroll);
-    window.addEventListener('resize', handleTimelineScroll);
+    window.addEventListener('scroll', handleTimelineScroll, { passive: true });
+    window.addEventListener('resize', handleTimelineScroll, { passive: true });
     // Initial trigger
-    setTimeout(handleTimelineScroll, 100);
+    setTimeout(handleTimelineScroll, 80);
   }
 
   // Initialize PC Interactive Canvas Particles
   initHeroParticles();
-
-  // Initialize 3D Tilter on cards
-  initCardTilts();
 });
 
 // ---- DISCORD LOGIN ----
@@ -857,40 +925,6 @@ function initHeroParticles() {
   animate();
 }
 
-// ---- 3D CARD TILT ----
-function initCardTilts() {
-  if (window.innerWidth <= 768) return;
-
-  const targetCards = document.querySelectorAll('.smp-card, .rule-card, .media-benefit-card, .smp-checkout-card');
-
-  targetCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const xc = rect.width / 2;
-      const yc = rect.height / 2;
-
-      const angleX = (yc - y) / (yc / 8);
-      const angleY = (x - xc) / (xc / 8);
-
-      card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.02, 1.02, 1.02)`;
-
-      const percentX = (x / rect.width) * 100;
-      const percentY = (y / rect.height) * 100;
-      card.style.boxShadow = `0 15px 35px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.12)`;
-      card.style.backgroundImage = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(10, 103, 229, 0.08) 0%, transparent 65%)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-      card.style.boxShadow = '';
-      card.style.backgroundImage = '';
-    });
-  });
-}
-
 // ---- CASCADE FALLING GAME ICONS ----
 function spawnFallingIcons(container) {
   if (!container) return;
@@ -926,61 +960,8 @@ function spawnFallingIcons(container) {
   }
 }
 
-// ---- EPIC VIP TRANSITION ----
 function triggerEpicVipTransition(callback) {
-  const overlay = document.createElement('div');
-  overlay.className = 'vip-portal-overlay';
-
-  const gateLeft = document.createElement('div');
-  gateLeft.className = 'vip-portal-gate gate-left';
-
-  const gateRight = document.createElement('div');
-  gateRight.className = 'vip-portal-gate gate-right';
-
-  const beam = document.createElement('div');
-  beam.className = 'vip-portal-beam';
-
-  const content = document.createElement('div');
-  content.className = 'vip-portal-content';
-
-  const crown = document.createElement('div');
-  crown.className = 'vip-portal-crown-badge';
-  crown.innerHTML = '<i class="fa-solid fa-crown"></i>';
-
-  const title = document.createElement('div');
-  title.className = 'vip-portal-title';
-  title.innerHTML = 'SMP<span class="gold-plus">+</span> ACCESS';
-
-  const subtitle = document.createElement('div');
-  subtitle.className = 'vip-portal-subtitle';
-  subtitle.innerHTML = 'Exkluzivní výhody a prémiové funkce';
-
-  content.appendChild(crown);
-  content.appendChild(title);
-  content.appendChild(subtitle);
-
-  overlay.appendChild(gateLeft);
-  overlay.appendChild(gateRight);
-  overlay.appendChild(beam);
-  overlay.appendChild(content);
-
-  document.body.appendChild(overlay);
-
-  requestAnimationFrame(() => {
-    overlay.classList.add('active');
-  });
-
-  setTimeout(() => {
-    if (callback) callback();
-  }, 420);
-
-  setTimeout(() => {
-    overlay.classList.add('exiting');
-  }, 920);
-
-  setTimeout(() => {
-    overlay.remove();
-  }, 1380);
+  if (callback) callback();
 }
 
 function handleBugImagesChange(input) {

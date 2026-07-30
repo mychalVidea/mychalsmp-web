@@ -5204,3 +5204,34 @@ body:has(#tab-napady.active) footer.footer {
   gap: 12px;
   background: rgba(0,0,0,0.2);
 }
+
+/* Card toggle AI vs Original text styles */
+.idea-ai-badge {
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.idea-ai-badge:hover {
+  background: rgba(168, 85, 247, 0.35);
+  border-color: #c084fc;
+  transform: scale(1.02);
+}
+
+.idea-toggle-hint {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
+.idea-original-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #38bdf8;
+  margin-bottom: 4px;
+}
+
+.idea-card-collapsed .idea-card-body {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px dashed rgba(56, 189, 248, 0.35);
+}

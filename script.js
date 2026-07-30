@@ -1245,12 +1245,12 @@ async function loadIdeasTab() {
             <span class="idea-card-author">${idea.author_name}</span>
             <span class="idea-card-time">${createdDate}</span>
           </div>
-          <div class="idea-card-body">
+          <div class="idea-card-body" ${hasAi ? `onclick="toggleIdeaText(${idea.id}, event)" title="Klikni pro přepnutí mezi AI a původním textem"` : ''}>
             ${hasAi ? `
-              <div class="idea-ai-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Gemini Rozpracováno</div>
-              <div class="idea-text-content">${escapeHtml(idea.ai_text)}</div>
-              <div class="idea-original-tooltip">
-                <strong>📝 Původní znění od hráče:</strong><br>
+              <div class="idea-ai-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Gemini Rozpracováno <span class="idea-toggle-hint">(Klikni pro zmenšení 🔄)</span></div>
+              <div class="idea-text-content idea-text-ai">${escapeHtml(idea.ai_text)}</div>
+              <div class="idea-text-content idea-text-original" style="display:none;">
+                <div class="idea-original-label">📝 Původní znění od hráče:</div>
                 ${escapeHtml(idea.original_text)}
               </div>
             ` : `
@@ -1396,6 +1396,30 @@ async function rejectIdea(id) {
   } catch (e) {
     console.error('Error rejecting idea:', e);
     showToast('❌ Chyba při spojení se serverem.');
+  }
+}
+
+function toggleIdeaText(ideaId, event) {
+  if (event) event.stopPropagation();
+  const card = document.getElementById(`idea-card-${ideaId}`);
+  if (!card) return;
+
+  const aiText = card.querySelector('.idea-text-ai');
+  const originalText = card.querySelector('.idea-text-original');
+  const badge = card.querySelector('.idea-ai-badge');
+
+  if (aiText && originalText) {
+    if (aiText.style.display === 'none') {
+      aiText.style.display = 'block';
+      originalText.style.display = 'none';
+      if (badge) badge.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> AI Gemini Rozpracováno <span class="idea-toggle-hint">(Klikni pro zmenšení 🔄)</span>';
+      card.classList.remove('idea-card-collapsed');
+    } else {
+      aiText.style.display = 'none';
+      originalText.style.display = 'block';
+      if (badge) badge.innerHTML = '<i class="fa-solid fa-user"></i> Původní text hráče <span class="idea-toggle-hint">(Klikni pro AI znění 🔄)</span>';
+      card.classList.add('idea-card-collapsed');
+    }
   }
 }
 

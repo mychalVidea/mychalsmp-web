@@ -1193,30 +1193,46 @@ async function loadIdeasTab() {
     // Render User Header Bar
     if (userBar) {
       if (!data.isLoggedIn || !data.user) {
+        userBar.className = 'ideas-user-bar ideas-user-bar-guest';
         userBar.innerHTML = `
-          <div class="ideas-user-info">
-            <span class="ideas-user-name">🔒 Přihlášení přes Discord</span>
-            <span style="font-size:0.88rem; color:var(--text-muted);">Pro přidávání nápadů se musíš přihlásit a být členem našeho Discord serveru.</span>
+          <div class="ideas-guest-hint">
+            <i class="fa-solid fa-lock"></i> Pro přidání nápadu se musíte přihlásit přes Discord:
           </div>
-          <button class="btn btn-discord" onclick="loginViaDiscord()"><i class="fa-brands fa-discord"></i> Přihlásit se přes Discord</button>
+          <button class="btn btn-discord btn-sm" onclick="loginViaDiscord()">
+            <i class="fa-brands fa-discord"></i> Přihlásit přes Discord
+          </button>
         `;
       } else {
         const u = data.user;
         const canAdd = u.pendingCount < 10;
+        userBar.className = 'ideas-user-bar';
         userBar.innerHTML = `
-          <div class="ideas-user-info">
-            <img src="${u.avatar}" class="ideas-user-avatar" alt="${u.username}" />
-            <div>
-              <div class="ideas-user-name">${u.username} ${u.isMajitel ? '<span style="color:#f59e0b; font-size:0.8rem; margin-left:6px;">👑 Majitel</span>' : ''}</div>
-              <div class="ideas-user-meta">
-                <span class="ideas-user-points"><i class="fa-solid fa-star"></i> ${u.points} ${u.points === 1 ? 'bod' : (u.points >= 2 && u.points <= 4 ? 'body' : 'bodů')}</span>
-                <span>📋 Probíhající nápady: ${u.pendingCount} / 10</span>
-              </div>
-            </div>
+          <div class="ideas-user-info-compact" title="${u.pendingCount}/10 neschválených nápadů">
+            <img src="${u.avatar}" class="ideas-user-avatar-sm" alt="${u.username}" />
+            <span class="ideas-user-name-sm">${u.username}</span>
+            <span class="ideas-user-badge-sm"><i class="fa-solid fa-star"></i> ${u.points}</span>
+            ${u.isMajitel ? '<span style="color:#f59e0b; font-size:0.8rem; margin-left:2px;">👑</span>' : ''}
           </div>
-          <button class="btn btn-primary" onclick="openIdeaModal()" ${!canAdd ? 'disabled style="opacity:0.6; cursor:not-allowed;" title="Máš již 10 neschválených nápadů"' : ''}>
-            <i class="fa-solid fa-plus"></i> Přidat nápad
-          </button>
+          <div class="ideas-inline-input-wrapper">
+            <input 
+              type="text" 
+              id="idea-inline-input" 
+              class="ideas-inline-input" 
+              placeholder="${canAdd ? 'Napiš svojí myšlenku nebo nápad... (Stiskni Enter pro odeslání)' : 'Máš již 10 neschválených nápadů...'}" 
+              maxlength="800"
+              ${!canAdd ? 'disabled' : ''}
+              onkeydown="handleIdeaInlineKeydown(event)"
+            />
+            <button 
+              id="btn-submit-inline-idea" 
+              class="ideas-inline-send-btn" 
+              onclick="submitInlineIdea()" 
+              title="Odeslat nápad"
+              ${!canAdd ? 'disabled' : ''}
+            >
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
         `;
       }
     }
@@ -1245,14 +1261,18 @@ async function loadIdeasTab() {
             <span class="idea-card-author">${idea.author_name}</span>
             <span class="idea-card-time">${createdDate}</span>
           </div>
-          <div class="idea-card-body" ${hasAi ? `onclick="toggleIdeaText(${idea.id}, event)" title="Klikni pro přepnutí mezi AI a původním textem"` : ''}>
+          <div class="idea-card-body">
             ${hasAi ? `
-              <div class="idea-ai-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Gemini Rozpracováno <span class="idea-toggle-hint">(Klikni pro zmenšení 🔄)</span></div>
-              <div class="idea-text-content idea-text-ai">${escapeHtml(idea.ai_text)}</div>
-              <div class="idea-text-content idea-text-original" style="display:none;">
-                <div class="idea-original-label">📝 Původní znění od hráče:</div>
-                ${escapeHtml(idea.original_text)}
+              <div class="idea-card-top-bar">
+                <div class="idea-mode-indicator idea-mode-user">
+                  <i class="fa-solid fa-user"></i> <span class="idea-mode-label">Návrh hráče</span>
+                </div>
+                <button class="idea-mode-switch-btn btn-is-ai" onclick="toggleIdeaView(${idea.id}, event)" title="Přepnout na AI vylepšení">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> AI
+                </button>
               </div>
+              <div class="idea-text-content idea-text-original">${escapeHtml(idea.original_text)}</div>
+              <div class="idea-text-content idea-text-ai" style="display:none;">${escapeHtml(idea.ai_text)}</div>
             ` : `
               <div class="idea-text-content">${escapeHtml(idea.original_text)}</div>
             `}
@@ -1300,14 +1320,24 @@ function updateIdeaCharCount() {
   }
 }
 
-async function submitNewIdea() {
-  const textarea = document.getElementById('idea-input-text');
-  const text = textarea ? textarea.value.trim() : '';
+function handleIdeaInlineKeydown(event) {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    submitInlineIdea();
+  }
+}
+
+async function submitInlineIdea() {
+  const input = document.getElementById('idea-inline-input');
+  const btn = document.getElementById('btn-submit-inline-idea');
+  const text = input ? input.value.trim() : '';
 
   if (text.length < 5) {
     showToast('❌ Napiš prosím podrobnější nápad (min. 5 znaků).');
     return;
   }
+
+  if (btn) btn.disabled = true;
 
   try {
     const res = await fetch('https://api.6767111.xyz/api/napady/add', {
@@ -1321,14 +1351,16 @@ async function submitNewIdea() {
     const data = await res.json();
     if (data.success) {
       showToast('✅ ' + data.message);
-      closeIdeaModal();
+      if (input) input.value = '';
       loadIdeasTab();
     } else {
       showToast('❌ ' + (data.message || 'Chyba při přidávání nápadu.'));
     }
   } catch (e) {
-    console.error('Error submitting idea:', e);
+    console.error('Error submitting inline idea:', e);
     showToast('❌ Spojení se serverem selhalo.');
+  } finally {
+    if (btn) btn.disabled = false;
   }
 }
 
@@ -1399,26 +1431,45 @@ async function rejectIdea(id) {
   }
 }
 
-function toggleIdeaText(ideaId, event) {
+function toggleIdeaView(ideaId, event) {
   if (event) event.stopPropagation();
   const card = document.getElementById(`idea-card-${ideaId}`);
   if (!card) return;
 
-  const aiText = card.querySelector('.idea-text-ai');
   const originalText = card.querySelector('.idea-text-original');
-  const badge = card.querySelector('.idea-ai-badge');
+  const aiText = card.querySelector('.idea-text-ai');
+  const indicator = card.querySelector('.idea-mode-indicator');
+  const switchBtn = card.querySelector('.idea-mode-switch-btn');
 
-  if (aiText && originalText) {
-    if (aiText.style.display === 'none') {
-      aiText.style.display = 'block';
+  if (originalText && aiText) {
+    const isShowingOriginal = originalText.style.display !== 'none';
+
+    if (isShowingOriginal) {
+      // Switch to AI mode
       originalText.style.display = 'none';
-      if (badge) badge.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> AI Gemini Rozpracováno <span class="idea-toggle-hint">(Klikni pro zmenšení 🔄)</span>';
-      card.classList.remove('idea-card-collapsed');
+      aiText.style.display = 'block';
+      if (indicator) {
+        indicator.className = 'idea-mode-indicator idea-mode-ai';
+        indicator.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> <span class="idea-mode-label">AI Rozpracováno</span>';
+      }
+      if (switchBtn) {
+        switchBtn.className = 'idea-mode-switch-btn btn-is-user';
+        switchBtn.innerHTML = '<i class="fa-solid fa-user"></i> Hráč';
+        switchBtn.title = 'Přepnout na původní znění od hráče';
+      }
     } else {
+      // Switch to Original Player mode
       aiText.style.display = 'none';
       originalText.style.display = 'block';
-      if (badge) badge.innerHTML = '<i class="fa-solid fa-user"></i> Původní text hráče <span class="idea-toggle-hint">(Klikni pro AI znění 🔄)</span>';
-      card.classList.add('idea-card-collapsed');
+      if (indicator) {
+        indicator.className = 'idea-mode-indicator idea-mode-user';
+        indicator.innerHTML = '<i class="fa-solid fa-user"></i> <span class="idea-mode-label">Návrh hráče</span>';
+      }
+      if (switchBtn) {
+        switchBtn.className = 'idea-mode-switch-btn btn-is-ai';
+        switchBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> AI';
+        switchBtn.title = 'Přepnout na AI vylepšení';
+      }
     }
   }
 }

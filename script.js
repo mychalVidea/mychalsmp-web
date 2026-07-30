@@ -2,12 +2,32 @@
    MYCHAL SMP – script.js
    ============================================= */
 
-// ---- TAB SWITCHING ----
+// ---- TAB SWITCHING & ROUTING ----
 function showTab(name) {
-  executeTabSwitch(name);
+  executeTabSwitch(name, true);
 }
 
-function executeTabSwitch(name) {
+function handleUrlRouting() {
+  const path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+  const hash = window.location.hash.toLowerCase().replace(/^#/, '');
+  const route = hash || path.split('/').pop();
+
+  if (route === 'smpplus' || route === 'smp-plus' || route === 'vip' || route === 'smp+') {
+    executeTabSwitch('smp-plus', false);
+  } else if (route === 'bug' || route === 'bugs' || route === 'report') {
+    executeTabSwitch('bugs', false);
+  } else if (route === 'media' || route === 'creator' || route === 'yt') {
+    executeTabSwitch('media', false);
+  } else if (route === 'howto' || route === 'jakhrat' || route === 'join' || route === 'help') {
+    executeTabSwitch('join', false);
+  } else if (route === 'rules' || route === 'pravidla') {
+    executeTabSwitch('rules', false);
+  } else if (route === 'home' || route === '' || route === 'index.html') {
+    executeTabSwitch('home', false);
+  }
+}
+
+function executeTabSwitch(name, updateUrl = true) {
   // Deactivate current active tab immediately with animation reset
   const activeSections = document.querySelectorAll('.tab-section.active');
   activeSections.forEach(s => {
@@ -36,6 +56,18 @@ function executeTabSwitch(name) {
 
   if (name === 'media') {
     checkMediaStatus();
+  }
+
+  if (updateUrl) {
+    let urlPath = '/' + name;
+    if (name === 'smp-plus') urlPath = '/smpplus';
+    else if (name === 'join') urlPath = '/howto';
+    else if (name === 'bugs') urlPath = '/bug';
+    else if (name === 'home') urlPath = '/';
+
+    if (window.location.pathname !== urlPath) {
+      history.pushState({ tab: name }, '', urlPath);
+    }
   }
 
   // Trigger scroll calculations (like timeline progress) after tab transition
@@ -430,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
     activeTab.classList.add('animate-in');
   }
 
-  // Check for token in URL (Discord Auth callback redirect)
+  // Check for token in URL (Discord Auth callback redirect) or route
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get('token');
   if (token) {
@@ -438,13 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.history.replaceState({}, document.title, window.location.pathname);
     showTab('media');
   } else {
-    // Sync bottom navigation active state on load
-    const activeSection = document.querySelector('.tab-section.active');
-    if (activeSection) {
-      const name = activeSection.id.replace('tab-', '');
-      const mobileBtn = document.getElementById('btn-nav-' + name);
-      if (mobileBtn) mobileBtn.classList.add('active');
-    }
+    handleUrlRouting();
   }
 
   // Initialize Stats Observer for Count-up
@@ -1115,4 +1141,6 @@ async function submitBugReport(e) {
     submitBtn.innerHTML = '🐛 Odeslat nahlášení';
   }
 }
+
+window.addEventListener('popstate', handleUrlRouting);
 

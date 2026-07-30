@@ -36,6 +36,7 @@
         <button id="tab-btn-rules" class="nav-link" onclick="showTab('rules')">📜 Pravidla</button>
         <button id="tab-btn-media" class="nav-link" onclick="showTab('media')">🎬 Media</button>
         <button id="tab-btn-bugs" class="nav-link" onclick="showTab('bugs')">🐛 Bugy</button>
+        <button id="tab-btn-napady" class="nav-link" onclick="showTab('napady')">💡 Nápady</button>
       </div>
       <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
         <span></span><span></span><span></span>
@@ -48,6 +49,7 @@
       <button class="nav-link" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
       <button class="nav-link" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
       <button class="nav-link" onclick="showTab('bugs');toggleMenu()">🐛 Bugy</button>
+      <button class="nav-link" onclick="showTab('napady');toggleMenu()">💡 Nápady</button>
     </div>
   </nav>
 
@@ -954,6 +956,34 @@
     </div>
   </section>
 
+  <!-- NÁPADY (WHITEBOARD) SECTION -->
+  <section id="tab-napady" class="tab-section">
+    <div class="whiteboard-wrapper">
+      <!-- Fullscreen Whiteboard Board Surface -->
+      <div class="whiteboard-board" id="whiteboard-board">
+        <div class="whiteboard-grid"></div>
+        <div class="whiteboard-grid-glow"></div>
+
+        <div class="whiteboard-inner-container">
+          <!-- Whiteboard Top Header -->
+          <div class="whiteboard-header-title">
+            <span class="section-badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3);"><i class="fa-solid fa-lightbulb"></i> NÁPADY PRO SERVER</span>
+          </div>
+
+          <!-- Floating Control Dock / Container inside board -->
+          <div id="ideas-user-bar" class="ideas-user-bar">
+            <!-- Rendered dynamically by JS -->
+          </div>
+
+          <!-- Cards Surface -->
+          <div id="whiteboard-surface" class="whiteboard-surface">
+            <!-- Idea cards loaded dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
     <button class="lightbox-close" onclick="closeLightbox()" aria-label="Zavřít">✕</button>
@@ -1009,6 +1039,29 @@
       <i class="fa-solid fa-bug"></i>
       <span>Bugy</span>
     </button>
+    <button class="bottom-nav-item" id="btn-nav-napady" onclick="showTab('napady')">
+      <i class="fa-solid fa-lightbulb"></i>
+      <span>Nápady</span>
+    </button>
+  </div>
+
+  <!-- Submit Idea Modal -->
+  <div id="idea-modal" class="idea-modal">
+    <div class="idea-modal-content">
+      <div class="idea-modal-header">
+        <h3>💡 Přidat nový nápad</h3>
+        <button class="idea-modal-close" onclick="closeIdeaModal()">&times;</button>
+      </div>
+      <div class="idea-modal-body">
+        <p class="idea-modal-sub">Popiš svůj nápad co nejsrozumitelněji. Po přidání ho uvidí ostatní hráči i vedení serveru.</p>
+        <textarea id="idea-input-text" class="idea-textarea" placeholder="Napiš sem svůj nápad pro server..." maxlength="500" oninput="updateIdeaCharCount()"></textarea>
+        <div class="idea-char-counter"><span id="idea-char-count">0</span> / 500 znaků</div>
+      </div>
+      <div class="idea-modal-footer">
+        <button class="btn btn-secondary" onclick="closeIdeaModal()">Zrušit</button>
+        <button class="btn btn-primary" onclick="submitNewIdea()"><i class="fa-solid fa-paper-plane"></i> Odeslat nápad</button>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>

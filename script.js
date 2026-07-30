@@ -22,6 +22,8 @@ function handleUrlRouting() {
     executeTabSwitch('join', false);
   } else if (route === 'rules' || route === 'pravidla') {
     executeTabSwitch('rules', false);
+  } else if (route === 'napady' || route === 'napad' || route === 'ideas') {
+    executeTabSwitch('napady', false);
   } else if (route === 'home' || route === '' || route === 'index.html') {
     executeTabSwitch('home', false);
   }
@@ -54,8 +56,15 @@ function executeTabSwitch(name, updateUrl = true) {
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
+  const footer = document.querySelector('footer.footer');
+  if (footer) {
+    footer.style.display = (name === 'napady') ? 'none' : 'block';
+  }
+
   if (name === 'media') {
     checkMediaStatus();
+  } else if (name === 'napady') {
+    loadIdeasTab();
   }
 
   if (updateUrl) {
@@ -63,6 +72,7 @@ function executeTabSwitch(name, updateUrl = true) {
     if (name === 'smp-plus') urlPath = '/smpplus';
     else if (name === 'join') urlPath = '/howto';
     else if (name === 'bugs') urlPath = '/bug';
+    else if (name === 'napady') urlPath = '/napady';
     else if (name === 'home') urlPath = '/';
 
     if (window.location.pathname !== urlPath) {
@@ -1143,4 +1153,249 @@ async function submitBugReport(e) {
 }
 
 window.addEventListener('popstate', handleUrlRouting);
+
+// ---- NÁPADY / WHITEBOARD TAB ----
+let currentIdeasData = null;
+
+async function loadIdeasTab() {
+  const userBar = document.getElementById('ideas-user-bar');
+  const surface = document.getElementById('whiteboard-surface');
+  const board = document.getElementById('whiteboard-board');
+
+  if (board && !board.dataset.mouseTracked) {
+    board.dataset.mouseTracked = 'true';
+    let mouseAnimFrame = null;
+    board.addEventListener('mousemove', (e) => {
+      const rect = board.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (!mouseAnimFrame) {
+        mouseAnimFrame = requestAnimationFrame(() => {
+          board.style.setProperty('--mouse-x', `${x}px`);
+          board.style.setProperty('--mouse-y', `${y}px`);
+          mouseAnimFrame = null;
+        });
+      }
+    });
+  }
+
+  if (!surface) return;
+
+  surface.innerHTML = '<div class="whiteboard-empty"><i class="fa-solid fa-spinner fa-spin"></i><p>Načítám nápady...</p></div>';
+
+  try {
+    const res = await fetch('https://api.6767111.xyz/api/napady/list', {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    currentIdeasData = data;
+
+    // Render User Header Bar
+    if (userBar) {
+      if (!data.isLoggedIn || !data.user) {
+        userBar.innerHTML = `
+          <div class="ideas-user-info">
+            <span class="ideas-user-name">🔒 Přihlášení přes Discord</span>
+            <span style="font-size:0.88rem; color:var(--text-muted);">Pro přidávání nápadů se musíš přihlásit a být členem našeho Discord serveru.</span>
+          </div>
+          <button class="btn btn-discord" onclick="loginViaDiscord()"><i class="fa-brands fa-discord"></i> Přihlásit se přes Discord</button>
+        `;
+      } else {
+        const u = data.user;
+        const canAdd = u.pendingCount < 10;
+        userBar.innerHTML = `
+          <div class="ideas-user-info">
+            <img src="${u.avatar}" class="ideas-user-avatar" alt="${u.username}" />
+            <div>
+              <div class="ideas-user-name">${u.username} ${u.isMajitel ? '<span style="color:#f59e0b; font-size:0.8rem; margin-left:6px;">👑 Majitel</span>' : ''}</div>
+              <div class="ideas-user-meta">
+                <span class="ideas-user-points"><i class="fa-solid fa-star"></i> ${u.points} ${u.points === 1 ? 'bod' : (u.points >= 2 && u.points <= 4 ? 'body' : 'bodů')}</span>
+                <span>📋 Probíhající nápady: ${u.pendingCount} / 10</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="openIdeaModal()" ${!canAdd ? 'disabled style="opacity:0.6; cursor:not-allowed;" title="Máš již 10 neschválených nápadů"' : ''}>
+            <i class="fa-solid fa-plus"></i> Přidat nápad
+          </button>
+        `;
+      }
+    }
+
+    // Render Idea Cards on Whiteboard
+    if (!data.ideas || data.ideas.length === 0) {
+      surface.innerHTML = `
+        <div class="whiteboard-empty">
+          <i class="fa-solid fa-lightbulb"></i>
+          <p>Zatím tu nejsou žádné nápady. Buď první a přidej svůj nápad pro MYCHAL SMP!</p>
+        </div>
+      `;
+      return;
+    }
+
+    surface.innerHTML = data.ideas.map(idea => {
+      const isMajitel = data.user && data.user.isMajitel;
+      const createdDate = new Date(idea.created_at).toLocaleDateString('cs-CZ', { day: 'numeric', month: 'numeric', year: 'numeric' });
+      const hasAi = !!idea.ai_text;
+
+      return `
+        <div class="idea-card" id="idea-card-${idea.id}" style="--card-rotation: ${idea.rotation || 0}deg;">
+          <div class="idea-card-pin">📍</div>
+          <div class="idea-card-header">
+            <img src="${idea.author_avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="idea-card-avatar" alt="${idea.author_name}" />
+            <span class="idea-card-author">${idea.author_name}</span>
+            <span class="idea-card-time">${createdDate}</span>
+          </div>
+          <div class="idea-card-body">
+            ${hasAi ? `
+              <div class="idea-ai-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Gemini Rozpracováno</div>
+              <div class="idea-text-content">${escapeHtml(idea.ai_text)}</div>
+              <div class="idea-original-tooltip">
+                <strong>📝 Původní znění od hráče:</strong><br>
+                ${escapeHtml(idea.original_text)}
+              </div>
+            ` : `
+              <div class="idea-text-content">${escapeHtml(idea.original_text)}</div>
+            `}
+          </div>
+          ${isMajitel ? `
+            <div class="idea-card-actions">
+              <button class="idea-btn-action idea-btn-ai" onclick="aiProcessIdea(${idea.id})" title="Rozpracovat a vylepšit pomocí AI Gemini (poslat do Discordu)">❓</button>
+              <button class="idea-btn-action idea-btn-approve" onclick="approveIdea(${idea.id})" title="Schválit nápad (dá +1 bod autorovi a oznámí v Discordu)">✅</button>
+              <button class="idea-btn-action idea-btn-reject" onclick="rejectIdea(${idea.id})" title="Zamítnout nápad (smaže z nástěnky)">❌</button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+
+  } catch (err) {
+    console.error('Error loading ideas tab:', err);
+    surface.innerHTML = '<div class="whiteboard-empty"><i class="fa-solid fa-circle-exclamation"></i><p>Chyba při načítání nápadů z API.</p></div>';
+  }
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+
+function openIdeaModal() {
+  const modal = document.getElementById('idea-modal');
+  const textarea = document.getElementById('idea-input-text');
+  if (textarea) textarea.value = '';
+  updateIdeaCharCount();
+  if (modal) modal.classList.add('active');
+}
+
+function closeIdeaModal() {
+  const modal = document.getElementById('idea-modal');
+  if (modal) modal.classList.remove('active');
+}
+
+function updateIdeaCharCount() {
+  const textarea = document.getElementById('idea-input-text');
+  const counter = document.getElementById('idea-char-count');
+  if (textarea && counter) {
+    counter.textContent = textarea.value.length;
+  }
+}
+
+async function submitNewIdea() {
+  const textarea = document.getElementById('idea-input-text');
+  const text = textarea ? textarea.value.trim() : '';
+
+  if (text.length < 5) {
+    showToast('❌ Napiš prosím podrobnější nápad (min. 5 znaků).');
+    return;
+  }
+
+  try {
+    const res = await fetch('https://api.6767111.xyz/api/napady/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders()
+      },
+      body: JSON.stringify({ text })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('✅ ' + data.message);
+      closeIdeaModal();
+      loadIdeasTab();
+    } else {
+      showToast('❌ ' + (data.message || 'Chyba při přidávání nápadu.'));
+    }
+  } catch (e) {
+    console.error('Error submitting idea:', e);
+    showToast('❌ Spojení se serverem selhalo.');
+  }
+}
+
+async function aiProcessIdea(id) {
+  const card = document.getElementById(`idea-card-${id}`);
+  const btn = card ? card.querySelector('.idea-btn-ai') : null;
+  if (btn) btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+  try {
+    const res = await fetch(`https://api.6767111.xyz/api/napady/ai-process/${id}`, {
+      method: 'POST',
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('🤖 Nápad byl zpracován AI a odeslán do Discord roomky!');
+      loadIdeasTab();
+    } else {
+      showToast('❌ ' + (data.message || 'Chyba při zpracování AI.'));
+      if (btn) btn.innerHTML = '❓';
+    }
+  } catch (e) {
+    console.error('Error AI processing idea:', e);
+    showToast('❌ Chyba při spojení se serverem.');
+    if (btn) btn.innerHTML = '❓';
+  }
+}
+
+async function approveIdea(id) {
+  if (!confirm('Opravdu chceš tento nápad SCHVÁLIT? Udělí autorovi +1 bod a pošle oznámení do Discordu.')) return;
+  
+  try {
+    const res = await fetch(`https://api.6767111.xyz/api/napady/approve/${id}`, {
+      method: 'POST',
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('🎉 Nápad byl schválen a autor získal +1 bod!');
+      loadIdeasTab();
+    } else {
+      showToast('❌ ' + (data.message || 'Chyba při schvalování nápadu.'));
+    }
+  } catch (e) {
+    console.error('Error approving idea:', e);
+    showToast('❌ Chyba při spojení se serverem.');
+  }
+}
+
+async function rejectIdea(id) {
+  if (!confirm('Opravdu chceš tento nápad ZAMÍTNUT a smazat z nástěnky?')) return;
+
+  try {
+    const res = await fetch(`https://api.6767111.xyz/api/napady/reject/${id}`, {
+      method: 'POST',
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('🗑️ Nápad byl zamítnut a odstraněn.');
+      loadIdeasTab();
+    } else {
+      showToast('❌ ' + (data.message || 'Chyba při zamítání nápadu.'));
+    }
+  } catch (e) {
+    console.error('Error rejecting idea:', e);
+    showToast('❌ Chyba při spojení se serverem.');
+  }
+}
 

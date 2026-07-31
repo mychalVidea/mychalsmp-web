@@ -1252,8 +1252,18 @@ async function loadIdeasTab() {
     }
 
     const isMajitel = data.user && data.user.isMajitel;
-    surface.innerHTML = data.ideas.map(idea => renderIdeaCardHtml(idea, isMajitel)).join('');
 
+    // Sort ideas: Best to Worst (highest score first, lower score sorts to the right)
+    data.ideas.sort((a, b) => {
+      const scoreA = a.score || 0;
+      const scoreB = b.score || 0;
+      if (scoreB !== scoreA) {
+        return scoreB - scoreA;
+      }
+      return new Date(b.created_at || 0) - new Date(a.created_at || 0);
+    });
+
+    surface.innerHTML = data.ideas.map(idea => renderIdeaCardHtml(idea, isMajitel)).join('');
     setupIdeasSilentInterval();
 
   } catch (err) {
@@ -1464,6 +1474,31 @@ function updateCardVoteState(ideaId, score, userVote) {
     scoreSpan.textContent = score > 0 ? `+${score}` : score;
     scoreSpan.className = 'idea-vote-score ' + (score > 0 ? 'score-positive' : (score < 0 ? 'score-negative' : ''));
   }
+
+  // Re-sort cards dynamically from best to worst after vote update
+  sortAndReorderIdeasDOM();
+}
+
+function sortAndReorderIdeasDOM() {
+  const surface = document.getElementById('whiteboard-surface');
+  if (!surface) return;
+  const cards = Array.from(surface.querySelectorAll('.idea-card'));
+  if (cards.length <= 1) return;
+
+  cards.sort((a, b) => {
+    const scoreSpanA = a.querySelector('.idea-vote-score');
+    const scoreSpanB = b.querySelector('.idea-vote-score');
+    const scoreA = scoreSpanA ? parseInt(scoreSpanA.textContent.replace('+', ''), 10) || 0 : 0;
+    const scoreB = scoreSpanB ? parseInt(scoreSpanB.textContent.replace('+', ''), 10) || 0 : 0;
+    if (scoreB !== scoreA) {
+      return scoreB - scoreA;
+    }
+    const idA = parseInt(a.id.replace('idea-card-', ''), 10) || 0;
+    const idB = parseInt(b.id.replace('idea-card-', ''), 10) || 0;
+    return idB - idA;
+  });
+
+  cards.forEach(card => surface.appendChild(card));
 }
 
 function escapeHtml(str) {

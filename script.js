@@ -1336,7 +1336,7 @@ let ideasSilentInterval = null;
 function setupIdeasSilentInterval() {
   if (ideasSilentInterval) clearInterval(ideasSilentInterval);
   ideasSilentInterval = setInterval(() => {
-    if (currentTab === 'ideas' && document.visibilityState === 'visible') {
+    if ((currentActiveTab === 'napady' || currentActiveTab === 'ideas') && document.visibilityState === 'visible') {
       silentUpdateIdeas();
     }
   }, 10000);
@@ -1413,7 +1413,7 @@ async function silentUpdateIdeas() {
 async function voteIdea(ideaId, type, event) {
   if (event) event.stopPropagation();
 
-  if (!currentUserData) {
+  if (!currentIdeasData || !currentIdeasData.isLoggedIn) {
     showToast('🔒 Pro hlasování o nápadech se musíš přihlásit.');
     return;
   }

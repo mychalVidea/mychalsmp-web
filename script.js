@@ -1248,21 +1248,134 @@ async function loadIdeasTab() {
       return;
     }
 
-    surface.innerHTML = data.ideas.map(idea => {
-      const isMajitel = data.user && data.user.isMajitel;
-      const createdDate = new Date(idea.created_at).toLocaleDateString('cs-CZ', { day: 'numeric', month: 'numeric', year: 'numeric' });
-      const hasAi = !!idea.ai_text;
+    const isMajitel = data.user && data.user.isMajitel;
+    surface.innerHTML = data.ideas.map(idea => renderIdeaCardHtml(idea, isMajitel)).join('');
 
-      return `
-        <div class="idea-card" id="idea-card-${idea.id}" style="--card-rotation: ${idea.rotation || 0}deg;">
-          <div class="idea-card-pin">📍</div>
-          <div class="idea-card-header">
-            <img src="${idea.author_avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="idea-card-avatar" alt="${idea.author_name}" />
-            <span class="idea-card-author">${idea.author_name}</span>
-            <span class="idea-card-time">${createdDate}</span>
+    setupIdeasSilentInterval();
+
+  } catch (err) {
+    console.error('Error loading ideas tab:', err);
+    surface.innerHTML = '<div class="whiteboard-empty"><i class="fa-solid fa-circle-exclamation"></i><p>Chyba při načítání nápadů z API.</p></div>';
+  }
+}
+
+function renderIdeaCardHtml(idea, isMajitel) {
+  const createdDate = new Date(idea.created_at).toLocaleDateString('cs-CZ', { day: 'numeric', month: 'numeric', year: 'numeric' });
+  const hasAi = !!idea.ai_text;
+  const authorPoints = idea.author_points || 0;
+  const userVote = idea.user_vote || 0;
+  const score = idea.score || 0;
+
+  const scoreFormatted = score > 0 ? `+${score}` : score;
+  const scoreClass = score > 0 ? 'score-positive' : (score < 0 ? 'score-negative' : '');
+
+  return `
+    <div class="idea-card" id="idea-card-${idea.id}" style="--card-rotation: ${idea.rotation || 0}deg;">
+      <div class="idea-card-pin">📍</div>
+      <div class="idea-card-header">
+        <img src="${idea.author_avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="idea-card-avatar" alt="${idea.author_name}" />
+        <span class="idea-card-author">
+          ${escapeHtml(idea.author_name)}
+          <span class="idea-author-stars" title="Autor má ${authorPoints} hvězdiček">
+            <i class="fa-solid fa-star"></i> ${authorPoints}
+          </span>
+        </span>
+        <span class="idea-card-time">${createdDate}</span>
+      </div>
+      <div class="idea-card-body">
+        ${hasAi ? `
+          <div class="idea-card-top-bar">
+            <div class="idea-mode-indicator idea-mode-user">
+              <i class="fa-solid fa-user"></i> <span class="idea-mode-label">Návrh hráče</span>
+            </div>
+            <button class="idea-mode-switch-btn btn-is-ai" onclick="toggleIdeaView(${idea.id}, event)" title="Přepnout na AI vylepšení">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> AI
+            </button>
           </div>
-          <div class="idea-card-body">
-            ${hasAi ? `
+          <div class="idea-text-content idea-text-original">${escapeHtml(idea.original_text)}</div>
+          <div class="idea-text-content idea-text-ai" style="display:none;">${escapeHtml(idea.ai_text)}</div>
+        ` : `
+          <div class="idea-text-content">${escapeHtml(idea.original_text)}</div>
+        `}
+      </div>
+      <div class="idea-card-footer">
+        <div class="idea-vote-box" id="idea-vote-box-${idea.id}">
+          <button 
+            class="idea-vote-btn idea-vote-up ${userVote === 1 ? 'voted-up' : ''}" 
+            onclick="voteIdea(${idea.id}, 'up', event)" 
+            title="Líbí se mi nápad (+1)"
+          >
+            <i class="fa-solid fa-thumbs-up"></i>
+          </button>
+          <span class="idea-vote-score ${scoreClass}" id="idea-score-${idea.id}">${scoreFormatted}</span>
+          <button 
+            class="idea-vote-btn idea-vote-down ${userVote === -1 ? 'voted-down' : ''}" 
+            onclick="voteIdea(${idea.id}, 'down', event)" 
+            title="Nelíbí se mi nápad (-1)"
+          >
+            <i class="fa-solid fa-thumbs-down"></i>
+          </button>
+        </div>
+        ${isMajitel ? `
+          <div class="idea-card-actions">
+            <button class="idea-btn-action idea-btn-ai" onclick="aiProcessIdea(${idea.id})" title="Rozpracovat a vylepšit pomocí AI Gemini">❓</button>
+            <button class="idea-btn-action idea-btn-approve" onclick="approveIdea(${idea.id})" title="Schválit nápad (+1 bod autorovi)">✅</button>
+            <button class="idea-btn-action idea-btn-reject" onclick="rejectIdea(${idea.id})" title="Zamítnout nápad (smaže z nástěnky)">❌</button>
+          </div>
+        ` : ''}
+      </div>
+    </div>
+  `;
+}
+
+let ideasSilentInterval = null;
+
+function setupIdeasSilentInterval() {
+  if (ideasSilentInterval) clearInterval(ideasSilentInterval);
+  ideasSilentInterval = setInterval(() => {
+    if (currentTab === 'ideas' && document.visibilityState === 'visible') {
+      silentUpdateIdeas();
+    }
+  }, 10000);
+}
+
+async function silentUpdateIdeas() {
+  try {
+    const res = await fetch('https://api.6767111.xyz/api/napady/list', {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!data.success || !data.ideas) return;
+
+    const surface = document.getElementById('whiteboard-surface');
+    if (!surface) return;
+
+    const isMajitel = data.user && data.user.isMajitel;
+    const ideaMap = new Map();
+    data.ideas.forEach(i => ideaMap.set(i.id, i));
+
+    // Remove deleted cards
+    const currentCardElements = surface.querySelectorAll('.idea-card');
+    currentCardElements.forEach(cardEl => {
+      const id = parseInt(cardEl.id.replace('idea-card-', ''), 10);
+      if (!ideaMap.has(id)) {
+        cardEl.remove();
+      }
+    });
+
+    // Update existing cards or prepend new ones silently
+    data.ideas.forEach(idea => {
+      let cardEl = document.getElementById(`idea-card-${idea.id}`);
+      if (cardEl) {
+        updateCardVoteState(idea.id, idea.score, idea.user_vote);
+        const starsSpan = cardEl.querySelector('.idea-author-stars');
+        if (starsSpan) {
+          starsSpan.innerHTML = `<i class="fa-solid fa-star"></i> ${idea.author_points || 0}`;
+        }
+        if (idea.ai_text && !cardEl.querySelector('.idea-card-top-bar')) {
+          const bodyEl = cardEl.querySelector('.idea-card-body');
+          if (bodyEl) {
+            bodyEl.innerHTML = `
               <div class="idea-card-top-bar">
                 <div class="idea-mode-indicator idea-mode-user">
                   <i class="fa-solid fa-user"></i> <span class="idea-mode-label">Návrh hráče</span>
@@ -1273,24 +1386,80 @@ async function loadIdeasTab() {
               </div>
               <div class="idea-text-content idea-text-original">${escapeHtml(idea.original_text)}</div>
               <div class="idea-text-content idea-text-ai" style="display:none;">${escapeHtml(idea.ai_text)}</div>
-            ` : `
-              <div class="idea-text-content">${escapeHtml(idea.original_text)}</div>
-            `}
-          </div>
-          ${isMajitel ? `
-            <div class="idea-card-actions">
-              <button class="idea-btn-action idea-btn-ai" onclick="aiProcessIdea(${idea.id})" title="Rozpracovat a vylepšit pomocí AI Gemini (poslat do Discordu)">❓</button>
-              <button class="idea-btn-action idea-btn-approve" onclick="approveIdea(${idea.id})" title="Schválit nápad (dá +1 bod autorovi a oznámí v Discordu)">✅</button>
-              <button class="idea-btn-action idea-btn-reject" onclick="rejectIdea(${idea.id})" title="Zamítnout nápad (smaže z nástěnky)">❌</button>
-            </div>
-          ` : ''}
-        </div>
-      `;
-    }).join('');
+            `;
+          }
+        }
+      } else {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = renderIdeaCardHtml(idea, isMajitel);
+        if (tempDiv.firstElementChild) {
+          surface.insertBefore(tempDiv.firstElementChild, surface.firstChild);
+        }
+      }
+    });
 
-  } catch (err) {
-    console.error('Error loading ideas tab:', err);
-    surface.innerHTML = '<div class="whiteboard-empty"><i class="fa-solid fa-circle-exclamation"></i><p>Chyba při načítání nápadů z API.</p></div>';
+    const emptyDiv = surface.querySelector('.whiteboard-empty');
+    if (emptyDiv && data.ideas.length > 0) {
+      emptyDiv.remove();
+    }
+  } catch (e) {
+    // Silent catch
+  }
+}
+
+async function voteIdea(ideaId, type, event) {
+  if (event) event.stopPropagation();
+
+  if (!currentUserData) {
+    showToast('🔒 Pro hlasování o nápadech se musíš přihlásit.');
+    return;
+  }
+
+  const box = document.getElementById(`idea-vote-box-${ideaId}`);
+  if (box) box.classList.add('voting-busy');
+
+  try {
+    const res = await fetch(`https://api.6767111.xyz/api/napady/vote/${ideaId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders()
+      },
+      body: JSON.stringify({ type })
+    });
+    const data = await res.json();
+    if (data.success) {
+      updateCardVoteState(ideaId, data.score, data.userVote);
+    } else {
+      showToast('❌ ' + (data.message || 'Chyba při hlasování.'));
+    }
+  } catch (e) {
+    console.error('Error voting on idea:', e);
+    showToast('❌ Chyba při spojení se serverem.');
+  } finally {
+    if (box) box.classList.remove('voting-busy');
+  }
+}
+
+function updateCardVoteState(ideaId, score, userVote) {
+  const box = document.getElementById(`idea-vote-box-${ideaId}`);
+  if (!box) return;
+
+  const upBtn = box.querySelector('.idea-vote-up');
+  const downBtn = box.querySelector('.idea-vote-down');
+  const scoreSpan = document.getElementById(`idea-score-${ideaId}`);
+
+  if (upBtn) {
+    if (userVote === 1) upBtn.classList.add('voted-up');
+    else upBtn.classList.remove('voted-up');
+  }
+  if (downBtn) {
+    if (userVote === -1) downBtn.classList.add('voted-down');
+    else downBtn.classList.remove('voted-down');
+  }
+  if (scoreSpan) {
+    scoreSpan.textContent = score > 0 ? `+${score}` : score;
+    scoreSpan.className = 'idea-vote-score ' + (score > 0 ? 'score-positive' : (score < 0 ? 'score-negative' : ''));
   }
 }
 

@@ -5512,3 +5512,403 @@ body:has(#tab-napady.active) footer.footer {
   background: rgba(0, 0, 0, 0.35);
   border: 1px dashed rgba(56, 189, 248, 0.35);
 }
+
+/* ==========================================================================
+   GLOBAL WHITEBOARD / NÁPADY PHILOSOPHY & ULTRA-GLASSMORPHISM OVERHAUL
+   ========================================================================== */
+
+/* 1. Global Ambient Background with Cursor Radial Glow */
+body {
+  background-color: #080a10 !important;
+  background-image: radial-gradient(450px circle at var(--mouse-x, 50vw) var(--mouse-y, 35vh), rgba(10, 103, 229, 0.22), rgba(56, 189, 248, 0.08) 50%, transparent 85%) !important;
+  background-size: 100% 100% !important;
+  background-attachment: fixed !important;
+}
+
+/* Base White Dot Grid (Single Grid, Perfectly Regular 32px Spacing) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px) !important;
+  background-size: 32px 32px !important;
+  background-position: 0 0 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  opacity: 0.8 !important;
+  filter: none !important;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+}
+
+/* Cursor Illuminated Cyan Dot Grid (Aligned 100% Exactly with Base Grid - NO DOUBLE DOTS!) */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(#38bdf8 2px, transparent 2px) !important;
+  background-size: 32px 32px !important;
+  background-position: 0 0 !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  mask-image: radial-gradient(220px circle at var(--mouse-x, 50vw) var(--mouse-y, 35vh), black 0%, transparent 100%) !important;
+  -webkit-mask-image: radial-gradient(220px circle at var(--mouse-x, 50vw) var(--mouse-y, 35vh), black 0%, transparent 100%) !important;
+  opacity: 0.95 !important;
+  filter: drop-shadow(0 0 6px #38bdf8) !important;
+}
+
+/* Disable redundant local whiteboard grids to prevent duplicate dots */
+.whiteboard-grid, .whiteboard-grid-glow {
+  display: none !important;
+}
+
+/* Ensure content sits above grid glow */
+.tab-section, .footer, .bottom-nav, .idea-modal, .lightbox {
+  position: relative;
+  z-index: 5;
+}
+
+/* Tab Sections padding top so content is never hidden behind top fixed navbar */
+.tab-section {
+  padding-top: calc(var(--nav-h) + 24px) !important;
+  min-height: 100vh !important;
+  box-sizing: border-box !important;
+}
+
+/* Enforce vertical page scrolling across entire site */
+html, body {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+/* 2. Top Ultra-Glass Navbar (Flush against top, ALWAYS ON TOP OF ALL CARDS) */
+.navbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 99999 !important; /* Always on top of all elements! */
+  pointer-events: auto !important;
+  border-radius: 0 !important;
+  background: rgba(10, 14, 26, 0.85) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+.nav-link {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border: 1px solid transparent !important;
+}
+
+.nav-link:hover {
+  color: var(--white) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.nav-link.active {
+  color: var(--white) !important;
+  background: linear-gradient(135deg, rgba(10, 103, 229, 0.3), rgba(56, 189, 248, 0.15)) !important;
+  border-color: rgba(10, 103, 229, 0.5) !important;
+  box-shadow: 0 0 20px rgba(10, 103, 229, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 3. Ultra-Glassmorphic Stats Cards */
+.stats-section {
+  background: transparent !important;
+  padding: 30px 0 !important;
+}
+
+.stats-row {
+  background: linear-gradient(145deg, rgba(18, 24, 40, 0.55), rgba(10, 14, 26, 0.4)) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  border-top: 3px solid var(--blue) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  overflow: hidden;
+}
+
+.stat-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  transform: translateY(-2px);
+}
+
+.stat-num {
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+/* 4. Gamemode Showcase Cards (SMP vs Survival) */
+.gamemode-card {
+  background: linear-gradient(145deg, rgba(22, 28, 44, 0.65), rgba(12, 16, 28, 0.5)) !important;
+  backdrop-filter: blur(26px) !important;
+  -webkit-backdrop-filter: blur(26px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease !important;
+}
+
+.gamemode-card--smp {
+  border-top: 4px solid var(--blue) !important;
+}
+
+.gamemode-card--survival {
+  border-top: 4px solid #22c55e !important;
+}
+
+.gamemode-card:hover {
+  transform: translateY(-6px) scale(1.015) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(10, 103, 229, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(10, 103, 229, 0.5) !important;
+}
+
+.gamemode-badge {
+  background: rgba(10, 103, 229, 0.2) !important;
+  border: 1px solid rgba(10, 103, 229, 0.4) !important;
+  box-shadow: 0 4px 14px rgba(10, 103, 229, 0.3) !important;
+  backdrop-filter: blur(10px);
+}
+
+.gamemode-badge--green {
+  background: rgba(34, 197, 94, 0.2) !important;
+  border: 1px solid rgba(34, 197, 94, 0.4) !important;
+  color: #4ade80 !important;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3) !important;
+}
+
+/* 5. Commands Cards Grid */
+.command-card {
+  background: linear-gradient(145deg, rgba(20, 26, 40, 0.6), rgba(10, 14, 24, 0.45)) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-top: 2px solid rgba(10, 103, 229, 0.6) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.command-card:hover {
+  transform: translateY(-4px) !important;
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(56, 189, 248, 0.25) !important;
+}
+
+.command-card code {
+  background: rgba(10, 103, 229, 0.2) !important;
+  border: 1px solid rgba(10, 103, 229, 0.4) !important;
+  color: #38bdf8 !important;
+  font-family: var(--mono) !important;
+  border-radius: 8px !important;
+  padding: 4px 10px !important;
+  box-shadow: 0 0 12px rgba(10, 103, 229, 0.3);
+}
+
+/* 6. Join Timeline & Cards */
+.join-timeline-card {
+  background: linear-gradient(145deg, rgba(22, 28, 44, 0.65), rgba(12, 16, 28, 0.5)) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  border-top: 3px solid var(--blue) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  transition: all 0.3s ease !important;
+}
+
+.join-timeline-card:hover {
+  transform: translateY(-4px) !important;
+  border-color: rgba(10, 103, 229, 0.5) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 30px rgba(10, 103, 229, 0.25) !important;
+}
+
+.join-ip-container {
+  background: linear-gradient(145deg, rgba(16, 22, 38, 0.75), rgba(10, 14, 24, 0.6)) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+  border-radius: 99px !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(14, 165, 233, 0.2) !important;
+}
+
+/* 7. Rules Cards */
+.rule-card {
+  background: linear-gradient(145deg, rgba(22, 28, 44, 0.65), rgba(12, 16, 28, 0.5)) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease !important;
+}
+
+.rule-card--ban {
+  border-top: 4px solid var(--red) !important;
+}
+
+.rule-card--warning {
+  border-top: 4px solid #f59e0b !important;
+}
+
+.rule-card:hover {
+  transform: translateY(-4px) scale(1.015) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 30px rgba(245, 21, 21, 0.2) !important;
+}
+
+.rule-badge {
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.rules-footer-box {
+  background: linear-gradient(145deg, rgba(22, 28, 44, 0.7), rgba(12, 16, 28, 0.55)) !important;
+  backdrop-filter: blur(26px) !important;
+  -webkit-backdrop-filter: blur(26px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-top: 3px solid #fbbf24 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+/* 8. SMP+ (VIP) Page Styling */
+.smp-checkout-card, .smp-card {
+  background: linear-gradient(145deg, rgba(22, 28, 44, 0.7), rgba(12, 16, 28, 0.55)) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-top: 4px solid #fbbf24 !important;
+  border-radius: 22px !important;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.smp-card:hover {
+  transform: translateY(-5px) scale(1.02) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(251, 191, 36, 0.25) !important;
+}
+
+.nickname-input-wrapper {
+  background: rgba(255, 255, 255, 0.06) !important;
+  backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08) !important;
+}
+
+.nickname-input-wrapper:focus-within {
+  border-color: rgba(251, 191, 36, 0.8) !important;
+  box-shadow: 0 0 25px rgba(251, 191, 36, 0.35) !important;
+}
+
+/* 9. Media & Bug Form Cards */
+.media-benefit-card, .media-req-card, .bug-form-wrapper, .bug-tips-panel {
+  background: linear-gradient(145deg, rgba(22, 28, 44, 0.65), rgba(12, 16, 28, 0.5)) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-top: 3px solid var(--blue) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  transition: all 0.3s ease !important;
+}
+
+.media-benefit-card:hover, .media-req-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 30px rgba(10, 103, 229, 0.25) !important;
+}
+
+.media-input {
+  background: rgba(255, 255, 255, 0.06) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 12px !important;
+  color: var(--white) !important;
+  transition: all 0.25s ease !important;
+}
+
+.media-input:focus {
+  border-color: var(--blue) !important;
+  box-shadow: 0 0 20px rgba(10, 103, 229, 0.35) !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+}
+
+/* 10. Footer & Bottom Navigation */
+.footer {
+  background: rgba(10, 14, 26, 0.75) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+.bottom-nav {
+  background: rgba(10, 14, 26, 0.75) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+/* 11. Clear Section Background Overlays so Whiteboard Grid & Mouse Light Shine Through 100% */
+.hero-bg-img {
+  opacity: 0.18 !important;
+  mix-blend-mode: overlay !important;
+  filter: brightness(0.8) saturate(1.2) !important;
+}
+
+.hero-overlay {
+  background: radial-gradient(circle at center, transparent 30%, rgba(8, 10, 16, 0.85) 100%) !important;
+}
+
+.info-section, .stats-section, .gamemodes-section, .commands-section, 
+.join-section-ambient, .rules-section-ambient, .media-section-ambient, 
+.smp-hero, .smp-hero-bg, .smp-hero-overlay, .whiteboard-board {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* 12. Fix Lightbox Overlay Position (Must be fixed top-level overlay) */
+.lightbox {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999 !important;
+  background: rgba(0, 0, 0, 0.93) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.lightbox img {
+  max-width: 90vw !important;
+  max-height: 88vh !important;
+  object-fit: contain !important;
+}
+
+/* 13. Restore Original Rounded Capsule Pill Design for Nápady User Bar */
+.ideas-user-bar {
+  position: relative !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: rgba(10, 14, 26, 0.45) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 99px !important;
+  padding: 8px 10px 8px 16px !important;
+  margin: 10px auto 36px auto !important;
+  max-width: 960px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+  gap: 14px !important;
+}

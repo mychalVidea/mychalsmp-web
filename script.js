@@ -33,6 +33,7 @@ let currentActiveTab = 'home';
 
 function executeTabSwitch(name, updateUrl = true) {
   currentActiveTab = name;
+  document.body.style.overflow = ''; // Unlock vertical page scroll
   // Deactivate current active tab immediately with animation reset
   const activeSections = document.querySelectorAll('.tab-section.active');
   activeSections.forEach(s => {
@@ -1680,4 +1681,19 @@ function toggleIdeaView(ideaId, event) {
     }
   }
 }
+
+// ---- GLOBAL MOUSE TRACKER FOR AMBIENT GLOW & RADIAL GRID ILLUMINATION ----
+(function initGlobalMouseTracker() {
+  let mouseAnimFrame = null;
+  document.addEventListener('mousemove', (e) => {
+    if (!mouseAnimFrame) {
+      mouseAnimFrame = requestAnimationFrame(() => {
+        document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
+        document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
+        mouseAnimFrame = null;
+      });
+    }
+  });
+})();
+
 

@@ -29,7 +29,10 @@ function handleUrlRouting() {
   }
 }
 
+let currentActiveTab = 'home';
+
 function executeTabSwitch(name, updateUrl = true) {
+  currentActiveTab = name;
   // Deactivate current active tab immediately with animation reset
   const activeSections = document.querySelectorAll('.tab-section.active');
   activeSections.forEach(s => {

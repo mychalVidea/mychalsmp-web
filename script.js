@@ -1805,7 +1805,7 @@ function switchTimeframe(timeframe) {
     periodText.innerHTML = `<i class="fa-regular fa-calendar-days"></i> ${periodLabels[timeframe] || 'Posledních 24 hodin'}`;
   }
 
-  renderStatsChart();
+  fetchLiveServerStats();
 }
 
 function renderStatsChart() {

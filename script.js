@@ -1722,7 +1722,7 @@ const statsData = {
     glowColor: 'rgba(56, 189, 248, 0.45)',
     '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [14, 16, 15, 19, 18, 22], curVal: '22 hráčů online' },
     '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [6, 2, 8, 22, 38, 48, 32], curVal: '32 hráčů online' },
-    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [38, 42, 45, 40, 68, 88, 76], curVal: '88 hráčů (Pik Týdne)' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [38, 42, 45, 40, 68, 88, 76], curVal: '88 hráčů (Peak týdne)' },
     '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [55, 72, 86, 98], curVal: '98 hráčů (Měsíční Max)' }
   },
   playtime: {
@@ -1934,31 +1934,106 @@ function setupChartHoverInteraction(points, metricObj) {
   };
 }
 
-// Fetch Live Server Stats for "Počet hráčů" card & topbar
+// Fetch Live & Historical Stats from Backend SQLite Database (/api/server-stats)
 async function fetchLiveServerStats() {
   try {
-    const res = await fetch('https://api.mcsrvstat.us/3/mychalsmp.xyz');
-    if (res.ok) {
-      const data = await res.json();
-      if (data.online) {
-        const onlineCount = data.players ? data.players.online : 0;
-        const maxCount = data.players ? data.players.max : 100;
+    const apiEndpoints = [
+      `/api/server-stats?timeframe=${currentStatsTimeframe}`,
+      `https://api.6767111.xyz/api/server-stats?timeframe=${currentStatsTimeframe}`
+    ];
 
-        const valPlayers = document.getElementById('val-players');
-        if (valPlayers) valPlayers.innerText = `${onlineCount} / ${maxCount}`;
-
-        // Dynamically update the current '1d' series live value if active
-        if (statsData.players['1d']) {
-          statsData.players['1d'].values[statsData.players['1d'].values.length - 1] = onlineCount;
-          statsData.players['1d'].curVal = `${onlineCount} hráčů online právě teď`;
-          if (currentStatsMetric === 'players') {
-            renderStatsChart();
-          }
+    let data = null;
+    for (const url of apiEndpoints) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          data = await res.json();
+          if (data && data.success) break;
         }
-      }
+      } catch (e) {}
+    }
+
+    if (data && data.success && data.history && data.history.length > 0) {
+      const history = data.history;
+      const latest = data.latest || history[history.length - 1];
+
+      // Update overview cards
+      const valPlayers = document.getElementById('val-players');
+      if (valPlayers) valPlayers.innerText = `${latest.online_players || 0} / 100`;
+
+      const valPlaytime = document.getElementById('val-playtime');
+      if (valPlaytime) valPlaytime.innerText = `${(latest.playtime_hours || 0).toLocaleString('cs-CZ')} hod.`;
+
+      const valMoney = document.getElementById('val-money');
+      if (valMoney) valMoney.innerText = `$${(latest.total_money || 0).toLocaleString('cs-CZ')}`;
+
+      const valVisitors = document.getElementById('val-visitors');
+      if (valVisitors) valVisitors.innerText = `${(latest.unique_visitors || 0).toLocaleString('cs-CZ')} hráčů`;
+
+      const valDeaths = document.getElementById('val-deaths');
+      if (valDeaths) valDeaths.innerText = `${(latest.total_deaths || 0).toLocaleString('cs-CZ')}`;
+
+      // Build time series for current timeframe
+      const labels = [];
+      const playersVals = [];
+      const playtimeVals = [];
+      const moneyVals = [];
+      const visitorsVals = [];
+      const deathsVals = [];
+
+      history.forEach(row => {
+        const d = new Date(row.timestamp);
+        let timeLabel = '';
+        if (currentStatsTimeframe === '1h') {
+          timeLabel = `${d.getMinutes()}m`;
+        } else if (currentStatsTimeframe === '1d') {
+          timeLabel = `${String(d.getHours()).padStart(2, '0')}:00`;
+        } else if (currentStatsTimeframe === '1w') {
+          const days = ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'];
+          timeLabel = days[d.getDay()];
+        } else {
+          timeLabel = `${d.getDate()}.${d.getMonth() + 1}.`;
+        }
+
+        labels.push(timeLabel);
+        playersVals.push(row.online_players || 0);
+        playtimeVals.push(row.playtime_hours || 0);
+        moneyVals.push(row.total_money || 0);
+        visitorsVals.push(row.unique_visitors || 0);
+        deathsVals.push(row.total_deaths || 0);
+      });
+
+      // Update statsData object dynamically from DB records
+      statsData.players[currentStatsTimeframe] = {
+        labels,
+        values: playersVals,
+        curVal: `${latest.online_players || 0} hráčů online právě teď`
+      };
+      statsData.playtime[currentStatsTimeframe] = {
+        labels,
+        values: playtimeVals,
+        curVal: `${(latest.playtime_hours || 0).toLocaleString('cs-CZ')} hodin celkem`
+      };
+      statsData.money[currentStatsTimeframe] = {
+        labels,
+        values: moneyVals,
+        curVal: `$${(latest.total_money || 0).toLocaleString('cs-CZ')} v oběhu`
+      };
+      statsData.visitors[currentStatsTimeframe] = {
+        labels,
+        values: visitorsVals,
+        curVal: `${(latest.unique_visitors || 0).toLocaleString('cs-CZ')} unikátních hráčů`
+      };
+      statsData.deaths[currentStatsTimeframe] = {
+        labels,
+        values: deathsVals,
+        curVal: `${(latest.total_deaths || 0).toLocaleString('cs-CZ')} celkových úmrtí`
+      };
+
+      renderStatsChart();
     }
   } catch (err) {
-    console.log('Live server stats fetch fallback active:', err);
+    console.log('Database server stats fetch fallback active:', err);
   }
 }
 

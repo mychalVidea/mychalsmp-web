@@ -14,6 +14,8 @@ function handleUrlRouting() {
 
   if (route === 'smpplus' || route === 'smp-plus' || route === 'vip' || route === 'smp+') {
     executeTabSwitch('smp-plus', false);
+  } else if (route === 'stats' || route === 'statistiky' || route === 'stat') {
+    executeTabSwitch('stats', false);
   } else if (route === 'bug' || route === 'bugs' || route === 'report') {
     executeTabSwitch('bugs', false);
   } else if (route === 'media' || route === 'creator' || route === 'yt') {
@@ -65,15 +67,24 @@ function executeTabSwitch(name, updateUrl = true) {
     footer.style.display = (name === 'napady') ? 'none' : 'block';
   }
 
+  if (name === 'napady' || name === 'stats') {
+    document.body.classList.add('has-dot-grid');
+  } else {
+    document.body.classList.remove('has-dot-grid');
+  }
+
   if (name === 'media') {
     checkMediaStatus();
   } else if (name === 'napady') {
     loadIdeasTab();
+  } else if (name === 'stats') {
+    initStatsModule();
   }
 
   if (updateUrl) {
     let urlPath = '/' + name;
     if (name === 'smp-plus') urlPath = '/smpplus';
+    else if (name === 'stats') urlPath = '/statistiky';
     else if (name === 'join') urlPath = '/howto';
     else if (name === 'bugs') urlPath = '/bug';
     else if (name === 'napady') urlPath = '/napady';
@@ -1695,5 +1706,260 @@ function toggleIdeaView(ideaId, event) {
     }
   });
 })();
+
+// ==========================================================================
+// INTERACTIVE STATISTIKY (STATS) TAB & LINE CHART MODULE
+// ==========================================================================
+let currentStatsMetric = 'players';
+let currentStatsTimeframe = '1d';
+let isStatsModuleInitialized = false;
+
+const statsData = {
+  players: {
+    title: 'Počet hráčů online',
+    unit: 'hráčů',
+    color: '#38bdf8',
+    glowColor: 'rgba(56, 189, 248, 0.45)',
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [14, 16, 15, 19, 18, 22], curVal: '22 hráčů online' },
+    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [6, 2, 8, 22, 38, 48, 32], curVal: '32 hráčů online' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [38, 42, 45, 40, 68, 88, 76], curVal: '88 hráčů (Pik Týdne)' },
+    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [55, 72, 86, 98], curVal: '98 hráčů (Měsíční Max)' }
+  },
+  playtime: {
+    title: 'Celkový nahranný čas (Playtime)',
+    unit: 'hodin',
+    color: '#f59e0b',
+    glowColor: 'rgba(245, 158, 11, 0.45)',
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [1838, 1839, 1840, 1841, 1842, 1842], curVal: '1 842 nahranných hodin' },
+    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [1790, 1795, 1802, 1815, 1828, 1838, 1842], curVal: '1 842 celkových hodin' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [1520, 1580, 1640, 1710, 1770, 1810, 1842], curVal: '1 842 hodin tento týden' },
+    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [950, 1200, 1550, 1842], curVal: '1 842 celkem za měsíc' }
+  },
+  money: {
+    title: 'Celkem peněz v ekonomice',
+    unit: '$',
+    color: '#22c55e',
+    glowColor: 'rgba(34, 197, 94, 0.45)',
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [4245000, 4247000, 4248500, 4249800, 4250200, 4250800], curVal: '$4 250 800 celkem' },
+    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [3900000, 3920000, 4010000, 4100000, 4180000, 4230000, 4250800], curVal: '$4 250 800 v oběhu' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [2800000, 3100000, 3400000, 3650000, 3900000, 4100000, 4250800], curVal: '$4 250 800 tento týden' },
+    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [1500000, 2200000, 3300000, 4250800], curVal: '$4 250 800 celkově' }
+  },
+  visitors: {
+    title: 'Unikátní návštěvníci (Hráči)',
+    unit: 'hráčů',
+    color: '#a855f7',
+    glowColor: 'rgba(168, 85, 247, 0.45)',
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [1237, 1238, 1238, 1239, 1240, 1240], curVal: '1 240 unikátních hráčů' },
+    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [1210, 1212, 1218, 1225, 1232, 1238, 1240], curVal: '+30 nových za 24h' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [1050, 1080, 1120, 1160, 1200, 1225, 1240], curVal: '+190 nových za 7d' },
+    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [620, 840, 1050, 1240], curVal: '+620 nových za 30d' }
+  },
+  deaths: {
+    title: 'Počet úmrtí na serveru',
+    unit: 'úmrtí',
+    color: '#ef4444',
+    glowColor: 'rgba(239, 68, 68, 0.45)',
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [18932, 18934, 18936, 18938, 18939, 18940], curVal: '18 940 celkových úmrtí' },
+    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [18720, 18730, 18780, 18840, 18890, 18925, 18940], curVal: '220 úmrtí dnes' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [17200, 17550, 17900, 18220, 18550, 18800, 18940], curVal: '1 740 úmrtí tento týden' },
+    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [12100, 14500, 16800, 18940], curVal: '6 840 úmrtí tento měsíc' }
+  }
+};
+
+function initStatsModule() {
+  renderStatsChart();
+  fetchLiveServerStats();
+  if (!isStatsModuleInitialized) {
+    isStatsModuleInitialized = true;
+    window.addEventListener('resize', renderStatsChart);
+  }
+}
+
+function switchChartMetric(metric) {
+  if (!statsData[metric]) return;
+  currentStatsMetric = metric;
+
+  document.querySelectorAll('.stats-metric-btn').forEach(btn => btn.classList.remove('active'));
+  const targetBtn = document.getElementById('metric-btn-' + metric);
+  if (targetBtn) targetBtn.classList.add('active');
+
+  renderStatsChart();
+}
+
+function switchTimeframe(timeframe) {
+  currentStatsTimeframe = timeframe;
+
+  document.querySelectorAll('.timeframe-btn').forEach(btn => btn.classList.remove('active'));
+  const targetBtn = document.getElementById('timeframe-btn-' + timeframe);
+  if (targetBtn) targetBtn.classList.add('active');
+
+  const periodLabels = {
+    '1h': 'Poslední hodina',
+    '1d': 'Posledních 24 hodin',
+    '1w': 'Posledních 7 dní',
+    '1m': 'Posledních 30 dní'
+  };
+  const periodText = document.getElementById('chart-period-text');
+  if (periodText) {
+    periodText.innerHTML = `<i class="fa-regular fa-calendar-days"></i> ${periodLabels[timeframe] || 'Posledních 24 hodin'}`;
+  }
+
+  renderStatsChart();
+}
+
+function renderStatsChart() {
+  const metricObj = statsData[currentStatsMetric] || statsData.players;
+  const seriesData = metricObj[currentStatsTimeframe] || metricObj['1d'];
+
+  const titleEl = document.getElementById('chart-current-title');
+  const valEl = document.getElementById('chart-current-value');
+  if (titleEl) titleEl.innerText = metricObj.title;
+  if (valEl) valEl.innerText = seriesData.curVal;
+
+  const svg = document.getElementById('stats-line-chart');
+  if (!svg) return;
+
+  const areaPath = document.getElementById('chart-area-path');
+  const linePath = document.getElementById('chart-line-path');
+  const gridGroup = document.getElementById('chart-grid-lines');
+  const pointsGroup = document.getElementById('chart-data-points');
+  const labelsContainer = document.getElementById('chart-x-labels');
+  const gradientStop0 = document.querySelectorAll('#chartGlowGradient stop')[0];
+
+  if (linePath) linePath.setAttribute('stroke', metricObj.color);
+  if (gradientStop0) gradientStop0.setAttribute('stop-color', metricObj.color);
+
+  const values = seriesData.values;
+  const labels = seriesData.labels;
+  const count = values.length;
+
+  let minVal = Math.min(...values);
+  let maxVal = Math.max(...values);
+  if (minVal === maxVal) {
+    minVal = Math.max(0, minVal - 5);
+    maxVal += 5;
+  }
+  const range = maxVal - minVal;
+  const padY = 30;
+  const padX = 20;
+  const svgW = 800;
+  const svgH = 280;
+  const usableW = svgW - 2 * padX;
+  const usableH = svgH - 2 * padY;
+
+  const points = values.map((val, idx) => {
+    const x = padX + (idx / (count - 1)) * usableW;
+    const y = svgH - padY - ((val - minVal) / range) * usableH;
+    return { x, y, val, label: labels[idx] };
+  });
+
+  // Render Horizontal Grid Lines (4 lines)
+  if (gridGroup) {
+    let gridHtml = '';
+    for (let i = 0; i <= 3; i++) {
+      const gY = padY + (i / 3) * usableH;
+      gridHtml += `<line x1="0" y1="${gY}" x2="${svgW}" y2="${gY}" stroke="rgba(255, 255, 255, 0.06)" stroke-dasharray="4 4" stroke-width="1" />`;
+    }
+    gridGroup.innerHTML = gridHtml;
+  }
+
+  // Smooth Bezier Path calculation
+  let dLine = `M ${points[0].x} ${points[0].y}`;
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[i];
+    const p1 = points[i + 1];
+    const cpX = (p0.x + p1.x) / 2;
+    dLine += ` C ${cpX} ${p0.y}, ${cpX} ${p1.y}, ${p1.x} ${p1.y}`;
+  }
+
+  const dArea = `${dLine} L ${points[points.length - 1].x} ${svgH - padY} L ${points[0].x} ${svgH - padY} Z`;
+
+  if (linePath) linePath.setAttribute('d', dLine);
+  if (areaPath) areaPath.setAttribute('d', dArea);
+
+  // Render Interactive Data Points
+  if (pointsGroup) {
+    let pointsHtml = '';
+    points.forEach((p, idx) => {
+      pointsHtml += `<circle class="chart-point" data-idx="${idx}" cx="${p.x}" cy="${p.y}" r="5.5" fill="${metricObj.color}" stroke="#0f172a" stroke-width="2.5" style="cursor: pointer; transition: all 0.2s ease;" />`;
+    });
+    pointsGroup.innerHTML = pointsHtml;
+  }
+
+  // Render X-Axis Labels
+  if (labelsContainer) {
+    labelsContainer.innerHTML = labels.map(l => `<span>${l}</span>`).join('');
+  }
+
+  // Bind Mouse Hover Interaction for Tooltip
+  setupChartHoverInteraction(points, metricObj);
+}
+
+function setupChartHoverInteraction(points, metricObj) {
+  const container = document.getElementById('svg-chart-container');
+  const tooltip = document.getElementById('chart-tooltip');
+  const timeEl = document.getElementById('tooltip-time');
+  const valEl = document.getElementById('tooltip-val');
+  if (!container || !tooltip) return;
+
+  container.onmousemove = (e) => {
+    const rect = container.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const ratio = Math.max(0, Math.min(1, mouseX / rect.width));
+    const pointIdx = Math.round(ratio * (points.length - 1));
+    const pt = points[pointIdx];
+
+    if (pt) {
+      const leftPercent = (pt.x / 800) * 100;
+      const topPercent = (pt.y / 280) * 100;
+
+      tooltip.style.left = `${leftPercent}%`;
+      tooltip.style.top = `${topPercent}%`;
+
+      if (timeEl) timeEl.innerText = pt.label;
+      if (valEl) {
+        if (metricObj.unit === '$') {
+          valEl.innerText = '$' + pt.val.toLocaleString('cs-CZ');
+        } else {
+          valEl.innerText = pt.val.toLocaleString('cs-CZ') + ' ' + metricObj.unit;
+        }
+      }
+      tooltip.classList.add('visible');
+    }
+  };
+
+  container.onmouseleave = () => {
+    tooltip.classList.remove('visible');
+  };
+}
+
+// Fetch Live Server Stats for "Počet hráčů" card & topbar
+async function fetchLiveServerStats() {
+  try {
+    const res = await fetch('https://api.mcsrvstat.us/3/mychalsmp.xyz');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.online) {
+        const onlineCount = data.players ? data.players.online : 0;
+        const maxCount = data.players ? data.players.max : 100;
+
+        const valPlayers = document.getElementById('val-players');
+        if (valPlayers) valPlayers.innerText = `${onlineCount} / ${maxCount}`;
+
+        // Dynamically update the current '1d' series live value if active
+        if (statsData.players['1d']) {
+          statsData.players['1d'].values[statsData.players['1d'].values.length - 1] = onlineCount;
+          statsData.players['1d'].curVal = `${onlineCount} hráčů online právě teď`;
+          if (currentStatsMetric === 'players') {
+            renderStatsChart();
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.log('Live server stats fetch fallback active:', err);
+  }
+}
 
 

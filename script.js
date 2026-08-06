@@ -1720,50 +1720,50 @@ const statsData = {
     unit: 'hráčů',
     color: '#38bdf8',
     glowColor: 'rgba(56, 189, 248, 0.45)',
-    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [14, 16, 15, 19, 18, 22], curVal: '22 hráčů online' },
-    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [6, 2, 8, 22, 38, 48, 32], curVal: '32 hráčů online' },
-    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [38, 42, 45, 40, 68, 88, 76], curVal: '88 hráčů (Peak týdne)' },
-    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [55, 72, 86, 98], curVal: '98 hráčů (Měsíční Max)' }
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [0, 0, 0, 0, 0, 0], curVal: '0 hráčů online' },
+    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 hráčů online' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 hráčů' },
+    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [0, 0, 0, 0], curVal: '0 hráčů' }
   },
   playtime: {
     title: 'Celkový nahranný čas (Playtime)',
     unit: 'hodin',
     color: '#f59e0b',
     glowColor: 'rgba(245, 158, 11, 0.45)',
-    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [1838, 1839, 1840, 1841, 1842, 1842], curVal: '1 842 nahranných hodin' },
-    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [1790, 1795, 1802, 1815, 1828, 1838, 1842], curVal: '1 842 celkových hodin' },
-    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [1520, 1580, 1640, 1710, 1770, 1810, 1842], curVal: '1 842 hodin tento týden' },
-    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [950, 1200, 1550, 1842], curVal: '1 842 celkem za měsíc' }
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [0, 0, 0, 0, 0, 0], curVal: '0 nahranných hodin' },
+    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 celkových hodin' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 hodin tento týden' },
+    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [0, 0, 0, 0], curVal: '0 celkem za měsíc' }
   },
   money: {
     title: 'Celkem peněz v ekonomice',
     unit: '$',
     color: '#22c55e',
     glowColor: 'rgba(34, 197, 94, 0.45)',
-    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [4245000, 4247000, 4248500, 4249800, 4250200, 4250800], curVal: '$4 250 800 celkem' },
-    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [3900000, 3920000, 4010000, 4100000, 4180000, 4230000, 4250800], curVal: '$4 250 800 v oběhu' },
-    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [2800000, 3100000, 3400000, 3650000, 3900000, 4100000, 4250800], curVal: '$4 250 800 tento týden' },
-    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [1500000, 2200000, 3300000, 4250800], curVal: '$4 250 800 celkově' }
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [0, 0, 0, 0, 0, 0], curVal: '$0 celkem' },
+    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '$0 v oběhu' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '$0 tento týden' },
+    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [0, 0, 0, 0], curVal: '$0 celkově' }
   },
   visitors: {
     title: 'Unikátní návštěvníci (Hráči)',
     unit: 'hráčů',
     color: '#a855f7',
     glowColor: 'rgba(168, 85, 247, 0.45)',
-    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [1237, 1238, 1238, 1239, 1240, 1240], curVal: '1 240 unikátních hráčů' },
-    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [1210, 1212, 1218, 1225, 1232, 1238, 1240], curVal: '+30 nových za 24h' },
-    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [1050, 1080, 1120, 1160, 1200, 1225, 1240], curVal: '+190 nových za 7d' },
-    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [620, 840, 1050, 1240], curVal: '+620 nových za 30d' }
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [0, 0, 0, 0, 0, 0], curVal: '0 unikátních hráčů' },
+    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 nových za 24h' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 nových za 7d' },
+    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [0, 0, 0, 0], curVal: '0 nových za 30d' }
   },
   deaths: {
     title: 'Počet úmrtí na serveru',
     unit: 'úmrtí',
     color: '#ef4444',
     glowColor: 'rgba(239, 68, 68, 0.45)',
-    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [18932, 18934, 18936, 18938, 18939, 18940], curVal: '18 940 celkových úmrtí' },
-    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [18720, 18730, 18780, 18840, 18890, 18925, 18940], curVal: '220 úmrtí dnes' },
-    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [17200, 17550, 17900, 18220, 18550, 18800, 18940], curVal: '1 740 úmrtí tento týden' },
-    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [12100, 14500, 16800, 18940], curVal: '6 840 úmrtí tento měsíc' }
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [0, 0, 0, 0, 0, 0], curVal: '0 celkových úmrtí' },
+    '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 úmrtí dnes' },
+    '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 úmrtí tento týden' },
+    '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [0, 0, 0, 0], curVal: '0 celkem za měsíc' }
   }
 };
 

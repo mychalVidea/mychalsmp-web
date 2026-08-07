@@ -648,14 +648,20 @@ async function checkMediaStatus() {
 
     const data = await res.json();
     // If user has no request — show the form
+    // If user has no request — show the form
     if (!data.success || !data.hasRequest) {
       statusBox.style.display = 'none';
       applyForm.style.display = 'block';
       loginBox.style.display = 'none';
+      if (data.mcNick) {
+        const mcInput = document.getElementById('media-mc-nick');
+        if (mcInput && !mcInput.value) mcInput.value = data.mcNick;
+      }
       return;
     }
 
     const status = data.status;
+    const mcNick = data.mcNick;
     const youtubeUrl = data.youtubeUrl;
     const kickUrl = data.kickUrl;
     const tiktokUrl = data.tiktokUrl;
@@ -672,6 +678,7 @@ async function checkMediaStatus() {
           <h3>Žádost se posuzuje</h3>
           <p>Tvoje žádost o Media Rank byla odeslána a čeká na schválení administrátorem.</p>
           <div class="status-details">
+            ${mcNick ? `<div><strong>Minecraft Nick:</strong> ${mcNick}</div>` : ''}
             <div><strong>YouTube:</strong> ${youtubeUrl || 'Nepřipojeno'}</div>
             <div><strong>Kick:</strong> ${kickUrl || 'Nepřipojeno'}</div>
             <div><strong>TikTok:</strong> ${tiktokUrl || 'Nepřipojeno'}</div>
@@ -753,12 +760,17 @@ function resetMediaForm() {
 async function submitMediaApplication(event) {
   event.preventDefault();
 
+  const mcNick = document.getElementById('media-mc-nick')?.value.trim();
   const yt = document.getElementById('media-yt').value.trim();
   const tt = document.getElementById('media-tt').value.trim();
   const twitch = document.getElementById('media-twitch').value.trim();
   const kick = document.getElementById('media-kick').value.trim();
   const ageConfirm = document.getElementById('media-age-confirm')?.checked;
 
+  if (!mcNick) {
+    alert('Vyplň svůj Minecraft nick!');
+    return;
+  }
   if (!yt && !tt && !twitch && !kick) {
     alert('Vyplň aspoň jeden kanál k ověření!');
     return;
@@ -814,6 +826,7 @@ async function submitMediaApplication(event) {
         ...getAuthHeaders()
       },
       body: JSON.stringify({
+        mcNick: mcNick,
         youtubeUrl: yt,
         tiktokUrl: tt,
         twitchUrl: twitch,

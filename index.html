@@ -864,8 +864,13 @@
         <form id="media-apply-form" style="display: none;" onsubmit="submitMediaApplication(event)">
           <h2 style="font-size: 1.8rem; color: #fff; margin-bottom: 12px; text-align: center;">🎬 Podat žádost</h2>
           <p style="color: var(--text-muted); margin-bottom: 30px; text-align: center; font-size: 0.95rem;">
-            Vyplň aspoň jeden kanál. Náš systém automaticky zkontroluje počet odběratelů/sledujících.
+            Vyplň svůj Minecraft nick a aspoň jeden kanál. Náš systém automaticky zkontroluje počet odběratelů/sledujících.
           </p>
+
+          <div class="media-form-group" style="margin-bottom: 24px;">
+            <label for="media-mc-nick"><i class="fa-solid fa-user" style="color:#2ecc71;"></i> Tvůj Minecraft Nick</label>
+            <input type="text" id="media-mc-nick" class="media-input" placeholder="Zadej svůj přesný nick ve hře..." required>
+          </div>
 
           <div class="media-form-grid">
             <div class="media-form-group">

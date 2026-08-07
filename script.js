@@ -1818,20 +1818,35 @@ function renderStatsChart() {
   if (valEl) valEl.innerText = seriesData.curVal;
 
   const svg = document.getElementById('stats-line-chart');
-  if (!svg) return;
+  const container = document.getElementById('svg-chart-container');
+  if (!svg || !container) return;
 
   const areaPath = document.getElementById('chart-area-path');
   const linePath = document.getElementById('chart-line-path');
   const gridGroup = document.getElementById('chart-grid-lines');
-  const pointsGroup = document.getElementById('chart-data-points');
   const labelsContainer = document.getElementById('chart-x-labels');
   const gradientStop0 = document.querySelectorAll('#chartGlowGradient stop')[0];
 
   if (linePath) linePath.setAttribute('stroke', metricObj.color);
   if (gradientStop0) gradientStop0.setAttribute('stop-color', metricObj.color);
 
-  const values = seriesData.values;
-  const labels = seriesData.labels;
+  let values = seriesData.values || [0];
+  let labels = seriesData.labels || [''];
+
+  // Downsample to max 20 points for ultra-smooth curve rendering
+  if (values.length > 20) {
+    const maxP = 20;
+    const sampledVals = [];
+    const sampledLabs = [];
+    for (let i = 0; i < maxP; i++) {
+      const idx = Math.round((i / (maxP - 1)) * (values.length - 1));
+      sampledVals.push(values[idx]);
+      sampledLabs.push(labels[idx]);
+    }
+    values = sampledVals;
+    labels = sampledLabs;
+  }
+
   const count = values.length;
 
   let minVal = Math.min(...values);
@@ -1849,7 +1864,7 @@ function renderStatsChart() {
   const usableH = svgH - 2 * padY;
 
   const points = values.map((val, idx) => {
-    const x = padX + (idx / (count - 1)) * usableW;
+    const x = padX + (idx / Math.max(1, count - 1)) * usableW;
     const y = svgH - padY - ((val - minVal) / range) * usableH;
     return { x, y, val, label: labels[idx] };
   });
@@ -1864,13 +1879,20 @@ function renderStatsChart() {
     gridGroup.innerHTML = gridHtml;
   }
 
-  // Smooth Bezier Path calculation
+  // Ultra-Smooth Catmull-Rom Spline Bezier Path calculation
   let dLine = `M ${points[0].x} ${points[0].y}`;
   for (let i = 0; i < points.length - 1; i++) {
-    const p0 = points[i];
-    const p1 = points[i + 1];
-    const cpX = (p0.x + p1.x) / 2;
-    dLine += ` C ${cpX} ${p0.y}, ${cpX} ${p1.y}, ${p1.x} ${p1.y}`;
+    const p0 = points[Math.max(0, i - 1)];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[Math.min(points.length - 1, i + 2)];
+
+    const cp1x = p1.x + (p2.x - p0.x) / 6;
+    const cp1y = p1.y + (p2.y - p0.y) / 6;
+    const cp2x = p2.x - (p3.x - p1.x) / 6;
+    const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+    dLine += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
   }
 
   const dArea = `${dLine} L ${points[points.length - 1].x} ${svgH - padY} L ${points[0].x} ${svgH - padY} Z`;
@@ -1878,18 +1900,29 @@ function renderStatsChart() {
   if (linePath) linePath.setAttribute('d', dLine);
   if (areaPath) areaPath.setAttribute('d', dArea);
 
-  // Render Interactive Data Points
-  if (pointsGroup) {
-    let pointsHtml = '';
-    points.forEach((p, idx) => {
-      pointsHtml += `<circle class="chart-point" data-idx="${idx}" cx="${p.x}" cy="${p.y}" r="5.5" fill="${metricObj.color}" stroke="#0f172a" stroke-width="2.5" style="cursor: pointer; transition: all 0.2s ease;" />`;
-    });
-    pointsGroup.innerHTML = pointsHtml;
-  }
+  // Render Perfectly Round HTML Overlay Dots (Eliminates flat bean SVG deformation)
+  // Remove any existing dots
+  container.querySelectorAll('.chart-point-dot').forEach(el => el.remove());
+  points.forEach((p, idx) => {
+    const dot = document.createElement('div');
+    dot.className = 'chart-point-dot';
+    dot.dataset.idx = idx;
+    dot.style.left = `${(p.x / svgW) * 100}%`;
+    dot.style.top = `${(p.y / svgH) * 100}%`;
+    dot.style.backgroundColor = metricObj.color;
+    dot.style.color = metricObj.color;
+    container.appendChild(dot);
+  });
 
-  // Render X-Axis Labels
+  // Render Clean, Non-overlapping X-Axis Labels (Max 6-7 labels)
   if (labelsContainer) {
-    labelsContainer.innerHTML = labels.map(l => `<span>${l}</span>`).join('');
+    const displayLabels = [];
+    const maxDisplay = Math.min(7, count);
+    for (let i = 0; i < maxDisplay; i++) {
+      const idx = Math.round((i / Math.max(1, maxDisplay - 1)) * (count - 1));
+      displayLabels.push(labels[idx]);
+    }
+    labelsContainer.innerHTML = displayLabels.map(l => `<span>${l}</span>`).join('');
   }
 
   // Bind Mouse Hover Interaction for Tooltip
@@ -1917,6 +1950,12 @@ function setupChartHoverInteraction(points, metricObj) {
       tooltip.style.left = `${leftPercent}%`;
       tooltip.style.top = `${topPercent}%`;
 
+      // Highlight active dot
+      container.querySelectorAll('.chart-point-dot').forEach((d, idx) => {
+        if (idx === pointIdx) d.classList.add('active');
+        else d.classList.remove('active');
+      });
+
       if (timeEl) timeEl.innerText = pt.label;
       if (valEl) {
         if (metricObj.unit === '$') {
@@ -1931,6 +1970,7 @@ function setupChartHoverInteraction(points, metricObj) {
 
   container.onmouseleave = () => {
     tooltip.classList.remove('visible');
+    container.querySelectorAll('.chart-point-dot').forEach(d => d.classList.remove('active'));
   };
 }
 

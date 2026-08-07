@@ -6215,11 +6215,60 @@ body {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.stats-metric-btn.active {
-  background: rgba(10, 103, 233, 0.25);
+/* Metric buttons styled by chart metric theme colors */
+#metric-btn-players.active {
+  background: rgba(56, 189, 248, 0.16);
   border-color: #38bdf8;
   color: #38bdf8;
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+}
+#metric-btn-players:hover:not(.active) {
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+}
+
+#metric-btn-playtime.active {
+  background: rgba(245, 158, 11, 0.16);
+  border-color: #f59e0b;
+  color: #f59e0b;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.3);
+}
+#metric-btn-playtime:hover:not(.active) {
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #f59e0b;
+}
+
+#metric-btn-money.active {
+  background: rgba(34, 197, 94, 0.16);
+  border-color: #22c55e;
+  color: #22c55e;
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.3);
+}
+#metric-btn-money:hover:not(.active) {
+  border-color: rgba(34, 197, 94, 0.4);
+  color: #22c55e;
+}
+
+#metric-btn-visitors.active {
+  background: rgba(168, 85, 247, 0.16);
+  border-color: #a855f7;
+  color: #a855f7;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.3);
+}
+#metric-btn-visitors:hover:not(.active) {
+  border-color: rgba(168, 85, 247, 0.4);
+  color: #a855f7;
+}
+
+#metric-btn-deaths.active {
+  background: rgba(239, 68, 68, 0.16);
+  border-color: #ef4444;
+  color: #ef4444;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.3);
+}
+#metric-btn-deaths:hover:not(.active) {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
 }
 
 /* TIMEFRAME SELECTOR BUTTONS */
@@ -6249,9 +6298,9 @@ body {
 }
 
 .timeframe-btn.active {
-  background: #0a67e9;
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(10, 103, 233, 0.4);
+  background: #38bdf8;
+  color: #0f172a;
+  box-shadow: 0 2px 10px rgba(56, 189, 248, 0.35);
 }
 
 /* CHART BANNER */

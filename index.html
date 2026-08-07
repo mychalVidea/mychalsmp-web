@@ -31,13 +31,13 @@
       </a>
       <div class="nav-links">
         <button id="tab-btn-home" class="nav-link active" onclick="showTab('home')">🏠 Domů</button>
-        <button id="tab-btn-stats" class="nav-link" onclick="showTab('stats')">📊 Statistiky</button>
-        <button id="tab-btn-smp-plus" class="nav-link" onclick="showTab('smp-plus')">👑 SMP+</button>
         <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">🔗 Jak se připojit</button>
-        <button id="tab-btn-rules" class="nav-link" onclick="showTab('rules')">📜 Pravidla</button>
+        <button id="tab-btn-smp-plus" class="nav-link" onclick="showTab('smp-plus')">👑 SMP+</button>
         <button id="tab-btn-media" class="nav-link" onclick="showTab('media')">🎬 Media</button>
-        <button id="tab-btn-bugs" class="nav-link" onclick="showTab('bugs')">🐛 Bugy</button>
         <button id="tab-btn-napady" class="nav-link" onclick="showTab('napady')">💡 Nápady</button>
+        <button id="tab-btn-stats" class="nav-link" onclick="showTab('stats')">📊 Statistiky</button>
+        <button id="tab-btn-bugs" class="nav-link" onclick="showTab('bugs')">🐛 Bugy</button>
+        <button id="tab-btn-rules" class="nav-link" onclick="showTab('rules')">📜 Pravidla</button>
       </div>
       <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
         <span></span><span></span><span></span>
@@ -45,13 +45,13 @@
     </div>
     <div class="mobile-menu" id="mobile-menu">
       <button class="nav-link" onclick="showTab('home');toggleMenu()">🏠 Domů</button>
-      <button class="nav-link" id="btn-nav-stats" onclick="showTab('stats');toggleMenu()">📊 Statistiky</button>
+      <button class="nav-link" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
       <button class="nav-link" onclick="showTab('smp-plus');toggleMenu()">👑 SMP+</button>
       <button class="nav-link" onclick="showTab('media');toggleMenu()">🎬 Media</button>
-      <button class="nav-link" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
-      <button class="nav-link" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
-      <button class="nav-link" onclick="showTab('bugs');toggleMenu()">🐛 Bugy</button>
       <button class="nav-link" onclick="showTab('napady');toggleMenu()">💡 Nápady</button>
+      <button class="nav-link" id="btn-nav-stats" onclick="showTab('stats');toggleMenu()">📊 Statistiky</button>
+      <button class="nav-link" onclick="showTab('bugs');toggleMenu()">🐛 Bugy</button>
+      <button class="nav-link" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
     </div>
   </nav>
 
@@ -1101,7 +1101,7 @@
           <div class="stat-detail-icon icon-blue"><i class="fa-solid fa-users"></i></div>
           <div class="stat-detail-info">
             <span class="stat-detail-label">Počet hráčů</span>
-            <span class="stat-detail-value" id="val-players">0 / 100</span>
+            <span class="stat-detail-value" id="val-players">0 / 50</span>
             <span class="stat-detail-sub"><i class="fa-solid fa-signal"></i> Živý stav ze serveru</span>
           </div>
         </div>
@@ -1111,7 +1111,7 @@
           <div class="stat-detail-info">
             <span class="stat-detail-label">Playtime</span>
             <span class="stat-detail-value" id="val-playtime">1 842 hod.</span>
-            <span class="stat-detail-sub"><i class="fa-solid fa-gamepad"></i> Odehraný čas komunity</span>
+            <span class="stat-detail-sub"><i class="fa-solid fa-gamepad"></i> Odehraný čas</span>
           </div>
         </div>
 
@@ -1120,7 +1120,7 @@
           <div class="stat-detail-info">
             <span class="stat-detail-label">Celkem peněz</span>
             <span class="stat-detail-value" id="val-money">$4 250 800</span>
-            <span class="stat-detail-sub"><i class="fa-solid fa-vault"></i> Ekonomice</span>
+            <span class="stat-detail-sub"><i class="fa-solid fa-vault"></i> Ekonomika</span>
           </div>
         </div>
 
@@ -1129,7 +1129,7 @@
           <div class="stat-detail-info">
             <span class="stat-detail-label">Unikátní návštěvníci</span>
             <span class="stat-detail-value" id="val-visitors">1 240 hráčů</span>
-            <span class="stat-detail-sub"><i class="fa-solid fa-passport"></i> Registrovaných účtů</span>
+            <span class="stat-detail-sub"><i class="fa-solid fa-passport"></i> Unikátních hráčů</span>
           </div>
         </div>
 

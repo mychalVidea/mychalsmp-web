@@ -1830,6 +1830,19 @@ function renderStatsChart() {
   if (linePath) linePath.setAttribute('stroke', metricObj.color);
   if (gradientStop0) gradientStop0.setAttribute('stop-color', metricObj.color);
 
+  // Update active timeframe button background to match active metric color
+  document.querySelectorAll('.timeframe-btn').forEach(btn => {
+    if (btn.classList.contains('active')) {
+      btn.style.backgroundColor = metricObj.color;
+      btn.style.color = '#0f172a';
+      btn.style.boxShadow = `0 2px 10px ${metricObj.glowColor || metricObj.color}`;
+    } else {
+      btn.style.backgroundColor = '';
+      btn.style.color = '';
+      btn.style.boxShadow = '';
+    }
+  });
+
   let values = seriesData.values || [0];
   let labels = seriesData.labels || [''];
 
@@ -1879,7 +1892,11 @@ function renderStatsChart() {
     gridGroup.innerHTML = gridHtml;
   }
 
-  // Ultra-Smooth Catmull-Rom Spline Bezier Path calculation
+  // Silky Smooth Tension Bezier Curve with Ground Clamping (No dipping below ground, super smooth wave)
+  const maxY = svgH - padY;
+  const minY = padY;
+  const smoothing = 0.22;
+
   let dLine = `M ${points[0].x} ${points[0].y}`;
   for (let i = 0; i < points.length - 1; i++) {
     const p0 = points[Math.max(0, i - 1)];
@@ -1887,10 +1904,14 @@ function renderStatsChart() {
     const p2 = points[i + 1];
     const p3 = points[Math.min(points.length - 1, i + 2)];
 
-    const cp1x = p1.x + (p2.x - p0.x) / 6;
-    const cp1y = p1.y + (p2.y - p0.y) / 6;
-    const cp2x = p2.x - (p3.x - p1.x) / 6;
-    const cp2y = p2.y - (p3.y - p1.y) / 6;
+    let cp1x = p1.x + (p2.x - p0.x) * smoothing;
+    let cp1y = p1.y + (p2.y - p0.y) * smoothing;
+    let cp2x = p2.x - (p3.x - p1.x) * smoothing;
+    let cp2y = p2.y - (p3.y - p1.y) * smoothing;
+
+    // Ground & Ceiling Clamping: Prevent control points from dipping below ground or above top
+    cp1y = Math.min(maxY, Math.max(minY, cp1y));
+    cp2y = Math.min(maxY, Math.max(minY, cp2y));
 
     dLine += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
   }

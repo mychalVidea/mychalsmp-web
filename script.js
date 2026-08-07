@@ -54,11 +54,13 @@ function executeTabSwitch(name, updateUrl = true) {
     section.classList.add('animate-in');
   }
 
-  // Activate matching buttons on both menus
+  // Activate matching buttons on desktop, top mobile, and bottom mobile navigation
   const desktopBtn = document.getElementById('tab-btn-' + name);
-  const mobileBtn = document.getElementById('btn-nav-' + name);
+  const topMobileBtn = document.getElementById('top-nav-' + name);
+  const bottomNavBtn = document.getElementById('btn-nav-' + name);
   if (desktopBtn) desktopBtn.classList.add('active');
-  if (mobileBtn) mobileBtn.classList.add('active');
+  if (topMobileBtn) topMobileBtn.classList.add('active');
+  if (bottomNavBtn) bottomNavBtn.classList.add('active');
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -1957,9 +1959,9 @@ function setupChartHoverInteraction(points, metricObj) {
   const valEl = document.getElementById('tooltip-val');
   if (!container || !tooltip) return;
 
-  container.onmousemove = (e) => {
+  const updateTooltipAtPos = (clientX) => {
     const rect = container.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
+    const mouseX = clientX - rect.left;
     const ratio = Math.max(0, Math.min(1, mouseX / rect.width));
     const pointIdx = Math.round(ratio * (points.length - 1));
     const pt = points[pointIdx];
@@ -1989,11 +1991,45 @@ function setupChartHoverInteraction(points, metricObj) {
     }
   };
 
-  container.onmouseleave = () => {
+  const hideTooltip = () => {
     tooltip.classList.remove('visible');
     container.querySelectorAll('.chart-point-dot').forEach(d => d.classList.remove('active'));
   };
+
+  container.onmousemove = (e) => {
+    updateTooltipAtPos(e.clientX);
+  };
+
+  container.onmouseleave = hideTooltip;
+
+  // Touch Support for Mobile devices
+  container.ontouchstart = (e) => {
+    if (e.touches && e.touches[0]) {
+      updateTooltipAtPos(e.touches[0].clientX);
+    }
+  };
+
+  container.ontouchmove = (e) => {
+    if (e.touches && e.touches[0]) {
+      updateTooltipAtPos(e.touches[0].clientX);
+    }
+  };
+
+  container.ontouchend = () => {
+    setTimeout(hideTooltip, 2500);
+  };
 }
+
+// Close mobile menu when clicking/tapping outside the navbar
+document.addEventListener('click', (e) => {
+  const navbar = document.getElementById('navbar');
+  const menu = document.getElementById('mobile-menu');
+  const ham = document.getElementById('hamburger');
+  if (menu && menu.classList.contains('open') && navbar && !navbar.contains(e.target)) {
+    menu.classList.remove('open');
+    if (ham) ham.classList.remove('open');
+  }
+});
 
 // Fetch Live & Historical Stats from Backend SQLite Database (/api/server-stats)
 async function fetchLiveServerStats() {

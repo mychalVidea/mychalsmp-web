@@ -44,14 +44,14 @@
       </button>
     </div>
     <div class="mobile-menu" id="mobile-menu">
-      <button class="nav-link" onclick="showTab('home');toggleMenu()">🏠 Domů</button>
-      <button class="nav-link" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
-      <button class="nav-link" onclick="showTab('smp-plus');toggleMenu()">👑 SMP+</button>
-      <button class="nav-link" onclick="showTab('media');toggleMenu()">🎬 Media</button>
-      <button class="nav-link" onclick="showTab('napady');toggleMenu()">💡 Nápady</button>
-      <button class="nav-link" id="btn-nav-stats" onclick="showTab('stats');toggleMenu()">📊 Statistiky</button>
-      <button class="nav-link" onclick="showTab('bugs');toggleMenu()">🐛 Bugy</button>
-      <button class="nav-link" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
+      <button class="nav-link" id="top-nav-home" onclick="showTab('home');toggleMenu()">🏠 Domů</button>
+      <button class="nav-link" id="top-nav-join" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
+      <button class="nav-link" id="top-nav-smp-plus" onclick="showTab('smp-plus');toggleMenu()">👑 SMP+</button>
+      <button class="nav-link" id="top-nav-media" onclick="showTab('media');toggleMenu()">🎬 Media</button>
+      <button class="nav-link" id="top-nav-napady" onclick="showTab('napady');toggleMenu()">💡 Nápady</button>
+      <button class="nav-link" id="top-nav-stats" onclick="showTab('stats');toggleMenu()">📊 Statistiky</button>
+      <button class="nav-link" id="top-nav-bugs" onclick="showTab('bugs');toggleMenu()">🐛 Bugy</button>
+      <button class="nav-link" id="top-nav-rules" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
     </div>
   </nav>
 
@@ -1180,29 +1180,33 @@
       <i class="fa-solid fa-house"></i>
       <span>Domů</span>
     </button>
-    <button class="bottom-nav-item" id="btn-nav-smp-plus" onclick="showTab('smp-plus')">
-      <i class="fa-solid fa-crown"></i>
-      <span>VIP</span>
-    </button>
     <button class="bottom-nav-item" id="btn-nav-join" onclick="showTab('join')">
       <i class="fa-solid fa-link"></i>
       <span>Připojit</span>
     </button>
-    <button class="bottom-nav-item" id="btn-nav-rules" onclick="showTab('rules')">
-      <i class="fa-solid fa-scroll"></i>
-      <span>Pravidla</span>
+    <button class="bottom-nav-item" id="btn-nav-smp-plus" onclick="showTab('smp-plus')">
+      <i class="fa-solid fa-crown"></i>
+      <span>SMP+</span>
     </button>
-    <button class="bottom-nav-item" id="btn-nav-media" onclick="showTab('media')">
-      <i class="fa-solid fa-video"></i>
-      <span>Media</span>
+    <button class="bottom-nav-item" id="btn-nav-stats" onclick="showTab('stats')">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>Stats</span>
+    </button>
+    <button class="bottom-nav-item" id="btn-nav-napady" onclick="showTab('napady')">
+      <i class="fa-solid fa-lightbulb"></i>
+      <span>Nápady</span>
     </button>
     <button class="bottom-nav-item" id="btn-nav-bugs" onclick="showTab('bugs')">
       <i class="fa-solid fa-bug"></i>
       <span>Bugy</span>
     </button>
-    <button class="bottom-nav-item" id="btn-nav-napady" onclick="showTab('napady')">
-      <i class="fa-solid fa-lightbulb"></i>
-      <span>Nápady</span>
+    <button class="bottom-nav-item" id="btn-nav-media" onclick="showTab('media')">
+      <i class="fa-solid fa-video"></i>
+      <span>Media</span>
+    </button>
+    <button class="bottom-nav-item" id="btn-nav-rules" onclick="showTab('rules')">
+      <i class="fa-solid fa-scroll"></i>
+      <span>Pravidla</span>
     </button>
   </div>
 

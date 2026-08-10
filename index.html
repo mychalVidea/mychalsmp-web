@@ -1092,11 +1092,29 @@
             <div class="chart-tooltip" id="chart-tooltip">
               <span class="tooltip-time" id="tooltip-time">14:00</span>
               <span class="tooltip-val" id="tooltip-val">18 hráčů</span>
+              <span class="tooltip-peak" id="tooltip-peak"></span>
             </div>
           </div>
 
           <!-- X-Axis Labels -->
           <div class="chart-x-labels" id="chart-x-labels"></div>
+        </div>
+
+        <!-- Chart Loading Skeleton Overlay -->
+        <div class="stats-chart-skeleton" id="stats-chart-skeleton" aria-hidden="true">
+          <div class="skeleton-banner">
+            <div class="skeleton-box skeleton-title"></div>
+            <div class="skeleton-box skeleton-value"></div>
+          </div>
+          <div class="skeleton-box skeleton-canvas"></div>
+          <div class="skeleton-labels">
+            <div class="skeleton-box skeleton-label"></div>
+            <div class="skeleton-box skeleton-label"></div>
+            <div class="skeleton-box skeleton-label"></div>
+            <div class="skeleton-box skeleton-label"></div>
+            <div class="skeleton-box skeleton-label"></div>
+            <div class="skeleton-box skeleton-label"></div>
+          </div>
         </div>
       </div>
 

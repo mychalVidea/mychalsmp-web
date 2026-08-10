@@ -1894,7 +1894,9 @@ function renderStatsChart() {
   const points = values.map((val, idx) => {
     const x = padX + (idx / Math.max(1, count - 1)) * usableW;
     const y = svgH - padY - ((val - minVal) / range) * usableH;
-    return { x, y, val, label: labels[idx] };
+    const peakInfo = seriesData.peaks ? seriesData.peaks[idx] : null;
+    const fullDateLabel = seriesData.fullDateLabels ? seriesData.fullDateLabels[idx] : null;
+    return { x, y, val, label: labels[idx], peakInfo, fullDateLabel };
   });
 
   // Render Horizontal Grid Lines (4 lines)
@@ -1961,7 +1963,7 @@ function renderStatsChart() {
     labelsContainer.innerHTML = displayLabels.map(l => `<span>${l}</span>`).join('');
   }
 
-  // Bind Mouse Hover Interaction for Tooltip
+  // Bind Mouse Hover & Click Interaction for Tooltip
   setupChartHoverInteraction(points, metricObj);
 }
 
@@ -1970,6 +1972,7 @@ function setupChartHoverInteraction(points, metricObj) {
   const tooltip = document.getElementById('chart-tooltip');
   const timeEl = document.getElementById('tooltip-time');
   const valEl = document.getElementById('tooltip-val');
+  const peakEl = document.getElementById('tooltip-peak');
   if (!container || !tooltip) return;
 
   const updateTooltipAtPos = (clientX) => {
@@ -1992,7 +1995,7 @@ function setupChartHoverInteraction(points, metricObj) {
         else d.classList.remove('active');
       });
 
-      if (timeEl) timeEl.innerText = pt.label;
+      if (timeEl) timeEl.innerText = pt.fullDateLabel || pt.label;
       if (valEl) {
         if (metricObj.unit === '$') {
           valEl.innerText = '$' + pt.val.toLocaleString('cs-CZ');
@@ -2000,6 +2003,16 @@ function setupChartHoverInteraction(points, metricObj) {
           valEl.innerText = pt.val.toLocaleString('cs-CZ') + ' ' + metricObj.unit;
         }
       }
+
+      if (peakEl) {
+        if (pt.peakInfo) {
+          peakEl.innerHTML = `<i class="fa-solid fa-bolt"></i> ${pt.peakInfo}`;
+          peakEl.classList.add('visible');
+        } else {
+          peakEl.classList.remove('visible');
+        }
+      }
+
       tooltip.classList.add('visible');
     }
   };
@@ -2010,6 +2023,10 @@ function setupChartHoverInteraction(points, metricObj) {
   };
 
   container.onmousemove = (e) => {
+    updateTooltipAtPos(e.clientX);
+  };
+
+  container.onclick = (e) => {
     updateTooltipAtPos(e.clientX);
   };
 
@@ -2029,7 +2046,7 @@ function setupChartHoverInteraction(points, metricObj) {
   };
 
   container.ontouchend = () => {
-    setTimeout(hideTooltip, 2500);
+    setTimeout(hideTooltip, 3000);
   };
 }
 
@@ -2044,8 +2061,20 @@ document.addEventListener('click', (e) => {
   }
 });
 
+let chartSkeletonTimer = null;
+
 // Fetch Live & Historical Stats from Backend SQLite Database (/api/server-stats)
 async function fetchLiveServerStats() {
+  const chartCard = document.querySelector('.stats-chart-card');
+  
+  // Show skeleton loader only if loading takes longer than 150ms (slow connection)
+  if (chartCard && !chartCard.classList.contains('is-loading')) {
+    chartSkeletonTimer = setTimeout(() => {
+      chartCard.classList.add('is-loading');
+      chartCard.setAttribute('aria-busy', 'true');
+    }, 150);
+  }
+
   try {
     const apiEndpoints = [
       `/api/server-stats?timeframe=${currentStatsTimeframe}`,
@@ -2083,67 +2112,186 @@ async function fetchLiveServerStats() {
       const valDeaths = document.getElementById('val-deaths');
       if (valDeaths) valDeaths.innerText = `${(latest.total_deaths || 0).toLocaleString('cs-CZ')}`;
 
-      // Build time series for current timeframe
+      // Build time series & peak calculations for current timeframe
       const labels = [];
-      const playersVals = [];
-      const playtimeVals = [];
-      const moneyVals = [];
-      const visitorsVals = [];
-      const deathsVals = [];
+      const fullDateLabels = [];
+      const metrics = {
+        players: { values: [], peaks: [] },
+        playtime: { values: [], peaks: [] },
+        money: { values: [], peaks: [] },
+        visitors: { values: [], peaks: [] },
+        deaths: { values: [], peaks: [] }
+      };
 
-      history.forEach(row => {
-        const d = new Date(row.timestamp);
-        let timeLabel = '';
-        if (currentStatsTimeframe === '1h') {
-          timeLabel = `${d.getMinutes()}m`;
-        } else if (currentStatsTimeframe === '1d') {
-          timeLabel = `${String(d.getHours()).padStart(2, '0')}:00`;
-        } else if (currentStatsTimeframe === '1w') {
-          const days = ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'];
-          timeLabel = days[d.getDay()];
-        } else {
-          timeLabel = `${d.getDate()}.${d.getMonth() + 1}.`;
+      const daysOfWeek = ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'];
+      const shortDays = ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'];
+
+      if (currentStatsTimeframe === '1h') {
+        history.forEach(row => {
+          const d = new Date(row.timestamp);
+          const timeLabel = `${String(d.getMinutes()).padStart(2, '0')}m`;
+          const fullLabel = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+          labels.push(timeLabel);
+          fullDateLabels.push(fullLabel);
+
+          metrics.players.values.push(row.online_players || 0);
+          metrics.players.peaks.push(null);
+
+          metrics.playtime.values.push(row.playtime_hours || 0);
+          metrics.playtime.peaks.push(null);
+
+          metrics.money.values.push(row.total_money || 0);
+          metrics.money.peaks.push(null);
+
+          metrics.visitors.values.push(row.unique_visitors || 0);
+          metrics.visitors.peaks.push(null);
+
+          metrics.deaths.values.push(row.total_deaths || 0);
+          metrics.deaths.peaks.push(null);
+        });
+      } else if (currentStatsTimeframe === '1d') {
+        history.forEach(row => {
+          const d = new Date(row.timestamp);
+          const timeLabel = `${String(d.getHours()).padStart(2, '0')}:00`;
+          const fullLabel = `${daysOfWeek[d.getDay()]} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+          labels.push(timeLabel);
+          fullDateLabels.push(fullLabel);
+
+          metrics.players.values.push(row.online_players || 0);
+          metrics.players.peaks.push(`Peak hodiny: ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`);
+
+          metrics.playtime.values.push(row.playtime_hours || 0);
+          metrics.playtime.peaks.push(null);
+
+          metrics.money.values.push(row.total_money || 0);
+          metrics.money.peaks.push(null);
+
+          metrics.visitors.values.push(row.unique_visitors || 0);
+          metrics.visitors.peaks.push(null);
+
+          metrics.deaths.values.push(row.total_deaths || 0);
+          metrics.deaths.peaks.push(null);
+        });
+      } else if (currentStatsTimeframe === '1w') {
+        // Group history into daily buckets and calculate peak timestamp & max value
+        const grouped = {};
+        history.forEach(row => {
+          const d = new Date(row.timestamp);
+          const dayKey = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+          if (!grouped[dayKey]) {
+            grouped[dayKey] = { dayName: daysOfWeek[d.getDay()], shortDay: shortDays[d.getDay()], dateStr: `${d.getDate()}. ${d.getMonth() + 1}.`, rows: [] };
+          }
+          grouped[dayKey].rows.push(row);
+        });
+
+        Object.values(grouped).forEach(group => {
+          labels.push(group.shortDay);
+          fullDateLabels.push(`${group.dayName} ${group.dateStr}`);
+
+          const keys = ['players', 'playtime', 'money', 'visitors', 'deaths'];
+          const fieldMap = { players: 'online_players', playtime: 'playtime_hours', money: 'total_money', visitors: 'unique_visitors', deaths: 'total_deaths' };
+
+          keys.forEach(k => {
+            const field = fieldMap[k];
+            let maxVal = 0;
+            let peakRow = group.rows[0];
+            let sumVal = 0;
+
+            group.rows.forEach(r => {
+              const v = r[field] || 0;
+              sumVal += v;
+              if (v >= maxVal) {
+                maxVal = v;
+                peakRow = r;
+              }
+            });
+
+            const avgVal = group.rows.length > 0 ? Math.round(sumVal / group.rows.length) : maxVal;
+            const peakDate = new Date(peakRow.timestamp);
+            const peakTimeStr = `${String(peakDate.getHours()).padStart(2, '0')}:${String(peakDate.getMinutes()).padStart(2, '0')}`;
+
+            metrics[k].values.push(k === 'players' ? maxVal : avgVal);
+            metrics[k].peaks.push(`Peak dne: ${peakTimeStr} (${maxVal.toLocaleString('cs-CZ')} ${statsData[k].unit})`);
+          });
+        });
+      } else if (currentStatsTimeframe === '1m') {
+        // Group history into weekly / date-range buckets and calculate peak day + peak hour
+        const numBuckets = Math.min(8, history.length);
+        const bucketSize = Math.ceil(history.length / Math.max(1, numBuckets));
+
+        for (let i = 0; i < history.length; i += bucketSize) {
+          const chunk = history.slice(i, i + bucketSize);
+          if (chunk.length === 0) continue;
+
+          const dStart = new Date(chunk[0].timestamp);
+          const dEnd = new Date(chunk[chunk.length - 1].timestamp);
+          const labelStr = `${dStart.getDate()}.${dStart.getMonth() + 1}.`;
+          const fullLabelStr = `${dStart.getDate()}.${dStart.getMonth() + 1}. – ${dEnd.getDate()}.${dEnd.getMonth() + 1}.`;
+
+          labels.push(labelStr);
+          fullDateLabels.push(fullLabelStr);
+
+          const keys = ['players', 'playtime', 'money', 'visitors', 'deaths'];
+          const fieldMap = { players: 'online_players', playtime: 'playtime_hours', money: 'total_money', visitors: 'unique_visitors', deaths: 'total_deaths' };
+
+          keys.forEach(k => {
+            const field = fieldMap[k];
+            let maxVal = 0;
+            let peakRow = chunk[0];
+            let sumVal = 0;
+
+            chunk.forEach(r => {
+              const v = r[field] || 0;
+              sumVal += v;
+              if (v >= maxVal) {
+                maxVal = v;
+                peakRow = r;
+              }
+            });
+
+            const avgVal = chunk.length > 0 ? Math.round(sumVal / chunk.length) : maxVal;
+            const peakDate = new Date(peakRow.timestamp);
+            const peakDayName = daysOfWeek[peakDate.getDay()];
+            const peakTimeStr = `${String(peakDate.getHours()).padStart(2, '0')}:${String(peakDate.getMinutes()).padStart(2, '0')}`;
+
+            metrics[k].values.push(k === 'players' ? maxVal : avgVal);
+            metrics[k].peaks.push(`Peak: ${peakDayName} ${peakTimeStr} (${maxVal.toLocaleString('cs-CZ')} ${statsData[k].unit})`);
+          });
         }
+      }
 
-        labels.push(timeLabel);
-        playersVals.push(row.online_players || 0);
-        playtimeVals.push(row.playtime_hours || 0);
-        moneyVals.push(row.total_money || 0);
-        visitorsVals.push(row.unique_visitors || 0);
-        deathsVals.push(row.total_deaths || 0);
+      // Update statsData object dynamically
+      const metricKeys = ['players', 'playtime', 'money', 'visitors', 'deaths'];
+      metricKeys.forEach(k => {
+        const latestVal = latest[k === 'players' ? 'online_players' : (k === 'playtime' ? 'playtime_hours' : (k === 'money' ? 'total_money' : (k === 'visitors' ? 'unique_visitors' : 'total_deaths')))] || 0;
+        let suffix = '';
+        if (k === 'players') suffix = 'hráčů online právě teď';
+        else if (k === 'playtime') suffix = 'hodin celkem';
+        else if (k === 'money') suffix = 'v oběhu';
+        else if (k === 'visitors') suffix = 'unikátních hráčů';
+        else if (k === 'deaths') suffix = 'celkových úmrtí';
+
+        const curValStr = k === 'money' ? `$${latestVal.toLocaleString('cs-CZ')} ${suffix}` : `${latestVal.toLocaleString('cs-CZ')} ${suffix}`;
+
+        statsData[k][currentStatsTimeframe] = {
+          labels: labels,
+          fullDateLabels: fullDateLabels,
+          values: metrics[k].values,
+          peaks: metrics[k].peaks,
+          curVal: curValStr
+        };
       });
-
-      // Update statsData object dynamically from DB records
-      statsData.players[currentStatsTimeframe] = {
-        labels,
-        values: playersVals,
-        curVal: `${latest.online_players || 0} hráčů online právě teď`
-      };
-      statsData.playtime[currentStatsTimeframe] = {
-        labels,
-        values: playtimeVals,
-        curVal: `${(latest.playtime_hours || 0).toLocaleString('cs-CZ')} hodin celkem`
-      };
-      statsData.money[currentStatsTimeframe] = {
-        labels,
-        values: moneyVals,
-        curVal: `$${(latest.total_money || 0).toLocaleString('cs-CZ')} v oběhu`
-      };
-      statsData.visitors[currentStatsTimeframe] = {
-        labels,
-        values: visitorsVals,
-        curVal: `${(latest.unique_visitors || 0).toLocaleString('cs-CZ')} unikátních hráčů`
-      };
-      statsData.deaths[currentStatsTimeframe] = {
-        labels,
-        values: deathsVals,
-        curVal: `${(latest.total_deaths || 0).toLocaleString('cs-CZ')} celkových úmrtí`
-      };
 
       renderStatsChart();
     }
   } catch (err) {
     console.log('Database server stats fetch fallback active:', err);
+  } finally {
+    if (chartSkeletonTimer) clearTimeout(chartSkeletonTimer);
+    if (chartCard) {
+      chartCard.classList.remove('is-loading');
+      chartCard.setAttribute('aria-busy', 'false');
+    }
   }
 }
 

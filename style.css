@@ -6415,6 +6415,28 @@ body {
   color: #ffffff;
 }
 
+.tooltip-peak {
+  display: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f59e0b;
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.tooltip-peak.visible {
+  display: flex;
+}
+
+.tooltip-peak i {
+  font-size: 0.7rem;
+  color: #fbbf24;
+}
+
 /* X-AXIS LABELS */
 .chart-x-labels {
   display: flex;
@@ -6840,5 +6862,105 @@ body {
     color: #38bdf8 !important;
     transform: scale(1.18) !important;
     text-shadow: 0 0 12px rgba(56, 189, 248, 0.6) !important;
+  }
+}
+
+/* ==========================================================================
+   GLASSMORPHIC SKELETON LOADER FOR STATS CHART
+   ========================================================================== */
+.stats-chart-card {
+  position: relative;
+}
+
+.stats-chart-wrapper {
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.stats-chart-card.is-loading .stats-chart-wrapper {
+  opacity: 0.15;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.stats-chart-skeleton {
+  display: none;
+  position: absolute;
+  top: 90px;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 15;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stats-chart-card.is-loading .stats-chart-skeleton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.skeleton-box {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(56, 189, 248, 0.14) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.6s infinite linear;
+  border-radius: 8px;
+}
+
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.skeleton-title {
+  width: 140px;
+  height: 14px;
+}
+
+.skeleton-value {
+  width: 220px;
+  height: 28px;
+}
+
+.skeleton-canvas {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+}
+
+.skeleton-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.skeleton-label {
+  flex: 1;
+  height: 14px;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .stats-chart-skeleton {
+    top: 135px;
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
   }
 }

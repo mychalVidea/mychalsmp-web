@@ -6964,3 +6964,179 @@ body {
     bottom: 14px;
   }
 }
+
+/* =============================================
+   PROMO BANNER – SMP+ sleva
+   ============================================= */
+
+.promo-banner {
+  position: absolute;
+  bottom: 90px;
+  right: 28px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px 16px 18px;
+  background: rgba(14, 12, 26, 0.72);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255, 200, 50, 0.28);
+  border-radius: 18px;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 200, 50, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  animation: promoSlideIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  max-width: 340px;
+}
+
+@keyframes promoSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.promo-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 195, 0, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.promo-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  font-size: 13px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+.promo-close:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+}
+
+.promo-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 8px rgba(255, 200, 50, 0.5));
+  animation: promoIconPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes promoIconPulse {
+  0%, 100% { transform: scale(1) rotate(-3deg); }
+  50% { transform: scale(1.08) rotate(3deg); }
+}
+
+.promo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.promo-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 200, 50, 0.75);
+}
+
+.promo-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.promo-plus {
+  color: #ffc832;
+  text-shadow: 0 0 12px rgba(255, 200, 50, 0.7);
+}
+
+.promo-code {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 1px;
+}
+
+.promo-code strong {
+  color: #ffc832;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  background: rgba(255, 200, 50, 0.1);
+  border: 1px solid rgba(255, 200, 50, 0.22);
+  border-radius: 5px;
+  padding: 0 5px;
+}
+
+.promo-countdown {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(255, 220, 100, 0.85);
+  margin-top: 3px;
+  letter-spacing: 0.02em;
+}
+
+.promo-btn {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 9px 16px;
+  background: linear-gradient(135deg, #ffc832 0%, #e89c00 100%);
+  color: #1a1000;
+  font-weight: 800;
+  font-size: 13px;
+  border-radius: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(255, 180, 0, 0.35);
+  transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
+}
+
+.promo-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 24px rgba(255, 180, 0, 0.55);
+  filter: brightness(1.08);
+}
+
+.promo-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@media (max-width: 600px) {
+  .promo-banner {
+    bottom: 20px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+  .promo-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+  }
+  .promo-title {
+    font-size: 17px;
+  }
+}

@@ -2296,3 +2296,47 @@ async function fetchLiveServerStats() {
 }
 
 
+// ─── PROMO COUNTDOWN ───────────────────────────────────────────────
+(function () {
+  // Aug 25 2026 20:00:00 Prague time (UTC+2)
+  const END_DATE = new Date('2026-08-25T18:00:00Z'); // 20:00 CEST = 18:00 UTC
+
+  const el = document.getElementById('promo-countdown');
+  const banner = document.getElementById('promo-banner');
+  if (!el || !banner) return;
+
+  function pad(n) { return n < 10 ? '0' + n : n; }
+
+  function tick() {
+    const now = new Date();
+    const diff = END_DATE - now;
+
+    if (diff <= 0) {
+      // Sleva skončila – skryjeme banner
+      banner.style.display = 'none';
+      return;
+    }
+
+    const totalSeconds = Math.floor(diff / 1000);
+    const days    = Math.floor(totalSeconds / 86400);
+    const hours   = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    let text = '';
+    if (days > 0) {
+      text = `⏳ Zbývá ${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
+    } else if (hours > 0) {
+      text = `⏳ Zbývá ${hours}h ${pad(minutes)}m ${pad(seconds)}s`;
+    } else if (minutes > 0) {
+      text = `⚡ Zbývá jen ${minutes}m ${pad(seconds)}s!`;
+    } else {
+      text = `🔥 Skoro konec! ${pad(seconds)}s`;
+    }
+
+    el.textContent = text;
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();

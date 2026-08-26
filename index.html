@@ -545,6 +545,18 @@
           </ul>
         </div>
 
+        <!-- Rule: Zákaz IRL Trade -->
+        <div class="rule-card rule-card--ban">
+          <div class="rule-badge">PERMANENTNÍ BAN</div>
+          <h3>Zákaz IRL Trade (RMT)</h3>
+          <p>Přísný zákaz jakéhokoliv nákupu, prodeje nebo směny herních předmětů, měny, účtů či služeb za reálné peníze.</p>
+          <ul class="rule-bullet-list">
+            <li>Prodej/nákup itemů nebo coinů za reálné peníze</li>
+            <li>Přeprodej herních účtů či výhod</li>
+            <li>Permanentní ban pro kupujícího i prodávajícího</li>
+          </ul>
+        </div>
+
         <!-- Rule 3 -->
         <div class="rule-card rule-card--warning">
           <div class="rule-badge">VAROVÁNÍ / BAN</div>
@@ -988,10 +1000,25 @@
             </div>
 
             <div class="media-form-group">
-              <label for="bug-desc"><i class="fa-solid fa-bug" style="color:#e74c3c;"></i> Popis bugu / problému</label>
+              <label for="bug-desc" id="bug-desc-label"><i class="fa-solid fa-bug" style="color:#e74c3c;"></i> Popis bugu / problému</label>
               <textarea id="bug-desc" class="media-input"
                 style="height: 120px; resize: vertical; font-family: inherit; line-height: 1.5; padding: 12px 16px;"
                 placeholder="Popiš kde se bug nachází, jak ho vyvolat a co se přesně děje..." required></textarea>
+            </div>
+
+            <!-- Žádost o unban checkbox -->
+            <div class="media-form-group" style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.22); border-radius: 12px; padding: 14px 18px; margin-top: -5px; transition: all 0.3s ease;">
+              <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; margin-bottom: 0; user-select: none;">
+                <input type="checkbox" id="bug-is-unban" style="width: 20px; height: 20px; accent-color: #ef4444; cursor: pointer; border-radius: 4px;" onchange="handleUnbanCheckboxToggle(this)">
+                <div>
+                  <span style="color: #fff; font-weight: 600; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
+                    <i class="fa-solid fa-scale-balanced" style="color: #ef4444;"></i> Žádost o unban
+                  </span>
+                  <span style="color: var(--text-muted); font-size: 0.84rem; display: block; margin-top: 2px;">
+                    Zaškrtni, pokud byl tvůj účet zablokován a žádáš o zrušení trestu nebo přezkoumání.
+                  </span>
+                </div>
+              </label>
             </div>
 
             <div class="media-form-group">

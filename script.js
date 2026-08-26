@@ -321,25 +321,38 @@ function formatCompactNumber(num) {
 // ---- FETCH DYNAMIC STATS ----
 async function loadStats() {
   try {
-    const res = await fetch('https://api.6767111.xyz/api/public-stats');
-    if (!res.ok) return;
-    const data = await res.json();
-    console.log('[PUBLIC STATS] response:', data);
+    const apiEndpoints = [
+      '/api/public-stats',
+      'https://api.6767111.xyz/api/public-stats'
+    ];
+    let data = null;
+    for (const url of apiEndpoints) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          data = await res.json();
+          if (data && (data.whitelist_count !== undefined || data.total_money !== undefined)) break;
+        }
+      } catch (e) {}
+    }
 
-    if (data.whitelist_count !== undefined) {
-      updateStat('stat-whitelist', data.whitelist_count);
-    }
-    if (data.discord_members !== undefined) {
-      updateStat('stat-discord', data.discord_members);
-    }
-    if (data.playtime_hours !== undefined) {
-      updateStat('stat-playtime', data.playtime_hours);
-    }
-    if (data.total_deaths !== undefined) {
-      updateStat('stat-deaths', data.total_deaths);
-    }
-    if (data.total_money !== undefined) {
-      updateStat('stat-money', data.total_money);
+    if (data) {
+      console.log('[PUBLIC STATS] loaded:', data);
+      if (data.whitelist_count !== undefined) {
+        updateStat('stat-whitelist', data.whitelist_count);
+      }
+      if (data.discord_members !== undefined) {
+        updateStat('stat-discord', data.discord_members);
+      }
+      if (data.playtime_hours !== undefined) {
+        updateStat('stat-playtime', data.playtime_hours);
+      }
+      if (data.total_deaths !== undefined) {
+        updateStat('stat-deaths', data.total_deaths);
+      }
+      if (data.total_money !== undefined) {
+        updateStat('stat-money', data.total_money);
+      }
     }
   } catch (err) {
     console.warn('Failed to load dynamic stats:', err);
@@ -1092,21 +1105,30 @@ function handleBugImagesChange(input) {
   preview.innerHTML = `📷 Vybrané fotky (${input.files.length}/2): ${names.join(', ')}`;
 }
 
-function readFileAsBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-    reader.readAsDataURL(file);
-  });
+function handleUnbanCheckboxToggle(checkbox) {
+  const isUnban = checkbox.checked;
+  const descLabel = document.getElementById('bug-desc-label');
+  const descInput = document.getElementById('bug-desc');
+  const submitBtn = document.getElementById('btn-bug-submit');
+
+  if (isUnban) {
+    if (descLabel) descLabel.innerHTML = '<i class="fa-solid fa-scale-balanced" style="color:#ef4444;"></i> Důvod žádosti a vysvětlení';
+    if (descInput) descInput.placeholder = 'Popiš za co jsi dostal trest, proč by ti měl být zrušen a doplňující vysvětlení...';
+    if (submitBtn) submitBtn.innerHTML = '⚖️ Odeslat žádost o unban';
+  } else {
+    if (descLabel) descLabel.innerHTML = '<i class="fa-solid fa-bug" style="color:#e74c3c;"></i> Popis bugu / problému';
+    if (descInput) descInput.placeholder = 'Popiš kde se bug nachází, jak ho vyvolat a co se přesně děje...';
+    if (submitBtn) submitBtn.innerHTML = '🐛 Odeslat nahlášení';
+  }
 }
 
-// ---- BUG REPORTING ----
+// ---- BUG & UNBAN REPORTING ----
 async function submitBugReport(e) {
   e.preventDefault();
   const nickInput = document.getElementById('bug-nick');
   const descInput = document.getElementById('bug-desc');
   const imagesInput = document.getElementById('bug-images');
+  const unbanCheckbox = document.getElementById('bug-is-unban');
   const submitBtn = document.getElementById('btn-bug-submit');
   const statusDiv = document.getElementById('bug-response-status');
 
@@ -1114,6 +1136,7 @@ async function submitBugReport(e) {
 
   const nick = nickInput.value.trim();
   const bug = descInput.value.trim();
+  const isUnban = unbanCheckbox ? unbanCheckbox.checked : false;
 
   if (!nick || !bug) {
     showToast('⚠️ Vyplň prosím všechna povinná pole!');
@@ -1144,41 +1167,61 @@ async function submitBugReport(e) {
   }
 
   submitBtn.disabled = true;
-  submitBtn.innerHTML = '⏳ Odesílám...';
+  submitBtn.innerHTML = isUnban ? '⏳ Odesílám žádost...' : '⏳ Odesílám...';
 
   try {
-    const res = await fetch('https://api.6767111.xyz/api/report-bug', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nick, bug, images })
-    });
+    const endpoints = ['/api/report-bug', 'https://api.6767111.xyz/api/report-bug'];
+    let data = null;
+    let successRes = false;
 
-    const data = await res.json();
-    if (res.ok && data.success) {
-      showToast('✅ Bug byl úspěšně nahlášen!');
+    for (const ep of endpoints) {
+      try {
+        const res = await fetch(ep, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nick, bug, images, isUnban })
+        });
+        if (res.ok) {
+          data = await res.json();
+          if (data && data.success) {
+            successRes = true;
+            break;
+          }
+        }
+      } catch (e) {}
+    }
+
+    if (successRes && data && data.success) {
+      showToast(isUnban ? '✅ Žádost o unban byla úspěšně odeslána!' : '✅ Bug byl úspěšně nahlášen!');
       nickInput.value = '';
       descInput.value = '';
+      if (unbanCheckbox) unbanCheckbox.checked = false;
+      handleUnbanCheckboxToggle({ checked: false });
       if (imagesInput) imagesInput.value = '';
       const preview = document.getElementById('bug-images-preview');
       if (preview) { preview.style.display = 'none'; preview.innerHTML = ''; }
 
       if (statusDiv) {
         statusDiv.style.display = 'block';
-        statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Děkujeme! Tvoje nahlášení bylo odesláno do systému ke kontrole. Po posouzení obdržíš odměnu přímo ve hře!</div>';
+        if (isUnban) {
+          statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Tvoje žádost o unban byla úspěšně odeslána! Administrátoři ji posoudí na Discordu.</div>';
+        } else {
+          statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Děkujeme! Tvoje nahlášení bylo odesláno do systému ke kontrole. Po posouzení obdržíš odměnu přímo ve hře!</div>';
+        }
       }
     } else {
-      showToast('❌ ' + (data.error || 'Chyba při odesílání'));
+      showToast(`❌ ${data && data.error ? data.error : 'Chyba při odesílání.'}`);
       if (statusDiv) {
         statusDiv.style.display = 'block';
-        statusDiv.innerHTML = `<div style="color:#e74c3c; font-weight:600; padding:15px; background:rgba(231,76,60,0.1); border-radius:10px; border: 1px solid rgba(231,76,60,0.3);">❌ ${data.error || 'Nepodařilo se odeslat bug.'}</div>`;
+        statusDiv.innerHTML = `<div style="color:#e74c3c; font-weight:600; padding:15px; background:rgba(231,76,60,0.1); border-radius:10px; border: 1px solid rgba(231,76,60,0.3);">❌ ${data && data.error ? data.error : 'Nepodařilo se odeslat nahlášení.'}</div>`;
       }
     }
   } catch (err) {
     console.error('Error submitting bug:', err);
-    showToast('❌ Chyba při spojení se serverem');
+    showToast('❌ Chyba při odesílání.');
   } finally {
     submitBtn.disabled = false;
-    submitBtn.innerHTML = '🐛 Odeslat nahlášení';
+    submitBtn.innerHTML = (unbanCheckbox && unbanCheckbox.checked) ? '⚖️ Odeslat žádost o unban' : '🐛 Odeslat nahlášení';
   }
 }
 
@@ -1802,6 +1845,42 @@ function switchChartMetric(metric) {
   renderStatsChart();
 }
 
+function computeMonotoneCubicPath(points, svgH, padY) {
+  if (!points || points.length === 0) return '';
+  if (points.length === 1) return `M ${points[0].x} ${points[0].y}`;
+  if (points.length === 2) return `M ${points[0].x} ${points[0].y} L ${points[1].x} ${points[1].y}`;
+
+  const n = points.length;
+  const m = new Array(n - 1);
+  for (let i = 0; i < n - 1; i++) {
+    const dx = points[i + 1].x - points[i].x;
+    m[i] = dx !== 0 ? (points[i + 1].y - points[i].y) / dx : 0;
+  }
+
+  const d = new Array(n);
+  d[0] = m[0];
+  d[n - 1] = m[n - 2];
+  for (let i = 1; i < n - 1; i++) {
+    if (m[i - 1] * m[i] <= 0) {
+      d[i] = 0;
+    } else {
+      d[i] = (m[i - 1] + m[i]) / 2;
+    }
+  }
+
+  let path = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+  for (let i = 0; i < n - 1; i++) {
+    const dx = (points[i + 1].x - points[i].x) / 3;
+    const cp1x = points[i].x + dx;
+    const cp1y = points[i].y + d[i] * dx;
+    const cp2x = points[i + 1].x - dx;
+    const cp2y = points[i + 1].y - d[i + 1] * dx;
+
+    path += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${points[i + 1].x.toFixed(1)} ${points[i + 1].y.toFixed(1)}`;
+  }
+  return path;
+}
+
 function switchTimeframe(timeframe) {
   currentStatsTimeframe = timeframe;
 
@@ -1858,32 +1937,33 @@ function renderStatsChart() {
     }
   });
 
-  let values = seriesData.values || [0];
-  let labels = seriesData.labels || [''];
-
-  // Downsample to max 20 points for ultra-smooth curve rendering
-  if (values.length > 20) {
-    const maxP = 20;
-    const sampledVals = [];
-    const sampledLabs = [];
-    for (let i = 0; i < maxP; i++) {
-      const idx = Math.round((i / (maxP - 1)) * (values.length - 1));
-      sampledVals.push(values[idx]);
-      sampledLabs.push(labels[idx]);
-    }
-    values = sampledVals;
-    labels = sampledLabs;
-  }
-
+  const values = seriesData.values || [0];
+  const labels = seriesData.labels || [''];
   const count = values.length;
 
   let minVal = Math.min(...values);
   let maxVal = Math.max(...values);
-  if (minVal === maxVal) {
-    minVal = Math.max(0, minVal - 5);
-    maxVal += 5;
+
+  if (currentStatsMetric === 'players') {
+    // For online players: always anchor baseline at 0 so player proportions are accurate
+    minVal = 0;
+    maxVal = Math.max(10, Math.ceil(maxVal * 1.25));
+  } else {
+    // For cumulative/financial totals: give a balanced, consistent margin (never 100% artificial swing)
+    if (minVal === maxVal) {
+      const pad = Math.max(1, minVal * 0.1);
+      minVal = Math.max(0, minVal - pad);
+      maxVal = maxVal + pad;
+    } else {
+      const delta = maxVal - minVal;
+      const minPadding = maxVal * 0.05;
+      const pad = Math.max(delta * 0.2, minPadding);
+      minVal = Math.max(0, minVal - pad);
+      maxVal = maxVal + pad;
+    }
   }
-  const range = maxVal - minVal;
+
+  const range = Math.max(1, maxVal - minVal);
   const padY = 30;
   const padX = 20;
   const svgW = 800;
@@ -1909,30 +1989,8 @@ function renderStatsChart() {
     gridGroup.innerHTML = gridHtml;
   }
 
-  // Silky Smooth Tension Bezier Curve with Ground Clamping (No dipping below ground, super smooth wave)
-  const maxY = svgH - padY;
-  const minY = padY;
-  const smoothing = 0.22;
-
-  let dLine = `M ${points[0].x} ${points[0].y}`;
-  for (let i = 0; i < points.length - 1; i++) {
-    const p0 = points[Math.max(0, i - 1)];
-    const p1 = points[i];
-    const p2 = points[i + 1];
-    const p3 = points[Math.min(points.length - 1, i + 2)];
-
-    let cp1x = p1.x + (p2.x - p0.x) * smoothing;
-    let cp1y = p1.y + (p2.y - p0.y) * smoothing;
-    let cp2x = p2.x - (p3.x - p1.x) * smoothing;
-    let cp2y = p2.y - (p3.y - p1.y) * smoothing;
-
-    // Ground & Ceiling Clamping: Prevent control points from dipping below ground or above top
-    cp1y = Math.min(maxY, Math.max(minY, cp1y));
-    cp2y = Math.min(maxY, Math.max(minY, cp2y));
-
-    dLine += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
-  }
-
+  // Render Accurate Monotone Cubic Spline (No overshoots, oscillations, or dipping)
+  const dLine = computeMonotoneCubicPath(points, svgH, padY);
   const dArea = `${dLine} L ${points[points.length - 1].x} ${svgH - padY} L ${points[0].x} ${svgH - padY} Z`;
 
   if (linePath) linePath.setAttribute('d', dLine);
@@ -1952,12 +2010,12 @@ function renderStatsChart() {
     container.appendChild(dot);
   });
 
-  // Render Clean, Non-overlapping X-Axis Labels (Max 6-7 labels)
+  // Render Clean, Evenly Spaced X-Axis Labels (Max 6-7 labels)
   if (labelsContainer) {
+    const maxLabels = Math.min(7, count);
     const displayLabels = [];
-    const maxDisplay = Math.min(7, count);
-    for (let i = 0; i < maxDisplay; i++) {
-      const idx = Math.round((i / Math.max(1, maxDisplay - 1)) * (count - 1));
+    for (let i = 0; i < maxLabels; i++) {
+      const idx = Math.round((i / Math.max(1, maxLabels - 1)) * (count - 1));
       displayLabels.push(labels[idx]);
     }
     labelsContainer.innerHTML = displayLabels.map(l => `<span>${l}</span>`).join('');
@@ -2112,7 +2170,7 @@ async function fetchLiveServerStats() {
       const valDeaths = document.getElementById('val-deaths');
       if (valDeaths) valDeaths.innerText = `${(latest.total_deaths || 0).toLocaleString('cs-CZ')}`;
 
-      // Build time series & peak calculations for current timeframe
+      // Build time series for current timeframe
       const labels = [];
       const fullDateLabels = [];
       const metrics = {
@@ -2126,139 +2184,44 @@ async function fetchLiveServerStats() {
       const daysOfWeek = ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'];
       const shortDays = ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'];
 
-      if (currentStatsTimeframe === '1h') {
-        history.forEach(row => {
-          const d = new Date(row.timestamp);
-          const timeLabel = `${String(d.getMinutes()).padStart(2, '0')}m`;
-          const fullLabel = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-          labels.push(timeLabel);
-          fullDateLabels.push(fullLabel);
+      history.forEach((row, idx) => {
+        const d = new Date(row.timestamp);
+        let timeLabel = '';
+        let fullLabel = '';
+        const isLast = (idx === history.length - 1);
 
-          metrics.players.values.push(row.online_players || 0);
-          metrics.players.peaks.push(null);
-
-          metrics.playtime.values.push(row.playtime_hours || 0);
-          metrics.playtime.peaks.push(null);
-
-          metrics.money.values.push(row.total_money || 0);
-          metrics.money.peaks.push(null);
-
-          metrics.visitors.values.push(row.unique_visitors || 0);
-          metrics.visitors.peaks.push(null);
-
-          metrics.deaths.values.push(row.total_deaths || 0);
-          metrics.deaths.peaks.push(null);
-        });
-      } else if (currentStatsTimeframe === '1d') {
-        history.forEach(row => {
-          const d = new Date(row.timestamp);
-          const timeLabel = `${String(d.getHours()).padStart(2, '0')}:00`;
-          const fullLabel = `${daysOfWeek[d.getDay()]} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-          labels.push(timeLabel);
-          fullDateLabels.push(fullLabel);
-
-          metrics.players.values.push(row.online_players || 0);
-          metrics.players.peaks.push(`Peak hodiny: ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`);
-
-          metrics.playtime.values.push(row.playtime_hours || 0);
-          metrics.playtime.peaks.push(null);
-
-          metrics.money.values.push(row.total_money || 0);
-          metrics.money.peaks.push(null);
-
-          metrics.visitors.values.push(row.unique_visitors || 0);
-          metrics.visitors.peaks.push(null);
-
-          metrics.deaths.values.push(row.total_deaths || 0);
-          metrics.deaths.peaks.push(null);
-        });
-      } else if (currentStatsTimeframe === '1w') {
-        // Group history into daily buckets and calculate peak timestamp & max value
-        const grouped = {};
-        history.forEach(row => {
-          const d = new Date(row.timestamp);
-          const dayKey = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
-          if (!grouped[dayKey]) {
-            grouped[dayKey] = { dayName: daysOfWeek[d.getDay()], shortDay: shortDays[d.getDay()], dateStr: `${d.getDate()}. ${d.getMonth() + 1}.`, rows: [] };
-          }
-          grouped[dayKey].rows.push(row);
-        });
-
-        Object.values(grouped).forEach(group => {
-          labels.push(group.shortDay);
-          fullDateLabels.push(`${group.dayName} ${group.dateStr}`);
-
-          const keys = ['players', 'playtime', 'money', 'visitors', 'deaths'];
-          const fieldMap = { players: 'online_players', playtime: 'playtime_hours', money: 'total_money', visitors: 'unique_visitors', deaths: 'total_deaths' };
-
-          keys.forEach(k => {
-            const field = fieldMap[k];
-            let maxVal = 0;
-            let peakRow = group.rows[0];
-            let sumVal = 0;
-
-            group.rows.forEach(r => {
-              const v = r[field] || 0;
-              sumVal += v;
-              if (v >= maxVal) {
-                maxVal = v;
-                peakRow = r;
-              }
-            });
-
-            const avgVal = group.rows.length > 0 ? Math.round(sumVal / group.rows.length) : maxVal;
-            const peakDate = new Date(peakRow.timestamp);
-            const peakTimeStr = `${String(peakDate.getHours()).padStart(2, '0')}:${String(peakDate.getMinutes()).padStart(2, '0')}`;
-
-            metrics[k].values.push(k === 'players' ? maxVal : avgVal);
-            metrics[k].peaks.push(`Peak dne: ${peakTimeStr} (${maxVal.toLocaleString('cs-CZ')} ${statsData[k].unit})`);
-          });
-        });
-      } else if (currentStatsTimeframe === '1m') {
-        // Group history into weekly / date-range buckets and calculate peak day + peak hour
-        const numBuckets = Math.min(8, history.length);
-        const bucketSize = Math.ceil(history.length / Math.max(1, numBuckets));
-
-        for (let i = 0; i < history.length; i += bucketSize) {
-          const chunk = history.slice(i, i + bucketSize);
-          if (chunk.length === 0) continue;
-
-          const dStart = new Date(chunk[0].timestamp);
-          const dEnd = new Date(chunk[chunk.length - 1].timestamp);
-          const labelStr = `${dStart.getDate()}.${dStart.getMonth() + 1}.`;
-          const fullLabelStr = `${dStart.getDate()}.${dStart.getMonth() + 1}. – ${dEnd.getDate()}.${dEnd.getMonth() + 1}.`;
-
-          labels.push(labelStr);
-          fullDateLabels.push(fullLabelStr);
-
-          const keys = ['players', 'playtime', 'money', 'visitors', 'deaths'];
-          const fieldMap = { players: 'online_players', playtime: 'playtime_hours', money: 'total_money', visitors: 'unique_visitors', deaths: 'total_deaths' };
-
-          keys.forEach(k => {
-            const field = fieldMap[k];
-            let maxVal = 0;
-            let peakRow = chunk[0];
-            let sumVal = 0;
-
-            chunk.forEach(r => {
-              const v = r[field] || 0;
-              sumVal += v;
-              if (v >= maxVal) {
-                maxVal = v;
-                peakRow = r;
-              }
-            });
-
-            const avgVal = chunk.length > 0 ? Math.round(sumVal / chunk.length) : maxVal;
-            const peakDate = new Date(peakRow.timestamp);
-            const peakDayName = daysOfWeek[peakDate.getDay()];
-            const peakTimeStr = `${String(peakDate.getHours()).padStart(2, '0')}:${String(peakDate.getMinutes()).padStart(2, '0')}`;
-
-            metrics[k].values.push(k === 'players' ? maxVal : avgVal);
-            metrics[k].peaks.push(`Peak: ${peakDayName} ${peakTimeStr} (${maxVal.toLocaleString('cs-CZ')} ${statsData[k].unit})`);
-          });
+        if (currentStatsTimeframe === '1h') {
+          timeLabel = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+          fullLabel = isLast ? `Nyní (${timeLabel})` : `Dnes ${timeLabel}`;
+        } else if (currentStatsTimeframe === '1d') {
+          timeLabel = `${String(d.getHours()).padStart(2, '0')}:00`;
+          fullLabel = isLast ? `Nyní (${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')})` : `${daysOfWeek[d.getDay()]} ${timeLabel}`;
+        } else if (currentStatsTimeframe === '1w') {
+          timeLabel = shortDays[d.getDay()];
+          fullLabel = isLast ? `Dnes (${timeLabel} ${d.getDate()}.${d.getMonth() + 1}.)` : `${daysOfWeek[d.getDay()]} ${d.getDate()}.${d.getMonth() + 1}.`;
+        } else if (currentStatsTimeframe === '1m') {
+          timeLabel = `${d.getDate()}.${d.getMonth() + 1}.`;
+          fullLabel = `${daysOfWeek[d.getDay()]} ${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
         }
-      }
+
+        labels.push(timeLabel);
+        fullDateLabels.push(fullLabel);
+
+        metrics.players.values.push(row.online_players || 0);
+        metrics.players.peaks.push((row.online_players !== undefined) ? `Aktivita: ${row.online_players} hráčů` : null);
+
+        metrics.playtime.values.push(row.playtime_hours || 0);
+        metrics.playtime.peaks.push(null);
+
+        metrics.money.values.push(row.total_money || 0);
+        metrics.money.peaks.push(null);
+
+        metrics.visitors.values.push(row.unique_visitors || 0);
+        metrics.visitors.peaks.push(null);
+
+        metrics.deaths.values.push(row.total_deaths || 0);
+        metrics.deaths.peaks.push(null);
+      });
 
       // Update statsData object dynamically
       const metricKeys = ['players', 'playtime', 'money', 'visitors', 'deaths'];
@@ -2285,12 +2248,15 @@ async function fetchLiveServerStats() {
       renderStatsChart();
     }
   } catch (err) {
-    console.log('Database server stats fetch fallback active:', err);
+    console.warn('Failed to load server stats:', err);
   } finally {
-    if (chartSkeletonTimer) clearTimeout(chartSkeletonTimer);
+    if (chartSkeletonTimer) {
+      clearTimeout(chartSkeletonTimer);
+      chartSkeletonTimer = null;
+    }
     if (chartCard) {
       chartCard.classList.remove('is-loading');
-      chartCard.setAttribute('aria-busy', 'false');
+      chartCard.removeAttribute('aria-busy');
     }
   }
 }

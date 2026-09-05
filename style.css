@@ -2036,7 +2036,7 @@ body {
   z-index: 2;
   display: flex;
   gap: 48px;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -2048,8 +2048,11 @@ body {
 .smp-hero-right {
   flex: 0.9;
   display: flex;
-  justify-content: flex-end;
-  min-width: 380px;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 440px;
+  width: 100%;
+  gap: 20px;
 }
 
 /* Premium branding texts */
@@ -2133,6 +2136,8 @@ body {
   padding: 36px 32px;
   width: 100%;
   max-width: 440px;
+  box-sizing: border-box;
+  flex-shrink: 0;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 35px rgba(14, 165, 233, 0.15);
   position: relative;
   overflow: hidden;
@@ -2204,12 +2209,14 @@ body {
   color: #ffffff;
   letter-spacing: -0.02em;
   text-shadow: 0 4px 20px rgba(14, 165, 233, 0.3);
+  white-space: nowrap;
 }
 
 .smp-price-period {
   font-size: 1.05rem;
   color: rgba(255, 255, 255, 0.65);
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .smp-divider {
@@ -3070,11 +3077,18 @@ body {
   }
 
   .smp-hero-right {
+    align-items: center;
     justify-content: center;
     width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
   }
 
   .smp-checkout-card {
+    max-width: 480px;
+  }
+
+  .smp-manage-card {
     max-width: 480px;
   }
 }
@@ -3091,6 +3105,10 @@ body {
 
   .smp-checkout-card {
     padding: 24px;
+  }
+
+  .smp-manage-card {
+    padding: 18px;
   }
 
   .smp-price-num {
@@ -7143,13 +7161,17 @@ body {
 
 /* ===================== SMP+ MEMBERSHIP MANAGEMENT & CANCELLATION ===================== */
 .smp-manage-card {
-  margin-top: 24px;
+  margin-top: 0;
   background: rgba(18, 24, 38, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
   padding: 24px;
+  width: 100%;
+  max-width: 440px;
+  box-sizing: border-box;
+  flex-shrink: 0;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }

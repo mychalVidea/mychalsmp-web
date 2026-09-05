@@ -81,6 +81,8 @@ function executeTabSwitch(name, updateUrl = true) {
     loadIdeasTab();
   } else if (name === 'stats') {
     initStatsModule();
+  } else if (name === 'smp-plus') {
+    checkSmpPlusStatus();
   }
 
   if (updateUrl) {
@@ -625,6 +627,196 @@ function getAuthHeaders() {
   return token ? { 'Authorization': token } : {};
 }
 
+// ---- SMP+ MEMBERSHIP MANAGEMENT & CANCELLATION ----
+let cachedSmpNick = '';
+
+async function checkSmpPlusStatus() {
+  const container = document.getElementById('smp-manage-content');
+  if (!container) return;
+
+  const token = localStorage.getItem('auth_token');
+
+  // 1. Not logged in
+  if (!token) {
+    container.innerHTML = `
+      <div class="smp-manage-unauth">
+        <p class="smp-manage-desc">Pro zrušení nebo správu svého SMP+ členství se musíš nejprve přihlásit přes Discord.</p>
+        <button type="button" onclick="loginViaDiscord()" class="btn-discord-login" style="width: 100%; justify-content: center;">
+          <i class="fa-brands fa-discord"></i> Přihlásit se přes Discord
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="smp-manage-loading">
+      <span class="btn-spinner"></span>
+      <span>Ověřuji stav předplatného a propojení...</span>
+    </div>
+  `;
+
+  try {
+    const res = await fetch('https://api.6767111.xyz/api/smpplus/status', {
+      headers: getAuthHeaders()
+    });
+
+    if (res.status === 401 || res.status === 403) {
+      localStorage.removeItem('auth_token');
+      container.innerHTML = `
+        <div class="smp-manage-unauth">
+          <p class="smp-manage-desc">Tvé přihlášení vypršelo. Přihlas se prosím znovu přes Discord.</p>
+          <button type="button" onclick="loginViaDiscord()" class="btn-discord-login" style="width: 100%; justify-content: center;">
+            <i class="fa-brands fa-discord"></i> Přihlásit se přes Discord
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    const data = await res.json();
+
+    // 2. Logged in, but account NOT linked via /dlink
+    if (!data.linked) {
+      container.innerHTML = `
+        <div class="smp-manage-unlinked">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.5rem; line-height: 1;">⚠️</span>
+            <div>
+              <strong style="color: #f59e0b; display: block; margin-bottom: 4px;">Nemáš propojený Minecraft účet!</strong>
+              <p class="smp-manage-desc">Pro správu nebo zrušení SMP+ musíš mít účet spárovaný. Připoj se na server <strong>mychalsmp.xyz</strong> a napiš do chatu:</p>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: 8px;">
+            <code class="dlink-code-badge" onclick="copyDlinkCmd()" title="Kliknutím zkopíruješ">/dlink <i class="fa-regular fa-copy" style="font-size: 0.85em; opacity: 0.8;"></i></code>
+            <button type="button" onclick="checkSmpPlusStatus()" class="btn-secondary" style="padding: 8px 14px; font-size: 0.85rem;">
+              <i class="fa-solid fa-arrows-rotate"></i> Zkontrolovat
+            </button>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    // 3. Logged in & linked via /dlink
+    cachedSmpNick = data.mcNick;
+    const nickInput = document.getElementById('mc-username');
+    if (nickInput && !nickInput.value && data.mcNick) {
+      nickInput.value = data.mcNick;
+      if (typeof updatePreviewName === 'function') updatePreviewName(data.mcNick);
+    }
+
+    if (data.hasSmpPlus) {
+      let expiryText = 'Aktivní předplatné';
+      if (data.expiresAt) {
+        const d = new Date(data.expiresAt);
+        expiryText = `Platné do: ${d.toLocaleDateString('cs-CZ')} (${d.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' })})`;
+      }
+
+      container.innerHTML = `
+        <div class="smp-manage-status-box">
+          <div class="smp-user-info-row">
+            <div class="smp-user-profile">
+              <img src="https://mc-heads.net/avatar/${data.mcNick}/32" alt="${data.mcNick}">
+              <div>
+                <span class="nick">${data.mcNick}</span>
+                <span style="display: block; font-size: 0.8rem; color: #94a3b8;">${expiryText}</span>
+              </div>
+            </div>
+            <span class="smp-badge-active"><i class="fa-solid fa-crown"></i> SMP+</span>
+          </div>
+          <p class="smp-manage-desc">Tvé předplatné je aktivní. Pokud si přeješ členství ukončit a odebrat výhody, můžeš ho níže zrušit.</p>
+          <button type="button" class="btn-cancel-smpplus" onclick="confirmCancelSmpPlus()">
+            <i class="fa-solid fa-ban"></i> Zrušit SMP+ členství
+          </button>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="smp-manage-status-box">
+          <div class="smp-user-info-row">
+            <div class="smp-user-profile">
+              <img src="https://mc-heads.net/avatar/${data.mcNick}/32" alt="${data.mcNick}">
+              <span class="nick">${data.mcNick}</span>
+            </div>
+            <span class="smp-badge-inactive">Neaktivní</span>
+          </div>
+          <p class="smp-manage-desc">Propojený účet <strong>${data.mcNick}</strong> momentálně nemá aktivní SMP+ členství.</p>
+        </div>
+      `;
+    }
+  } catch (err) {
+    console.error('[CHECK SMP+ STATUS ERR]', err);
+    container.innerHTML = `
+      <div style="color: #ef4444; padding: 10px 0;">
+        Nepodařilo se načíst stav členství. <button type="button" onclick="checkSmpPlusStatus()" style="background: none; border: none; color: #38bdf8; cursor: pointer; text-decoration: underline;">Zkusit znovu</button>
+      </div>
+    `;
+  }
+}
+
+function copyDlinkCmd() {
+  navigator.clipboard.writeText('/dlink').then(() => {
+    if (typeof showToast === 'function') {
+      showToast('📋 Příkaz /dlink byl zkopírován do schránky!');
+    }
+  }).catch(() => {});
+}
+
+function confirmCancelSmpPlus() {
+  const modal = document.getElementById('smp-cancel-modal');
+  const desc = document.getElementById('smp-cancel-modal-desc');
+  if (desc && cachedSmpNick) {
+    desc.innerHTML = `Opravdu si přeješ zrušit SMP+ členství pro hráče <strong>${cachedSmpNick}</strong>?<br><br>Okamžitě přijdeš o všechny výhody SMP+ (větší Ender truhla, barva nicku, rychlejší teleporty, 14 domovů) ve hře i na Discordu.`;
+  }
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeCancelModal() {
+  const modal = document.getElementById('smp-cancel-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function executeCancelSmpPlus() {
+  const btn = document.getElementById('btn-confirm-cancel-smpplus');
+  const spinner = document.getElementById('cancel-btn-spinner');
+  if (btn) btn.disabled = true;
+  if (spinner) spinner.style.display = 'inline-block';
+
+  try {
+    const res = await fetch('https://api.6767111.xyz/api/smpplus/cancel', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders()
+      }
+    });
+
+    const data = await res.json();
+    closeCancelModal();
+
+    if (data.success) {
+      if (typeof showToast === 'function') {
+        showToast('✅ ' + data.message);
+      }
+      checkSmpPlusStatus();
+    } else {
+      if (typeof showToast === 'function') {
+        showToast('❌ ' + (data.message || 'Chyba při rušení členství.'));
+      }
+    }
+  } catch (err) {
+    console.error('[CANCEL SMP+ ERR]', err);
+    closeCancelModal();
+    if (typeof showToast === 'function') {
+      showToast('❌ Chyba při komunikaci se serverem.');
+    }
+  } finally {
+    if (btn) btn.disabled = false;
+    if (spinner) spinner.style.display = 'none';
+  }
+}
+
 // ---- CHECK MEDIA STATUS ----
 async function checkMediaStatus() {
   const token = localStorage.getItem('auth_token');
@@ -1073,37 +1265,165 @@ function triggerEpicVipTransition(callback) {
   if (callback) callback();
 }
 
-function handleBugImagesChange(input) {
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file);
+  });
+}
+
+let bugSelectedFiles = [];
+
+function removeBugImage(index) {
+  bugSelectedFiles.splice(index, 1);
+  renderBugImagesPreview();
+}
+
+function renderBugImagesPreview() {
   const preview = document.getElementById('bug-images-preview');
   if (!preview) return;
-  if (!input.files || input.files.length === 0) {
+  if (bugSelectedFiles.length === 0) {
     preview.style.display = 'none';
     preview.innerHTML = '';
     return;
   }
 
-  if (input.files.length > 2) {
-    showToast('⚠️ Můžeš vybrat maximálně 2 obrázky!');
-    input.value = '';
-    preview.style.display = 'none';
-    return;
-  }
+  preview.style.display = 'block';
+  preview.innerHTML = `
+    <div style="font-size:13px; margin-bottom:8px; color:#2ecc71; font-weight:600;">
+      📷 Vybrané fotky (${bugSelectedFiles.length}/3):
+    </div>
+    <div id="bug-thumb-container" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;"></div>
+  `;
+  const container = document.getElementById('bug-thumb-container');
 
-  const names = [];
-  for (let i = 0; i < input.files.length; i++) {
-    const file = input.files[i];
-    if (file.size > 10 * 1024 * 1024) {
-      showToast(`⚠️ Obrázek "${file.name}" přesahuje limit 10 MB!`);
-      input.value = '';
-      preview.style.display = 'none';
+  bugSelectedFiles.forEach((file, idx) => {
+    const thumb = document.createElement('div');
+    thumb.style.cssText = 'position:relative; width:90px; height:65px; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.25); box-shadow:0 4px 10px rgba(0,0,0,0.3); background:#111;';
+
+    const objectUrl = URL.createObjectURL(file);
+    thumb.innerHTML = `
+      <img src="${objectUrl}" style="width:100%; height:100%; object-fit:cover;" title="${file.name}">
+      <button type="button" onclick="removeBugImage(${idx})" style="position:absolute; top:2px; right:2px; background:rgba(231,76,60,0.85); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:12px; line-height:20px; text-align:center; cursor:pointer; padding:0;">×</button>
+    `;
+    container.appendChild(thumb);
+  });
+}
+
+function processBugImage(file) {
+  return new Promise((resolve) => {
+    const fallback = () => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve({ name: file.name, data: e.target.result });
+      reader.onerror = () => resolve({ name: file.name, data: '' });
+      reader.readAsDataURL(file);
+    };
+
+    if (!file.type || !file.type.startsWith('image/')) {
+      fallback();
       return;
     }
-    names.push(file.name);
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          // Resize to max 1280px to stay well within Nginx limits while keeping crisp detail
+          let maxDimension = 1280;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxDimension || height > maxDimension) {
+            if (width > height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          let quality = 0.78;
+          let compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+
+          // If still larger than 350KB, compress further to prevent 413 Payload Too Large
+          if (compressedDataUrl.length > 450000) {
+            quality = 0.65;
+            compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+          }
+
+          const extName = (file.name || 'screenshot').replace(/\.[^/.]+$/, '') + '.jpg';
+          resolve({ name: extName, data: compressedDataUrl });
+        } catch (canvasErr) {
+          fallback();
+        }
+      };
+      img.onerror = () => fallback();
+      img.src = e.target.result;
+    };
+    reader.onerror = () => fallback();
+    reader.readAsDataURL(file);
+  });
+}
+
+function handleBugImagesChange(input) {
+  if (!input.files || input.files.length === 0) return;
+
+  const newFiles = Array.from(input.files);
+  for (const file of newFiles) {
+    if (bugSelectedFiles.length >= 3) {
+      showToast('⚠️ Můžeš přiložit maximálně 3 fotky!');
+      break;
+    }
+    if (file.size > 20 * 1024 * 1024) {
+      showToast(`⚠️ Obrázek "${file.name}" je příliš velký (max 20 MB).`);
+      continue;
+    }
+    bugSelectedFiles.push(file);
   }
 
-  preview.style.display = 'block';
-  preview.innerHTML = `📷 Vybrané fotky (${input.files.length}/2): ${names.join(', ')}`;
+  input.value = '';
+  renderBugImagesPreview();
 }
+
+// Paste support for screenshots on bug report
+document.addEventListener('paste', (e) => {
+  const activeTab = document.querySelector('.tab-content.active');
+  const isBugTab = activeTab && (activeTab.id === 'tab-bugs' || activeTab.querySelector('#bug-report-form'));
+  if (!isBugTab) return;
+
+  const items = (e.clipboardData || e.originalEvent.clipboardData)?.items;
+  if (!items) return;
+
+  let pastedAny = false;
+  for (const item of items) {
+    if (item.type && item.type.indexOf('image') !== -1) {
+      const file = item.getAsFile();
+      if (file) {
+        if (bugSelectedFiles.length >= 3) {
+          showToast('⚠️ Můžeš přiložit maximálně 3 fotky!');
+          break;
+        }
+        bugSelectedFiles.push(file);
+        pastedAny = true;
+      }
+    }
+  }
+
+  if (pastedAny) {
+    showToast('📷 Snímek vložen ze schránky!');
+    renderBugImagesPreview();
+  }
+});
 
 function handleUnbanCheckboxToggle(checkbox) {
   const isUnban = checkbox.checked;
@@ -1189,24 +1509,24 @@ async function submitBugReport(e) {
     return;
   }
 
+  const filesToUpload = bugSelectedFiles.length > 0 ? bugSelectedFiles : (imagesInput && imagesInput.files ? Array.from(imagesInput.files) : []);
   const images = [];
-  if (imagesInput && imagesInput.files && imagesInput.files.length > 0) {
-    if (imagesInput.files.length > 2) {
-      showToast('⚠️ Můžeš přiložit maximálně 2 obrázky!');
+
+  if (filesToUpload.length > 0) {
+    if (filesToUpload.length > 3) {
+      showToast('⚠️ Můžeš přiložit maximálně 3 obrázky!');
       return;
     }
-    for (let i = 0; i < imagesInput.files.length; i++) {
-      const file = imagesInput.files[i];
-      if (file.size > 10 * 1024 * 1024) {
-        showToast(`⚠️ Soubor "${file.name}" přesahuje limit 10 MB!`);
-        return;
-      }
+    for (let i = 0; i < filesToUpload.length; i++) {
+      const file = filesToUpload[i];
       try {
-        const base64Data = await readFileAsBase64(file);
-        images.push({ name: file.name, data: base64Data });
+        const processed = await processBugImage(file);
+        if (processed && processed.data) {
+          images.push(processed);
+        }
       } catch (err) {
-        console.error('Error reading file:', err);
-        showToast('❌ Chyba při načítání obrázku.');
+        console.error('Error processing image:', err);
+        showToast(`❌ Chyba při načítání obrázku "${file.name}".`);
         return;
       }
     }
@@ -1219,6 +1539,8 @@ async function submitBugReport(e) {
     const endpoints = ['/api/report-bug', 'https://api.6767111.xyz/api/report-bug'];
     let data = null;
     let successRes = false;
+    let resErrorMsg = null;
+    let resRetryAfter = null;
 
     for (const ep of endpoints) {
       try {
@@ -1227,17 +1549,29 @@ async function submitBugReport(e) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ nick, bug, images, isUnban })
         });
-        if (res.ok) {
-          data = await res.json();
-          if (data && data.success) {
-            successRes = true;
-            break;
-          }
-        } else if (res.status === 429) {
-          data = await res.json().catch(() => null);
+        const json = await res.json().catch(() => null);
+
+        if (res.ok && json && json.success) {
+          data = json;
+          successRes = true;
           break;
         }
-      } catch (e) {}
+
+        if (res.status === 413) {
+          resErrorMsg = 'Obrázky jsou příliš velké. Zkus nahrát menší snímek nebo jen 1 fotku.';
+          break;
+        }
+
+        if (json && json.error) {
+          resErrorMsg = json.error;
+        }
+        if (json && json.retryAfter) {
+          resRetryAfter = json.retryAfter;
+          break;
+        }
+      } catch (e) {
+        console.warn('Endpoint error:', ep, e);
+      }
     }
 
     if (successRes && data && data.success) {
@@ -1247,8 +1581,8 @@ async function submitBugReport(e) {
       if (unbanCheckbox) unbanCheckbox.checked = false;
       handleUnbanCheckboxToggle({ checked: false });
       if (imagesInput) imagesInput.value = '';
-      const preview = document.getElementById('bug-images-preview');
-      if (preview) { preview.style.display = 'none'; preview.innerHTML = ''; }
+      bugSelectedFiles = [];
+      renderBugImagesPreview();
 
       if (statusDiv) {
         statusDiv.style.display = 'block';
@@ -1260,14 +1594,14 @@ async function submitBugReport(e) {
       }
       startBugCooldownTimer(60);
     } else {
-      const errMsg = (data && data.error) ? data.error : 'Nepodařilo se odeslat nahlášení.';
+      const errMsg = resErrorMsg || (data && data.error) || 'Nepodařilo se odeslat nahlášení.';
       showToast(`❌ ${errMsg}`);
       if (statusDiv) {
         statusDiv.style.display = 'block';
         statusDiv.innerHTML = `<div style="color:#e74c3c; font-weight:600; padding:15px; background:rgba(231,76,60,0.1); border-radius:10px; border: 1px solid rgba(231,76,60,0.3);">❌ ${errMsg}</div>`;
       }
-      if (data && data.retryAfter) {
-        startBugCooldownTimer(data.retryAfter);
+      if (resRetryAfter || (data && data.retryAfter)) {
+        startBugCooldownTimer(resRetryAfter || data.retryAfter);
       }
     }
   } catch (err) {

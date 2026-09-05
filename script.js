@@ -1123,8 +1123,38 @@ function handleUnbanCheckboxToggle(checkbox) {
 }
 
 // ---- BUG & UNBAN REPORTING ----
+let bugCooldownInterval = null;
+
+function startBugCooldownTimer(seconds) {
+  const submitBtn = document.getElementById('btn-bug-submit');
+  const unbanCheckbox = document.getElementById('bug-is-unban');
+  if (!submitBtn) return;
+
+  if (bugCooldownInterval) clearInterval(bugCooldownInterval);
+  let remaining = seconds;
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = '0.6';
+  submitBtn.style.cursor = 'not-allowed';
+
+  submitBtn.innerHTML = `⏳ Další odeslání za ${remaining}s`;
+
+  bugCooldownInterval = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(bugCooldownInterval);
+      bugCooldownInterval = null;
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '';
+      submitBtn.style.cursor = '';
+      submitBtn.innerHTML = (unbanCheckbox && unbanCheckbox.checked) ? '⚖️ Odeslat žádost o unban' : '🐛 Odeslat nahlášení';
+    } else {
+      submitBtn.innerHTML = `⏳ Další odeslání za ${remaining}s`;
+    }
+  }, 1000);
+}
+
 async function submitBugReport(e) {
-  e.preventDefault();
+  if (e && e.preventDefault) e.preventDefault();
   const nickInput = document.getElementById('bug-nick');
   const descInput = document.getElementById('bug-desc');
   const imagesInput = document.getElementById('bug-images');
@@ -1134,12 +1164,28 @@ async function submitBugReport(e) {
 
   if (!nickInput || !descInput || !submitBtn) return;
 
+  if (bugCooldownInterval) {
+    showToast('⏳ Počkej prosím chvíli před odesláním dalšího hlášení.');
+    return;
+  }
+
   const nick = nickInput.value.trim();
   const bug = descInput.value.trim();
   const isUnban = unbanCheckbox ? unbanCheckbox.checked : false;
 
   if (!nick || !bug) {
     showToast('⚠️ Vyplň prosím všechna povinná pole!');
+    return;
+  }
+
+  if (nick.length < 2) {
+    showToast('❌ Zadej platný herní nick (min. 2 znaky).');
+    nickInput.focus();
+    return;
+  }
+  if (bug.length < 5) {
+    showToast(isUnban ? '❌ Popiš svou žádost o unban podrobněji (min. 5 znaků).' : '❌ Popiš bug podrobněji (min. 5 znaků).');
+    descInput.focus();
     return;
   }
 
@@ -1187,12 +1233,15 @@ async function submitBugReport(e) {
             successRes = true;
             break;
           }
+        } else if (res.status === 429) {
+          data = await res.json().catch(() => null);
+          break;
         }
       } catch (e) {}
     }
 
     if (successRes && data && data.success) {
-      showToast(isUnban ? '✅ Žádost o unban byla úspěšně odeslána!' : '✅ Bug byl úspěšně nahlášen!');
+      showToast(isUnban ? '✅ Žádost o unban byla úspěšně odeslána! (Další za 1 minutu)' : '✅ Bug byl úspěšně nahlášen! (Další za 1 minutu)');
       nickInput.value = '';
       descInput.value = '';
       if (unbanCheckbox) unbanCheckbox.checked = false;
@@ -1204,24 +1253,31 @@ async function submitBugReport(e) {
       if (statusDiv) {
         statusDiv.style.display = 'block';
         if (isUnban) {
-          statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Tvoje žádost o unban byla úspěšně odeslána! Administrátoři ji posoudí na Discordu.</div>';
+          statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Tvoje žádost o unban byla úspěšně odeslána! Administrátoři ji posoudí na Discordu. Další žádost můžeš poslat za 1 minutu.</div>';
         } else {
-          statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Děkujeme! Tvoje nahlášení bylo odesláno do systému ke kontrole. Po posouzení obdržíš odměnu přímo ve hře!</div>';
+          statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Děkujeme! Tvoje nahlášení bylo odesláno do systému ke kontrole. Po posouzení obdržíš odměnu přímo ve hře! Další hlášení můžeš poslat za 1 minutu.</div>';
         }
       }
+      startBugCooldownTimer(60);
     } else {
-      showToast(`❌ ${data && data.error ? data.error : 'Chyba při odesílání.'}`);
+      const errMsg = (data && data.error) ? data.error : 'Nepodařilo se odeslat nahlášení.';
+      showToast(`❌ ${errMsg}`);
       if (statusDiv) {
         statusDiv.style.display = 'block';
-        statusDiv.innerHTML = `<div style="color:#e74c3c; font-weight:600; padding:15px; background:rgba(231,76,60,0.1); border-radius:10px; border: 1px solid rgba(231,76,60,0.3);">❌ ${data && data.error ? data.error : 'Nepodařilo se odeslat nahlášení.'}</div>`;
+        statusDiv.innerHTML = `<div style="color:#e74c3c; font-weight:600; padding:15px; background:rgba(231,76,60,0.1); border-radius:10px; border: 1px solid rgba(231,76,60,0.3);">❌ ${errMsg}</div>`;
+      }
+      if (data && data.retryAfter) {
+        startBugCooldownTimer(data.retryAfter);
       }
     }
   } catch (err) {
     console.error('Error submitting bug:', err);
     showToast('❌ Chyba při odesílání.');
   } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = (unbanCheckbox && unbanCheckbox.checked) ? '⚖️ Odeslat žádost o unban' : '🐛 Odeslat nahlášení';
+    if (!bugCooldownInterval) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = (unbanCheckbox && unbanCheckbox.checked) ? '⚖️ Odeslat žádost o unban' : '🐛 Odeslat nahlášení';
+    }
   }
 }
 

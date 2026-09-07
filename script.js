@@ -26,6 +26,10 @@ function handleUrlRouting() {
     executeTabSwitch('rules', false);
   } else if (route === 'napady' || route === 'napad' || route === 'ideas') {
     executeTabSwitch('napady', false);
+  } else if (route === 'privacy' || route === 'gdpr' || route === 'soukromi' || route === 'data') {
+    executeTabSwitch('privacy', false);
+  } else if (route === 'terms' || route === 'tos' || route === 'podminky') {
+    executeTabSwitch('terms', false);
   } else if (route === 'home' || route === '' || route === 'index.html') {
     executeTabSwitch('home', false);
   }

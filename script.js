@@ -468,6 +468,20 @@ async function checkoutSMP() {
     return;
   }
 
+  // Check mandatory terms and immediate delivery consent
+  const consentCb = document.getElementById('smp-consent-terms');
+  if (consentCb && !consentCb.checked) {
+    showToast('⚠️ Pro nákup musíš potvrdit souhlas s Podmínkami služby a okamžitým plněním!');
+    const consentWrapper = document.getElementById('smp-consent-wrapper');
+    if (consentWrapper) {
+      consentWrapper.classList.remove('shake-input');
+      void consentWrapper.offsetWidth;
+      consentWrapper.classList.add('shake-input');
+    }
+    consentCb.focus();
+    return;
+  }
+
   const btn = document.querySelector('.btn-purchase');
   const originalText = btn.innerHTML;
   btn.innerHTML = '<span class="btn-spinner"></span> Načítám košík...';
@@ -986,6 +1000,12 @@ async function submitMediaApplication(event) {
   }
   if (!ageConfirm) {
     alert('Pro podání žádosti potvrď, že je ti více než 10 let.');
+    return;
+  }
+
+  const termsConfirm = document.getElementById('media-terms-confirm')?.checked;
+  if (!termsConfirm) {
+    alert('Pro odeslání žádosti potvrď souhlas s pravidly serveru a ochranou údajů.');
     return;
   }
 
@@ -1510,6 +1530,19 @@ async function submitBugReport(e) {
   if (bug.length < 5) {
     showToast(isUnban ? '❌ Popiš svou žádost o unban podrobněji (min. 5 znaků).' : '❌ Popiš bug podrobněji (min. 5 znaků).');
     descInput.focus();
+    return;
+  }
+
+  const bugConsent = document.getElementById('bug-consent');
+  if (bugConsent && !bugConsent.checked) {
+    showToast('⚠️ Před odesláním potvrď souhlas se zpracováním údajů.');
+    const wrapper = document.getElementById('bug-consent-wrapper');
+    if (wrapper) {
+      wrapper.classList.remove('shake-input');
+      void wrapper.offsetWidth;
+      wrapper.classList.add('shake-input');
+    }
+    bugConsent.focus();
     return;
   }
 
@@ -2699,4 +2732,60 @@ async function fetchLiveServerStats() {
 
   tick();
   setInterval(tick, 1000);
+})();
+
+// ---- LEGAL DOCUMENTATION INTERACTIVE CONTROLS ----
+function smoothScrollToLegal(targetId, event) {
+  if (event) event.preventDefault();
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  const yOffset = -90; // kompenzace fixní navigace
+  const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+  window.scrollTo({ top: y, behavior: 'smooth' });
+}
+
+// Sledování průběhu čtení a aktivní kapitoly v TOC
+(function initLegalReader() {
+  function updateLegalProgress() {
+    const activeSection = document.querySelector('.tab-section.legal-section.active');
+    if (!activeSection) return;
+
+    const progressBar = activeSection.querySelector('.legal-progress-bar');
+    const articles = activeSection.querySelectorAll('.legal-article');
+    const tocLinks = activeSection.querySelectorAll('.legal-toc-link');
+
+    if (!articles.length) return;
+
+    const firstRect = articles[0].getBoundingClientRect();
+    const lastRect = articles[articles.length - 1].getBoundingClientRect();
+    const totalHeight = lastRect.bottom - firstRect.top;
+    const scrollPos = (window.innerHeight / 2) - firstRect.top;
+
+    const pct = Math.max(0, Math.min(100, Math.round((scrollPos / totalHeight) * 100)));
+    if (progressBar) {
+      progressBar.style.width = pct + '%';
+    }
+
+    let activeId = '';
+    articles.forEach(art => {
+      const r = art.getBoundingClientRect();
+      if (r.top <= 200 && r.bottom >= 100) {
+        activeId = art.id;
+      }
+    });
+
+    if (activeId && tocLinks.length) {
+      tocLinks.forEach(link => {
+        const href = (link.getAttribute('href') || '').replace('#', '');
+        if (href === activeId) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  window.addEventListener('scroll', updateLegalProgress, { passive: true });
+  window.addEventListener('resize', updateLegalProgress, { passive: true });
 })();

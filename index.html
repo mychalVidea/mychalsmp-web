@@ -711,9 +711,24 @@
                 <input type="text" id="mc-username" class="nickname-input nickname-input--with-head"
                   placeholder="Napiš svůj nick..." required oninput="updatePreviewName(this.value)" />
               </div>
+
+              <!-- Mandatory Consent Checkbox -->
+              <div class="smp-consent-wrapper" id="smp-consent-wrapper">
+                <label class="smp-consent-label" for="smp-consent-terms">
+                  <input type="checkbox" id="smp-consent-terms" class="smp-consent-checkbox" required />
+                  <span class="smp-consent-text">
+                    Souhlasím s <a href="#terms" onclick="showTab('terms')">Podmínkami služby</a> a <a href="#privacy"
+                      onclick="showTab('privacy')">Zásadami ochrany údajů</a> a výslovně žádám o okamžité zahájení
+                    dodání digitálního obsahu dle § 1837 písm. l) OZ (se zánikem práva na 14denní odstoupení od
+                    smlouvy).
+                  </span>
+                </label>
+              </div>
+
               <button class="btn-purchase" onclick="checkoutSMP()">ZÍSKAT <span
                   class="btn-icon-lightning">⚡</span></button>
-              <p class="nickname-tip">Zabezpečená platba přes Tebex. Aktivace obvykle do 5 min (při výpadku sítě max. do 2 hodin).</p>
+              <p class="nickname-tip">Zabezpečená platba přes Tebex. Aktivace obvykle do 5 min (při výpadku sítě max. do
+                2 hodin).</p>
               <div class="smp-trust-badges">
                 <div class="trust-badge-item">
                   <i class="fa-solid fa-shield-halved"></i>
@@ -725,7 +740,11 @@
                 </div>
               </div>
               <p class="smp-legal-notice">
-                Aktivace obvykle proběhne do 5 minut. Při výpadku sítě proběhne dodání nejpozději do 2 hodin od nákupu. Pokud k dodání nedojde do 2 hodin, můžete požádat o kompenzaci či promokód (nevzniká nárok na finanční refund). Nákupem souhlasíte s okamžitým plněním dle § 1837 písm. l) OZ a s <a href="#terms" onclick="showTab('terms')">Podmínkami služby</a>.
+                Aktivace výhod obvykle proběhne do 5 minut. Při výpadku sítě proběhne dodání nejpozději do 2 hodin od
+                nákupu. Pokud by k aktivaci nedošlo ani po nahlášení na podporu, máte nárok na kompenzaci či plný
+                refund. Prodejcem je společnost Tebex Limited (Merchant of Record). Nákupem udělujete výslovný souhlas
+                se započetím okamžitého plnění digitálního obsahu dle § 1837 písm. l) OZ a souhlasíte s <a href="#terms"
+                  onclick="showTab('terms')">Podmínkami služby</a>.
               </p>
             </div>
           </div>
@@ -994,6 +1013,15 @@
             </label>
           </div>
 
+          <div class="media-form-group media-checkbox-group" style="margin-top: -6px;">
+            <label for="media-terms-confirm" class="media-checkbox-label">
+              <input type="checkbox" id="media-terms-confirm" required /> Souhlasím s <a href="#terms"
+                onclick="showTab('terms')" style="color:var(--accent-primary); text-decoration:underline;">pravidly
+                serveru</a> a beru na vědomí <a href="#privacy" onclick="showTab('privacy')"
+                style="color:var(--accent-primary); text-decoration:underline;">ochranu údajů</a>.
+            </label>
+          </div>
+
           <button type="submit" id="btn-media-submit" class="btn-media-verify">Odeslat k ověření a schválení</button>
         </form>
       </div>
@@ -1084,6 +1112,17 @@
                 style="padding: 10px; cursor: pointer;" onchange="handleBugImagesChange(this)">
               <div id="bug-images-preview"
                 style="display: none; margin-top: 8px; font-size: 0.85rem; color: #2ecc71; font-weight: 500;"></div>
+            </div>
+
+            <div class="smp-consent-wrapper" id="bug-consent-wrapper" style="margin: 4px 0 8px 0;">
+              <label class="smp-consent-label" for="bug-consent">
+                <input type="checkbox" id="bug-consent" class="smp-consent-checkbox" required />
+                <span class="smp-consent-text">
+                  Souhlasím se zpracováním zadaných údajů a snímků za účelem vyřízení nahlášení / žádosti o unban dle <a
+                    href="#privacy" onclick="showTab('privacy')">Zásad ochrany údajů</a> a s <a href="#terms"
+                    onclick="showTab('terms')">pravidly serveru</a>.
+                </span>
+              </label>
             </div>
 
             <button type="submit" id="btn-bug-submit" class="btn-media-verify" style="margin-top: 10px;">🐛 Odeslat
@@ -1284,165 +1323,332 @@
   <!-- PRIVACY POLICY (GDPR) -->
   <section id="tab-privacy" class="tab-section legal-section">
     <div class="legal-container">
-      <div class="legal-header">
-        <div class="legal-nav-switch">
-          <button class="legal-nav-btn active"><i class="fa-solid fa-shield-halved"></i> Ochrana osobních údajů</button>
-          <button class="legal-nav-btn" onclick="showTab('terms')"><i class="fa-solid fa-scale-balanced"></i> Obchodní
-            podmínky</button>
-        </div>
-        <h1 class="legal-title"><i class="fa-solid fa-user-shield"></i> Zásady ochrany osobních údajů</h1>
-        <p class="legal-subtitle">Informace o tom, jaké údaje herní server a web MYCHALSMP zpracovává, jak je bezpečně
-          chráníme a jaká máte práva podle evropského nařízení GDPR.</p>
-      </div>
+      <div class="legal-layout">
+        <!-- LEFT SIDEBAR (STICKY RAIL - F-PATTERN READING ANCHOR) -->
+        <aside class="legal-sidebar">
+          <div class="legal-sidebar-sticky">
+            <div class="legal-badge-header">
+              <span class="legal-status-dot"></span>
+              <span>DOKUMENTACE &amp; PRIVACY</span>
+            </div>
 
-      <!-- Kdo je správce -->
-      <div class="legal-card">
-        <div class="legal-card-header">
-          <div class="legal-card-icon"><i class="fa-solid fa-server"></i></div>
-          <h2 class="legal-card-title">1. Kdo spravuje vaše údaje</h2>
-        </div>
-        <div class="legal-simple-box">
-          <strong>Stručně v lidské řeči</strong>
-          Vaše data zpracovává tým herního projektu MYCHALSMP výhradně k tomu, aby herní server a web bezpečně a
-          správně fungovaly.
-        </div>
-        <p class="legal-body-text">Správcem osobních údajů v souladu s Nařízením Evropského parlamentu a Rady (EU)
-          2016/679 (obecné nařízení o ochraně osobních údajů neboli GDPR) a zákonem č. 110/2019 Sb., o zpracování
-          osobních údajů, je provozovatel herního serveru a webu MYCHALSMP (dále jen „správce“ nebo „server“).</p>
-        <ul class="legal-bullet-list">
-          <li><strong>Projekt:</strong> MYCHALSMP (mychalsmp.xyz)</li>
-          <li><strong>Provozovatel:</strong> mychalVidea</li>
-          <li><strong>Kontakt pro ochranu údajů:</strong> přidáme email, zatím oficiální Discord server</li>
-        </ul>
-      </div>
+            <h1 class="legal-sidebar-title">Zásady ochrany osobních údajů</h1>
+            <p class="legal-sidebar-meta">Platnost od: <strong>9. září 2026</strong> · Doba čtení: <strong>~3
+                min</strong></p>
 
-      <!-- Jaké údaje zpracováváme -->
-      <div class="legal-card">
-        <div class="legal-card-header">
-          <div class="legal-card-icon"><i class="fa-solid fa-database"></i></div>
-          <h2 class="legal-card-title">2. Jaké údaje shromažďujeme a proč</h2>
-        </div>
-        <div class="legal-simple-box">
-          <strong>Stručně v lidské řeči</strong>
-          Shromažďujeme jen to nejnutnější pro hru: herní nick, IP adresu (abychom zabránili útokům a botům) a
-          zašifrované heslo. Pokud si koupíte SMP+, platební brána zpracuje platbu a my dostaneme jen potvrzení.
-        </div>
+            <div class="legal-nav-switch">
+              <button class="legal-nav-btn active"><i class="fa-solid fa-shield-halved"></i> Ochrana údajů</button>
+              <button class="legal-nav-btn" onclick="showTab('terms')"><i class="fa-solid fa-scale-balanced"></i>
+                Obchodní podmínky</button>
+            </div>
 
-        <p class="legal-body-text">Při hraní na našem Minecraft serveru a používání webu zpracováváme následující
-          kategorie údajů:</p>
+            <!-- Reading Progress Bar -->
+            <div class="legal-progress-bar-container">
+              <div class="legal-progress-bar" id="privacy-progress-bar"></div>
+            </div>
 
-        <ul class="legal-bullet-list">
-          <li>
-            <strong>IP adresy a síťová bezpečnost:</strong>
-            Při každém připojení na server zaznamenáváme vaši IP adresu. Děláme to na základě oprávněného zájmu (čl. 6
-            odst. 1 písm. f) GDPR) za účelem obrany serveru před kybernetickými útoky (DDoS), blokování škodlivých botů
-            a vymáhání trestů (banů) za hrubé porušení pravidel.
-          </li>
-          <li>
-            <strong>Herní identita (Přezdívka a UUID):</strong>
-            Váš herní nick a unikátní Minecraft identifikátor (UUID) slouží k vedení vašeho účtu, ukládání inventáře,
-            herní měny, postavených domovů, chráněných území (claimů) a statistik. Právním základem je plnění dohody
-            o poskytování herních služeb (čl. 6 odst. 1 písm. b) GDPR).
-          </li>
-          <li>
-            <strong>Hesla k hernímu účtu (Bezpečnostní hash):</strong>
-            Vaše heslo nikdy neukládáme v čitelné podobě. Hesla jsou nevratně kryptograficky solena a hashována (pomocí
-            algoritmů SHA-256 / Argon2id). Skutečné heslo nezná nikdo z administrátorů serveru a nelze jej z databáze
-            zpětně přečíst ani zrekonstruovat.
-          </li>
-          <li>
-            <strong>E-maily a platby při nákupu SMP+:</strong>
-            Platby v herním obchodě probíhají výhradně přes licencovanou mezinárodní platební bránu Tebex Limited
-            (podléhající britským a evropským bankovním standardům). Server MYCHALSMP nemá přístup k číslům vašich
-            platebních karet ani bankovním údajům. Váš e-mail slouží výhradně pro zaslání potvrzení o nákupu a daňového
-            dokladu dle zákona (čl. 6 odst. 1 písm. c) GDPR).
-          </li>
-          <li>
-            <strong>Anticheat telemetrie a férová hra:</strong>
-            Systémy ochrany (SMPAC, GrimAC) v reálném čase analyzují síťové pakety a pohyb postavy, aby detekovaly
-            nepovolené cheaty a hacky. Tyto záznamy jsou ryze technické a chrání poctivé hráče.
-          </li>
-          <li>
-            <strong>Propojení s Discordem:</strong>
-            Pokud dobrovolně použijete herní příkaz pro propojení účtu (/dlink), uloží se vaše Discord ID za účelem
-            automatického
-            přidělení příslušných rolí v naší komunitě.
-          </li>
-          <li>
-            <strong>Webové rozhraní a cookies:</strong>
-            Náš web nepoužívá žádné sledovací ani reklamní cookies třetích stran (žádný Google Analytics, žádný Facebook
-            Pixel).
-          </li>
-        </ul>
-      </div>
+            <!-- Left Index / TOC -->
+            <nav class="legal-toc" aria-label="Obsah zásad ochrany údajů">
+              <span class="legal-toc-heading">Obsah dokumentu</span>
+              <ul class="legal-toc-list">
+                <li><a href="#privacy-sec-1" class="legal-toc-link active"
+                    onclick="smoothScrollToLegal('privacy-sec-1', event)"><span class="toc-num">01</span> Kdo spravuje
+                    vaše údaje</a></li>
+                <li><a href="#privacy-sec-2" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('privacy-sec-2', event)"><span class="toc-num">02</span> Zpracovávané
+                    údaje &amp; důvody</a></li>
+                <li><a href="#privacy-sec-3" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('privacy-sec-3', event)"><span class="toc-num">03</span> Doba uchování
+                    &amp; partneři</a></li>
+                <li><a href="#privacy-sec-4" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('privacy-sec-4', event)"><span class="toc-num">04</span> Práva dle GDPR
+                    &amp; ÚOOÚ</a></li>
+                <li><a href="#privacy-sec-5" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('privacy-sec-5', event)"><span class="toc-num">05</span> Ochrana
+                    mladších hráčů</a></li>
+              </ul>
+            </nav>
 
-      <!-- Doba uchování a předávání -->
-      <div class="legal-card">
-        <div class="legal-card-header">
-          <div class="legal-card-icon"><i class="fa-solid fa-lock"></i></div>
-          <h2 class="legal-card-title">3. Jak data chráníme a komu je předáváme</h2>
-        </div>
-        <div class="legal-simple-box">
-          <strong>Stručně v lidské řeči</strong>
-          Vaše data nikdy nikomu neprodáváme ani je nepředáváme marketérům. Jsou uložena na zabezpečených serverech s
-          přístupem omezeným pouze na pověřenou technickou správu.
-        </div>
-        <p class="legal-body-text">Vaše údaje jsou chráněny moderními technickými a organizačními opatřeními. K údajům
-          mají přístup pouze prověření správci infrastruktury pod vázaností mlčenlivostí.</p>
-        <p class="legal-body-text">Osobní údaje mohou být v nezbytném rozsahu předávány pouze těmto technickým
-          partnerům:</p>
-        <ul class="legal-bullet-list">
-          <li><strong>Cloudflare Inc.:</strong> Zajišťuje ochranu před DDoS útoky a distribuci síťového provozu.</li>
-          <li><strong>Tebex Limited:</strong> Zajišťuje bezpečné odbavení plateb a plnění zákonných daňových předpisů.
-          </li>
-          <li><strong>Mojang Studios / Microsoft:</strong> Pouze ověřovací šifrovací handshake pro hráče s originálním
-            Minecraft účtem.</li>
-        </ul>
-      </div>
+            <!-- Executive Summary (TL;DR) -->
+            <div class="legal-summary-card">
+              <div class="legal-summary-title"><i class="fa-solid fa-bolt"></i> Shrnutí v kostce</div>
+              <ul class="legal-summary-list">
+                <li><i class="fa-solid fa-check"></i> <strong>0 % trackerů:</strong> Žádný Google Analytics ani Meta
+                  Pixel.</li>
+                <li><i class="fa-solid fa-check"></i> <strong>Hashovaná hesla:</strong> Hesla nelze z databáze přečíst
+                  (Argon2 / SHA-256).</li>
+                <li><i class="fa-solid fa-check"></i> <strong>Sociální sítě &amp; API:</strong> Transparentní kontrola
+                  kanálů u Media ranku.</li>
+                <li><i class="fa-solid fa-check"></i> <strong>Platby chrání Tebex:</strong> K platebním kartám nemáme
+                  přístup.</li>
+              </ul>
+            </div>
+          </div>
+        </aside>
 
-      <!-- Práva hráče dle GDPR -->
-      <div class="legal-card legal-card-success">
-        <div class="legal-card-header">
-          <div class="legal-card-icon"><i class="fa-solid fa-hand-holding-hand"></i></div>
-          <h2 class="legal-card-title">4. Vaše práva podle GDPR</h2>
-        </div>
-        <div class="legal-simple-box">
-          <strong>Stručně v lidské řeči</strong>
-          Kdykoliv máte právo vědět, co o vás víme, nechat údaje opravit, nebo požádat o úplné smazání svého herního
-          účtu a zapomenutí.
-        </div>
-        <p class="legal-body-text">Jako subjekt údajů máte podle platných evropských předpisů následující nezcizitelná
-          práva:</p>
-        <ul class="legal-bullet-list">
-          <li><strong>Právo na přístup:</strong> Můžete nás požádat o potvrzení, jaké údaje o vašem účtu evidujeme.</li>
-          <li><strong>Právo na opravu:</strong> Pokud jsou vaše údaje nepřesné, máte právo na jejich úpravu.</li>
-          <li><strong>Právo na výmaz („Právo být zapomenut“):</strong> Můžete požádat o trvalé smazání vašeho herního
-            účtu a souvisejících dat z databáze. Žádosti vyhovíme, pokud uchování nebrání zákonná daňová povinnost u
-            nákupů nebo oprávněný zájem (např. trvání banu za podvádění).</li>
-          <li><strong>Právo vznést námitku:</strong> Máte právo vznést námitku proti zpracování založenému na oprávněném
-            zájmu.</li>
-        </ul>
-      </div>
+        <!-- RIGHT MAIN CONTENT -->
+        <main class="legal-main">
+          <!-- Article 1 -->
+          <article id="privacy-sec-1" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">01 · SPRÁVCE ÚDAJŮ</span>
+              <span class="legal-marker-ref">Čl. 13 odst. 1 GDPR</span>
+            </div>
+            <h2 class="legal-article-title">Kdo spravuje vaše osobní údaje</h2>
 
-      <!-- Ochrana dětí -->
-      <div class="legal-card">
-        <div class="legal-card-header">
-          <div class="legal-card-icon"><i class="fa-solid fa-child"></i></div>
-          <h2 class="legal-card-title">5. Zvláštní poučení pro mladší hráče a rodiče</h2>
-        </div>
-        <div class="legal-simple-box">
-          <strong>Stručně v lidské řeči</strong>
-          Pokud je vám méně než 15 let, řekněte o hraní u nás rodičům. Dbáme na slušné chování na serveru a nikdy od vás
-          nechceme žádné citlivé osobní informace, jako je adresa nebo telefon.
-        </div>
-        <p class="legal-body-text">Server MYCHALSMP je herní komunitou otevřenou i mladším hráčům. Žádáme hráče mladší
-          15 let, aby server navštěvovali s vědomím svých rodičů nebo zákonných zástupců. V herním chatu striktně
-          zakazujeme sdílení jakýchkoliv osobních údajů (jména, adresy bydliště, telefonní čísla či sociální sítě).</p>
-      </div>
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Data jsou fyzicky uložena na vyhrazeném hardwaru u majitele projektu doma. Přístup k databázím má výhradně majitel osobně, žádné neprověřené osoby ani řadový personál k nim přístup nemají.
+            </div>
 
-      <div class="legal-footer-note">
-        Poslední aktualizace zásad: 7. září 2026 &nbsp;·&nbsp; Tyto zásady jsou platné pro herní server mychalsmp.xyz i
-        webové stránky.
+            <p class="legal-text">Správcem osobních údajů v souladu s Nařízením Evropského parlamentu a Rady (EU)
+              2016/679 (obecné nařízení o ochraně osobních údajů neboli GDPR) a zákonem č. 110/2019 Sb., o zpracování
+              osobních údajů, je provozovatel herního serveru a webu MYCHALSMP (dále jen „správce“ či „server“):</p>
+
+            <div class="legal-grid-details">
+              <div class="legal-detail-row">
+                <span class="legal-detail-label">Projekt</span>
+                <span class="legal-detail-value">MYCHALSMP (mychalsmp.xyz)</span>
+              </div>
+              <div class="legal-detail-row">
+                <span class="legal-detail-label">Správce &amp; provozovatel</span>
+                <span class="legal-detail-value">mychalVidea (majitel projektu a výhradní správce dat)</span>
+              </div>
+              <div class="legal-detail-row">
+                <span class="legal-detail-label">Fyzické umístění dat</span>
+                <span class="legal-detail-value">Lokální vyhrazené stanice majitele; přístup má výhradně majitel</span>
+              </div>
+              <div class="legal-detail-row">
+                <span class="legal-detail-label">Oficiální kontakt &amp; DSA</span>
+                <span class="legal-detail-value"><a href="mailto:admin@mychalsmp.xyz"
+                    class="legal-link">admin@mychalsmp.xyz</a> / Discord ticket</span>
+              </div>
+              <div class="legal-detail-row">
+                <span class="legal-detail-label">Správce plateb</span>
+                <span class="legal-detail-value">Tebex Limited (Merchant of Record), viz článek 3</span>
+              </div>
+            </div>
+
+            <p class="legal-text" style="margin-top: 20px;">
+              <strong>Fyzické uložení a výhradní kontrola majitele (čl. 32 GDPR):</strong>
+              Veškeré provozní a herní databáze (přihlašovací účty, herní inventáře, postavené stavby, statistiky a IP logy)
+              jsou fyzicky uloženy na vyhrazeném hardwarovém vybavení v přímém osobním vlastnictví a správě majitele projektu.
+              K databázovým souborům a systémovému úložišti má administrátorský a fyzický přístup <strong>výhradně majitel serveru</strong>.
+              K těmto souborům nemají přístup žádní řadoví administrátoři, moderátoři ani neoprávněné třetí osoby.
+              Správa, vývoj a bezpečnostní údržba kódu probíhá v zabezpečeném lokálním prostředí majitele v souladu s přísnými
+              technickými a organizačními opatřeními na ochranu dat před neoprávněným zásahem či únikem.
+            </p>
+          </article>
+
+          <!-- Article 2 -->
+          <article id="privacy-sec-2" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">02 · KATEGORIE ÚDAJŮ</span>
+              <span class="legal-marker-ref">Čl. 6 odst. 1 GDPR</span>
+            </div>
+            <h2 class="legal-article-title">Jaké údaje shromažďujeme a právní důvody</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Evidujeme pouze nezbytná herní a technická data: nick, IP adresu (ochrana AntiVPN před útoky/boty),
+              šifrované heslo, kanály tvůrců u Media ranku a vyžádané webové notifikace. Žádná data neprodáváme.
+            </div>
+
+            <ul class="legal-list">
+              <li>
+                <strong>IP adresy, síťové logy a vlastní ochrana AntiVPN (Oprávněný zájem dle čl. 6 odst. 1 písm. f)
+                  GDPR):</strong>
+                Při připojení na herní server zaznamenáváme vaši IP adresu a technická metadata. K ochraně
+                herního světa před boty, útoky DDoS a obcházením banů využíváme náš vlastní bezpečnostní systém (AntiVPN
+                modul), který ověřuje IP adresu vůči bezpečnostním rozhraním (ip-api.com a ipwho.is) pro detekci známých
+                proxy sítí, hostingových datacenter a VPN tunelů, a uplatňuje GeoIP filtraci povolených regionů.
+                Výsledky jsou z důvodu optimalizace cachovány na 24 hodin. Použití anonymních VPN je na serveru
+                z bezpečnostních důvodů blokováno (včetně automatického preventivního IP banu).
+              </li>
+              <li>
+                <strong>Herní identita – Přezdívka a UUID (Plnění smlouvy dle čl. 6 odst. 1 písm. b) GDPR):</strong>
+                Váš herní Minecraft nick a unikátní UUID slouží k vedení vašeho účtu, ukládání inventáře, herní měny,
+                postavených domovů, chráněných území (claimů GriefPrevention) a statistik odehraného času.
+              </li>
+              <li>
+                <strong>Hesla k hernímu účtu (Bezpečnostní kryptografický hash):</strong>
+                Vaše heslo nikdy neukládáme v čitelné podobě. Hesla v autentizačním systému (mychalAuth) jsou
+                nevratně kryptograficky hashována a solena pomocí moderního algoritmu Argon2id (respektive SHA-256).
+                Skutečné heslo nezná nikdo z týmu a nelze jej zpětně zrekonstruovat.
+              </li>
+              <li>
+                <strong>Ověřování tvůrců a sociálních sítí – Media Rank:</strong>
+                Při podání žádosti o hodnost Media rank evidujeme váš Discord identifikátor, Minecraft nick a vámi
+                zadané odkazy na veřejné profily (YouTube, Twitch, TikTok, Kick). Náš systém provádí pravidelnou
+                automatizovanou kontrolu (cca 1× za 7 dní) veřejně přístupných metadat těchto kanálů (názvy a popisky
+                videí či streamů za posledních 30 dní za účelem ověření tvorby obsahu s tagem #mychalsmp či odkazem na
+                server). V případě zjištění dlouhodobé neaktivity systém tvůrce automaticky upozorní soukromou zprávou
+                (Discord DM) a navrhne odebrání role.
+              </li>
+              <li>
+                <strong>YouTube kanál, vysílání a členové (/cleniyt):</strong>
+                Server využívá rozhraní Google YouTube Data API v3 k detekci nově spuštěných streamů a premiér kanálu
+                mychalVidea (s automatickým odesláním interaktivního odkazu do hry přes RCON) a k načítání veřejného
+                seznamu členů kanálu pro příkaz <code>/cleniyt</code> a herní výhody.
+              </li>
+              <li>
+                <strong>Webové Push notifikace (OneSignal &amp; Web Push):</strong>
+                Pokud v prohlížeči dobrovolně potvrdíte příjem oznámení, ukládáme technický identifikátor zařízení
+                (OneSignal Subscription ID nebo Web Push endpoint, šifrovací klíče p256dh a auth), název zařízení a čas
+                poslední aktivity. Údaje zpracováváme na základě vašeho souhlasu (čl. 6 odst. 1 písm. a) GDPR) výhradně
+                pro zasílání upozornění na streamy, eventy a odstávky. Souhlas můžete kdykoliv odvolat v nastavení
+                prohlížeče.
+              </li>
+              <li>
+                <strong>Automatizovaná AI moderace (Google Gemini AI / Groq – soulad s EU AI Act):</strong>
+                V souladu s Nařízením Evropského parlamentu a Rady (EU) 2024/1689 (EU AI Act) transparentně informujeme,
+                že k zajištění bezpečného a slušného prostředí využíváme asistenční AI technologie. Tyto modely
+                automatizovaně analyzují textovou komunikaci a přepisy hlasových hovorů výhradně za účelem včasného
+                záchytu závažné toxicity, rasismu či kyberšikany, a asistují při zpracování komunitních návrhů. AI
+                slouží jako podpůrný nástroj; jakýkoliv trest může hráč nechat lidsky přezkoumat administrátorským
+                týmem.
+              </li>
+              <li>
+                <strong>Propojení účtů Discord a Minecraft (/dlink):</strong>
+                Při generování párovacího tokenu ve hře evidujeme krátkodobý jednorázový token, Minecraft UUID, herní
+                nick a IP adresu hráče za účelem bezpečného propojení herní postavy s vaším Discord účtem.
+              </li>
+              <li>
+                <strong>E-maily a platby při nákupu SMP+ (Tebex Merchant of Record):</strong>
+                Platby probíhají přes společnost Tebex Limited. Server MYCHALSMP nemá přístup k vašim platebním kartám
+                ani bankovním údajům. Správce eviduje pouze transakční ID a herní nick pro účely technického přiřazení
+                výhod ve hře.
+              </li>
+              <li>
+                <strong>Anticheat telemetrie a férová hra:</strong>
+                Ochranné pluginy (SMPAC, GrimAC) v reálném čase analyzují pohybové vektory a síťové pakety postavy za
+                účelem detekce neférových výhod a hack klientů.
+              </li>
+              <li>
+                <strong>Hlášení chyb, žádosti o unban a nápady:</strong>
+                Při odeslání formuláře na webu zpracováváme zadaný nick, popis situace a přiložené screenshoty výhradně
+                za účelem vyřízení vašeho podnětu.
+              </li>
+              <li>
+                <strong>Webové rozhraní a LocalStorage:</strong>
+                Web nepoužívá žádné sledovací ani reklamní cookies třetích stran. Využívá výhradně technicky nezbytné
+                lokální úložiště prohlížeče (LocalStorage) pro bezpečné uchování přihlašovacího tokenu (`auth_token`)
+                při správě předplatného SMP+. Toto uložení nevyžaduje souhlas dle § 89 odst. 3 zákona č. 127/2005 Sb.
+              </li>
+            </ul>
+          </article>
+
+          <!-- Article 3 -->
+          <article id="privacy-sec-3" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">03 · UCHOVÁVÁNÍ &amp; PŘEDÁVÁNÍ</span>
+              <span class="legal-marker-ref">Čl. 13 odst. 2 &amp; Kapitola V GDPR</span>
+            </div>
+            <h2 class="legal-article-title">Doba uchovávání dat a prověření partneři</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Data mažeme, jakmile pomine důvod pro jejich držení. Předáváme je pouze nezbytným infrastrukturním
+              partnerům (Cloudflare, Tebex, Mojang, Google, OneSignal).
+            </div>
+
+            <p class="legal-text">Osobní údaje uchováváme pouze po nezbytně nutnou dobu:</p>
+            <ul class="legal-list">
+              <li><strong>Síťové bezpečnostní logy a IP adresy:</strong> uchováváme maximálně 90 dní pro prevenci a
+                řešení incidentů.</li>
+              <li><strong>Herní účet a herní data:</strong> uchováváme po dobu aktivního hraní na serveru nebo do
+                vyřízení žádosti o výmaz účtu.</li>
+              <li><strong>Záznamy o udělených trestech (bany):</strong> uchováváme po dobu trvání trestu pro ochranu
+                integrity herní komunity.</li>
+              <li><strong>Údaje žádostí o Media rank:</strong> uchováváme po dobu trvání žádosti a následného držení
+                role; při odebrání jsou profily smazány či archivovány dle nastavení.</li>
+              <li><strong>Webové push tokeny:</strong> uchováváme do odhlášení odběru v prohlížeči nebo neaktivity delší
+                než 180 dní.</li>
+              <li><strong>Hlášení bugů a unban tikety:</strong> archivujeme po dobu vyřízení, nejdéle 6 měsíců.</li>
+            </ul>
+
+            <p class="legal-text">Předávání dat technickým partnerům probíhá v souladu s mezinárodními standardy:</p>
+            <ul class="legal-list">
+              <li><strong>Cloudflare Inc. (USA):</strong> Ochrana před DDoS útoky a distribuce obsahu. Předávání probíhá
+                v režimu rozhodnutí Evropské komise o odpovídající ochraně (EU-U.S. Data Privacy Framework) a doložek
+                SCC.</li>
+              <li><strong>Tebex Limited (UK):</strong> Zajištění platebního styku, fakturace a DPH v souladu s
+                rozhodnutím Komise o odpovídající ochraně pro Spojené království.</li>
+              <li><strong>Mojang Studios / Microsoft Corporation (USA):</strong> Ověřovací handshake pro hráče s
+                originálním Minecraft účtem (v režimu EU-U.S. Data Privacy Framework).</li>
+              <li><strong>Google LLC (USA):</strong> YouTube Data API v3 a Google Gemini API (analýza bezpečnosti a
+                asistence). Certifikováno v rámci EU-U.S. Data Privacy Framework.</li>
+              <li><strong>OneSignal Inc. (USA):</strong> Technická infrastruktura pro bezpečné doručování webových push
+                notifikací (EU-U.S. Data Privacy Framework).</li>
+              <li><strong>ip-api.com &amp; ipwho.is:</strong> Dotazování bezpečnostních GeoIP a AntiVPN rozhraní pro
+                detekci nebezpečných proxy sítí, hostingových datacenter a blokování VPN z důvodu obrany před útoky.
+              </li>
+            </ul>
+          </article>
+
+          <!-- Article 4 -->
+          <article id="privacy-sec-4" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">04 · VAŠE PRÁVA</span>
+              <span class="legal-marker-ref">Čl. 15–22 GDPR</span>
+            </div>
+            <h2 class="legal-article-title">Vaše práva podle GDPR a dozorový úřad</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Máte právo vědět, co o vás evidujeme, požádat o opravu či úplné smazání herního účtu a zapomenutí.
+            </div>
+
+            <ul class="legal-list">
+              <li><strong>Právo na přístup (čl. 15 GDPR):</strong> Můžete nás požádat o potvrzení a výpis evidovaných
+                údajů.</li>
+              <li><strong>Právo na opravu (čl. 16 GDPR):</strong> Právo na bezodkladnou opravu nepřesných či neúplných
+                údajů.</li>
+              <li><strong>Právo na výmaz / být zapomenut (čl. 17 GDPR):</strong> Právo na smazání účtu a souvisejících
+                dat. Vyhovíme, pokud neexistuje převažující zákonný či oprávněný důvod (např. trvání banu za podvádění).
+              </li>
+              <li><strong>Právo na omezení zpracování (čl. 18) a přenositelnost (čl. 20):</strong> Právo omezit
+                nakládání s daty či získat jejich export.</li>
+              <li><strong>Právo vznést námitku (čl. 21 GDPR):</strong> Právo namítat proti zpracování založenému na
+                oprávněném zájmu.</li>
+              <li><strong>Lhůta vyřízení:</strong> Na veškeré žádosti odpovídáme bezodkladně, nejpozději do 30 dnů na
+                adrese <a href="mailto:admin@mychalsmp.xyz" class="legal-link">admin@mychalsmp.xyz</a>.</li>
+              <li>
+                <strong>Právo podat stížnost u dozorového úřadu:</strong> Pokud se domníváte, že s vašimi údaji
+                nakládáme v rozporu se zákonem, máte právo obrátit se na dozorový úřad v ČR:<br>
+                <strong>Úřad pro ochranu osobních údajů (ÚOOÚ)</strong>, Pplk. Sochora 27, 170 00 Praha 7<br>
+                Web: <a href="https://www.uoou.gov.cz" target="_blank" rel="noopener"
+                  class="legal-link">www.uoou.gov.cz</a> | E-mail: posta@uoou.gov.cz
+              </li>
+            </ul>
+          </article>
+
+          <!-- Article 5 -->
+          <article id="privacy-sec-5" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">05 · OCHRANA DĚTÍ</span>
+              <span class="legal-marker-ref">§ 7 Zákona č. 110/2019 Sb.</span>
+            </div>
+            <h2 class="legal-article-title">Poučení pro mladší hráče a rodiče</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Pokud je vám méně než 15 let, hrajte s vědomím rodičů. V chatu nikdy nesdílejte adresu ani telefon. Nákupy
+              výhod smí provádět pouze rodiče.
+            </div>
+
+            <p class="legal-text">Server MYCHALSMP je otevřen i mladším hráčům. Ve smyslu § 7 zákona č. 110/2019 Sb. je
+              věková hranice pro samostatný souhlas v ČR stanovena na 15 let. Hráče mladší 15 let žádáme, aby server
+              navštěvovali s vědomím svých zákonných zástupců. V herním chatu striktně zakazujeme sdílení citlivých
+              osobních údajů (jména, adresy bydliště, telefonní čísla či sociální sítě). Případné nákupy doplňků SMP+
+              smějí nezletilé osoby provádět výhradně se souhlasem rodičů.</p>
+          </article>
+
+          <div class="legal-footer-note">
+            Poslední revize zásad: 9. září 2026 &nbsp;·&nbsp; Tyto zásady jsou platné pro herní server mychalsmp.xyz i
+            webové rozhraní.
+          </div>
+        </main>
       </div>
     </div>
   </section>
@@ -1450,137 +1656,350 @@
   <!-- TERMS OF SERVICE -->
   <section id="tab-terms" class="tab-section legal-section">
     <div class="legal-container">
-      <div class="legal-header">
-        <div class="legal-nav-switch">
-          <button class="legal-nav-btn" onclick="showTab('privacy')"><i class="fa-solid fa-shield-halved"></i> Ochrana
-            osobních údajů</button>
-          <button class="legal-nav-btn active"><i class="fa-solid fa-scale-balanced"></i> Obchodní podmínky</button>
-        </div>
-        <h1 class="legal-title"><i class="fa-solid fa-file-contract"></i> Podmínky služby a nákupu</h1>
-        <p class="legal-subtitle">Pravidla používání herního serveru, fungování dobrovolných příspěvků a nákupů výhod
-          SMP+ a vymezení odpovědnosti.</p>
-      </div>
+      <div class="legal-layout">
+        <!-- LEFT SIDEBAR (STICKY RAIL - F-PATTERN READING ANCHOR) -->
+        <aside class="legal-sidebar">
+          <div class="legal-sidebar-sticky">
+            <div class="legal-badge-header">
+              <span class="legal-status-dot"></span>
+              <span>DOKUMENTACE &amp; PODMÍNKY</span>
+            </div>
 
-      <!-- Vztah k Mojang -->
-      <div class="legal-card">
-        <div class="legal-card-header">
-          <div class="legal-card-icon"><i class="fa-solid fa-cube"></i></div>
-          <h2 class="legal-card-title">1. Vztah ke společnosti Mojang Studios</h2>
-        </div>
-        <div class="legal-simple-box">
-          <strong>Stručně v lidské řeči</strong>
-          Tento server je nezávislý komunitní projekt tvořený fanoušky pro fanoušky. Nejsme zaměstnanci Mojangu ani
-          Microsoftu.
-        </div>
-        <p class="legal-body-text">Server MYCHALSMP je nezávislý komunitní server. Tento server a web nejsou oficiálním
-          produktem Minecraftu, nejsou schváleny společností Mojang Studios ani Microsoft Corporation a nejsou s nimi
-          nijak spojeny. Minecraft je registrovaná ochranná známka společnosti Mojang Synergies AB. Veškerý provoz
-          serveru se řídí pravidly Mojang Commercial Usage Guidelines.</p>
-      </div>
+            <h1 class="legal-sidebar-title">Podmínky služby a nákupu</h1>
+            <p class="legal-sidebar-meta">Platnost od: <strong>9. září 2026</strong> · Doba čtení: <strong>~4
+                min</strong></p>
 
-      <!-- Pravidla a přístup -->
-      <div class="legal-card">
-        <div class="legal-card-header">
-          <div class="legal-card-icon"><i class="fa-solid fa-gavel"></i></div>
-          <h2 class="legal-card-title">2. Přístup na server a pravidla komunity</h2>
-        </div>
-        <div class="legal-simple-box">
-          <strong>Stručně v lidské řeči</strong>
-          Hraní je zdarma pro každého, kdo dodržuje pravidla. Pokud bude někdo cheatovat, podvádět nebo kazit hru
-          ostatním, dostane ban bez náhrady.
-        </div>
-        <p class="legal-body-text">Přístup na herní server je bezplatný. Připojením na server hráč stvrzuje, že se
-          seznámil s herními pravidly a zavazuje se je bez výhrad dodržovat.</p>
-        <ul class="legal-bullet-list">
-          <li><strong>Zákaz podvádění:</strong> Je přísně zakázáno používání cheatů, hack klientů, X-Ray modifikací,
-            botů, autoclickerů a maker.</li>
-          <li><strong>Zákaz zneužívání chyb:</strong> Nalezené chyby v mapě nebo pluginech je hráč povinen neprodleně
-            nahlásit. Zneužití se trestá trvalým banem.</li>
-          <li><strong>Zákaz IRL obchodování:</strong> Je přísně zakázán jakýkoliv prodej herních předmětů, měny nebo
-            účtů za reálné peníze mimo oficiální obchod.</li>
-          <li><strong>Omezení přístupu:</strong> Provozovatel serveru si vyhrazuje právo omezit nebo natrvalo odebrat
-            přístup (udělit ban) hráči, který porušuje pravidla, narušuje chod serveru nebo obtěžuje komunitu, a to bez
-            nároku na kompenzaci.</li>
-        </ul>
-      </div>
+            <div class="legal-nav-switch">
+              <button class="legal-nav-btn" onclick="showTab('privacy')"><i class="fa-solid fa-shield-halved"></i>
+                Ochrana údajů</button>
+              <button class="legal-nav-btn active"><i class="fa-solid fa-scale-balanced"></i> Obchodní podmínky</button>
+            </div>
 
-      <!-- Nákupy a SMP+ -->
-      <div class="legal-card legal-card-danger">
-        <div class="legal-card-header">
-          <div class="legal-card-icon"><i class="fa-solid fa-credit-card"></i></div>
-          <h2 class="legal-card-title">3. Nákupy v herním obchodě (SMP+) a vyloučení vrácení plateb</h2>
-        </div>
-        <div class="legal-simple-box">
-          <strong>Stručně v lidské řeči</strong>
-          Nákup výhod SMP+ slouží k podpoře provozu serveru. Aktivace obvykle probíhá do 5 minut, při výpadku sítě
-          nejpozději do 2 hodin od nákupu. Pokud k aktivaci nedojde ani do 2 hodin, máte nárok na manuální prověření a
-          kompenzaci (např. prodloužení platnosti ranku či promokód), nikoliv na finanční vrácení peněz (refund). Jelikož
-          se jedná o okamžitě spotřebovaný digitální obsah, nelze žádat refund ani dělat neoprávněné chargebacky v bance.
-        </div>
-        <p class="legal-body-text">Příspěvky a nákupy v herním obchodě (ranky SMP+ a další doplňky) představují
-          dobrovolnou finanční podporu chodu a rozvoje serveru, za kterou hráč získává virtuální digitální obsah v
-          herním světě.</p>
-        <ul class="legal-bullet-list">
-          <li>
-            <strong>Doba dodání a řešení výpadků sítě (garance dodání do 2 hodin):</strong>
-            Standardní automatická aktivace zakoupených výhod na herním účtu probíhá zpravidla do 5 minut od dokončení
-            platby. V ojedinělých případech způsobených výpadkem síťového spojení, technickým zpožděním platební brány
-            Tebex nebo synchronizací herních serverů může dojít k prodlevě. Případné dodání proběhne nejpozději do 2
-            hodin od zakoupení.
-          </li>
-          <li>
-            <strong>Postup při nedodání do 2 hodin – kompenzace či promokód, nikoliv refund:</strong>
-            Pokud zakoupené výhody nebudou na herní účet připsány ani do 2 hodin od okamžiku nákupu, je uživatel povinen
-            kontaktovat podporu serveru (prostřednictvím ticketu na oficiálním Discordu) a doložit číslo objednávky
-            (Tebex Transaction ID). V takovém případě podpora balíček neprodleně aktivuje manuálně a uživatel může
-            požádat o přiměřenou kompenzaci (např. bezplatné prodloužení předplatného, herní odměny nebo bonusový
-            promokód). <strong>Vzniklá prodleva nezakládá právo na finanční vrácení peněz (refund).</strong>
-          </li>
-          <li>
-            <strong>Okamžité plnění digitálního obsahu (§ 1837 písm. l) občanského zákoníku):</strong>
-            Odesláním objednávky a zaplacením kupující výslovně žádá a souhlasí s tím, aby mu byl digitální obsah
-            (aktivace výhod SMP+ na herním účtu) dodán <strong>ihned po zaplacení</strong> před uplynutím zákonné lhůty
-            pro odstoupení od smlouvy. Kupující bere na vědomí, že udělením tohoto souhlasu <strong>ztrácí právo na
-              odstoupení od smlouvy ve 14denní lhůtě</strong> v souladu s § 1837 písm. l) zákona č. 89/2012 Sb.,
-            občanský zákoník, a příslušnou směrnicí Evropského parlamentu a Rady o právech spotřebitelů.
-          </li>
-          <li>
-            <strong>Zákaz neoprávněných store sporů (Chargeback Fraud):</strong>
-            Jakýkoliv neoprávněný pokus o vrácení platby prostřednictvím banky (chargeback) po dodání a využití herních
-            výhod bude považován za podvodné jednání. Účet hráče bude okamžitě trvale zablokován na serveru i v globální
-            síti platební brány Tebex.
-          </li>
-          <li>
-            <strong>Udělení trestu (Ban) a výhody:</strong>
-            Získání výhod SMP+ neopravňuje hráče k porušování herních pravidel. Pokud hráč s aktivním SMP+ poruší
-            pravidla a obdrží trest (ban), nevzniká mu nárok na vrácení peněz ani na prodloužení doby platnosti výhod.
-          </li>
-        </ul>
-      </div>
+            <!-- Reading Progress Bar -->
+            <div class="legal-progress-bar-container">
+              <div class="legal-progress-bar" id="terms-progress-bar"></div>
+            </div>
 
-      <!-- Vyloučení odpovědnosti -->
-      <div class="legal-card">
-        <div class="legal-card-header">
-          <div class="legal-card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-          <h2 class="legal-card-title">4. Vyloučení odpovědnosti</h2>
-        </div>
-        <div class="legal-simple-box">
-          <strong>Stručně v lidské řeči</strong>
-          Děláme maximum pro stabilitu serveru, ale je to online hra. Neručíme za ztrátu věcí způsobenou lagem vašeho
-          internetu, pádem do lávy nebo herními mechanikami.
-        </div>
-        <p class="legal-body-text">Server je poskytován tak, jak je („as is“). Provozovatel nenese odpovědnost za:</p>
-        <ul class="legal-bullet-list">
-          <li>Dočasnou nedostupnost serveru způsobenou technickou údržbou, výpadky či útoky třetích stran.</li>
-          <li>Ztrátu virtuálních předmětů, herních peněz či staveb způsobenou smrtí postavy, lagem připojení na straně
-            hráče, chybou hry Minecraft nebo standardními herními pravidly.</li>
-          <li>Chování ostatních hráčů v herním světě mimo rámec automatického moderování.</li>
-        </ul>
-      </div>
+            <!-- Left Index / TOC -->
+            <nav class="legal-toc" aria-label="Obsah obchodních podmínek">
+              <span class="legal-toc-heading">Obsah dokumentu</span>
+              <ul class="legal-toc-list">
+                <li><a href="#terms-sec-1" class="legal-toc-link active"
+                    onclick="smoothScrollToLegal('terms-sec-1', event)"><span class="toc-num">01</span> Vztah ke
+                    společnosti Mojang</a></li>
+                <li><a href="#terms-sec-2" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('terms-sec-2', event)"><span class="toc-num">02</span> Pravidla &amp;
+                    moderace (DSA)</a></li>
+                <li><a href="#terms-sec-3" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('terms-sec-3', event)"><span class="toc-num">03</span> Nákupy SMP+
+                    &amp; Tebex MoR</a></li>
+                <li><a href="#terms-sec-4" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('terms-sec-4', event)"><span class="toc-num">04</span> Trvalost světa
+                    &amp; chyby pluginů</a></li>
+                <li><a href="#terms-sec-5" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('terms-sec-5', event)"><span class="toc-num">05</span> Bezpečnost účtu
+                    &amp; sdílení hesel</a></li>
+                <li><a href="#terms-sec-6" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('terms-sec-6', event)"><span class="toc-num">06</span> Vymezení
+                    odpovědnosti</a></li>
+                <li><a href="#terms-sec-7" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('terms-sec-7', event)"><span class="toc-num">07</span> Mimosoudní
+                    řešení (ČOI ADR)</a></li>
+              </ul>
+            </nav>
 
-      <div class="legal-footer-note">
-        Tyto podmínky nabývají platnosti dnem zveřejnění. Provozovatel si vyhrazuje právo tyto podmínky v přiměřeném
-        rozsahu aktualizovat.
+            <!-- Executive Summary (TL;DR) -->
+            <div class="legal-summary-card">
+              <div class="legal-summary-title"><i class="fa-solid fa-bolt"></i> Shrnutí v kostce</div>
+              <ul class="legal-summary-list">
+                <li><i class="fa-solid fa-check"></i> <strong>Prodejce:</strong> Tebex Limited (Merchant of Record).
+                </li>
+                <li><i class="fa-solid fa-check"></i> <strong>Herní svět:</strong> Trvalý, žádné pravidelné sezónní
+                  wipy.</li>
+                <li><i class="fa-solid fa-check"></i> <strong>Váš účet:</strong> Za heslo plně odpovídá hráč (výmluvy na
+                  kamaráda neplatí).</li>
+                <li><i class="fa-solid fa-check"></i> <strong>Sociální sítě &amp; AI:</strong> Pravidla reklamy a lidský
+                  přezkum trestů.</li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+
+        <!-- RIGHT MAIN CONTENT -->
+        <main class="legal-main">
+          <!-- Article 1 -->
+          <article id="terms-sec-1" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">01 · MOJANG GUIDELINES</span>
+              <span class="legal-marker-ref">Commercial Usage Guidelines</span>
+            </div>
+            <h2 class="legal-article-title">1. Vztah ke společnosti Mojang Studios</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Jsme nezávislý komunitní projekt tvořený fanoušky. Nejsme oficiálním produktem Mojangu ani Microsoftu.
+            </div>
+
+            <p class="legal-text">Server MYCHALSMP je nezávislý komunitní projekt provozovaný herními nadšenci. Tento
+              server a webové stránky nejsou oficiálním produktem hry Minecraft, nejsou schváleny společností Mojang
+              Studios ani Microsoft Corporation a nejsou s nimi nijak spojeny. Minecraft je registrovaná ochranná známka
+              společnosti Mojang Synergies AB. Veškerý provoz serveru i nabídka virtuálních výhod plně respektuje
+              pravidla Mojang Commercial Usage Guidelines.</p>
+          </article>
+
+          <!-- Article 2 -->
+          <article id="terms-sec-2" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">02 · PRAVIDLA &amp; MODERACE</span>
+              <span class="legal-marker-ref">Digital Services Act &amp; AI Moderace</span>
+            </div>
+            <h2 class="legal-article-title">2. Přístup na server, pravidla komunity a moderace obsahu</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Hraní je zdarma. Kdo cheatuje nebo kazí hru ostatním, dostane ban. Vlastní reklama a odkazy na sociální
+              sítě jsou zakázané, výjimku mají jen ověření tvůrci s Media rankem. Proti trestu se můžete odvolat přes
+              webový formulář nebo Discord.
+            </div>
+
+            <p class="legal-text">Přístup na herní server je bezplatný. Připojením na server hráč stvrzuje, že se
+              seznámil s herními pravidly a zavazuje se je bez výhrad dodržovat:</p>
+            <ul class="legal-list">
+              <li><strong>Zákaz podvádění a cheatů:</strong> Je přísně zakázáno používání hack klientů, X-Ray modifikací
+                či textur, botů, autoclickerů a neférových maker. Ochranné anticheat systémy monitorují chování hráčů v
+                reálném čase.</li>
+              <li><strong>Zákaz nevyžádané reklamy a propagace sociálních sítí:</strong> Běžným hráčům je v herním
+                chatu, soukromých zprávách i na Discordu zakázána jakákoliv propagace vlastních či cizích sociálních
+                sítí, kanálů (YouTube, Twitch, Kick, TikTok) a jiných herních serverů. Výjimku tvoří výhradně schválení
+                tvůrci s hodností <strong>Media rank</strong>, kteří mohou sdílet odkazy na své oficiálně zaregistrované
+                a schválené profily.</li>
+              <li><strong>Pravidla pro držitele Media ranku a kontrola aktivity:</strong> Získání a držení Media ranku
+                je vázáno na tvorbu tematického obsahu z projektu MYCHALSMP (videa, streamy, Shorts) s uvedením
+                serverových odkazů nebo tagu #mychalsmp. Systém provádí pravidelnou automatizovanou kontrolu aktivity na
+                kanálech tvůrce. V případě zjištění neaktivity po dobu delší než 30 dní a vyčerpání ochranné lhůty
+                (streak protection) je Media rank automaticky navržen k odebrání.</li>
+              <li><strong>Zákaz zneužívání chyb:</strong> Nalezené technické chyby v mapě nebo pluginech je hráč povinen
+                neprodleně nahlásit. Záměrné zneužití pro vlastní obohacení se trestá trvalým banem.</li>
+              <li><strong>Zákaz IRL obchodování:</strong> Je zakázán jakýkoliv prodej herních předmětů, měny či účtů za
+                reálné peníze mimo oficiální herní obchod.</li>
+              <li><strong>Transparentní moderace obsahu a asistence AI (Digital Services Act &amp; EU AI Act):</strong>
+                K zajištění bezpečného prostředí využíváme automatizované skripty a asistenční modely umělé inteligence
+                (Google Gemini AI) pro detekci kyberšikany, extremismu a toxicity. Provozovatel si vyhrazuje právo
+                omezit nebo odebrat přístup (udělit ban či ztišení) hráči, který pravidla porušuje. Hráč je o důvodu
+                trestu informován a má garantované právo na lidské posouzení a odvolání (žádost o unban) prostřednictvím
+                webového formuláře v sekci „Nahlášení bugu / Žádost o unban“ nebo ticket systému na Discordu.</li>
+            </ul>
+          </article>
+
+          <!-- Article 3 -->
+          <article id="terms-sec-3" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">03 · NÁKUPY &amp; TEBEX</span>
+              <span class="legal-marker-ref">Merchant of Record &amp; § 1837 písm. l) OZ</span>
+            </div>
+            <h2 class="legal-article-title">3. Nákupy výhod (SMP+) a postavení společnosti Tebex Limited</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Nákupem SMP+ podporujete chod serveru. Prodejcem je společnost Tebex Limited (Merchant of Record).
+              Aktivace probíhá obvykle do 5 minut (max. do 2 hodin). Pokud by k aktivaci nedošlo ani po nahlášení na
+              podporu, máte nárok na plný refund.
+            </div>
+
+            <ul class="legal-list">
+              <li>
+                <strong>Tebex Limited jako autorizovaný prodejce (Merchant of Record):</strong>
+                Veškeré platby a prodeje herních výhod jsou právně realizovány společností <strong>Tebex
+                  Limited</strong> (se sídlem ve Spojeném království). Kupní smlouvu o pořízení digitálního obsahu
+                uzavírá kupující přímo se společností Tebex Limited v souladu s podmínkami Tebex Checkout Terms of
+                Service. Provozovatel serveru MYCHALSMP vystupuje jako technický partner poskytující herní prostředí a
+                zajišťující doručení výhod ve hře.
+              </li>
+              <li>
+                <strong>Doba dodání a řešení zpoždění:</strong>
+                Standardní automatická aktivace zakoupených výhod probíhá zpravidla do 5 minut od dokončení platby. V
+                případě výpadku spojení či technické prodlevy proběhne dodání nejpozději do 2 hodin od nákupu.
+              </li>
+              <li>
+                <strong>Reklamace a postup při nedodání obsahu:</strong>
+                Pokud výhody nebudou na herní účet připsány do 2 hodin od nákupu, uživatel kontaktuje podporu (Discord
+                ticket nebo e-mail <a href="mailto:admin@mychalsmp.xyz" class="legal-link">admin@mychalsmp.xyz</a>) s
+                číslem objednávky (Tebex Transaction ID). Podpora neprodleně provede manuální aktivaci a případně
+                nabídne bonusovou kompenzaci. Pokud by digitální obsah nebyl doručen ani v dodatečné přiměřené lhůtě, má
+                kupující plné právo na vrácení zaplacené částky (refund) v souladu s platnými právními předpisy a
+                standardem Tebexu.
+              </li>
+              <li>
+                <strong>Okamžité plnění digitálního obsahu (§ 1837 písm. l) občanského zákoníku):</strong>
+                Odesláním objednávky a zaplacením kupující výslovně žádá a souhlasí s tím, aby mu byl digitální obsah
+                (aktivace výhod SMP+ na herním účtu) dodán <strong>ihned po zaplacení</strong> před uplynutím zákonné
+                14denní lhůty pro odstoupení od smlouvy. Kupující bere na vědomí, že udělením tohoto výslovného souhlasu
+                se započetím plnění <strong>zaniká jeho právo na odstoupení od smlouvy ve 14denní lhůtě</strong> v
+                souladu s § 1837 písm. l) zákona č. 89/2012 Sb., občanský zákoník.
+              </li>
+              <li>
+                <strong>Zákaz neoprávněných bankovních sporů (Chargeback):</strong>
+                Zahájení neoprávněného sporu u banky (chargeback) po řádném dodání a využívání herních výhod je
+                považováno za porušení podmínek. Účet hráče bude do vyřešení sporu preventivně zablokován pro ochranu
+                integrity platebního systému.
+              </li>
+              <li>
+                <strong>Udělení trestu (Ban) a výhody:</strong>
+                Zakoupení výhod SMP+ neopravňuje hráče k porušování pravidel. Pokud hráč s aktivním SMP+ poruší pravidla
+                a obdrží oprávněný trest (ban či ztišení), nevzniká nárok na vrácení peněz za již uplynulé období
+                poskytování služby.
+              </li>
+            </ul>
+          </article>
+
+          <!-- Article 4 -->
+          <article id="terms-sec-4" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">04 · HERNÍ SVĚT &amp; ZÁLOHY</span>
+              <span class="legal-marker-ref">Specifika Minecraft provozu</span>
+            </div>
+            <h2 class="legal-article-title">4. Trvalost herního světa, absence běžných wipů a chyby pluginů</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Mapu nemažeme v sezónních wypech, snažíme se o trvalý svět. Data zálohujeme na externí disky, ale nejsou
+              veřejně otevřená 24/7. Ojedinělá chyba v pluginech může způsobit načtení staršího stavu dat, což je
+              technická vlastnost hry a nezakládá finanční refund.
+            </div>
+
+            <ul class="legal-list">
+              <li>
+                <strong>Trvalost světa a absence sezónních wipů:</strong>
+                Server MYCHALSMP standardně neuplatňuje plánované sezónní resety mapy (wipy). Cílem projektu je
+                dlouhodobá udržitelnost staveb a herního postupu hráčů. K celkovému vyresetování světa by došlo výhradně
+                za zcela mimořádných a kritických technických okolností (např. fatální destrukce souborového systému či
+                neopravitelné poškození dat světa nezaviněné provozovatelem).
+              </li>
+              <li>
+                <strong>Zálohování a archivní data:</strong>
+                Provozovatel pravidelně ukládá herní světy a hráčská data na oddělená záložní úložiště (backup disky).
+                Tato archivní data jsou určena pro případ nouzové obnovy a nejsou běžně garantována jako nepřetržitě
+                veřejně přístupná 24/7. Přístup k historickým zálohám může být umožněn pouze výjimečně v rámci předem
+                oznámených komunitních eventů či archivních prohlídek.
+              </li>
+              <li>
+                <strong>Technické chyby pluginů a desynchronizace dat:</strong>
+                Vzhledem k povaze komplexního chodu Minecraft serveru s rozsáhlou sadou vlastních i externích pluginů
+                může ojediněle dojít k technické chybě pluginu, desynchronizaci dat nebo načtení staršího stavu
+                hráčských dat (rollback / data desync). Provozovatel a administrátorský tým vyvíjí maximální technické
+                úsilí pro minimalizaci těchto chyb a v případě prokazatelné ztráty se snaží hráči v herním světě vyjít
+                vstříc. Hráč však bere na vědomí, že tyto přechodné technické jevy nezakládají právní nárok na finanční
+                refundaci za zakoupené výhody.
+              </li>
+            </ul>
+          </article>
+
+          <!-- Article 5 -->
+          <article id="terms-sec-5" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">05 · BEZPEČNOST ÚČTU</span>
+              <span class="legal-marker-ref">Odpovědnost držitele účtu</span>
+            </div>
+            <h2 class="legal-article-title">5. Bezpečnost účtu a zákaz sdílení hesel</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Za svůj herní účet a heslo plně zodpovídáte vy. Půjčování účtu kamarádům či sourozencům je na vlastní
+              riziko. Výmluvy typu „to hrál brácha / kamarád“ neomlouvají ban za cheatování ani nevrací peníze.
+            </div>
+
+            <ul class="legal-list">
+              <li>
+                <strong>Výhradní odpovědnost za přihlašovací údaje:</strong>
+                Každý hráč nese plnou a výhradní odpovědnost za zabezpečení svého herního účtu a hesla. Hráč je povinen
+                zvolit silné a unikátní heslo a chránit jej před zneužitím.
+              </li>
+              <li>
+                <strong>Zákaz sdílení a půjčování hesel:</strong>
+                Půjčování herního účtu, sdílení hesel kamarádům, rodinným příslušníkům či třetím osobám je striktně na
+                vlastní riziko hráče. Provozovatel neodpovídá za škody (ztrátu itemů, zničení staveb či odcizení herní
+                měny) způsobené třetí osobou, které hráč heslo dobrovolně či z nedbalosti sdělil.
+              </li>
+              <li>
+                <strong>Přičitatelnost jednání a výmluvy na třetí osoby:</strong>
+                Veškerá herní aktivita provedená pod přihlášeným účtem hráče se z pohledu serverových pravidel a
+                anticheat systémů považuje za jednání samotného majitele účtu. Pokud pod daným účtem dojde k porušení
+                pravidel (např. cheatování, toxicita, griefing na chráněném území), bude trest (ban) udělen bez ohledu
+                na to, kdo fyzicky seděl u počítače. Argumenty typu „hrál na tom kamarád“, „bratr mi sedl k počítači“
+                nebo „byl jsem hacknut kvůli jednoduchému heslu“ nejsou důvodem ke zrušení banu ani k vrácení peněz.
+              </li>
+            </ul>
+          </article>
+
+          <!-- Article 6 -->
+          <article id="terms-sec-6" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">06 · ODPOVĚDNOST</span>
+              <span class="legal-marker-ref">Podmínky „jak stojí a leží“</span>
+            </div>
+            <h2 class="legal-article-title">6. Vymezení a vyloučení odpovědnosti</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Děláme maximum pro stabilitu, ale je to online hra. Neručíme za ztrátu věcí zaviněnou lagem vašeho
+              internetu, pádem do lávy nebo povoleným griefingem na SMP světě.
+            </div>
+
+            <p class="legal-text">Server je poskytován ve stavu „jak stojí a leží“ („as is“). Provozovatel nenese právní
+              odpovědnost za:</p>
+            <ul class="legal-list">
+              <li>Dočasnou nedostupnost herních serverů způsobenou nutnou technickou údržbou, výpadky internetového uzlu
+                či DDoS útoky třetích stran.</li>
+              <li>Ztrátu virtuálních předmětů, herních peněz či staveb způsobenou smrtí postavy, chybou internetového
+                spojení na straně hráče, chybou samotné hry Minecraft nebo standardními herními mechanikami (včetně
+                povoleného griefingu na SMP světě /smp).</li>
+              <li>Chování ostatních hráčů v herním světě mimo rámec automatického moderování a pravidel.</li>
+            </ul>
+          </article>
+
+          <!-- Article 7 -->
+          <article id="terms-sec-7" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">07 · SPORY &amp; KONTAKT</span>
+              <span class="legal-marker-ref">§ 14 Zákona č. 634/1992 Sb. &amp; DSA</span>
+            </div>
+            <h2 class="legal-article-title">7. Mimosoudní řešení sporů (ČOI) a kontaktní místo</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Pokud by nastal spor, který nevyřešíme přes podporu, máte jako spotřebitel ze zákona právo obrátit se na
+              Českou obchodní inspekci.
+            </div>
+
+            <p class="legal-text">V souladu se zákonem č. 634/1992 Sb., o ochraně spotřebitele, informujeme spotřebitele
+              o právu na mimosoudní řešení spotřebitelských sporů (ADR). Subjektem věcně příslušným pro mimosoudní
+              řešení spotřebitelských sporů pro území České republiky je:</p>
+            <ul class="legal-list">
+              <li>
+                <strong>Česká obchodní inspekce (ČOI)</strong><br>
+                Ústřední inspektorát – oddělení ADR, Štěpánská 44, 120 00 Praha 2<br>
+                Web: <a href="https://adr.coi.cz" target="_blank" rel="noopener" class="legal-link">adr.coi.cz</a> | <a
+                  href="https://www.coi.cz" target="_blank" rel="noopener" class="legal-link">www.coi.cz</a> | E-mail:
+                adr@coi.cz
+              </li>
+              <li>Spotřebitel může rovněž využít platformu pro řešení sporů online zřízenou Evropskou komisí na adrese
+                <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener"
+                  class="legal-link">ec.europa.eu/consumers/odr</a>.
+              </li>
+              <li><strong>Jednotné kontaktní místo podle Digital Services Act (DSA):</strong> Pro komunikaci s uživateli
+                i orgány veřejné moci ve smyslu čl. 11 a 12 Nařízení (EU) 2022/2065 slouží e-mail: <a
+                  href="mailto:admin@mychalsmp.xyz" class="legal-link">admin@mychalsmp.xyz</a>. Komunikačním jazykem je
+                čeština, slovenština a angličtina.</li>
+              <li><strong>Rozhodné právo:</strong> Veškeré právní vztahy mezi uživatelem a provozovatelem se řídí
+                právním řádem České republiky.</li>
+            </ul>
+          </article>
+
+          <div class="legal-footer-note">
+            Poslední revize podmínek: 9. září 2026 &nbsp;·&nbsp; Tyto podmínky nabývají platnosti a účinnosti dnem
+            jejich zveřejnění na webu mychalsmp.xyz.
+          </div>
+        </main>
       </div>
     </div>
   </section>

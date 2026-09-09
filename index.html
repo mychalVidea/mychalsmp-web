@@ -1438,6 +1438,16 @@
               Správa, vývoj a bezpečnostní údržba kódu probíhá v zabezpečeném lokálním prostředí majitele v souladu s přísnými
               technickými a organizačními opatřeními na ochranu dat před neoprávněným zásahem či únikem.
             </p>
+
+            <p class="legal-text" style="margin-top: 14px;">
+              <strong>Síťová architektura a směrovací brána (Reverse Proxy Tunel):</strong>
+              Pro zajištění stabilního veřejného spojení hráčů a ochranu privátní domácí infrastruktury serveru využíváme
+              zabezpečenou vstupní síťovou bránu (reverse proxy tunel) provozovanou na infrastruktuře Oracle Cloud Infrastructure
+              (v datacentru v rámci EU – Frankfurt). Tento cloudový uzel funguje výhradně jako tranzitní směrovač síťových TCP
+              paketů hry Minecraft a webových spojení. <strong>Na této cloudové síťové bráně se neukládají žádné herní
+              databáze, inventáře, stavby, hesla ani trvalá data hráčů</strong> – veškerý síťový provoz pouze zabezpečeně
+              protéká tunelem na lokální hardware majitele, kde jsou data zpracovávána a chráněna.
+            </p>
           </article>
 
           <!-- Article 2 -->
@@ -1583,6 +1593,9 @@
               <li><strong>ip-api.com &amp; ipwho.is:</strong> Dotazování bezpečnostních GeoIP a AntiVPN rozhraní pro
                 detekci nebezpečných proxy sítí, hostingových datacenter a blokování VPN z důvodu obrany před útoky.
               </li>
+              <li><strong>Oracle Corporation (Oracle Cloud Infrastructure – EU, Frankfurt):</strong> Poskytovatel
+                cloudové síťové infrastruktury pro provoz tranzitní reverse proxy brány. Přenos probíhá v datacentru v rámci
+                Evropské unie v plném souladu s GDPR. Na serveru Oracle nedochází k trvalému ukládání herních databází.</li>
             </ul>
           </article>
 

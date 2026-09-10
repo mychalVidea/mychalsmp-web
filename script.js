@@ -129,14 +129,28 @@ function copyIP(event) {
       const element = event.currentTarget;
 
       // If it's the copy button on the Home hero
-      if (element.id === 'copy-btn') {
-        const origText = element.innerHTML;
-        element.innerHTML = '✅ Zkopírováno!';
-        element.classList.add('copied');
-        setTimeout(() => {
-          element.innerHTML = origText;
-          element.classList.remove('copied');
-        }, 2000);
+      if (element.id === 'copy-btn' || element.classList.contains('hero-ip-bar')) {
+        const copyBtn = document.getElementById('copy-btn');
+        if (copyBtn) {
+          const origText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '✅ Zkopírováno!';
+          copyBtn.classList.add('copied');
+          setTimeout(() => {
+            copyBtn.innerHTML = origText;
+            copyBtn.classList.remove('copied');
+          }, 2000);
+        }
+      }
+      // If it's the quickstart ip box
+      else if (element.classList.contains('quickstart-ip-box')) {
+        const copyBtn = element.querySelector('.quickstart-copy-btn');
+        if (copyBtn) {
+          const origText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i class="fa-solid fa-check" style="color: #4ade80;"></i>';
+          setTimeout(() => {
+            copyBtn.innerHTML = origText;
+          }, 2000);
+        }
       }
       // If it's the join-ip-container in the header
       else if (element.classList.contains('join-ip-container')) {
@@ -167,6 +181,24 @@ function copyIP(event) {
     }
   }).catch(err => {
     console.error('Failed to copy: ', err);
+  });
+}
+
+function copyTicketId(e) {
+  if (e && e.stopPropagation) e.stopPropagation();
+  const ticketIdEl = document.getElementById('ticket-id-display');
+  if (!ticketIdEl) return;
+  const text = ticketIdEl.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    showToast(`📋 Číslo tiketu ${text} zkopírováno!`);
+    const btn = document.querySelector('.ticket-copy-btn');
+    if (btn) {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-check" style="color: #4ade80;"></i>';
+      setTimeout(() => { btn.innerHTML = orig; }, 2000);
+    }
+  }).catch(() => {
+    showToast(`Číslo tiketu: ${text}`);
   });
 }
 
@@ -339,7 +371,7 @@ async function loadStats() {
           data = await res.json();
           if (data && (data.whitelist_count !== undefined || data.total_money !== undefined)) break;
         }
-      } catch (e) {}
+      } catch (e) { }
     }
 
     if (data) {
@@ -778,7 +810,7 @@ function copyDlinkCmd() {
     if (typeof showToast === 'function') {
       showToast('📋 Příkaz /dlink byl zkopírován do schránky!');
     }
-  }).catch(() => {});
+  }).catch(() => { });
 }
 
 function confirmCancelSmpPlus() {
@@ -1117,137 +1149,9 @@ async function submitMediaApplication(event) {
   }
 }
 
-// ---- PC INTERACTIVE PARTICLES ----
+// ---- PC INTERACTIVE PARTICLES (Disabled for clean, premium performance) ----
 function initHeroParticles() {
-  const canvas = document.getElementById('hero-particles-canvas');
-  if (!canvas) return;
-
-  // Only run on desktop
-  if (window.innerWidth <= 768) {
-    canvas.style.display = 'none';
-    return;
-  }
-
-  const ctx = canvas.getContext('2d');
-  let animationFrameId;
-  const particles = [];
-  const particleCount = 55;
-  const colors = ['#0a67e5', '#ffbb00', '#ef4444', '#00b4cc'];
-  const mouse = { x: null, y: null, radius: 140 };
-
-  const hero = document.querySelector('.hero');
-
-  function resizeCanvas() {
-    canvas.width = hero.clientWidth;
-    canvas.height = hero.clientHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  hero.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
-
-  hero.addEventListener('mouseleave', () => {
-    mouse.x = null;
-    mouse.y = null;
-  });
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.radius = Math.random() * 3.5 + 1.5;
-      this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.vx = (Math.random() - 0.5) * 0.6;
-      this.vy = (Math.random() - 0.5) * 0.6;
-      this.baseRadius = this.radius;
-    }
-
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
-      ctx.globalAlpha = 0.55;
-      ctx.fill();
-    }
-
-    update() {
-      // Basic movement
-      this.x += this.vx;
-      this.y += this.vy;
-
-      // Wrap boundaries
-      if (this.x < 0) this.x = canvas.width;
-      if (this.x > canvas.width) this.x = 0;
-      if (this.y < 0) this.y = canvas.height;
-      if (this.y > canvas.height) this.y = 0;
-
-      // Mouse repulsion
-      if (mouse.x !== null && mouse.y !== null) {
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < mouse.radius) {
-          const force = (mouse.radius - dist) / mouse.radius;
-          const angle = Math.atan2(dy, dx);
-
-          this.x += Math.cos(angle) * force * 3;
-          this.y += Math.sin(angle) * force * 3;
-
-          this.radius = this.baseRadius * (1 + force * 0.8);
-        } else {
-          if (this.radius > this.baseRadius) {
-            this.radius -= 0.1;
-          }
-        }
-      } else {
-        if (this.radius > this.baseRadius) {
-          this.radius -= 0.1;
-        }
-      }
-    }
-  }
-
-  // Instantiate particles
-  for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Connect particles with thin lines
-    ctx.lineWidth = 0.55;
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 85) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = '#0a67e5';
-          ctx.globalAlpha = (1 - dist / 85) * 0.12;
-          ctx.stroke();
-        }
-      }
-    }
-
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-
-    animationFrameId = requestAnimationFrame(animate);
-  }
-
-  animate();
+  // Disabled to eliminate visual noise, save battery/CPU, and avoid generic AI template look.
 }
 
 // ---- CASCADE FALLING GAME ICONS ----
@@ -1306,33 +1210,21 @@ function removeBugImage(index) {
 }
 
 function renderBugImagesPreview() {
-  const preview = document.getElementById('bug-images-preview');
-  if (!preview) return;
-  if (bugSelectedFiles.length === 0) {
-    preview.style.display = 'none';
-    preview.innerHTML = '';
-    return;
-  }
-
-  preview.style.display = 'block';
-  preview.innerHTML = `
-    <div style="font-size:13px; margin-bottom:8px; color:#2ecc71; font-weight:600;">
-      📷 Vybrané fotky (${bugSelectedFiles.length}/3):
-    </div>
-    <div id="bug-thumb-container" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;"></div>
-  `;
-  const container = document.getElementById('bug-thumb-container');
+  const container = document.getElementById('bug-images-chips');
+  if (!container) return;
+  container.innerHTML = '';
+  if (bugSelectedFiles.length === 0) return;
 
   bugSelectedFiles.forEach((file, idx) => {
-    const thumb = document.createElement('div');
-    thumb.style.cssText = 'position:relative; width:90px; height:65px; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.25); box-shadow:0 4px 10px rgba(0,0,0,0.3); background:#111;';
-
+    const chip = document.createElement('div');
+    chip.className = 'bug-image-chip';
     const objectUrl = URL.createObjectURL(file);
-    thumb.innerHTML = `
-      <img src="${objectUrl}" style="width:100%; height:100%; object-fit:cover;" title="${file.name}">
-      <button type="button" onclick="removeBugImage(${idx})" style="position:absolute; top:2px; right:2px; background:rgba(231,76,60,0.85); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:12px; line-height:20px; text-align:center; cursor:pointer; padding:0;">×</button>
+    chip.innerHTML = `
+      <img src="${objectUrl}" alt="Snímek" class="bug-chip-preview-img">
+      <span title="${file.name}">${file.name.length > 16 ? file.name.substring(0, 13) + '...' : file.name}</span>
+      <button type="button" class="bug-chip-remove-btn" onclick="removeBugImage(${idx})" title="Odstranit">✕</button>
     `;
-    container.appendChild(thumb);
+    container.appendChild(chip);
   });
 }
 
@@ -1449,38 +1341,78 @@ document.addEventListener('paste', (e) => {
   }
 });
 
-function handleUnbanCheckboxToggle(checkbox) {
-  const isUnban = checkbox.checked;
+// ---- MODERN BUG & UNBAN REPORTING ----
+let currentBugCategory = 'game';
+let bugNickTimeout = null;
+let bugCooldownInterval = null;
+
+function selectBugCategory(cat) {
+  currentBugCategory = cat;
+  document.querySelectorAll('.bug-cat-chip').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === cat);
+  });
+
   const descLabel = document.getElementById('bug-desc-label');
   const descInput = document.getElementById('bug-desc');
-  const submitBtn = document.getElementById('btn-bug-submit');
+  const submitText = document.getElementById('btn-bug-text');
 
-  if (isUnban) {
-    if (descLabel) descLabel.innerHTML = '<i class="fa-solid fa-scale-balanced" style="color:#ef4444;"></i> Důvod žádosti a vysvětlení';
-    if (descInput) descInput.placeholder = 'Popiš za co jsi dostal trest, proč by ti měl být zrušen a doplňující vysvětlení...';
-    if (submitBtn) submitBtn.innerHTML = '⚖️ Odeslat žádost o unban';
+  if (cat === 'unban') {
+    if (descLabel) descLabel.innerHTML = '<span><i class="fa-solid fa-scale-balanced"></i> Proč žádáš o unban?</span>';
+    if (descInput) descInput.placeholder = 'Vysvětli situaci, za co jsi dostal trest a proč bys měl dostat unban...';
+    if (submitText) submitText.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Odeslat žádost o unban';
   } else {
-    if (descLabel) descLabel.innerHTML = '<i class="fa-solid fa-bug" style="color:#e74c3c;"></i> Popis bugu / problému';
-    if (descInput) descInput.placeholder = 'Popiš kde se bug nachází, jak ho vyvolat a co se přesně děje...';
-    if (submitBtn) submitBtn.innerHTML = '🐛 Odeslat nahlášení';
+    if (descLabel) descLabel.innerHTML = '<span><i class="fa-solid fa-align-left"></i> Co se přesně stalo?</span>';
+    if (submitText) submitText.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Odeslat nahlášení';
+
+    if (descInput) {
+      if (cat === 'economy') {
+        descInput.placeholder = 'Popiš chybu v ekonomice, /shopu, mincích nebo tržnici...';
+      } else if (cat === 'web') {
+        descInput.placeholder = 'Popiš problém s webem, Discord botem nebo propojením účtu...';
+      } else {
+        descInput.placeholder = 'Popiš, kde se chyba nachází, co jsi dělal a co se stalo...';
+      }
+    }
   }
 }
 
-// ---- BUG & UNBAN REPORTING ----
-let bugCooldownInterval = null;
+function handleBugNickInput(val) {
+  const nick = (val || '').trim();
+  const avatarImg = document.getElementById('bug-nick-avatar');
+  const greeting = document.getElementById('bug-nick-greeting');
+
+  if (bugNickTimeout) clearTimeout(bugNickTimeout);
+  bugNickTimeout = setTimeout(() => {
+    if (nick.length >= 2 && /^[a-zA-Z0-9_]{2,16}$/.test(nick)) {
+      if (avatarImg) {
+        avatarImg.src = `https://mc-heads.net/avatar/${encodeURIComponent(nick)}/48`;
+      }
+      if (greeting) {
+        greeting.textContent = `Ahoj, ${nick}! 👋`;
+        greeting.style.opacity = '1';
+      }
+    } else {
+      if (avatarImg) {
+        avatarImg.src = 'https://mc-heads.net/avatar/MHF_Steve/48';
+      }
+      if (greeting) {
+        greeting.textContent = '';
+        greeting.style.opacity = '0';
+      }
+    }
+  }, 250);
+}
 
 function startBugCooldownTimer(seconds) {
   const submitBtn = document.getElementById('btn-bug-submit');
-  const unbanCheckbox = document.getElementById('bug-is-unban');
+  const submitText = document.getElementById('btn-bug-text');
   if (!submitBtn) return;
 
   if (bugCooldownInterval) clearInterval(bugCooldownInterval);
   let remaining = seconds;
   submitBtn.disabled = true;
-  submitBtn.style.opacity = '0.6';
-  submitBtn.style.cursor = 'not-allowed';
 
-  submitBtn.innerHTML = `⏳ Další odeslání za ${remaining}s`;
+  if (submitText) submitText.innerHTML = `⏳ Další odeslání za ${remaining}s`;
 
   bugCooldownInterval = setInterval(() => {
     remaining--;
@@ -1488,11 +1420,9 @@ function startBugCooldownTimer(seconds) {
       clearInterval(bugCooldownInterval);
       bugCooldownInterval = null;
       submitBtn.disabled = false;
-      submitBtn.style.opacity = '';
-      submitBtn.style.cursor = '';
-      submitBtn.innerHTML = (unbanCheckbox && unbanCheckbox.checked) ? '⚖️ Odeslat žádost o unban' : '🐛 Odeslat nahlášení';
+      selectBugCategory(currentBugCategory);
     } else {
-      submitBtn.innerHTML = `⏳ Další odeslání za ${remaining}s`;
+      if (submitText) submitText.innerHTML = `⏳ Další odeslání za ${remaining}s`;
     }
   }, 1000);
 }
@@ -1502,9 +1432,8 @@ async function submitBugReport(e) {
   const nickInput = document.getElementById('bug-nick');
   const descInput = document.getElementById('bug-desc');
   const imagesInput = document.getElementById('bug-images');
-  const unbanCheckbox = document.getElementById('bug-is-unban');
   const submitBtn = document.getElementById('btn-bug-submit');
-  const statusDiv = document.getElementById('bug-response-status');
+  const submitText = document.getElementById('btn-bug-text');
 
   if (!nickInput || !descInput || !submitBtn) return;
 
@@ -1514,11 +1443,11 @@ async function submitBugReport(e) {
   }
 
   const nick = nickInput.value.trim();
-  const bug = descInput.value.trim();
-  const isUnban = unbanCheckbox ? unbanCheckbox.checked : false;
+  let bug = descInput.value.trim();
+  const isUnban = (currentBugCategory === 'unban');
 
   if (!nick || !bug) {
-    showToast('⚠️ Vyplň prosím všechna povinná pole!');
+    showToast('⚠️ Vyplň prosím svůj herní nick a popis!');
     return;
   }
 
@@ -1528,22 +1457,23 @@ async function submitBugReport(e) {
     return;
   }
   if (bug.length < 5) {
-    showToast(isUnban ? '❌ Popiš svou žádost o unban podrobněji (min. 5 znaků).' : '❌ Popiš bug podrobněji (min. 5 znaků).');
+    showToast(isUnban ? '❌ Popiš svou žádost o unban podrobněji (min. 5 znaků).' : '❌ Popiš chybu podrobněji (min. 5 znaků).');
     descInput.focus();
     return;
   }
 
   const bugConsent = document.getElementById('bug-consent');
   if (bugConsent && !bugConsent.checked) {
-    showToast('⚠️ Před odesláním potvrď souhlas se zpracováním údajů.');
-    const wrapper = document.getElementById('bug-consent-wrapper');
-    if (wrapper) {
-      wrapper.classList.remove('shake-input');
-      void wrapper.offsetWidth;
-      wrapper.classList.add('shake-input');
-    }
+    showToast('⚠️ Potvrď prosím souhlas.');
     bugConsent.focus();
     return;
+  }
+
+  // Prepend category tag if not unban
+  if (!isUnban) {
+    const catLabels = { game: 'HERNÍ BUG', economy: 'EKONOMIKA', web: 'WEB/DISCORD' };
+    const tag = catLabels[currentBugCategory] || 'BUG';
+    bug = `[${tag}] ${bug}`;
   }
 
   const filesToUpload = bugSelectedFiles.length > 0 ? bugSelectedFiles : (imagesInput && imagesInput.files ? Array.from(imagesInput.files) : []);
@@ -1570,7 +1500,7 @@ async function submitBugReport(e) {
   }
 
   submitBtn.disabled = true;
-  submitBtn.innerHTML = isUnban ? '⏳ Odesílám žádost...' : '⏳ Odesílám...';
+  if (submitText) submitText.innerHTML = isUnban ? '⏳ Odesílám žádost...' : '⏳ Odesílám nahlášení...';
 
   try {
     const endpoints = ['/api/report-bug', 'https://api.6767111.xyz/api/report-bug'];
@@ -1612,31 +1542,33 @@ async function submitBugReport(e) {
     }
 
     if (successRes && data && data.success) {
-      showToast(isUnban ? '✅ Žádost o unban byla úspěšně odeslána! (Další za 1 minutu)' : '✅ Bug byl úspěšně nahlášen! (Další za 1 minutu)');
-      nickInput.value = '';
-      descInput.value = '';
-      if (unbanCheckbox) unbanCheckbox.checked = false;
-      handleUnbanCheckboxToggle({ checked: false });
-      if (imagesInput) imagesInput.value = '';
-      bugSelectedFiles = [];
-      renderBugImagesPreview();
+      const ticketNum = (isUnban ? '#UNBAN-' : '#BUG-') + Math.floor(1000 + Math.random() * 9000);
+      showToast(isUnban ? '✅ Žádost o unban byla úspěšně odeslána!' : '✅ Nahlášení bylo úspěšně odesláno!');
 
-      if (statusDiv) {
-        statusDiv.style.display = 'block';
-        if (isUnban) {
-          statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Tvoje žádost o unban byla úspěšně odeslána! Administrátoři ji posoudí na Discordu. Další žádost můžeš poslat za 1 minutu.</div>';
-        } else {
-          statusDiv.innerHTML = '<div style="color:#2ecc71; font-weight:600; padding:15px; background:rgba(46,204,113,0.1); border-radius:10px; border: 1px solid rgba(46,204,113,0.3);">✅ Děkujeme! Tvoje nahlášení bylo odesláno do systému ke kontrole. Po posouzení obdržíš odměnu přímo ve hře! Další hlášení můžeš poslat za 1 minutu.</div>';
-        }
+      // Populate confirmation ticket card
+      const ticketIdEl = document.getElementById('ticket-id-display');
+      const ticketUserAvatar = document.getElementById('ticket-user-avatar');
+      const ticketUserName = document.getElementById('ticket-user-name');
+      const ticketTitle = document.getElementById('ticket-success-title');
+
+      if (ticketIdEl) ticketIdEl.textContent = ticketNum;
+      if (ticketUserAvatar) ticketUserAvatar.src = `https://mc-heads.net/avatar/${encodeURIComponent(nick)}/48`;
+      if (ticketUserName) ticketUserName.textContent = nick;
+      if (ticketTitle) ticketTitle.textContent = isUnban ? 'Žádost o unban byla úspěšně odeslána!' : 'Nahlášení bylo úspěšně odesláno!';
+
+      // Smooth switch to ticket confirmation
+      const cardFront = document.getElementById('bug-card-front');
+      const cardBack = document.getElementById('bug-card-back');
+      if (cardFront) cardFront.style.display = 'none';
+      if (cardBack) {
+        cardBack.style.display = 'block';
+        cardBack.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
+
       startBugCooldownTimer(60);
     } else {
       const errMsg = resErrorMsg || (data && data.error) || 'Nepodařilo se odeslat nahlášení.';
       showToast(`❌ ${errMsg}`);
-      if (statusDiv) {
-        statusDiv.style.display = 'block';
-        statusDiv.innerHTML = `<div style="color:#e74c3c; font-weight:600; padding:15px; background:rgba(231,76,60,0.1); border-radius:10px; border: 1px solid rgba(231,76,60,0.3);">❌ ${errMsg}</div>`;
-      }
       if (resRetryAfter || (data && data.retryAfter)) {
         startBugCooldownTimer(resRetryAfter || data.retryAfter);
       }
@@ -1647,9 +1579,25 @@ async function submitBugReport(e) {
   } finally {
     if (!bugCooldownInterval) {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = (unbanCheckbox && unbanCheckbox.checked) ? '⚖️ Odeslat žádost o unban' : '🐛 Odeslat nahlášení';
+      selectBugCategory(currentBugCategory);
     }
   }
+}
+
+function resetBugCardState() {
+  const cardFront = document.getElementById('bug-card-front');
+  const cardBack = document.getElementById('bug-card-back');
+  if (cardFront) cardFront.style.display = 'block';
+  if (cardBack) cardBack.style.display = 'none';
+
+  const descInput = document.getElementById('bug-desc');
+  const imagesInput = document.getElementById('bug-images');
+  if (descInput) descInput.value = '';
+  if (imagesInput) imagesInput.value = '';
+  bugSelectedFiles = [];
+  renderBugImagesPreview();
+  selectBugCategory('game');
+  cardFront.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 window.addEventListener('popstate', handleUrlRouting);
@@ -2095,7 +2043,7 @@ async function aiProcessIdea(id) {
 
 async function approveIdea(id) {
   if (!confirm('Opravdu chceš tento nápad SCHVÁLIT? Udělí autorovi +1 bod a pošle oznámení do Discordu.')) return;
-  
+
   try {
     const res = await fetch(`https://api.6767111.xyz/api/napady/approve/${id}`, {
       method: 'POST',
@@ -2255,9 +2203,15 @@ const statsData = {
 function initStatsModule() {
   renderStatsChart();
   fetchLiveServerStats();
+  fetchOnlinePlayers();
   if (!isStatsModuleInitialized) {
     isStatsModuleInitialized = true;
     window.addEventListener('resize', renderStatsChart);
+    setInterval(() => {
+      if (currentActiveTab === 'stats') {
+        fetchOnlinePlayers();
+      }
+    }, 15000);
   }
 }
 
@@ -2551,7 +2505,7 @@ let chartSkeletonTimer = null;
 // Fetch Live & Historical Stats from Backend SQLite Database (/api/server-stats)
 async function fetchLiveServerStats() {
   const chartCard = document.querySelector('.stats-chart-card');
-  
+
   // Show skeleton loader only if loading takes longer than 150ms (slow connection)
   if (chartCard && !chartCard.classList.contains('is-loading')) {
     chartSkeletonTimer = setTimeout(() => {
@@ -2574,7 +2528,7 @@ async function fetchLiveServerStats() {
           data = await res.json();
           if (data && data.success) break;
         }
-      } catch (e) {}
+      } catch (e) { }
     }
 
     if (data && data.success && data.history && data.history.length > 0) {
@@ -2583,7 +2537,7 @@ async function fetchLiveServerStats() {
 
       // Update overview cards
       const valPlayers = document.getElementById('val-players');
-      if (valPlayers) valPlayers.innerText = `${latest.online_players || 0} / 100`;
+      if (valPlayers) valPlayers.innerText = `${latest.online_players || 0} / 50`;
 
       const valPlaytime = document.getElementById('val-playtime');
       if (valPlaytime) valPlaytime.innerText = `${(latest.playtime_hours || 0).toLocaleString('cs-CZ')} hod.`;
@@ -2674,6 +2628,9 @@ async function fetchLiveServerStats() {
 
       renderStatsChart();
     }
+
+    // Trigger online players update
+    fetchOnlinePlayers();
   } catch (err) {
     console.warn('Failed to load server stats:', err);
   } finally {
@@ -2685,6 +2642,73 @@ async function fetchLiveServerStats() {
       chartCard.classList.remove('is-loading');
       chartCard.removeAttribute('aria-busy');
     }
+  }
+}
+
+// Fetch and render live online players widget
+async function fetchOnlinePlayers() {
+  const badge = document.getElementById('online-players-badge');
+  const grid = document.getElementById('online-players-grid');
+  if (!grid) return;
+
+  try {
+    const apiEndpoints = [
+      '/api/online-players',
+      'https://api.6767111.xyz/api/online-players'
+    ];
+    let data = null;
+    for (const url of apiEndpoints) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          data = await res.json();
+          if (data && data.success) break;
+        }
+      } catch (e) { }
+    }
+
+    const maxCount = data?.max || 50;
+
+    if (!data || !data.players || data.players.length === 0) {
+      if (badge) badge.innerHTML = `<i class="fa-solid fa-users"></i> 0 / ${maxCount}`;
+      grid.innerHTML = `
+        <div class="online-players-empty">
+          <div class="empty-icon"><i class="fa-solid fa-moon"></i></div>
+          <div class="empty-text">
+            <h4>Na serveru zrovna nikdo nehraje</h4>
+            <p>Buď první a připoj se na <strong>mychalsmp.xyz</strong>!</p>
+          </div>
+          <button class="btn-copy-ip-mini" onclick="copyIP(event)">
+            <i class="fa-solid fa-copy"></i> Zkopírovat IP
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    if (badge) badge.innerHTML = `<i class="fa-solid fa-users"></i> ${data.players.length} / ${maxCount}`;
+
+    grid.innerHTML = data.players.map(player => {
+      const badgeClass = player.rank_badge === 'owner' ? 'badge-owner' : (player.rank_badge === 'smpplus' ? 'badge-smpplus' : 'badge-player');
+      const badgeIcon = player.rank_badge === 'owner' ? '<i class="fa-solid fa-crown"></i> ' : (player.rank_badge === 'smpplus' ? '<i class="fa-solid fa-gem"></i> ' : '<i class="fa-solid fa-user"></i> ');
+      const avatarUrl = player.avatar || `https://mc-heads.net/avatar/${encodeURIComponent(player.name)}/64`;
+      const playtime = player.playtime_hours !== undefined ? `${player.playtime_hours} hod.` : 'Nové';
+
+      return `
+        <div class="player-card">
+          <img src="${avatarUrl}" alt="${player.name}" class="player-card-avatar" loading="lazy" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+          <div class="player-card-info">
+            <span class="player-card-name" title="${player.name}">${player.name}</span>
+            <div class="player-card-meta">
+              <span class="player-badge ${badgeClass}">${badgeIcon}${player.rank || 'Hráč'}</span>
+              <span class="player-playtime"><i class="fa-regular fa-clock"></i> ${playtime}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (err) {
+    console.warn('[ONLINE PLAYERS] Error:', err);
   }
 }
 
@@ -2711,8 +2735,8 @@ async function fetchLiveServerStats() {
     }
 
     const totalSeconds = Math.floor(diff / 1000);
-    const days    = Math.floor(totalSeconds / 86400);
-    const hours   = Math.floor((totalSeconds % 86400) / 3600);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 

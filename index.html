@@ -17,7 +17,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20260910_fix1" />
 </head>
 
 <body>
@@ -62,7 +62,6 @@
         <img src="imgs/2026-07-03_00.51.06.webp" alt="MYCHAL SMP server" class="hero-bg-img" />
         <div class="hero-overlay"></div>
       </div>
-      <canvas id="hero-particles-canvas"></canvas>
       <div class="hero-content">
         <h1 class="sr-only">MYCHAL SMP</h1>
         <img src="imgs/mychalSMP-SERVERICONtestv2 (2).webp" alt="MYCHAL SMP Logo" class="hero-logo" />
@@ -83,20 +82,6 @@
       </div>
       <div class="scroll-hint">
         <div class="scroll-arrow"></div>
-      </div>
-
-      <!-- PROMO BANNER: SMP+ sleva -->
-      <div class="promo-banner" id="promo-banner">
-        <button class="promo-close" onclick="document.getElementById('promo-banner').style.display='none'"
-          aria-label="Zavřít">✕</button>
-        <div class="promo-icon">🏷️</div>
-        <div class="promo-text">
-          <span class="promo-label">Časová sleva</span>
-          <span class="promo-title">SMP<span class="promo-plus">+</span> &minus;20%</span>
-          <span class="promo-code">Kód: <strong>skolavola</strong></span>
-          <span class="promo-countdown" id="promo-countdown">⏳ Načítám...</span>
-        </div>
-        <a class="promo-btn" href="https://join.mychalsmp.xyz/smpplus" target="_blank" rel="noopener">Získat SMP+ →</a>
       </div>
     </div>
 
@@ -129,9 +114,8 @@
           </div>
           <div class="stat-divider"></div>
           <div class="stat-card">
-            <span class="stat-card-icon stat-card-icon--money"
-              style="font-size: 1.8rem; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; filter: drop-shadow(0 2px 8px rgba(33,222,0,0.4));">💲</span>
-            <span class="stat-num" id="stat-money" data-target="0">$0</span>
+            <i class="fa-solid fa-coins stat-card-icon" style="color: #21DE00; font-size: 2rem;"></i>
+            <span class="stat-num" id="stat-money" data-target="0" style="color: #21DE00;">$0</span>
             <span class="stat-label">Peněz</span>
           </div>
         </div>
@@ -225,13 +209,6 @@
                   <span class="gamemode-feature-desc">Tvé věci na SMP zůstávají bezpečně na SMP.</span>
                 </div>
               </li>
-              <li>
-                <i class="fa-solid fa-plane text-yellow"></i>
-                <div class="gamemode-feature-content">
-                  <span class="gamemode-feature-title">Padající Airdropy</span>
-                  <span class="gamemode-feature-desc">Cenné truhly s lootem padají přímo do akčního světa.</span>
-                </div>
-              </li>
             </ul>
           </div>
 
@@ -279,6 +256,50 @@
                 </div>
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICKSTART (HOW TO JOIN IN 1 MINUTE) -->
+    <div class="quickstart-section">
+      <div class="container">
+        <div class="quickstart-card">
+          <div class="quickstart-header text-center">
+            <span class="info-eyebrow">PŘIPOJ SE BĚHEM CHVILKY</span>
+            <h2 class="section-heading">Jak začít hrát <span class="accent-blue">do 1 minuty</span></h2>
+            <p class="section-subheading">Žádné složité nastavování ani formuláře. Zkopíruj IP, spusť hru a jsi na
+              serveru.</p>
+          </div>
+          <div class="quickstart-grid">
+            <div class="quickstart-step">
+              <div class="quickstart-step-num">1</div>
+              <h3 class="quickstart-step-title">Zkopíruj serverovou IP</h3>
+              <div class="quickstart-ip-box" onclick="copyIP(event)">
+                <span class="quickstart-ip-code">mychalsmp.xyz</span>
+                <button class="quickstart-copy-btn" aria-label="Zkopírovat IP"><i
+                    class="fa-regular fa-copy"></i></button>
+              </div>
+              <span class="quickstart-step-hint">Java Edition • <strong>26.2</strong> (nejvíce stabilní) &amp; nově i
+                <strong>1.21.11</strong></span>
+            </div>
+
+            <div class="quickstart-step">
+              <div class="quickstart-step-num">2</div>
+              <h3 class="quickstart-step-title">Přidej server do hry</h3>
+              <p class="quickstart-step-desc">V Minecraftu zvol <strong>Multiplayer</strong> → <strong>Add
+                  Server</strong> a vlož naši IP. Ponechej textury povolené.</p>
+              <span class="quickstart-step-hint">Server má vlastní balíček textur</span>
+            </div>
+
+            <div class="quickstart-step">
+              <div class="quickstart-step-num">3</div>
+              <h3 class="quickstart-step-title">Přihlas se a hraj</h3>
+              <div class="quickstart-cmd-box">
+                <code>/register &lt;heslo&gt; &lt;heslo&gt;</code>
+              </div>
+              <span class="quickstart-step-hint">Originální účty: napiš <strong>2x /prem</strong> pro autologin!</span>
+            </div>
           </div>
         </div>
       </div>
@@ -358,9 +379,17 @@
         <div class="join-timeline-row row-left" id="join-step-1">
           <div class="join-timeline-dot">1</div>
           <div class="join-timeline-card">
-            <h3>Spuštění hry (Verze 26.2)</h3>
-            <p>Spusť svůj Minecraft nastavený na verzi <strong>26.2</strong>.</p>
-            <div class="join-version-badge" style="margin-top: 14px; display: inline-block;">☕ Java Edition 26.2</div>
+            <h3>Spuštění hry (Verze 26.2 &amp; 1.21.11)</h3>
+            <p>Server podporuje verze <strong>1.21.11</strong> až <strong>26.2</strong>. Pro nejlepší herní zážitek a
+              bezchybnou stabilitu doporučujeme verzi <strong>26.2 (nejvíce stabilní)</strong>.</p>
+            <div class="join-version-badges" style="margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap;">
+              <div class="join-version-badge"
+                style="display: inline-block; background: rgba(56, 189, 248, 0.2); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; padding: 6px 14px; border-radius: 8px; font-size: 0.84rem; font-weight: 700;">
+                ⭐ Doporučeno: Java Edition 26.2 (nejvíce stabilní)</div>
+              <div class="join-version-badge"
+                style="display: inline-block; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); color: #cbd5e1; padding: 6px 14px; border-radius: 8px; font-size: 0.84rem; font-weight: 600;">
+                ☕ Podporováno také: 1.21.11</div>
+            </div>
           </div>
         </div>
 
@@ -481,7 +510,7 @@
           </button>
           <div class="faq-content">
             <p>Není potřeba žádný whitelist! Náš server je plně veřejný pro všechny hráče. Stačí v Minecraftu zadat IP
-              mychalsmp.xyz a připojit se ve verzi 26.2.</p>
+              mychalsmp.xyz a připojit se ve verzi 26.2 nebo 1.21.11.</p>
           </div>
         </div>
         <div class="faq-card">
@@ -490,8 +519,8 @@
             <span class="faq-icon-chevron">+</span>
           </button>
           <div class="faq-content">
-            <p>Server běží na verzi Minecraft Java Edition 26.2. Ujisti se, že máš správně nastavenou verzi před
-              připojením.</p>
+            <p>Server podporuje verzi <strong>1.21.11</strong> až <strong>26.2</strong>. Pro nejlepší herní stabilitu a
+              plynulost doporučujeme připojit se s verzí <strong>26.2</strong> (nejvíce stabilní).</p>
           </div>
         </div>
         <div class="faq-card">
@@ -891,21 +920,15 @@
             <code>/tpa</code> volně pohybovat bez zrušení teleportu!
           </p>
         </div>
-        <div class="media-benefit-card"
-          style="border-color: rgba(96, 165, 250, 0.3); background: linear-gradient(135deg, rgba(30, 30, 42, 0.6) 0%, rgba(96, 165, 250, 0.08) 100%);">
-          <div class="media-benefit-icon"
-            style="color: #60a5fa; border-color: rgba(96, 165, 250, 0.3); background: rgba(96, 165, 250, 0.15); box-shadow: 0 0 15px rgba(96, 165, 250, 0.15);">
-            🎥</div>
-          <h3 style="color: #60a5fa;">Povolený Replay Mod</h3>
+        <div class="media-benefit-card media-benefit-card--replay">
+          <div class="media-benefit-icon">🎥</div>
+          <h3>Povolený Replay Mod</h3>
           <p>Exkluzivní povolení pro natáčení cinematic záběrů, časosběrů a videí pomocí <strong>Replay Modu</strong>
             (pro ostatní hráče je zakázán a blokován anticheatem).</p>
         </div>
-        <div class="media-benefit-card"
-          style="border-color: rgba(241, 196, 15, 0.3); background: linear-gradient(135deg, rgba(30, 30, 42, 0.6) 0%, rgba(241, 196, 15, 0.05) 100%);">
-          <div class="media-benefit-icon"
-            style="color: #f1c40f; border-color: rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.15); box-shadow: 0 0 15px rgba(241, 196, 15, 0.15);">
-            ⭐</div>
-          <h3 style="color: #f1c40f;">Vylepšení na Media+</h3>
+        <div class="media-benefit-card media-benefit-card--plus">
+          <div class="media-benefit-icon">⭐</div>
+          <h3>Vylepšení na Media+</h3>
           <p>Dokoupením <strong>SMP+</strong> k roli Media získáš exkluzivní rank <strong>Media+</strong>, který ti
             odemkne <strong>všechny SMP+ výhody</strong> (včetně 2x větší Ender Truhly s 54 sloty, změny barvy nicku
             <code>/cc</code>, 14 domovů, změny barvy postele, 4 warpů a rychlého <code>/back</code>).
@@ -1031,105 +1054,132 @@
   <!-- BUGS -->
   <section id="tab-bugs" class="tab-section media-section-ambient">
     <div class="media-header text-center">
-      <h1 class="media-hero-title">Nahlášení <span>Bugu</span></h1>
-      <p class="media-hero-subtitle">Našel jsi na serveru chybu nebo nefungující věc? Nahlás ji do systému a za
-        schválené nahlášení získej odměnu přímo ve hře!</p>
+      <div class="bug-badge-pill"><i class="fa-solid fa-wrench"></i> Nahlášení problému</div>
+      <h1 class="media-hero-title">Našel jsi na serveru <span>chybu</span>?</h1>
+      <p class="media-hero-subtitle">Dej nám vědět, co přesně nefunguje. Každé potvrzené hlášení odměňujeme <strong>dia blocky podle závažnosti</strong> a u kritických chyb i <strong>netherite ingoty</strong> přímo ve hře!</p>
+      <div class="bug-reward-pill">
+        <i class="fa-solid fa-gem"></i>
+        <span>Odměna: <strong>Dia blocky</strong> dle závažnosti &amp; <strong>Netherite ingoty</strong> za kritické chyby!</span>
+      </div>
     </div>
 
-    <div class="container" style="max-width: 800px;">
-      <!-- REWARD & TIPS PANEL -->
-      <div class="bug-tips-panel"
-        style="background: linear-gradient(135deg, rgba(22, 22, 34, 0.85) 0%, rgba(46, 204, 113, 0.08) 100%); border-color: rgba(46, 204, 113, 0.25);">
-        <div class="bug-tips-icon"
-          style="color: #2ecc71; background: rgba(46, 204, 113, 0.12); border-color: rgba(46, 204, 113, 0.3);">🎁</div>
-        <div>
-          <h3
-            style="font-size: 1.15rem; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 10px;">
-            <span>Odměna ve hře</span>
-            <span
-              style="font-size: 0.75rem; font-weight: 700; color: #2ecc71; background: rgba(46, 204, 113, 0.15); border: 1px solid rgba(46, 204, 113, 0.3); padding: 3px 10px; border-radius: 20px;">Za
-              schválený bug</span>
-          </h3>
-          <div class="bug-tips-list">
-            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Uveď svůj přesný
-              Minecraft nick</div>
-            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Popiš přesný postup, jak
-              chybu vyvolat</div>
-            <div class="bug-tip-item"><i class="fa-solid fa-check" style="color:#2ecc71;"></i> Připoj až 2 snímky
-              obrazovky (max 10 MB)</div>
+    <div class="container" style="max-width: 720px;">
+      <!-- INTERACTIVE BUG CARD (WITH FLIP / SUCCESS TICKET STATE) -->
+      <div class="bug-interactive-card" id="bug-interactive-card">
+        <!-- FRONT: FORM -->
+        <div class="bug-card-face bug-card-front" id="bug-card-front">
+          <!-- 1-CLICK CATEGORY SELECTOR -->
+          <div class="bug-category-chips" id="bug-category-chips">
+            <button type="button" class="bug-cat-chip active" data-cat="game" onclick="selectBugCategory('game')">
+              <i class="fa-solid fa-gamepad"></i> Herní bug
+            </button>
+            <button type="button" class="bug-cat-chip" data-cat="economy" onclick="selectBugCategory('economy')">
+              <i class="fa-solid fa-coins"></i> Ekonomika &amp; Shop
+            </button>
+            <button type="button" class="bug-cat-chip" data-cat="web" onclick="selectBugCategory('web')">
+              <i class="fa-solid fa-globe"></i> Web / Discord
+            </button>
+            <button type="button" class="bug-cat-chip chip-unban" data-cat="unban" onclick="selectBugCategory('unban')">
+              <i class="fa-solid fa-scale-balanced"></i> Žádost o unban
+            </button>
+          </div>
+
+          <form id="bug-report-form" onsubmit="submitBugReport(event)">
+            <!-- PLAYER NICK ROW WITH LIVE AVATAR HEAD PREVIEW -->
+            <div class="bug-input-group">
+              <label for="bug-nick" class="bug-input-label">
+                <span><i class="fa-solid fa-user"></i> Tvůj herní nick</span>
+                <span id="bug-nick-greeting" class="bug-nick-greeting"></span>
+              </label>
+              <div class="bug-nick-field-wrap">
+                <div class="bug-avatar-container" id="bug-avatar-container">
+                  <img id="bug-nick-avatar" src="https://mc-heads.net/avatar/MHF_Steve/48" alt="Minecraft skin"
+                    class="bug-nick-avatar-img">
+                </div>
+                <input type="text" id="bug-nick" class="bug-modern-input" placeholder="Zadej svůj přesný nick ve hře..."
+                  required autocomplete="off" oninput="handleBugNickInput(this.value)">
+              </div>
+            </div>
+
+            <!-- BUG DESCRIPTION -->
+            <div class="bug-input-group">
+              <label for="bug-desc" class="bug-input-label" id="bug-desc-label">
+                <span><i class="fa-solid fa-align-left"></i> Co se přesně stalo?</span>
+              </label>
+              <textarea id="bug-desc" class="bug-modern-textarea"
+                placeholder="Popiš, kde se chyba nachází, co jsi dělal a co se stalo..." required></textarea>
+            </div>
+
+            <!-- DRAG & DROP / PASTE SCREENSHOT ZONE -->
+            <div class="bug-input-group">
+              <label class="bug-input-label">
+                <span><i class="fa-solid fa-image"></i> Snímky obrazovky <span
+                    class="bug-optional-badge">(volitelné)</span></span>
+              </label>
+              <div class="bug-dropzone" id="bug-dropzone" onclick="document.getElementById('bug-images').click()">
+                <input type="file" id="bug-images" accept="image/*" multiple style="display: none;"
+                  onchange="handleBugImagesChange(this)">
+                <div class="dropzone-content">
+                  <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
+                  <div class="dropzone-text">
+                    <span class="dropzone-title">Přetáhni sem snímek, klikni pro výběr nebo vlož přes
+                      <strong>Ctrl+V</strong></span>
+                    <span class="dropzone-sub">Podporuje PNG, JPG, WebP (max. 3 obrázky)</span>
+                  </div>
+                </div>
+              </div>
+              <div id="bug-images-chips" class="bug-images-chips"></div>
+            </div>
+
+            <!-- CONSENT & SUBMIT -->
+            <div class="bug-form-footer">
+              <label class="bug-checkbox-label" for="bug-consent">
+                <input type="checkbox" id="bug-consent" required checked>
+                <span>Nahlášení je pravdivé a v souladu s <a href="#rules"
+                    onclick="showTab('rules')">pravidly</a>.</span>
+              </label>
+              <button type="submit" id="btn-bug-submit" class="btn-bug-modern">
+                <span id="btn-bug-text"><i class="fa-solid fa-paper-plane"></i> Odeslat nahlášení</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- BACK: SUCCESS TICKET CONFIRMATION -->
+        <div class="bug-card-face bug-card-back" id="bug-card-back" style="display: none;">
+          <div class="ticket-celebrate-box">
+            <div class="ticket-check-ring">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="ticket-heading" id="ticket-success-title">Nahlášení bylo úspěšně odesláno!</h3>
+            <p class="ticket-subheading">Zpráva byla předána admin týmu na Discordu.</p>
+
+            <div class="ticket-id-chip" onclick="copyTicketId(event)" title="Kliknutím zkopíruješ číslo tiketu">
+              <span class="ticket-id-label">ČÍSLO TIKETU:</span>
+              <span class="ticket-id-value" id="ticket-id-display">#BUG-1000</span>
+              <button type="button" class="ticket-copy-btn" aria-label="Kopírovat"><i
+                  class="fa-regular fa-copy"></i></button>
+            </div>
+
+            <div class="ticket-reward-banner">
+              <i class="fa-solid fa-gem"></i>
+              <span>Odměna v podobě <strong>dia blocků</strong> (a u vážných chyb i <strong>netherite ingotů</strong>) ti bude předána ve hře po ověření adminem!</span>
+            </div>
+
+            <div class="ticket-user-preview">
+              <img id="ticket-user-avatar" src="https://mc-heads.net/avatar/MHF_Steve/48" alt="Player avatar"
+                class="ticket-user-avatar-img">
+              <div class="ticket-user-text">
+                <strong id="ticket-user-name">Player</strong>
+                <span>Díky za pomoc serveru! Po ověření chybky tě ve hře čekají <strong>dia blocky / netherite</strong> podle závažnosti.</span>
+              </div>
+            </div>
+
+            <button type="button" class="btn-ticket-again" onclick="resetBugCardState()">
+              <i class="fa-solid fa-rotate-left"></i> Nahlásit další problém
+            </button>
           </div>
         </div>
-      </div>
-
-      <div class="bug-form-wrapper">
-        <form id="bug-report-form" onsubmit="submitBugReport(event)">
-          <h2 style="font-size: 1.8rem; color: #fff; margin-bottom: 12px; text-align: center;">🐛 Nahlásit problém</h2>
-          <p style="color: var(--text-muted); margin-bottom: 30px; text-align: center; font-size: 0.95rem;">
-            Zadej svůj Minecraft nick a detailní popis problému. Nahlášení bude posouzeno v systému a po schválení
-            obdržíš odměnu.
-          </p>
-
-          <div style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
-            <div class="media-form-group">
-              <label for="bug-nick"><i class="fa-solid fa-user" style="color:#3498db;"></i> Tvůj Minecraft Nick</label>
-              <input type="text" id="bug-nick" class="media-input" placeholder="Zadej svůj přesný nick ve hře..."
-                required>
-            </div>
-
-            <div class="media-form-group">
-              <label for="bug-desc" id="bug-desc-label"><i class="fa-solid fa-bug" style="color:#e74c3c;"></i> Popis
-                bugu / problému</label>
-              <textarea id="bug-desc" class="media-input"
-                style="height: 120px; resize: vertical; font-family: inherit; line-height: 1.5; padding: 12px 16px;"
-                placeholder="Popiš kde se bug nachází, jak ho vyvolat a co se přesně děje..." required></textarea>
-            </div>
-
-            <!-- Žádost o unban checkbox -->
-            <div class="media-form-group"
-              style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.22); border-radius: 12px; padding: 14px 18px; margin-top: -5px; transition: all 0.3s ease;">
-              <label
-                style="display: flex; align-items: center; gap: 12px; cursor: pointer; margin-bottom: 0; user-select: none;">
-                <input type="checkbox" id="bug-is-unban"
-                  style="width: 20px; height: 20px; accent-color: #ef4444; cursor: pointer; border-radius: 4px;"
-                  onchange="handleUnbanCheckboxToggle(this)">
-                <div>
-                  <span
-                    style="color: #fff; font-weight: 600; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
-                    <i class="fa-solid fa-scale-balanced" style="color: #ef4444;"></i> Žádost o unban
-                  </span>
-                  <span style="color: var(--text-muted); font-size: 0.84rem; display: block; margin-top: 2px;">
-                    Zaškrtni, pokud byl tvůj účet zablokován a žádáš o zrušení trestu nebo přezkoumání.
-                  </span>
-                </div>
-              </label>
-            </div>
-
-            <div class="media-form-group">
-              <label for="bug-images"><i class="fa-solid fa-image" style="color:#f1c40f;"></i> Přiložit snímky / fotky
-                <span style="font-weight: normal; opacity: 0.7; font-size: 0.85rem;">(Volitelné, max 3 obrázky nebo
-                  vložení přes Ctrl+V)</span></label>
-              <input type="file" id="bug-images" class="media-input" accept="image/*" multiple
-                style="padding: 10px; cursor: pointer;" onchange="handleBugImagesChange(this)">
-              <div id="bug-images-preview"
-                style="display: none; margin-top: 8px; font-size: 0.85rem; color: #2ecc71; font-weight: 500;"></div>
-            </div>
-
-            <div class="smp-consent-wrapper" id="bug-consent-wrapper" style="margin: 4px 0 8px 0;">
-              <label class="smp-consent-label" for="bug-consent">
-                <input type="checkbox" id="bug-consent" class="smp-consent-checkbox" required />
-                <span class="smp-consent-text">
-                  Souhlasím se zpracováním zadaných údajů a snímků za účelem vyřízení nahlášení / žádosti o unban dle <a
-                    href="#privacy" onclick="showTab('privacy')">Zásad ochrany údajů</a> a s <a href="#terms"
-                    onclick="showTab('terms')">pravidly serveru</a>.
-                </span>
-              </label>
-            </div>
-
-            <button type="submit" id="btn-bug-submit" class="btn-media-verify" style="margin-top: 10px;">🐛 Odeslat
-              nahlášení</button>
-          </div>
-        </form>
-        <div id="bug-response-status" style="display: none; margin-top: 20px; text-align: center;"></div>
       </div>
     </div>
   </section>
@@ -1317,6 +1367,39 @@
           </div>
         </div>
       </div>
+
+      <!-- LIVE ONLINE PLAYERS SECTION -->
+      <div class="online-players-section" id="online-players-section">
+        <div class="online-players-header">
+          <div class="online-players-header-left">
+            <span class="online-pulse-indicator">
+              <span class="pulse-dot"></span>
+              <span class="pulse-ring"></span>
+            </span>
+            <div class="online-players-titles">
+              <h3 class="online-players-title">Právě hrají na serveru</h3>
+              <span class="online-players-subtitle">Živý seznam hráčů připojených k serveru</span>
+            </div>
+          </div>
+          <div class="online-players-header-right">
+            <span class="online-count-pill" id="online-players-badge"><i class="fa-solid fa-users"></i> 0 / 50</span>
+          </div>
+        </div>
+
+        <!-- Players Grid Container -->
+        <div class="online-players-grid" id="online-players-grid">
+          <div class="online-players-empty" id="online-players-empty">
+            <div class="empty-icon"><i class="fa-solid fa-moon"></i></div>
+            <div class="empty-text">
+              <h4>Na serveru zrovna nikdo nehraje</h4>
+              <p>Buď první a připoj se na <strong>mychalsmp.xyz</strong>!</p>
+            </div>
+            <button class="btn-copy-ip-mini" onclick="copyIP(event)">
+              <i class="fa-solid fa-copy"></i> Zkopírovat IP
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1398,7 +1481,8 @@
 
             <div class="legal-callout">
               <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
-              Data jsou fyzicky uložena na vyhrazeném hardwaru u majitele projektu doma. Přístup k databázím má výhradně majitel osobně, žádné neprověřené osoby ani řadový personál k nim přístup nemají.
+              Data jsou fyzicky uložena na vyhrazeném hardwaru u majitele projektu doma. Přístup k databázím má výhradně
+              majitel osobně, žádné neprověřené osoby ani řadový personál k nim přístup nemají.
             </div>
 
             <p class="legal-text">Správcem osobních údajů v souladu s Nařízením Evropského parlamentu a Rady (EU)
@@ -1414,7 +1498,7 @@
                 <span class="legal-detail-label">Správce &amp; provozovatel</span>
                 <span class="legal-detail-value">mychalVidea (majitel projektu a výhradní správce dat)</span>
               </div>
-              <div class="legal-detail-row">
+              <div class="legal-detail-row legal-detail-row--full">
                 <span class="legal-detail-label">Fyzické umístění dat</span>
                 <span class="legal-detail-value">Lokální vyhrazené stanice majitele; přístup má výhradně majitel</span>
               </div>
@@ -1431,21 +1515,29 @@
 
             <p class="legal-text" style="margin-top: 20px;">
               <strong>Fyzické uložení a výhradní kontrola majitele (čl. 32 GDPR):</strong>
-              Veškeré provozní a herní databáze (přihlašovací účty, herní inventáře, postavené stavby, statistiky a IP logy)
-              jsou fyzicky uloženy na vyhrazeném hardwarovém vybavení v přímém osobním vlastnictví a správě majitele projektu.
-              K databázovým souborům a systémovému úložišti má administrátorský a fyzický přístup <strong>výhradně majitel serveru</strong>.
+              Veškeré provozní a herní databáze (přihlašovací účty, herní inventáře, postavené stavby, statistiky a IP
+              logy)
+              jsou fyzicky uloženy na vyhrazeném hardwarovém vybavení v přímém osobním vlastnictví a správě majitele
+              projektu.
+              K databázovým souborům a systémovému úložišti má administrátorský a fyzický přístup <strong>výhradně
+                majitel serveru</strong>.
               K těmto souborům nemají přístup žádní řadoví administrátoři, moderátoři ani neoprávněné třetí osoby.
-              Správa, vývoj a bezpečnostní údržba kódu probíhá v zabezpečeném lokálním prostředí majitele v souladu s přísnými
+              Správa, vývoj a bezpečnostní údržba kódu probíhá v zabezpečeném lokálním prostředí majitele v souladu s
+              přísnými
               technickými a organizačními opatřeními na ochranu dat před neoprávněným zásahem či únikem.
             </p>
 
             <p class="legal-text" style="margin-top: 14px;">
               <strong>Síťová architektura a směrovací brána (Reverse Proxy Tunel):</strong>
-              Pro zajištění stabilního veřejného spojení hráčů a ochranu privátní domácí infrastruktury serveru využíváme
-              zabezpečenou vstupní síťovou bránu (reverse proxy tunel) provozovanou na infrastruktuře Oracle Cloud Infrastructure
-              (v datacentru v rámci EU – Frankfurt). Tento cloudový uzel funguje výhradně jako tranzitní směrovač síťových TCP
+              Pro zajištění stabilního veřejného spojení hráčů a ochranu privátní domácí infrastruktury serveru
+              využíváme
+              zabezpečenou vstupní síťovou bránu (reverse proxy tunel) provozovanou na infrastruktuře Oracle Cloud
+              Infrastructure
+              (v datacentru v rámci EU – Frankfurt). Tento cloudový uzel funguje výhradně jako tranzitní směrovač
+              síťových TCP
               paketů hry Minecraft a webových spojení. <strong>Na této cloudové síťové bráně se neukládají žádné herní
-              databáze, inventáře, stavby, hesla ani trvalá data hráčů</strong> – veškerý síťový provoz pouze zabezpečeně
+                databáze, inventáře, stavby, hesla ani trvalá data hráčů</strong> – veškerý síťový provoz pouze
+              zabezpečeně
               protéká tunelem na lokální hardware majitele, kde jsou data zpracovávána a chráněna.
             </p>
           </article>
@@ -1594,8 +1686,10 @@
                 detekci nebezpečných proxy sítí, hostingových datacenter a blokování VPN z důvodu obrany před útoky.
               </li>
               <li><strong>Oracle Corporation (Oracle Cloud Infrastructure – EU, Frankfurt):</strong> Poskytovatel
-                cloudové síťové infrastruktury pro provoz tranzitní reverse proxy brány. Přenos probíhá v datacentru v rámci
-                Evropské unie v plném souladu s GDPR. Na serveru Oracle nedochází k trvalému ukládání herních databází.</li>
+                cloudové síťové infrastruktury pro provoz tranzitní reverse proxy brány. Přenos probíhá v datacentru v
+                rámci
+                Evropské unie v plném souladu s GDPR. Na serveru Oracle nedochází k trvalému ukládání herních databází.
+              </li>
             </ul>
           </article>
 
@@ -2108,7 +2202,7 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260910"></script>
 </body>
 
 </html>

@@ -152,6 +152,33 @@ function copyIP(event) {
           }, 2000);
         }
       }
+      // If it's the join-quick-ip-card or join-quick-ip-address
+      else if (element.classList.contains('join-quick-ip-address') || element.closest('.join-quick-ip-card')) {
+        const copyBtn = element.querySelector('.join-quick-copy-btn') || element.closest('.join-quick-ip-card').querySelector('.join-quick-copy-btn');
+        if (copyBtn) {
+          const origText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '✅ Zkopírováno!';
+          copyBtn.classList.add('copied');
+          setTimeout(() => {
+            copyBtn.innerHTML = origText;
+            copyBtn.classList.remove('copied');
+          }, 2000);
+        }
+      }
+      // If it's the join-step-ip-box
+      else if (element.classList.contains('join-step-ip-box') || element.closest('.join-step-ip-box')) {
+        const box = element.classList.contains('join-step-ip-box') ? element : element.closest('.join-step-ip-box');
+        const copyBtn = box.querySelector('.join-step-copy-btn');
+        if (copyBtn) {
+          const origText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i class="fa-solid fa-check" style="color: #21DE00;"></i> Zkopírováno!';
+          box.classList.add('copied');
+          setTimeout(() => {
+            copyBtn.innerHTML = origText;
+            box.classList.remove('copied');
+          }, 2000);
+        }
+      }
       // If it's the join-ip-container in the header
       else if (element.classList.contains('join-ip-container')) {
         const copyBtn = element.querySelector('.join-ip-copy-btn');
@@ -181,6 +208,34 @@ function copyIP(event) {
     }
   }).catch(err => {
     console.error('Failed to copy: ', err);
+  });
+}
+
+// ---- COPY COMMAND TO CLIPBOARD ----
+function copyCommand(cmd, el) {
+  if (!cmd) return;
+  navigator.clipboard.writeText(cmd).then(() => {
+    showToast(`⚡ Příkaz <code>${cmd}</code> byl zkopírován!`);
+    if (el) {
+      const hint = el.querySelector('.cmd-copy-hint') || 
+                   el.querySelector('.gm-card-cmd-chip i') || 
+                   el.querySelector('.join-cmd-box i') || 
+                   el.querySelector('i.fa-copy');
+      if (hint) {
+        const originalHtml = hint.outerHTML;
+        hint.outerHTML = '<i class="fa-solid fa-check text-green-accent" style="color: #21DE00;"></i>';
+        el.classList.add('command-copied');
+        setTimeout(() => {
+          const checkIcon = el.querySelector('i.text-green-accent') || el.querySelector('.fa-check');
+          if (checkIcon) {
+            checkIcon.outerHTML = originalHtml;
+          }
+          el.classList.remove('command-copied');
+        }, 1800);
+      }
+    }
+  }).catch(() => {
+    showToast(`Příkaz: ${cmd}`);
   });
 }
 
@@ -445,32 +500,101 @@ function animateCounter(el, targetValue) {
 
 let skinDebounceTimer = null;
 
-// ---- LIVE CHAT PREVIEW & REALTIME SKIN AVATAR ----
+// ---- LIVE IN-GAME RANK PREVIEW (CHAT, TABLIST, NAMETAG) ----
 function updatePreviewName(val) {
   const preview = document.getElementById('smp-preview-name');
+  const previewTab = document.getElementById('smp-preview-name-tab');
+  const previewTag = document.getElementById('smp-preview-name-tag');
   const previewHead = document.getElementById('smp-preview-head');
+  const previewHeadTab = document.getElementById('smp-preview-head-tab');
+  const previewHeadTag = document.getElementById('smp-preview-head-tag');
   const inputHead = document.getElementById('nickname-input-head');
 
-  const cleanVal = val.trim();
-  if (preview) {
-    preview.textContent = cleanVal ? cleanVal : 'Hrac';
-  }
+  const cleanVal = (val || '').trim();
+  const displayName = cleanVal ? cleanVal : 'Hrac';
+
+  if (preview) preview.textContent = displayName;
+  if (previewTab) previewTab.textContent = displayName;
+  if (previewTag) previewTag.textContent = displayName;
 
   // Debounce skin lookup to avoid spamming mc-heads
   clearTimeout(skinDebounceTimer);
   skinDebounceTimer = setTimeout(() => {
     const targetNick = (cleanVal && /^[a-zA-Z0-9_]{2,16}$/.test(cleanVal)) ? cleanVal : 'MHF_Question';
     const avatarUrl = `https://mc-heads.net/avatar/${encodeURIComponent(targetNick)}/28`;
+    const avatarUrlSm = `https://mc-heads.net/avatar/${encodeURIComponent(targetNick)}/24`;
+    const avatarUrlLg = `https://mc-heads.net/avatar/${encodeURIComponent(targetNick)}/42`;
 
-    [previewHead, inputHead].forEach(head => {
-      if (head) {
-        head.src = avatarUrl;
-        head.classList.remove('avatar-pop');
-        void head.offsetWidth; // Trigger reflow for animation restart
-        head.classList.add('avatar-pop');
-      }
-    });
+    if (previewHead) {
+      previewHead.src = avatarUrl;
+      previewHead.classList.remove('avatar-pop');
+      void previewHead.offsetWidth;
+      previewHead.classList.add('avatar-pop');
+    }
+    if (previewHeadTab) previewHeadTab.src = avatarUrlSm;
+    if (previewHeadTag) previewHeadTag.src = avatarUrlLg;
+    if (inputHead) {
+      inputHead.src = avatarUrlSm;
+      inputHead.classList.remove('avatar-pop');
+      void inputHead.offsetWidth;
+      inputHead.classList.add('avatar-pop');
+    }
   }, 280);
+}
+
+// Switch between Chat, Tablist, and Nametag previews
+function switchSmpPreviewMode(mode) {
+  const chatView = document.getElementById('smp-view-chat');
+  const tabView = document.getElementById('smp-view-tab');
+  const tagView = document.getElementById('smp-view-tag');
+
+  const chatBtn = document.getElementById('smp-mode-chat-btn');
+  const tabBtn = document.getElementById('smp-mode-tab-btn');
+  const tagBtn = document.getElementById('smp-mode-tag-btn');
+
+  [chatView, tabView, tagView].forEach(v => { if (v) v.style.display = 'none'; });
+  [chatBtn, tabBtn, tagBtn].forEach(b => { if (b) b.classList.remove('active'); });
+
+  if (mode === 'tab') {
+    if (tabView) tabView.style.display = 'block';
+    if (tabBtn) tabBtn.classList.add('active');
+  } else if (mode === 'tag') {
+    if (tagView) tagView.style.display = 'flex';
+    if (tagBtn) tagBtn.classList.add('active');
+  } else {
+    if (chatView) chatView.style.display = 'flex';
+    if (chatBtn) chatBtn.classList.add('active');
+  }
+}
+
+// Live /cc color selector in the preview
+function setPreviewNickColor(color, swatchEl) {
+  const names = [
+    document.getElementById('smp-preview-name'),
+    document.getElementById('smp-preview-name-tab'),
+    document.getElementById('smp-preview-name-tag')
+  ];
+
+  names.forEach(el => {
+    if (el) {
+      el.style.color = color;
+      if (color !== '#ffffff' && color !== '#f1f5f9') {
+        el.style.textShadow = `0 0 8px ${color}80`;
+      } else {
+        el.style.textShadow = 'none';
+      }
+    }
+  });
+
+  // Highlight active swatch
+  document.querySelectorAll('.smp-swatch').forEach(s => s.classList.remove('active'));
+  if (swatchEl) {
+    swatchEl.classList.add('active');
+  } else {
+    document.querySelectorAll('.smp-swatch').forEach(s => {
+      if (s.getAttribute('style')?.includes(color)) s.classList.add('active');
+    });
+  }
 }
 
 // ---- TEBEX CHECKOUT CONFIG ----
@@ -910,7 +1034,10 @@ async function checkMediaStatus() {
       loginBox.style.display = 'none';
       if (data.mcNick) {
         const mcInput = document.getElementById('media-mc-nick');
-        if (mcInput && !mcInput.value) mcInput.value = data.mcNick;
+        if (mcInput && !mcInput.value) {
+          mcInput.value = data.mcNick;
+          handleMediaNickInput(data.mcNick);
+        }
       }
       return;
     }
@@ -951,7 +1078,7 @@ async function checkMediaStatus() {
           <p>Gratulujeme! Tvoje žádost o Media Rank byla schválena. Rank máš aktivní ve hře i na Discordu.</p>
           <div style="margin-top: 20px; padding: 15px; background: rgba(10, 167, 100, 0.06); border-left: 4px solid #16a34a; border-radius: 4px; text-align: left;">
             <strong style="color: #16a34a; display: block; margin-bottom: 8px;">✅ UPOZORNĚNÍ:</strong>
-            Pro udržení Media ranku uváděj v popiscích IP <strong>join.mychalsmp.xyz</strong> nebo <strong>mychalsmp.xyz</strong> a používej hashtag <strong>#mychalsmp</strong>.
+            Pro udržení Media ranku uváděj v popiscích IP <strong>mychalsmp.xyz</strong> a používej hashtag <strong>#mychalsmp</strong>.
           </div>
         </div>
       `;
@@ -1008,6 +1135,65 @@ function resetMediaForm() {
     statusBox.style.display = 'none';
     applyForm.style.display = 'block';
     applyForm.reset();
+    handleMediaNickInput('');
+  }
+}
+
+let mediaNickTimeout = null;
+function handleMediaNickInput(val) {
+  const nick = (val || '').trim();
+  const avatarImg = document.getElementById('media-nick-avatar');
+  const previewChatHead = document.getElementById('media-preview-chat-head');
+  const previewChatNick = document.getElementById('media-preview-chat-nick');
+  const greeting = document.getElementById('media-nick-greeting');
+
+  if (previewChatNick) {
+    previewChatNick.textContent = (nick && nick.length >= 2) ? nick : 'TvujNick';
+  }
+
+  if (mediaNickTimeout) clearTimeout(mediaNickTimeout);
+  mediaNickTimeout = setTimeout(() => {
+    if (nick.length >= 2 && /^[a-zA-Z0-9_]{2,16}$/.test(nick)) {
+      const skinUrl48 = `https://mc-heads.net/avatar/${encodeURIComponent(nick)}/48`;
+      const skinUrl28 = `https://mc-heads.net/avatar/${encodeURIComponent(nick)}/28`;
+      if (avatarImg) avatarImg.src = skinUrl48;
+      if (previewChatHead) previewChatHead.src = skinUrl28;
+      if (greeting) {
+        greeting.textContent = `Ahoj, ${nick}! 👋`;
+        greeting.style.opacity = '1';
+      }
+    } else {
+      if (avatarImg) avatarImg.src = 'https://mc-heads.net/avatar/MHF_Steve/48';
+      if (previewChatHead) previewChatHead.src = 'https://mc-heads.net/avatar/MHF_Steve/28';
+      if (greeting) {
+        greeting.textContent = '';
+        greeting.style.opacity = '0';
+      }
+    }
+  }, 250);
+}
+
+// Toggle between Media (📹) and Media+ (📹+) prefix in the live preview
+function toggleMediaPreviewRank(type) {
+  const singleBtn = document.getElementById('media-prev-single-btn');
+  const plusBtn = document.getElementById('media-prev-plus-btn');
+  const badge = document.getElementById('media-preview-prefix-badge');
+  const msg = document.getElementById('media-preview-chat-msg');
+
+  if (type === 'media_plus') {
+    if (singleBtn) singleBtn.classList.remove('active');
+    if (plusBtn) plusBtn.classList.add('active');
+    if (badge) {
+      badge.innerHTML = '<span class="media-prefix-cam">📹</span><span class="smp-preview-plus">+</span>';
+    }
+    if (msg) msg.textContent = 'Dnes točíme velký projekt na MYCHAL SMP! (Media+)';
+  } else {
+    if (singleBtn) singleBtn.classList.add('active');
+    if (plusBtn) plusBtn.classList.remove('active');
+    if (badge) {
+      badge.innerHTML = '<span class="media-prefix-cam">📹 </span>';
+    }
+    if (msg) msg.textContent = 'Ahoj, nové video z MYCHAL SMP je online!';
   }
 }
 

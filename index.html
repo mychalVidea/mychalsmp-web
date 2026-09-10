@@ -17,7 +17,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20260910_fix1" />
+  <link rel="stylesheet" href="style.css?v=20260910_v14" />
 </head>
 
 <body>
@@ -63,21 +63,42 @@
         <div class="hero-overlay"></div>
       </div>
       <div class="hero-content">
-        <h1 class="sr-only">MYCHAL SMP</h1>
-        <img src="imgs/mychalSMP-SERVERICONtestv2 (2).webp" alt="MYCHAL SMP Logo" class="hero-logo" />
-        <p class="hero-subtitle">Komunitní Minecraft server plný dobrodružství, stavění a zábavy.</p>
-
-        <div class="hero-ip-bar" onclick="copyIP(event)">
-          <div class="hero-ip-left">
-            <span class="hero-ip-dot"></span>
-            <span class="hero-ip-text">mychalsmp.xyz</span>
-          </div>
-          <button class="hero-copy-btn" id="copy-btn" aria-label="Kopírovat IP">📋 Zkopírovat IP</button>
+        <!-- Live Server Status Chip -->
+        <div class="hero-status-pill">
+          <span class="hero-live-dot"></span>
+          <span class="hero-live-text">Java Edition • <strong>26.2 (Doporučeno)</strong> • <strong>1.21.11</strong></span>
         </div>
 
+        <h1 class="sr-only">MYCHAL SMP</h1>
+        <img src="imgs/mychalSMP-SERVERICONtestv2 (2).webp" alt="MYCHAL SMP Logo" class="hero-logo" />
+        <p class="hero-subtitle">
+          Komunitní Minecraft server se dvěma unikátními světy – čistá akce a stálé PvP na <strong>SMP</strong> a bezpečné stavitelské projekty na <strong>Survivalu</strong>.
+        </p>
+
+        <!-- Redesigned High-Visibility Interactive IP Bar -->
+        <div class="hero-ip-bar" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP adresu">
+          <div class="hero-ip-left">
+            <span class="hero-ip-dot"></span>
+            <span class="hero-ip-label">SERVER IP:</span>
+            <span class="hero-ip-text">mychalsmp.xyz</span>
+          </div>
+          <button class="hero-copy-btn" id="copy-btn" aria-label="Kopírovat IP">
+            <i class="fa-regular fa-copy"></i>
+            <span>Zkopírovat IP</span>
+          </button>
+        </div>
+
+        <!-- Modern High-Craft CTA Row -->
         <div class="hero-cta-row">
-          <button class="btn-hero-primary" onclick="showTab('join')">🔗 Jak se připojit</button>
-          <button class="btn-hero-smp" onclick="showTab('smp-plus')">👑 SMP+</button>
+          <button class="btn-hero-primary" onclick="showTab('join')">
+            <i class="fa-solid fa-link"></i> Jak se připojit
+          </button>
+          <button class="btn-hero-smp" onclick="showTab('smp-plus')">
+            <i class="fa-solid fa-crown text-gold"></i> Výhody SMP+
+          </button>
+          <a href="https://discord.gg/HwZUGWGVD9" target="_blank" rel="noopener" class="btn-hero-discord">
+            <i class="fa-brands fa-discord"></i> Discord
+          </a>
         </div>
       </div>
       <div class="scroll-hint">
@@ -142,7 +163,7 @@
               <span class="info-chip">⚔️ Nové SMP (/smp)</span>
               <span class="info-chip">🌲 Klasika (/survival)</span>
               <span class="info-chip">🔥 Perma PvP na SMP</span>
-              <span class="info-chip">🛒 Shop &amp; Orders</span>
+              <span class="info-chip">🛒 Shop a Orders</span>
               <span class="info-chip">☕ Java Edition</span>
             </div>
             <div class="info-actions">
@@ -168,94 +189,144 @@
         <div class="section-title-box text-center">
           <span class="info-eyebrow">DVA UNIKÁTNÍ SVĚTY</span>
           <h2 class="section-heading">Vyber si svůj <span class="accent-red">herní svět</span></h2>
-          <p class="section-subheading">Ať už hledáš nekompromisní akční SMP nebo klidný stavitelský Survival s
-            rezidencemi, na MYCHAL SMP si přijdeš na své.</p>
+          <p class="section-subheading">Ať už hledáš nekompromisní akční souboje na SMP nebo klidné stavění s rezidencemi na Survivalu, na MYCHAL SMP si přijdeš na své.</p>
         </div>
 
         <div class="gamemodes-grid">
           <!-- Card 1: SMP Gamemode -->
           <div class="gamemode-card gamemode-card--smp">
-            <div class="gamemode-badge">🔥 NOVÝ GAMEMODE</div>
-            <div class="gamemode-header">
-              <div class="gamemode-icon"><img src="imgs/icons/minecraft-world-icon-14.webp" alt="SMP World"
-                  class="gamemode-img-icon"></div>
-              <div>
-                <h3 class="gamemode-title">Nové <span class="mc-font smp-text-blue">SMP</span></h3>
-                <span class="gamemode-cmd">Příkaz pro vstup: <code>/smp</code></span>
+            <!-- Visual Hero Header with Real Server Screenshot -->
+            <div class="gm-card-media" onclick="openLightbox('imgs/2026-07-03_00.57.44.webp')" title="Kliknutím zvětšíš screenshot">
+              <img src="imgs/2026-07-03_00.57.44.webp" alt="Nové SMP – Akční svět" class="gm-card-img" />
+              <div class="gm-card-overlay"></div>
+              <div class="gm-card-badge gm-badge--smp"><i class="fa-solid fa-fire"></i> AKCE • PERMA PVP</div>
+              <div class="gm-card-cmd-chip" onclick="event.stopPropagation(); copyCommand('/smp', this)" title="Kliknutím zkopíruješ příkaz">
+                <code>/smp</code>
+                <i class="fa-regular fa-copy"></i>
               </div>
             </div>
-            <p class="gamemode-desc">Zcela nový svět s vlastním seedem, novým Netherem i Endem pro všechny, kteří chtějí
-              čistý survival bez zbytečných omezení!</p>
-            <ul class="gamemode-features">
-              <li>
-                <i class="fa-solid fa-fire text-red"></i>
-                <div class="gamemode-feature-content">
-                  <span class="gamemode-feature-title">Bez rezidencí &amp; claimů</span>
-                  <span class="gamemode-feature-desc">Žádné zakazování vstupu – čisté survival dobrodružství.</span>
+
+            <div class="gm-card-body">
+              <div class="gm-card-head">
+                <div class="gm-card-icon-box">
+                  <img src="imgs/icons/minecraft-world-icon-14.webp" alt="SMP World" class="inline-game-icon">
                 </div>
-              </li>
-              <li>
-                <i class="fa-solid fa-skull text-red"></i>
-                <div class="gamemode-feature-content">
-                  <span class="gamemode-feature-title">PvP trvale zapnuto</span>
-                  <span class="gamemode-feature-desc">Akce na každém kroku. PvP nelze vypnout přes
-                    <code>/pvp</code>.</span>
+                <div>
+                  <h3 class="gm-card-title">Nové <span class="mc-font smp-text-blue">SMP</span></h3>
+                  <span class="gm-card-sub">Příkaz pro vstup: <code>/smp</code></span>
                 </div>
-              </li>
-              <li>
-                <i class="fa-solid fa-box text-blue"></i>
-                <div class="gamemode-feature-content">
-                  <span class="gamemode-feature-title">Oddělený inventář &amp; EnderChest</span>
-                  <span class="gamemode-feature-desc">Tvé věci na SMP zůstávají bezpečně na SMP.</span>
+              </div>
+
+              <p class="gm-card-desc">
+                Zbrusu nový svět s vlastním seedem, novým Netherem i Endem pro všechny, kteří chtějí čistý survival bez zbytečných omezení a s permanentním PvP!
+              </p>
+
+              <!-- Sleek 2x2 Feature Grid -->
+              <div class="gm-feature-grid">
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-red"><i class="fa-solid fa-skull"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Trvalé PvP</strong>
+                    <span>Souboje jsou permanentně zapnuté, akce na každém kroku.</span>
+                  </div>
                 </div>
-              </li>
-            </ul>
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-orange"><i class="fa-solid fa-fire"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Bez claimů</strong>
+                    <span>Čistý survival, žádné zakazování vstupu do oblastí.</span>
+                  </div>
+                </div>
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-blue"><i class="fa-solid fa-box-archive"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Oddělený inventář</strong>
+                    <span>Věci na SMP jsou oddělené od Survivalu a bezpečně uložené.</span>
+                  </div>
+                </div>
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-cyan"><i class="fa-solid fa-compass"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Čerstvý seed</strong>
+                    <span>Zcela nový svět plný neprobádaných surovin k vytěžení.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gm-card-actions">
+                <button class="btn-gm-action btn-gm--smp" onclick="copyCommand('/smp', this)">
+                  <i class="fa-solid fa-bolt"></i> Zkopírovat <code>/smp</code> pro vstup
+                </button>
+              </div>
+            </div>
           </div>
 
           <!-- Card 2: Classic Survival -->
           <div class="gamemode-card gamemode-card--survival">
-            <div class="gamemode-badge gamemode-badge--green">🌲 KLASIKA</div>
-            <div class="gamemode-header">
-              <div class="gamemode-icon"><img src="imgs/icons/6559_villager.webp" alt="Survival Villager"
-                  class="gamemode-img-icon"></div>
-              <div>
-                <h3 class="gamemode-title">Klasický <span class="mc-font text-green">Survival</span></h3>
-                <span class="gamemode-cmd">Příkaz pro vstup: <code>/survival</code></span>
+            <!-- Visual Hero Header with Real Server Screenshot -->
+            <div class="gm-card-media" onclick="openLightbox('imgs/2026-07-03_00.56.31.webp')" title="Kliknutím zvětšíš screenshot">
+              <img src="imgs/2026-07-03_00.56.31.webp" alt="Klasický Survival – Stavění a rezidence" class="gm-card-img" />
+              <div class="gm-card-overlay"></div>
+              <div class="gm-card-badge gm-badge--survival"><i class="fa-solid fa-tree"></i> STAVĚNÍ • REZIDENCE</div>
+              <div class="gm-card-cmd-chip" onclick="event.stopPropagation(); copyCommand('/survival', this)" title="Kliknutím zkopíruješ příkaz">
+                <code>/survival</code>
+                <i class="fa-regular fa-copy"></i>
               </div>
             </div>
-            <p class="gamemode-desc">Původní osvědčený svět s rezidencemi a volitelným PvP pro bezpečné stavění a
-              dlouhodobé projekty.</p>
-            <ul class="gamemode-features">
-              <li>
-                <i class="fa-solid fa-shield-halved text-green"></i>
-                <div class="gamemode-feature-content">
-                  <span class="gamemode-feature-title">Ochrana stavění (Claimy)</span>
-                  <span class="gamemode-feature-desc">Chraň své stavby a majetek pomocí GriefPrevention.</span>
+
+            <div class="gm-card-body">
+              <div class="gm-card-head">
+                <div class="gm-card-icon-box">
+                  <img src="imgs/icons/6559_villager.webp" alt="Survival Villager" class="inline-game-icon">
                 </div>
-              </li>
-              <li>
-                <i class="fa-solid fa-toggle-on text-green"></i>
-                <div class="gamemode-feature-content">
-                  <span class="gamemode-feature-title">Volitelné PvP</span>
-                  <span class="gamemode-feature-desc">Přepínej si PvP status podle nálady přes <code>/pvp</code>.</span>
+                <div>
+                  <h3 class="gm-card-title">Klasický <span class="mc-font text-green">Survival</span></h3>
+                  <span class="gm-card-sub">Příkaz pro vstup: <code>/survival</code></span>
                 </div>
-              </li>
-              <li>
-                <i class="fa-solid fa-monument text-blue"></i>
-                <div class="gamemode-feature-content">
-                  <span class="gamemode-feature-title">Stavitelské projekty</span>
-                  <span class="gamemode-feature-desc">Tradiční svět s velkou historií a komunitou.</span>
+              </div>
+
+              <p class="gm-card-desc">
+                Původní osvědčený svět s rezidencemi a volitelným PvP pro bezpečné stavění monumentálních projektů, komunitní obchodování a klidnou hru.
+              </p>
+
+              <!-- Sleek 2x2 Feature Grid -->
+              <div class="gm-feature-grid">
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-green"><i class="fa-solid fa-shield-halved"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Ochrana claimů</strong>
+                    <span>Chraň své stavby a truhly pomocí GriefPrevention.</span>
+                  </div>
                 </div>
-              </li>
-              <li>
-                <i class="fa-solid fa-shop text-yellow"></i>
-                <div class="gamemode-feature-content">
-                  <span class="gamemode-feature-title">Tržnice &amp; Zakázky</span>
-                  <span class="gamemode-feature-desc">Obchoduj s ostatními hráči přes <code>/shop</code> a
-                    <code>/orders</code>.</span>
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-cyan"><i class="fa-solid fa-toggle-on"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Volitelné PvP</strong>
+                    <span>Přepínej si PvP status podle nálady přes <code>/pvp</code>.</span>
+                  </div>
                 </div>
-              </li>
-            </ul>
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-yellow"><i class="fa-solid fa-store"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Tržnice a zakázky</strong>
+                    <span>Obchoduj s ostatními hráči přes <code>/shop</code> a <code>/orders</code>.</span>
+                  </div>
+                </div>
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-gold"><i class="fa-solid fa-monument"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Stavitelské projekty</strong>
+                    <span>Tradiční svět s dlouhou historií a přátelskou komunitou.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gm-card-actions">
+                <button class="btn-gm-action btn-gm--survival" onclick="copyCommand('/survival', this)">
+                  <i class="fa-solid fa-person-walking-arrow-right"></i> Zkopírovat <code>/survival</code> pro vstup
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -268,8 +339,7 @@
           <div class="quickstart-header text-center">
             <span class="info-eyebrow">PŘIPOJ SE BĚHEM CHVILKY</span>
             <h2 class="section-heading">Jak začít hrát <span class="accent-blue">do 1 minuty</span></h2>
-            <p class="section-subheading">Žádné složité nastavování ani formuláře. Zkopíruj IP, spusť hru a jsi na
-              serveru.</p>
+            <p class="section-subheading">Žádné složité nastavování ani formuláře. Zkopíruj IP, spusť hru a jsi na serveru.</p>
           </div>
           <div class="quickstart-grid">
             <div class="quickstart-step">
@@ -277,18 +347,15 @@
               <h3 class="quickstart-step-title">Zkopíruj serverovou IP</h3>
               <div class="quickstart-ip-box" onclick="copyIP(event)">
                 <span class="quickstart-ip-code">mychalsmp.xyz</span>
-                <button class="quickstart-copy-btn" aria-label="Zkopírovat IP"><i
-                    class="fa-regular fa-copy"></i></button>
+                <button class="quickstart-copy-btn" aria-label="Zkopírovat IP"><i class="fa-regular fa-copy"></i></button>
               </div>
-              <span class="quickstart-step-hint">Java Edition • <strong>26.2</strong> (nejvíce stabilní) &amp; nově i
-                <strong>1.21.11</strong></span>
+              <span class="quickstart-step-hint">Java Edition • <strong>26.2</strong> (nejvíce stabilní) • <strong>1.21.11</strong></span>
             </div>
 
             <div class="quickstart-step">
               <div class="quickstart-step-num">2</div>
               <h3 class="quickstart-step-title">Přidej server do hry</h3>
-              <p class="quickstart-step-desc">V Minecraftu zvol <strong>Multiplayer</strong> → <strong>Add
-                  Server</strong> a vlož naši IP. Ponechej textury povolené.</p>
+              <p class="quickstart-step-desc">V Minecraftu zvol <strong>Multiplayer</strong> → <strong>Add Server</strong> a vlož naši IP.</p>
               <span class="quickstart-step-hint">Server má vlastní balíček textur</span>
             </div>
 
@@ -298,203 +365,190 @@
               <div class="quickstart-cmd-box">
                 <code>/register &lt;heslo&gt; &lt;heslo&gt;</code>
               </div>
-              <span class="quickstart-step-hint">Originální účty: napiš <strong>2x /prem</strong> pro autologin!</span>
+              <span class="quickstart-step-hint">Originální účty: <strong>Automatické přihlášení bez hesla!</strong> (Warez: /register)</span>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- COMMANDS SHOWCASE -->
-    <div class="commands-section">
-      <div class="container">
-        <div class="section-title-box text-center">
-          <span class="info-eyebrow">PŘÍKAZY SERVERU</span>
-          <h2 class="section-heading">Užitečné příkazy pro hráče</h2>
-        </div>
-        <div class="commands-grid">
-          <div class="command-card">
-            <code>/smp</code>
-            <span>Teleport a náhodný výsadek na novém SMP světě (5s odpočet)</span>
-          </div>
-          <div class="command-card">
-            <code>/survival</code>
-            <span>Teleport a návrat na klasický Survival svět (5s odpočet)</span>
-          </div>
-          <div class="command-card">
-            <code>/rtp</code>
-            <span>Náhodný teleport v rámci tvého aktuálního světa</span>
-          </div>
-          <div class="command-card">
-            <code>/spawn</code>
-            <span>Teleport na hlavní serverový Spawn</span>
-          </div>
-          <div class="command-card">
-            <code>/home</code>
-            <span>Správa a teleport na tvoje domovy (odděleno per-svět)</span>
-          </div>
-          <div class="command-card">
-            <code>/shop</code>
-            <span>Hráčská tržnice pro nákup a prodej předmětů</span>
-          </div>
-          <div class="command-card">
-            <code>/orders</code>
-            <span>Hráčské zakázky pro poptávku surovin</span>
-          </div>
-          <div class="command-card">
-            <code>/trade</code>
-            <span>Bezpečný obchod předmětů mezi hráči</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- JOIN -->
+  <!-- JOIN / HOW-TO GUIDE -->
   <section id="tab-join" class="tab-section join-section-ambient">
-    <!-- Kompaktní transparentní hlavička s IP boxem -->
-    <div class="join-header text-center" style="padding-top: 50px;">
-      <div class="join-ip-box-wrapper">
-        <div class="join-ip-container" onclick="copyIP(event)">
-          <span class="join-ip-label">IP ADRESA:</span>
-          <div class="join-ip-value">
-            <span id="ip-address-text">mychalsmp.xyz</span>
-            <button class="join-ip-copy-btn">📋 Kopírovat</button>
+    <!-- Hero Header of How-To -->
+    <div class="join-hero-header text-center">
+      <div class="container">
+        <span class="info-eyebrow">PŘIPOJENÍ NA SERVER</span>
+        <h1 class="join-main-title">Jak se připojit na <span class="accent-red">MYCHAL SMP</span></h1>
+        <p class="join-main-sub">Vše, co potřebuješ vědět pro bleskový vstup do hry. Stačí pár kliknutí a jsi ve světě!</p>
+
+        <!-- Live Quick-Join IP Card -->
+        <div class="join-quick-ip-card">
+          <div class="join-quick-ip-info">
+            <span class="join-quick-ip-tag"><span class="hero-live-dot"></span> Java Edition • 26.2 (Doporučeno) • 1.21.11</span>
+            <div class="join-quick-ip-address" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP adresu">
+              <code class="join-ip-code-text">mychalsmp.xyz</code>
+              <button class="join-quick-copy-btn" aria-label="Zkopírovat IP"><i class="fa-regular fa-copy"></i> Kopírovat IP</button>
+            </div>
+          </div>
+          <div class="join-quick-badges">
+            <span class="join-pill"><i class="fa-solid fa-bolt text-yellow"></i> Bez Whitelistu</span>
+            <span class="join-pill"><i class="fa-solid fa-shield-halved text-green"></i> Auto-Login pro Originálky</span>
+            <span class="join-pill"><i class="fa-solid fa-gamepad text-blue"></i> Podpora i pro Warez</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Kroky připojení (7 karet pro plynulé scrollování) -->
-    <div class="container join-steps-container">
-      <div class="join-timeline-wrapper">
-        <!-- Connecting Line -->
-        <div class="join-timeline-progress-bar">
-          <div class="join-timeline-progress-fill">
-            <div class="join-timeline-glow-head"></div>
-          </div>
-        </div>
+    <!-- Compact & Structured Step-by-Step Guide -->
+    <div class="container join-guide-container">
+      <div class="join-steps-list">
 
-        <!-- Step 1 -->
-        <div class="join-timeline-row row-left" id="join-step-1">
-          <div class="join-timeline-dot">1</div>
-          <div class="join-timeline-card">
-            <h3>Spuštění hry (Verze 26.2 &amp; 1.21.11)</h3>
-            <p>Server podporuje verze <strong>1.21.11</strong> až <strong>26.2</strong>. Pro nejlepší herní zážitek a
-              bezchybnou stabilitu doporučujeme verzi <strong>26.2 (nejvíce stabilní)</strong>.</p>
-            <div class="join-version-badges" style="margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap;">
-              <div class="join-version-badge"
-                style="display: inline-block; background: rgba(56, 189, 248, 0.2); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; padding: 6px 14px; border-radius: 8px; font-size: 0.84rem; font-weight: 700;">
-                ⭐ Doporučeno: Java Edition 26.2 (nejvíce stabilní)</div>
-              <div class="join-version-badge"
-                style="display: inline-block; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); color: #cbd5e1; padding: 6px 14px; border-radius: 8px; font-size: 0.84rem; font-weight: 600;">
-                ☕ Podporováno také: 1.21.11</div>
+        <!-- Krok 1: Spuštění hry a výběr verze -->
+        <div class="join-step-row">
+          <div class="join-step-info">
+            <div class="join-step-badge-row">
+              <span class="join-step-pill">01</span>
+              <span class="join-tag-pill">Spuštění a verze</span>
             </div>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="join-timeline-row row-right" id="join-step-2">
-          <div class="join-timeline-dot">2</div>
-          <div class="join-timeline-card">
-            <h3>Otevření Multiplayeru</h3>
-            <p>V hlavním menu Minecraftu klikni na tlačítko <strong>Hra více hráčů (Multiplayer)</strong>.</p>
-            <img src="imgs/screenshot/multiplayer.png" alt="Otevření Multiplayeru" class="join-step-img"
-              onclick="openLightbox(this.src)" />
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="join-timeline-row row-left" id="join-step-3">
-          <div class="join-timeline-dot">3</div>
-          <div class="join-timeline-card">
-            <h3>Přidání nového serveru</h3>
-            <p>V menu klikni na <strong>Přidej server (Add Server)</strong>. Do pole <em>Název serveru (Server
-                Name)</em> si zadej <strong>libovolný název</strong> (např. <code>MYCHAL SMP</code> nebo cokoliv si
-              přeješ).</p>
-            <img src="imgs/screenshot/addsrvr.png" alt="Přidání nového serveru" class="join-step-img"
-              onclick="openLightbox(this.src)" />
-          </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="join-timeline-row row-right" id="join-step-4">
-          <div class="join-timeline-dot">4</div>
-          <div class="join-timeline-card">
-            <h3>IP adresa &amp; Textury</h3>
-            <p>Do pole <em>Adresa serveru (Server Address)</em> vlož naši adresu:</p>
-            <div class="join-timeline-ip" onclick="copyIP(event)" style="margin: 12px 0;">
-              <code>mychalsmp.xyz</code>
-              <span class="join-copy-indicator">Kliknutím zkopíruješ IP</span>
-            </div>
-            <p style="font-size: 0.88rem; color: rgba(255,255,255,0.8); line-height: 1.5; margin-top: 10px;">
-              💡 <strong>Server Resource Packs:</strong> Doporučujeme ponechat na <strong>Prompt (Dotázat se)</strong>
-              nebo <strong>Enabled (Povoleno)</strong>. Pokud to nezměníš, nevadí – hra se tě při prvním vstupu stejně
-              zeptá na schválení stáhnutí balíčku textur! Poté klikni na <strong>Hotovo (Done)</strong>.
+            <h3 class="join-step-title">Spusť Minecraft ve verzi 26.2 nebo 1.21.11</h3>
+            <p class="join-step-text">
+              Server podporuje Java Edition verze <strong>1.21.11 až 26.2</strong>. Pro maximální plynulost, nejnovější mechaniky a bezchybnou stabilitu doporučujeme verzi <strong>26.2 (nejvíce stabilní)</strong>.
             </p>
-            <img src="imgs/screenshot/nameippack.png" alt="Nastavení IP adresy a textur" class="join-step-img"
-              onclick="openLightbox(this.src)" />
-          </div>
-        </div>
-
-        <!-- Step 5 -->
-        <div class="join-timeline-row row-left" id="join-step-5">
-          <div class="join-timeline-dot">5</div>
-          <div class="join-timeline-card">
-            <h3>Připojení &amp; Registrace</h3>
-            <p>Vyber server v seznamu a klikni na <strong>Připojit se (Join Server)</strong>. Po načtení se v chatu
-              zaregistruj zadáním příkazu:</p>
-            <div
-              style="margin-top: 12px; background: rgba(10, 11, 18, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 16px; border-radius: 12px; font-family: var(--font-mono); color: #38bdf8; font-size: 0.95rem;">
-              <code>/register &lt;mojeHeslo&gt; &lt;mojeHeslo&gt;</code>
+            <div class="join-step-action-bar">
+              <span class="join-step-chip"><i class="fa-solid fa-arrow-pointer text-blue"></i> V hlavním menu klikni na <strong>Hra více hráčů (Multiplayer)</strong></span>
             </div>
-            <p style="margin-top: 10px; font-size: 0.88rem; color: rgba(255,255,255,0.75);">
-              Při dalších přihlášeních na server použiješ <code>/login &lt;mojeHeslo&gt;</code>.
-            </p>
-            <img src="imgs/screenshot/registerhesloheslo.png" alt="Registrace v chatu" class="join-step-img"
-              onclick="openLightbox(this.src)" />
+          </div>
+          <div class="join-step-media" onclick="openLightbox('imgs/screenshot/multiplayer.png')" title="Kliknutím zvětšíš screenshot">
+            <div class="join-media-bar">
+              <span class="join-media-title"><i class="fa-solid fa-gamepad"></i> Hlavní menu</span>
+              <span class="join-media-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i> Zvětšit</span>
+            </div>
+            <div class="join-media-canvas">
+              <img src="imgs/screenshot/multiplayer.png" alt="Otevření Multiplayeru v Minecraftu" class="join-media-img" loading="lazy" />
+            </div>
           </div>
         </div>
 
-        <!-- Step 6 -->
-        <div class="join-timeline-row row-right" id="join-step-6">
-          <div class="join-timeline-dot">6</div>
-          <div class="join-timeline-card">
-            <h3>Auto-login pro originální účty (/prem)</h3>
-            <p>Pokud máš zakoupený Minecraft účet, aktivuj si automatický přihlašovací systém bez psaní hesla!</p>
-            <div class="join-prem-box"
-              style="margin-top: 14px; background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3); padding: 14px 16px; border-radius: 14px;">
-              <h4
-                style="color: #38bdf8; font-size: 0.95rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-                <span>👑 Aktivace automatického vstupu</span>
-              </h4>
-              <p style="font-size: 0.88rem; color: rgba(255,255,255,0.85); line-height: 1.5; margin: 0;">
-                Napiš <strong>2x po sobě</strong> příkaz <code>/prem</code> (napiš <code>/prem</code>, potvrd v chatu a
-                napiš znova <code>/prem</code>).
-              </p>
-              <div
-                style="margin-top: 10px; font-size: 0.82rem; color: #ffbe0b; background: rgba(255, 190, 11, 0.12); border: 1px solid rgba(255, 190, 11, 0.25); padding: 10px 12px; border-radius: 10px; line-height: 1.4;">
-                ⚠️ <strong>Nenech se zmást:</strong> Ignoruj systémovou zprávu v chatu, která píše
-                <code>/premium</code>! Příkaz <code>/premium</code> tě pouze vykopne a nic neudělá. Musíš napsat přesně
-                <strong>2x /prem</strong> za sebou!
+        <!-- Krok 2: Přidání nového serveru -->
+        <div class="join-step-row">
+          <div class="join-step-info">
+            <div class="join-step-badge-row">
+              <span class="join-step-pill">02</span>
+              <span class="join-tag-pill">Seznam serverů</span>
+            </div>
+            <h3 class="join-step-title">Klikni na Přidat server (Add Server)</h3>
+            <p class="join-step-text">
+              V dolní liště seznamu serverů klikni na tlačítko <strong>Přidej server (Add Server)</strong>. Název serveru si zadej libovolně (např. <code>MYCHAL SMP</code>), abys server v seznamu snadno poznal.
+            </p>
+            <div class="join-step-action-bar">
+              <span class="join-step-chip"><i class="fa-solid fa-arrow-pointer text-blue"></i> Klikni na <strong>Přidej server</strong> dole v liště</span>
+            </div>
+          </div>
+          <div class="join-step-media" onclick="openLightbox('imgs/screenshot/addsrvr.png')" title="Kliknutím zvětšíš screenshot">
+            <div class="join-media-bar">
+              <span class="join-media-title"><i class="fa-solid fa-server"></i> Výběr serveru</span>
+              <span class="join-media-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i> Zvětšit</span>
+            </div>
+            <div class="join-media-canvas">
+              <img src="imgs/screenshot/addsrvr.png" alt="Tlačítko Přidej server (Add Server)" class="join-media-img" loading="lazy" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Krok 3: Zadání IP adresy -->
+        <div class="join-step-row">
+          <div class="join-step-info">
+            <div class="join-step-badge-row">
+              <span class="join-step-pill">03</span>
+              <span class="join-tag-pill">Adresa serveru</span>
+            </div>
+            <h3 class="join-step-title">Zadej IP adresu a zapni textury</h3>
+            <p class="join-step-text">
+              Do pole <em>Adresa serveru (Server Address)</em> zadej <code>mychalsmp.xyz</code>. Položku <strong>Server Resource Packs</strong> nastav na <strong>Enabled (Povoleno)</strong> nebo <strong>Prompt (Dotázat se)</strong> pro správné načtení serverových modelů.
+            </p>
+            <div class="join-step-action-bar">
+              <div class="join-compact-ip-box" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP adresu">
+                <span class="hero-live-dot"></span>
+                <code class="join-compact-ip-code">mychalsmp.xyz</code>
+                <button class="join-compact-copy-btn"><i class="fa-regular fa-copy"></i> Kopírovat</button>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Step 7 -->
-        <div class="join-timeline-row row-left" id="join-step-7">
-          <div class="join-timeline-dot">7</div>
-          <div class="join-timeline-card">
-            <h3>Discord Komunita, Novinky &amp; Pokec</h3>
-            <p>Připoj se na náš komunitní Discord server! Najdeš tam nejnovější oznámení a novinky ze serveru, pokec s
-              ostatními hráči, návody, možnost nahlásit chybu nebo soutěže.</p>
-            <div class="join-timeline-action" style="margin-top: 16px;">
-              <a href="https://discord.gg/HwZUGWGVD9" target="_blank" rel="noopener" class="btn-primary">💬 Připojit se
-                na Discord →</a>
+          <div class="join-step-media" onclick="openLightbox('imgs/screenshot/nameippack.png')" title="Kliknutím zvětšíš screenshot">
+            <div class="join-media-bar">
+              <span class="join-media-title"><i class="fa-solid fa-pen-to-square"></i> Úprava údajů</span>
+              <span class="join-media-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i> Zvětšit</span>
+            </div>
+            <div class="join-media-canvas">
+              <img src="imgs/screenshot/nameippack.png" alt="Nastavení IP adresy a textur" class="join-media-img" loading="lazy" />
             </div>
           </div>
         </div>
+
+        <!-- Krok 4: Vstup do hry -->
+        <div class="join-step-row">
+          <div class="join-step-info">
+            <div class="join-step-badge-row">
+              <span class="join-step-pill">04</span>
+              <span class="join-tag-pill">Vstup do hry</span>
+            </div>
+            <h3 class="join-step-title">Připoj se a začni hrát</h3>
+            <p class="join-step-text">
+              Vyber MYCHAL SMP v seznamu a klikni na <strong>Připojit se</strong>. Přihlášení je plně optimalizováno pro oba typy hráčů:
+            </p>
+            <div class="join-auth-compact-grid">
+              <div class="join-auth-mini-card join-auth-mini--orig">
+                <div class="join-auth-mini-head"><i class="fa-solid fa-crown text-gold"></i> <strong>Originální Minecraft</strong></div>
+                <p>Automatický Mojang Auto-Login bez nutnosti zadávat jakékoliv heslo.</p>
+              </div>
+              <div class="join-auth-mini-card join-auth-mini--warez">
+                <div class="join-auth-mini-head"><i class="fa-solid fa-gamepad text-cyan"></i> <strong>Warez klient</strong></div>
+                <p>Při prvním vstupu se jednorázově zaregistruj:</p>
+                <div class="join-mini-cmd" onclick="copyCommand('/register heslo123 heslo123', this)" title="Kliknutím zkopíruješ příkaz">
+                  <code>/register &lt;heslo&gt; &lt;heslo&gt;</code>
+                  <i class="fa-regular fa-copy"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="join-step-media" onclick="openLightbox('imgs/screenshot/registerhesloheslo.png')" title="Kliknutím zvětšíš screenshot">
+            <div class="join-media-bar">
+              <span class="join-media-title"><i class="fa-solid fa-terminal"></i> Chat registrace</span>
+              <span class="join-media-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i> Zvětšit</span>
+            </div>
+            <div class="join-media-canvas join-media-canvas--chat">
+              <img src="imgs/screenshot/registerhesloheslo.png" alt="Registrace v chatu serveru" class="join-media-img join-media-img--chat" loading="lazy" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5 / Community Card: Discord a podpora -->
+        <div class="join-community-card">
+          <div class="join-community-left">
+            <div class="join-badge-pill join-badge-pill--discord"><i class="fa-brands fa-discord"></i> Komunita a podpora</div>
+            <h3 class="join-community-title">Připoj se k nám na Discord</h3>
+            <p class="join-community-desc">
+              Nejčerstvější novinky, komunitní eventy, pokec s hráči a přímý ticket systém podpory od administrátorů.
+            </p>
+            <div class="join-bug-bounty">
+              <div class="join-bounty-item">
+                <img src="imgs/icons/minecraft-world-icon-14.webp" alt="Diamond Block" class="inline-game-icon">
+                <span><strong>Odměna za nahlášení chyb:</strong> Hodnotné <strong>diamantové bloky</strong> přímo ve hře podle závažnosti.</span>
+              </div>
+              <div class="join-bounty-item">
+                <i class="fa-solid fa-gem text-purple"></i>
+                <span><strong>Kritické chyby a exploity:</strong> Prémiová odměna v <strong>Netherite blocích</strong>!</span>
+              </div>
+            </div>
+          </div>
+          <div class="join-community-right">
+            <a href="https://discord.gg/HwZUGWGVD9" target="_blank" rel="noopener" class="btn-hero-discord">
+              <i class="fa-brands fa-discord"></i> Otevřít Discord server
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -554,7 +608,7 @@
         <!-- Rule 1 -->
         <div class="rule-card rule-card--ban">
           <div class="rule-badge">BAN</div>
-          <h3>Cheaty &amp; Modifikace</h3>
+          <h3>Cheaty a modifikace</h3>
           <p>Jakýkoliv cheat, hack nebo modifikace dávající neférovou výhodu je přísně zakázána.</p>
           <ul class="rule-bullet-list">
             <li><strong>Replay Mod:</strong> Povolen <strong>pouze pro hráče s Media rankem</strong> (pro tvorbu videí).
@@ -566,7 +620,7 @@
         <!-- Rule 2 -->
         <div class="rule-card rule-card--ban">
           <div class="rule-badge">BAN</div>
-          <h3>X-Ray &amp; ESP</h3>
+          <h3>X-Ray a ESP</h3>
           <p>Využívání x-ray modů nebo texture packů je zakázáno.</p>
           <ul class="rule-bullet-list">
             <li>X-Ray mody a texture packy</li>
@@ -608,7 +662,7 @@
             ničení zakázáno.</p>
           <ul class="rule-bullet-list">
             <li>SMP (/smp): Griefing je POVOLEN</li>
-            <li>Lag machiny &amp; přetěžování serveru jsou ZAKÁZÁNY všude!</li>
+            <li>Lag machiny a přetěžování serveru jsou ZAKÁZÁNY všude!</li>
             <li>Survival (/survival): Griefing je ZAKÁZÁN</li>
           </ul>
         </div>
@@ -642,7 +696,7 @@
       <div class="rules-footer-box">
         <div class="rules-footer-left">
           <h3><img src="imgs/icons/Heart.webp" alt="Minecraft Heart" class="inline-game-icon animate-pulse" /> Zlaté
-            pravidlo &amp; Dodržování pravidel</h3>
+            pravidlo a dodržování pravidel</h3>
           <p>Chovej se k ostatním tak, jak chceš, aby se oni chovali k tobě. Respekt, fair-play a zábava pro všechny –
             to je MYCHAL SMP. Porušení pravidel může vést k varování, dočasnému ztišení (mute) nebo permanentnímu banu.
           </p>
@@ -656,78 +710,190 @@
 
   <!-- SMP+ SUBSCRIPTION -->
   <section id="tab-smp-plus" class="tab-section">
-    <!-- Page hero with background image & Split Layout -->
+    <!-- Page hero with Split Layout -->
     <div class="smp-hero">
       <div class="smp-hero-bg">
         <div class="smp-hero-overlay"></div>
       </div>
       <div class="container smp-hero-container">
+        <!-- LEFT COLUMN: Narrative & Tangible Value -->
         <div class="smp-hero-left">
-          <div class="smp-premium-badge"><img src="imgs/icons/trophy.webp" alt="Trophy Icon"
-              class="inline-badge-icon" /> PREMIUM RANK</div>
-          <h1 class="smp-hero-title">Předplatné <span class="smp-text-blue">SMP</span><span
-              class="smp-text-gold">+</span></h1>
-          <p class="smp-hero-subtitle">Podpoř chod serveru MYCHAL SMP a odemkni exkluzivní výhody, rychlejší teleporty,
-            barevný nick a speciální prefix v chatu.</p>
+          <div class="smp-premium-badge">
+            <i class="fa-solid fa-crown" style="color:#fbbf24; margin-right:6px;"></i> OFICIÁLNÍ ČLENSTVÍ SERVERU
+          </div>
+          <h1 class="smp-hero-title">
+            Hraj naplno s výhodami <span class="smp-text-blue">SMP</span><span class="smp-text-gold">+</span>
+          </h1>
+          <p class="smp-hero-subtitle">
+            Žádné Pay-to-Win prvky kazící hru ostatním. SMP+ je navrženo pro maximální komfort, bezpečí pro tvé cennosti,
+            bleskové cestování a stylový status v komunitě.
+          </p>
 
-          <div class="smp-features-list">
-            <div class="smp-feat-item">
-              <span class="smp-check">✓</span>
-              <span>Prefix: <span class="smp-bracket" style="color: #7f7f7f;">[</span><span class="smp-text-blue"
-                  style="font-weight: 700;">SMP</span><span class="smp-text-gold"
-                  style="font-weight: 700;">+</span><span class="smp-bracket" style="color: #7f7f7f;">]</span> v chatu i
-                tablistu</span>
+          <!-- Highlight Showcase Cards -->
+          <div class="smp-showcase-grid">
+            <!-- Feature 1 -->
+            <div class="smp-showcase-card">
+              <div class="smp-sc-icon-box">
+                <i class="fa-solid fa-box-archive"></i>
+              </div>
+              <div class="smp-sc-content">
+                <div class="smp-sc-head">
+                  <h4>2x větší Ender Truhla (54 slotů)</h4>
+                  <span class="smp-badge-tag smp-badge-tag--green">+100% místa</span>
+                </div>
+                <p>Plných 6 řádků kapacity pro všechny tvé cennosti. Při vypršení předplatného se věci nikdy neztratí – automaticky se přesunou do tvého osobního Trezoru v <code>/ah</code>.</p>
+              </div>
             </div>
-            <div class="smp-feat-item">
-              <span class="smp-check">✓</span>
-              <span><strong>2x větší Ender Truhla</strong> – plná dvojitá truhla s trezorem</span>
+
+            <!-- Feature 2 -->
+            <div class="smp-showcase-card">
+              <div class="smp-sc-icon-box">
+                <i class="fa-solid fa-bolt-lightning"></i>
+              </div>
+              <div class="smp-sc-content">
+                <div class="smp-sc-head">
+                  <h4>Instantní /back a bleskové 3s teleporty</h4>
+                  <span class="smp-badge-tag smp-badge-tag--blue">Bez čekání</span>
+                </div>
+                <p>Zatímco běžní hráči čekají na odpočet, se SMP+ tě příkaz <code>/back</code> vrátí zpět přímo na místo smrti okamžitě bez čekání! Čekací doba na <code>/home</code>, <code>/rtp</code> a <code>/tpa</code> je navíc zkrácena na pouhé 3 sekundy.</p>
+              </div>
             </div>
-            <div class="smp-feat-item">
-              <span class="smp-check">✓</span>
-              <span>Změna barvy nicku příkazem <code>/cc</code></span>
+
+            <!-- Feature 3 -->
+            <div class="smp-showcase-card">
+              <div class="smp-sc-icon-box">
+                <i class="fa-solid fa-palette"></i>
+              </div>
+              <div class="smp-sc-content">
+                <div class="smp-sc-head">
+                  <h4>Prémiová paleta 24 barev jména (/cc)</h4>
+                  <span class="smp-badge-tag smp-badge-tag--gold">Stylový nick</span>
+                </div>
+                <p>Změň si barvu svého jména v chatu, v tablistu i nad postavou příkazem <code>/cc</code>. Spolu s ikonickým modrým symbolem <code>+</code> přímo před jménem (<code>+Nick</code>) tě ve hře nikdo nepřehlédne.</p>
+                <div class="smp-color-dots" title="Kliknutím na barvu ji otestuješ v náhledu">
+                  <span class="smp-dot" style="background:#ffffff;" onclick="setPreviewNickColor('#ffffff')" title="Bílá (Výchozí)"></span>
+                  <span class="smp-dot" style="background:#55ffff;" onclick="setPreviewNickColor('#55ffff')" title="Světle modrá (Cyan)"></span>
+                  <span class="smp-dot" style="background:#ffaa00;" onclick="setPreviewNickColor('#ffaa00')" title="Zlatá (Gold)"></span>
+                  <span class="smp-dot" style="background:#55ff55;" onclick="setPreviewNickColor('#55ff55')" title="Zelená (Lime)"></span>
+                  <span class="smp-dot" style="background:#ff55ff;" onclick="setPreviewNickColor('#ff55ff')" title="Růžovo-fialová (Purple)"></span>
+                  <span class="smp-dot" style="background:#ffff55;" onclick="setPreviewNickColor('#ffff55')" title="Žlutá (Yellow)"></span>
+                  <span class="smp-dot" style="background:#ff5555;" onclick="setPreviewNickColor('#ff5555')" title="Červená (Red)"></span>
+                  <span class="smp-dot" style="background:#38bdf8;" onclick="setPreviewNickColor('#38bdf8')" title="Modrá (Sky Blue)"></span>
+                </div>
+              </div>
             </div>
-            <div class="smp-feat-item">
-              <span class="smp-check">✓</span>
-              <span>Rychlé 3s teleporty a okamžitý návrat příkazem <code>/back</code></span>
+
+            <!-- Feature 4 -->
+            <div class="smp-showcase-card">
+              <div class="smp-sc-icon-box">
+                <i class="fa-solid fa-house-chimney"></i>
+              </div>
+              <div class="smp-sc-content">
+                <div class="smp-sc-head">
+                  <h4>14 domovů a barvy v /homes</h4>
+                  <span class="smp-badge-tag smp-badge-tag--blue">Dvojnásobek</span>
+                </div>
+                <p>Ulož si až 14 různých domovů (<code>/sethome</code>) oproti základním 7 a v herním menu <code>/homes</code> si přizpůsob barvu postele pro každou svou základnu či farmu.</p>
+              </div>
             </div>
-            <div class="smp-feat-item">
-              <span class="smp-check">✓</span>
-              <span>Až <strong>14 domovů</strong> (<code>/sethome</code>) a změna barvy postele</span>
+
+            <!-- Feature 5 -->
+            <div class="smp-showcase-card">
+              <div class="smp-sc-icon-box">
+                <i class="fa-solid fa-coins"></i>
+              </div>
+              <div class="smp-sc-content">
+                <div class="smp-sc-head">
+                  <h4>Tržnice a zakázky Boost</h4>
+                  <span class="smp-badge-tag smp-badge-tag--green">15 slotů</span>
+                </div>
+                <p>Vystav v <code>/shop</code> až 15 položek k prodeji naráz a v <code>/orders</code> vypiš až 4 nákupní zakázky. Ideální pro vybudování vlastního obchodního impéria.</p>
+              </div>
             </div>
-            <div class="smp-feat-item">
-              <span class="smp-check">✓</span>
-              <span>Až <strong>4 osobní warpy</strong> (<code>/setwarp</code>) a volný pohyb při teleportu</span>
-            </div>
-            <div class="smp-feat-item">
-              <span class="smp-check">✓</span>
-              <span>Rozšířená tržnice (15 slotů v <code>/shop</code>) a 4 zakázky (<code>/orders</code>)</span>
+          </div>
+
+          <!-- Fairness Guarantee Banner -->
+          <div class="smp-fairness-banner">
+            <div class="smp-fairness-icon"><i class="fa-solid fa-shield-heart"></i></div>
+            <div class="smp-fairness-text">
+              <strong>Férový přístup bez Pay-to-Win:</strong>
+              <span>Všechny výhody jsou zaměřené na pohodlí a styl. Žádný hráč nezíská nezranitelnost ani neférovou sílu v boji proti ostatním.</span>
             </div>
           </div>
         </div>
 
+        <!-- RIGHT COLUMN: High-Visibility Checkout Card -->
         <div class="smp-hero-right">
-          <!-- Main Purchase Box immediately visible at the top -->
           <div class="smp-checkout-card">
             <div class="smp-checkout-header">
-              <div class="smp-checkout-badge"><i class="fa-solid fa-crown"></i> POPULÁRNÍ RANK</div>
+              <div class="smp-checkout-badge">
+                <i class="fa-solid fa-fire"></i> NEJOBLÍBENĚJŠÍ VOLBA
+              </div>
               <div class="smp-price-tag">
-                <span class="smp-price-num">1.99 €</span>
+                <span class="smp-price-currency">€</span>
+                <span class="smp-price-num">1.99</span>
                 <span class="smp-price-period">/ měsíc</span>
               </div>
+              <div class="smp-price-sub">Kdykoliv zrušitelné na 1 kliknutí • Bez závazků</div>
             </div>
 
             <div class="smp-divider"></div>
 
-            <!-- Live Preview of Rank -->
+            <!-- Authentic Live Rank Preview (Chat, Tablist, Nametag) -->
             <div class="smp-preview-box">
-              <span class="smp-preview-label">💬 Náhled v chatu:</span>
-              <div class="smp-chat-preview">
-                <img id="smp-preview-head" src="https://mc-heads.net/avatar/MHF_Question/28" class="mc-avatar-head"
-                  alt="Skin Head">
-                <span class="smp-bracket">[</span><span class="smp-preview-blue">SMP</span><span
-                  class="smp-preview-gold">+</span><span class="smp-bracket">]</span> <span class="smp-preview-name"
-                  id="smp-preview-name">Hrac</span><span class="smp-chat-colon">:</span> <span
-                  class="smp-chat-text">Ahoj jak se mas!</span>
+              <div class="smp-preview-head-row">
+                <div class="smp-preview-label">
+                  <i class="fa-solid fa-eye"></i> Živý náhled tvého ranku:
+                </div>
+                <div class="smp-preview-modes" role="tablist">
+                  <button type="button" class="smp-mode-btn active" id="smp-mode-chat-btn" onclick="switchSmpPreviewMode('chat')">Chat</button>
+                  <button type="button" class="smp-mode-btn" id="smp-mode-tab-btn" onclick="switchSmpPreviewMode('tab')">Tablist</button>
+                  <button type="button" class="smp-mode-btn" id="smp-mode-tag-btn" onclick="switchSmpPreviewMode('tag')">Nad hlavou</button>
+                </div>
+              </div>
+
+              <!-- Chat View -->
+              <div class="smp-chat-preview" id="smp-view-chat">
+                <img id="smp-preview-head" src="https://mc-heads.net/avatar/MHF_Question/28" class="mc-avatar-head" alt="Skin Head">
+                <span class="mc-chat-flag" title="Česká republika">🇨🇿</span>
+                <span class="smp-preview-plus">+</span><span class="smp-preview-name" id="smp-preview-name">Hrac</span><span class="smp-chat-colon">:</span>
+                <span class="smp-chat-text">Ahoj jak se mas!</span>
+              </div>
+
+              <!-- Tablist View -->
+              <div class="smp-tablist-preview" id="smp-view-tab" style="display: none;">
+                <div class="smp-tab-player-item">
+                  <img id="smp-preview-head-tab" src="https://mc-heads.net/avatar/MHF_Question/24" class="mc-avatar-head-sm" alt="Skin Head">
+                  <span class="mc-chat-flag">🇨🇿</span>
+                  <span class="smp-preview-plus">+</span><span class="smp-preview-name" id="smp-preview-name-tab">Hrac</span>
+                  <span class="smp-tab-ping"><i class="fa-solid fa-signal text-green"></i> 15ms</span>
+                </div>
+              </div>
+
+              <!-- Nametag View -->
+              <div class="smp-nametag-preview" id="smp-view-tag" style="display: none;">
+                <div class="smp-nametag-box">
+                  <div class="smp-nametag-tag">
+                    <span class="smp-preview-plus">+</span><span class="smp-preview-name" id="smp-preview-name-tag">Hrac</span>
+                  </div>
+                  <img id="smp-preview-head-tag" src="https://mc-heads.net/avatar/MHF_Question/42" class="mc-avatar-nametag" alt="Skin Head">
+                </div>
+              </div>
+
+              <!-- Interactive /cc Color Picker in Preview Box -->
+              <div class="smp-preview-cc-bar">
+                <span class="smp-preview-cc-title"><i class="fa-solid fa-palette"></i> Vyzkoušej barvu jména (/cc):</span>
+                <div class="smp-preview-cc-swatches">
+                  <span class="smp-swatch active" style="--swatch:#ffffff;" onclick="setPreviewNickColor('#ffffff', this)" title="Bílá (Výchozí)"></span>
+                  <span class="smp-swatch" style="--swatch:#55ffff;" onclick="setPreviewNickColor('#55ffff', this)" title="Cyan"></span>
+                  <span class="smp-swatch" style="--swatch:#ffaa00;" onclick="setPreviewNickColor('#ffaa00', this)" title="Gold"></span>
+                  <span class="smp-swatch" style="--swatch:#55ff55;" onclick="setPreviewNickColor('#55ff55', this)" title="Lime"></span>
+                  <span class="smp-swatch" style="--swatch:#ff55ff;" onclick="setPreviewNickColor('#ff55ff', this)" title="Purple"></span>
+                  <span class="smp-swatch" style="--swatch:#ffff55;" onclick="setPreviewNickColor('#ffff55', this)" title="Yellow"></span>
+                  <span class="smp-swatch" style="--swatch:#ff5555;" onclick="setPreviewNickColor('#ff5555', this)" title="Red"></span>
+                  <span class="smp-swatch" style="--swatch:#38bdf8;" onclick="setPreviewNickColor('#38bdf8', this)" title="Sky Blue"></span>
+                  <span class="smp-swatch" style="--swatch:#2ecc71;" onclick="setPreviewNickColor('#2ecc71', this)" title="Green"></span>
+                </div>
               </div>
             </div>
 
@@ -735,10 +901,9 @@
             <div class="nickname-form">
               <label for="mc-username" class="nickname-label">Tvůj Minecraft nick:</label>
               <div class="nickname-input-wrapper">
-                <img id="nickname-input-head" src="https://mc-heads.net/avatar/Steve/24" class="nickname-input-head"
-                  alt="Head">
+                <img id="nickname-input-head" src="https://mc-heads.net/avatar/Steve/24" class="nickname-input-head" alt="Head">
                 <input type="text" id="mc-username" class="nickname-input nickname-input--with-head"
-                  placeholder="Napiš svůj nick..." required oninput="updatePreviewName(this.value)" />
+                  placeholder="Zadej svůj herní nick..." required oninput="updatePreviewName(this.value)" autocomplete="off" />
               </div>
 
               <!-- Mandatory Consent Checkbox -->
@@ -754,26 +919,27 @@
                 </label>
               </div>
 
-              <button class="btn-purchase" onclick="checkoutSMP()">ZÍSKAT <span
-                  class="btn-icon-lightning">⚡</span></button>
-              <p class="nickname-tip">Zabezpečená platba přes Tebex. Aktivace obvykle do 5 min (při výpadku sítě max. do
-                2 hodin).</p>
+              <!-- High-Contrast Prominent Pay Button -->
+              <button class="btn-purchase" onclick="checkoutSMP()">
+                <div class="btn-purchase-title">
+                  <i class="fa-solid fa-bolt-lightning"></i> AKTIVOVAT SMP+
+                </div>
+                <div class="btn-purchase-sub">Pouze 1.99 € / měsíc • Okamžitá aktivace</div>
+              </button>
+
               <div class="smp-trust-badges">
                 <div class="trust-badge-item">
                   <i class="fa-solid fa-shield-halved"></i>
-                  <span>Secure checkout</span>
+                  <span>Zabezpečeno přes Tebex</span>
                 </div>
                 <div class="trust-badge-item">
                   <i class="fa-solid fa-bolt"></i>
-                  <span>Rychlá aktivace</span>
+                  <span>Aktivace do 5 minut</span>
                 </div>
               </div>
+
               <p class="smp-legal-notice">
-                Aktivace výhod obvykle proběhne do 5 minut. Při výpadku sítě proběhne dodání nejpozději do 2 hodin od
-                nákupu. Pokud by k aktivaci nedošlo ani po nahlášení na podporu, máte nárok na kompenzaci či plný
-                refund. Prodejcem je společnost Tebex Limited (Merchant of Record). Nákupem udělujete výslovný souhlas
-                se započetím okamžitého plnění digitálního obsahu dle § 1837 písm. l) OZ a souhlasíte s <a href="#terms"
-                  onclick="showTab('terms')">Podmínkami služby</a>.
+                Aktivace výhod probíhá automaticky do 5 minut. Prodejcem je společnost Tebex Limited (Merchant of Record). Nákupem udělujete výslovný souhlas se započetím okamžitého plnění digitálního obsahu dle § 1837 písm. l) OZ.
               </p>
             </div>
           </div>
@@ -781,7 +947,7 @@
           <!-- SMP+ Management & Cancellation Card -->
           <div id="smp-manage-card" class="smp-manage-card">
             <div class="smp-manage-header">
-              <div class="smp-manage-title"><i class="fa-solid fa-user-gear"></i> Správa &amp; Zrušení SMP+</div>
+              <div class="smp-manage-title"><i class="fa-solid fa-user-gear"></i> Správa a zrušení SMP+</div>
             </div>
             <div class="smp-manage-body" id="smp-manage-content">
               <div class="smp-manage-loading">
@@ -796,12 +962,10 @@
             <div class="smp-modal-box">
               <div class="smp-modal-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
               <h3>Opravdu chceš zrušit SMP+?</h3>
-              <p id="smp-cancel-modal-desc">Zrušením předplatného okamžitě ztratíš všechny výhody SMP+ ve hře i na
-                Discordu.</p>
+              <p id="smp-cancel-modal-desc">Zrušením předplatného okamžitě ztratíš všechny výhody SMP+ ve hře i na Discordu.</p>
               <div class="smp-modal-actions">
                 <button type="button" class="btn-modal-back" onclick="closeCancelModal()">Ponechat členství</button>
-                <button type="button" class="btn-modal-danger" id="btn-confirm-cancel-smpplus"
-                  onclick="executeCancelSmpPlus()">
+                <button type="button" class="btn-modal-danger" id="btn-confirm-cancel-smpplus" onclick="executeCancelSmpPlus()">
                   <span id="cancel-btn-spinner" class="btn-spinner" style="display: none;"></span>
                   <span>Ano, zrušit SMP+</span>
                 </button>
@@ -812,67 +976,202 @@
       </div>
     </div>
 
-    <!-- Detailed Features List below -->
+    <!-- DETAILED COMPARISON & VALUE BREAKDOWN -->
     <div class="container smp-details-container">
-      <h2 class="smp-details-title">Detailní přehled všech výhod</h2>
-      <div class="smp-grid">
-        <!-- Benefit Card 1: 2x Larger Ender Chest -->
-        <div class="smp-card">
-          <div class="smp-card-icon">🎒</div>
-          <h3>2x větší Ender Truhla (54 slotů)</h3>
-          <p>Získáš <strong>dvojnásobnou kapacitu – všech 6 řádků (54 slotů)</strong> místo pouhých 27! Všechny tvé
-            cennosti bezpečně u sebe. Při vypršení se věci přesunou do tvého Trezoru v <code>/ah</code>.</p>
+      <div class="smp-section-header text-center">
+        <span class="smp-eyebrow">PŘEHLEDNÉ SROVNÁNÍ</span>
+        <h2 class="smp-details-title">Klasický hráč vs. <span>SMP+ Člen</span></h2>
+        <p class="smp-details-sub">Podívej se, jak přesně ti SMP+ zpříjemní každodenní hraní na serveru.</p>
+      </div>
+
+      <!-- Comparison Table Component -->
+      <div class="smp-compare-table-wrap">
+        <table class="smp-compare-table">
+          <thead>
+            <tr>
+              <th class="col-feature">Herní funkce</th>
+              <th class="col-free">Hráč bez ranku</th>
+              <th class="col-plus">SMP+ Člen <span>👑</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-box-archive"></i> Kapacita Ender Truhly</div>
+                <div class="feat-desc">Kapacita osobního inventáře s ochranou věcí</div>
+              </td>
+              <td class="col-free">27 slotů <span class="text-sub">(3 řady)</span></td>
+              <td class="col-plus"><strong>54 slotů</strong> <span class="tag-highlight">Plná dvojtruhla + Trezor v /ah</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-hourglass-half"></i> Čekání na teleport (/home, /rtp, /tpa)</div>
+                <div class="feat-desc">Doba čekání bez pohybu do provedení teleportu</div>
+              </td>
+              <td class="col-free">5 sekund</td>
+              <td class="col-plus"><strong>Pouhé 3 sekundy</strong> <span class="tag-highlight">Bleskový warp</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-skull-crossbones"></i> Záchranný návrat po smrti (/back)</div>
+                <div class="feat-desc">Teleportace zpět na místo, kde jsi naposledy zemřel</div>
+              </td>
+              <td class="col-free">S odpočtem <span class="text-sub">(delay 5s)</span></td>
+              <td class="col-plus"><strong>Okamžitý /back</strong> <span class="tag-highlight">Instantní bez čekání</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-house-chimney"></i> Počet uložených domovů (/sethome)</div>
+                <div class="feat-desc">Sloty pro základny, farmy a doly</div>
+              </td>
+              <td class="col-free">7 domovů</td>
+              <td class="col-plus"><strong>14 domovů</strong> <span class="tag-highlight">2x více místa</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-palette"></i> Výběr barvy nicku (/cc)</div>
+                <div class="feat-desc">Barevné odlišení tvého jména ve hře i chatu</div>
+              </td>
+              <td class="col-free">Pouze bílá</td>
+              <td class="col-plus"><strong>24 prémiových barev</strong> <span class="tag-highlight">Včetně chatu i tablistu</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-person-running"></i> Pohyb během odpočtu teleportu</div>
+                <div class="feat-desc">Volnost pohybu při čekání na přesun</div>
+              </td>
+              <td class="col-free">Pohyb zruší teleport</td>
+              <td class="col-plus"><strong>Volný pohyb</strong> <span class="text-sub">(pokud nikdo není blízko)</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-bed"></i> Barvy domovů a postelí v /homes</div>
+                <div class="feat-desc">Přizpůsobení ikonek v herním menu</div>
+              </td>
+              <td class="col-free">Pouze červená postel</td>
+              <td class="col-plus"><strong>Všech 16 barev postelí</strong></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-shop"></i> Nabídky na Tržnici (/shop)</div>
+                <div class="feat-desc">Kolik předmětů můžeš prodávat současně</div>
+              </td>
+              <td class="col-free">5 nabídek naráz</td>
+              <td class="col-plus"><strong>15 nabídek naráz</strong> <span class="tag-highlight">3x více</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-clipboard-list"></i> Poptávkové zakázky (/orders)</div>
+                <div class="feat-desc">Kolik zakázek na nákup můžeš vypsat</div>
+              </td>
+              <td class="col-free">1 zakázka</td>
+              <td class="col-plus"><strong>Až 4 zakázky současně</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Server Ranks & In-Game Formatting Showcase -->
+      <div class="smp-ranks-showcase">
+        <div class="smp-section-header text-center">
+          <span class="smp-eyebrow">PŘEHLEDNÝ FORMÁT HODNOSTÍ</span>
+          <h3 class="smp-details-title">Jak vypadají hodnosti a prefixy <span>ve hře</span></h3>
+          <p class="smp-details-sub">Na serveru nepoužíváme zastaralé hranaté závorky. Ranks mají čisté, moderní symboly a národní vlajku hráče.</p>
         </div>
-        <!-- Benefit Card 2: Name Color -->
-        <div class="smp-card">
-          <div class="smp-card-icon">🎨</div>
-          <h3>Barevné jméno ve hře (/cc)</h3>
-          <p>Příkazem <code>/cc</code> si odemkneš prémiovou paletu 24 barev pro svůj nick v chatu, tablistu i nad
-            postavou!</p>
+
+        <div class="ranks-grid">
+          <!-- Rank: Default Player -->
+          <div class="rank-card">
+            <div class="rank-card-header">
+              <span class="rank-card-name"><i class="fa-solid fa-user"></i> Hráč (Základní)</span>
+              <span class="rank-card-tag rank-tag--player">Zdarma pro všechny</span>
+            </div>
+            <div class="rank-card-preview">
+              <span class="mc-chat-flag">🇨🇿</span> <span class="rank-p-name">Hrac</span><span class="smp-chat-colon">:</span> <span class="smp-chat-text">Ahoj všem na serveru!</span>
+            </div>
+            <div class="rank-card-foot">Vlajka hráče, čisté bílé jméno bez rušivých prefixů.</div>
+          </div>
+
+          <!-- Rank: SMP+ -->
+          <div class="rank-card rank-card--smp">
+            <div class="rank-card-header">
+              <span class="rank-card-name"><i class="fa-solid fa-bolt text-blue"></i> SMP+ Člen</span>
+              <span class="rank-card-tag rank-tag--smp">1.99 € / měsíc</span>
+            </div>
+            <div class="rank-card-preview">
+              <span class="mc-chat-flag">🇨🇿</span> <span class="smp-preview-plus">+</span><span class="rank-p-name text-cyan">Hrac</span><span class="smp-chat-colon">:</span> <span class="smp-chat-text">Ahoj, mám aktivní SMP+!</span>
+            </div>
+            <div class="rank-card-foot">Modrý symbol <code>+</code> přímo před nickem a volba z 24 barev <code>/cc</code>.</div>
+          </div>
+
+          <!-- Rank: Media -->
+          <div class="rank-card rank-card--media">
+            <div class="rank-card-header">
+              <span class="rank-card-name"><i class="fa-solid fa-video text-magenta"></i> Media Rank</span>
+              <span class="rank-card-tag rank-tag--media">Ověřený tvůrce</span>
+            </div>
+            <div class="rank-card-preview">
+              <span class="mc-chat-flag">🇨🇿</span> <span class="media-prefix-cam">📹 </span><span class="rank-p-name">Tvurce</span><span class="smp-chat-colon">:</span> <span class="smp-chat-text">Zrovna streamuju na YouTube!</span>
+            </div>
+            <div class="rank-card-foot">Ikonická fialová kamera <code>📹</code> před jménem a Replay Mod.</div>
+          </div>
+
+          <!-- Rank: Media+ -->
+          <div class="rank-card rank-card--mediaplus">
+            <div class="rank-card-header">
+              <span class="rank-card-name"><i class="fa-solid fa-star text-gold"></i> Media+ (SMP+ + Media)</span>
+              <span class="rank-card-tag rank-tag--gold">Kombinovaný rank</span>
+            </div>
+            <div class="rank-card-preview">
+              <span class="mc-chat-flag">🇨🇿</span> <span class="media-prefix-cam">📹</span><span class="smp-preview-plus">+</span><span class="rank-p-name text-gold">Tvurce</span><span class="smp-chat-colon">:</span> <span class="smp-chat-text">Dnes točíme další velký projekt!</span>
+            </div>
+            <div class="rank-card-foot">Spojený prefix <code>📹+</code> a kompletní balík výhod obou ranků.</div>
+          </div>
+
+          <!-- Rank: Moderátor / Admin -->
+          <div class="rank-card">
+            <div class="rank-card-header">
+              <span class="rank-card-name"><i class="fa-solid fa-shield-halved text-green"></i> Moderátor a Admin</span>
+              <span class="rank-card-tag rank-tag--staff">Vedení serveru</span>
+            </div>
+            <div class="rank-card-preview">
+              <span class="mc-chat-flag">🇨🇿</span> <span class="staff-prefix-mod">🛡 </span><span class="rank-p-name">Moderator</span><span class="smp-chat-colon">:</span> <span class="smp-chat-text">Hrajte prosím podle pravidel!</span>
+            </div>
+            <div class="rank-card-foot">Štít <code>🛡</code> (Mod) nebo ozubené kolo <code>⚙</code> (Admin) v barvě role.</div>
+          </div>
+
+          <!-- Rank: Majitel -->
+          <div class="rank-card">
+            <div class="rank-card-header">
+              <span class="rank-card-name"><i class="fa-solid fa-crown text-gold"></i> Majitel</span>
+              <span class="rank-card-tag rank-tag--gold">Správce serveru</span>
+            </div>
+            <div class="rank-card-preview">
+              <span class="mc-chat-flag">🇨🇿</span> <span class="staff-prefix-owner">👑 </span><span class="rank-p-name">mychalVidea</span><span class="smp-chat-colon">:</span> <span class="smp-chat-text">senk ju</span>
+            </div>
+            <div class="rank-card-foot">Zlatá koruna <code>👑</code> přímo v chatu, tablistu i nad postavou.</div>
+          </div>
         </div>
-        <!-- Benefit Card 3: Faster Teleportation & /back -->
-        <div class="smp-card">
-          <div class="smp-card-icon">⚡</div>
-          <h3>Rychlé teleporty &amp; /back</h3>
-          <p>Čekací doba na warpy, spawn a TPA je zkrácena na pouhé <strong>3 sekundy</strong>. Příkaz
-            <code>/back</code> tě navíc kdykoliv vrátí zpět na místo smrti!
-          </p>
+      </div>
+
+      <!-- 3 Core Guarantees -->
+      <div class="smp-guarantee-grid">
+        <div class="smp-guar-card">
+          <div class="smp-guar-icon"><i class="fa-solid fa-vault"></i></div>
+          <h3>Trezor pro tvé itemy</h3>
+          <p>Když ti členství někdy vyprší, žádné itemy z druhé půlky Ender truhly nezmizí. Automaticky se přesunou do tvého osobního Trezoru v <code>/ah</code>, odkud si je můžeš kdykoliv bezpečně vyzvednout.</p>
         </div>
-        <!-- Benefit Card 4: 14 Home Slots -->
-        <div class="smp-card">
-          <div class="smp-card-icon">🏠</div>
-          <h3>Až 14 Domovů (/sethome)</h3>
-          <p>Místo běžných 7 domovů máš k dispozici rovnou <strong>14 domovů</strong>. Ulož si všechny základny, farmy a
-            doly bez omezení.</p>
+
+        <div class="smp-guar-card">
+          <div class="smp-guar-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+          <h3>100% Čistá a férová hra</h3>
+          <p>Žádný Pay-to-Win. Žádný fly mód, žádná nesmrtelnost ani zbraně s cheatovanými enchanty. Všechny výhody slouží čistě pro pohodlí, časovou úsporu a estetiku.</p>
         </div>
-        <!-- Benefit Card 5: Custom Home & Bed Color -->
-        <div class="smp-card">
-          <div class="smp-card-icon">🛏️</div>
-          <h3>Změna barvy domova</h3>
-          <p>V menu <code>/homes</code> si můžeš pro každý svůj domov nastavit libovolnou barvu postele a ikonky pro
-            dokonalý přehled.</p>
-        </div>
-        <!-- Benefit Card 6: 4 Personal Warps -->
-        <div class="smp-card">
-          <div class="smp-card-icon">📍</div>
-          <h3>4 Osobní Warpy</h3>
-          <p>Vytvoř si až <strong>4 vlastní veřejné warpy</strong> přes <code>/setwarp</code>. Ostatní hráči na ně můžou
-            kdykoliv cestovat.</p>
-        </div>
-        <!-- Benefit Card 7: Market & Orders Boost -->
-        <div class="smp-card">
-          <div class="smp-card-icon">🛒</div>
-          <h3>Tržnice &amp; Zakázky Boost</h3>
-          <p>V <code>/shop</code> můžeš prodávat až <strong>15 položek</strong> naráz a v <code>/orders</code>
-            vystavovat až <strong>4 zakázky</strong> současně.</p>
-        </div>
-        <!-- Benefit Card 8: Free Movement During Teleport -->
-        <div class="smp-card">
-          <div class="smp-card-icon">🏃</div>
-          <h3>Volný pohyb při teleportu</h3>
-          <p>Pokud v tvém okolí nikdo nehraje, můžeš se při čekání na <code>/home</code>, <code>/rtp</code> a
-            <code>/tpa</code> volně pohybovat a teleport se nezruší!
-          </p>
+
+        <div class="smp-guar-card">
+          <div class="smp-guar-icon"><i class="fa-solid fa-heart"></i></div>
+          <h3>Podpora komunitního světa</h3>
+          <p>Předplatné 1.99 € jde přímo na financování herního serveru, stabilní hardware, ochranu proti DDoS útokům a kontinuální vývoj unikátních pluginů pro všechny hráče.</p>
         </div>
       </div>
     </div>
@@ -880,186 +1179,254 @@
 
   <!-- MEDIA -->
   <section id="tab-media" class="tab-section media-section-ambient">
-    <!-- Kompaktní transparentní hlavička media -->
-    <div class="media-header text-center">
-      <h1 class="media-hero-title">Žádost o <span>Media</span> Rank</h1>
-      <p class="media-hero-subtitle">Tvoříš obsah z našeho serveru? Získej speciální výhody, propagační podporu a
-        exkluzivní roli ve hře i na Discordu.</p>
+    <div class="container media-top-container">
+      <div class="media-top-grid">
+        
+        <!-- Left Column: Overview, Criteria & Highlights -->
+        <div class="media-intro-col">
+          <div class="media-badge-pill"><i class="fa-solid fa-clapperboard"></i> Partnerský Creator Program</div>
+          <h1 class="media-hero-title">Žádost o <span>Media</span> Rank</h1>
+          <p class="media-hero-subtitle">
+            Tvoříš videa nebo streamuješ z Minecraftu? Získej oficiální status na <strong>MYCHAL SMP</strong>, prestižní fialový odznak <code>📹</code>, propagační podporu a prémiové nástroje pro ničím nerušenou tvorbu.
+          </p>
+
+          <!-- Compact Criteria Pills -->
+          <div class="media-criteria-box">
+            <span class="media-criteria-label"><i class="fa-solid fa-clipboard-check text-magenta"></i> Podmínka: Splň alespoň 1 platformu</span>
+            <div class="media-criteria-chips">
+              <div class="media-crit-chip media-crit-chip--yt">
+                <i class="fa-brands fa-youtube"></i> <strong>YouTube:</strong> 100+ subs
+              </div>
+              <div class="media-crit-chip media-crit-chip--tt">
+                <i class="fa-brands fa-tiktok"></i> <strong>TikTok:</strong> 200+ sledujících
+              </div>
+              <div class="media-crit-chip media-crit-chip--twitch">
+                <i class="fa-brands fa-twitch"></i> <strong>Twitch:</strong> 50+ sledujících
+              </div>
+              <div class="media-crit-chip media-crit-chip--kick">
+                <i class="fa-solid fa-bolt"></i> <strong>Kick:</strong> 50+ sledujících
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Perks Checklist -->
+          <div class="media-perks-checklist">
+            <div class="media-perk-item">
+              <i class="fa-solid fa-video text-magenta"></i>
+              <span><strong>Replay Mod povolen:</strong> Oficiální výjimka z anticheatu pro filmové záběry</span>
+            </div>
+            <div class="media-perk-item">
+              <i class="fa-solid fa-mask text-magenta"></i>
+              <span><strong>Vlastní /nick:</strong> Ochrana identity proti stream sniperům a stalkingu</span>
+            </div>
+            <div class="media-perk-item">
+              <i class="fa-solid fa-eye text-magenta"></i>
+              <span><strong>15 chunků dohled:</strong> Rozšířený render distance pro krásné scenérie</span>
+            </div>
+            <div class="media-perk-item">
+              <i class="fa-solid fa-store text-magenta"></i>
+              <span><strong>15 slotů v /shop:</strong> Rychlý obchod a volný pohyb při teleportu</span>
+            </div>
+          </div>
+
+          <!-- Promotion Rule Callout -->
+          <div class="media-rule-note">
+            <i class="fa-solid fa-circle-info text-magenta"></i>
+            <span>V popisku videa stačí uvést IP <code>mychalsmp.xyz</code> a hashtag <strong>#mychalsmp</strong>.</span>
+          </div>
+        </div>
+
+        <!-- Right Column: Direct Application Panel (Zero Scrolling) -->
+        <div class="media-action-col">
+          <div class="media-card-panel">
+            <!-- 1. Not Logged In Box -->
+            <div id="media-login-box" class="media-login-box">
+              <div class="media-login-icon"><i class="fa-brands fa-discord"></i></div>
+              <h2>Nutné přihlášení přes Discord</h2>
+              <p>Pro podání žádosti se nejprve musíš přihlásit přes svůj Discord účet, abychom věděli, komu roli udělit a propojili tvůj herní účet s komunitním Discordem.</p>
+              <button onclick="loginViaDiscord()" class="btn-discord-login">
+                <i class="fa-brands fa-discord"></i>
+                Přihlásit se přes Discord
+              </button>
+            </div>
+
+            <!-- 2. Status Box -->
+            <div id="media-status-box" style="display: none;">
+              <div class="spinner-circle"></div>
+              <p>Načítám stav žádosti...</p>
+            </div>
+
+            <!-- 3. Form Box -->
+            <form id="media-apply-form" style="display: none;" onsubmit="submitMediaApplication(event)">
+              <div class="media-form-header">
+                <h3><i class="fa-solid fa-video" style="color:var(--blue); margin-right:8px;"></i> Žádost o Media Rank</h3>
+                <p>Zadej svůj herní nick a vyplň odkazy na tvůj kanál či profil. Systém provede automatické ověření parametrů.</p>
+              </div>
+
+              <!-- Player Nick with Live Avatar Preview -->
+              <div class="media-nick-field-box">
+                <label for="media-mc-nick" class="media-input-label">
+                  <span><i class="fa-solid fa-user"></i> Tvůj Minecraft Nick</span>
+                  <span id="media-nick-greeting" class="media-nick-greeting"></span>
+                </label>
+                <div class="media-nick-input-wrap">
+                  <div class="media-avatar-container" id="media-avatar-container">
+                    <img id="media-nick-avatar" src="https://mc-heads.net/avatar/MHF_Steve/48" alt="Minecraft skin" class="media-nick-avatar-img">
+                  </div>
+                  <input type="text" id="media-mc-nick" class="media-input media-input--nick"
+                    placeholder="Zadej svůj přesný nick ve hře..." required autocomplete="off"
+                    oninput="handleMediaNickInput(this.value)">
+                </div>
+              </div>
+
+              <!-- Media Live Prefix Preview Box -->
+              <div class="media-live-preview-box">
+                <div class="media-preview-head-row">
+                  <div class="media-preview-label">
+                    <i class="fa-solid fa-eye"></i> Živý náhled tvého Media prefixu ve hře:
+                  </div>
+                  <div class="media-preview-toggle-wrap">
+                    <button type="button" class="media-preview-toggle-btn active" id="media-prev-single-btn" onclick="toggleMediaPreviewRank('media')">Media (📹)</button>
+                    <button type="button" class="media-preview-toggle-btn" id="media-prev-plus-btn" onclick="toggleMediaPreviewRank('media_plus')">Media+ (📹+)</button>
+                  </div>
+                </div>
+                <div class="smp-chat-preview media-chat-preview">
+                  <img id="media-preview-chat-head" src="https://mc-heads.net/avatar/MHF_Steve/28" class="mc-avatar-head" alt="Skin Head">
+                  <span class="mc-chat-flag">🇨🇿</span>
+                  <span id="media-preview-prefix-badge" class="media-prefix-cam">📹 </span><span class="smp-preview-name" id="media-preview-chat-nick">TvujNick</span><span class="smp-chat-colon">:</span>
+                  <span class="smp-chat-text" id="media-preview-chat-msg">Ahoj, nové video z MYCHAL SMP je online!</span>
+                </div>
+              </div>
+
+              <!-- Socials Grid -->
+              <div class="media-form-grid">
+                <div class="media-form-group">
+                  <label for="media-yt"><i class="fa-brands fa-youtube" style="color:#ff0000;"></i> YouTube odkaz / @kanal</label>
+                  <input type="text" id="media-yt" class="media-input" placeholder="https://youtube.com/@TvujKanal">
+                </div>
+
+                <div class="media-kick"><label for="media-kick"><i class="fa-solid fa-bolt" style="color:#53fc18;"></i> Kick odkaz</label>
+                  <input type="text" id="media-kick" class="media-input" placeholder="https://kick.com/TvujKanal">
+                </div>
+
+                <div class="media-form-group">
+                  <label for="media-tt"><i class="fa-brands fa-tiktok" style="color:#00f2fe;"></i> TikTok odkaz / @jmeno</label>
+                  <input type="text" id="media-tt" class="media-input" placeholder="https://tiktok.com/@TvujProfil">
+                </div>
+
+                <div class="media-form-group">
+                  <label for="media-twitch"><i class="fa-brands fa-twitch" style="color:#a970ff;"></i> Twitch odkaz</label>
+                  <input type="text" id="media-twitch" class="media-input" placeholder="https://twitch.tv/TvujKanal">
+                </div>
+              </div>
+
+              <div class="media-checkbox-stack">
+                <label for="media-age-confirm" class="media-checkbox-label">
+                  <input type="checkbox" id="media-age-confirm" />
+                  <span>Potvrzuji, že je mi <strong>více než 13 let</strong></span>
+                </label>
+
+                <label for="media-terms-confirm" class="media-checkbox-label">
+                  <input type="checkbox" id="media-terms-confirm" required />
+                  <span>Souhlasím s <a href="#rules" onclick="showTab('rules')">pravidly serveru</a> a beru na vědomí <a
+                      href="#privacy" onclick="showTab('privacy')">ochranu údajů</a></span>
+                </label>
+              </div>
+
+              <button type="submit" id="btn-media-submit" class="btn-media-verify">
+                <i class="fa-solid fa-paper-plane" style="margin-right:8px;"></i> Odeslat k ověření a schválení
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <div class="container">
-      <!-- Výhody Media -->
-      <h2 class="media-benefits-title">Výhody <span>Media</span> Ranku</h2>
+    <!-- Detailed Perks Section below -->
+    <div class="container media-benefits-container">
+      <div class="media-section-head text-center">
+        <span class="media-eyebrow">CO VŠECHNO ZÍSKÁŠ</span>
+        <h2 class="media-section-title">Detailní přehled výhod pro <span>Media</span> rank</h2>
+        <p class="media-section-subtitle">Exkluzivní herní nástroje navržené přímo pro pohodlné a kvalitní natáčení.</p>
+      </div>
+
       <div class="media-benefits-grid">
-        <div class="media-benefit-card">
-          <div class="media-benefit-icon">🎭</div>
-          <h3>Custom Nickname (/nick)</h3>
-          <p>Změň si nick na cokoliv chceš pomocí <code>/nick</code>. Ideální na natáčení videí a streamování bez
-            stalkerů.</p>
-        </div>
-        <div class="media-benefit-card">
-          <div class="media-benefit-icon">👀</div>
-          <h3>Zvýšená dohlednost</h3>
-          <p>Vidíš dál! Render distance máš zvýšený na <strong>15 chunků</strong> – perfektní pro čisté a imerzivní
-            záběry.</p>
-        </div>
-        <div class="media-benefit-card">
-          <div class="media-benefit-icon">🛒</div>
-          <h3>Rozšířená Tržnice</h3>
-          <p>Do <code>/shop</code> dáš až <strong>15 nabídek</strong> naráz pro pohodlné obchodování.</p>
-        </div>
-        <div class="media-benefit-card">
-          <div class="media-benefit-icon">🎬</div>
-          <h3>Speciální Prefix</h3>
-          <p>Získáš výrazný prefix a ikonu <code>[MEDIA]</code> před tvým jménem v tablistu i chatu.</p>
-        </div>
-        <div class="media-benefit-card">
-          <div class="media-benefit-icon">🏃</div>
-          <h3>Volný pohyb při teleportu</h3>
-          <p>Když blízko tebe nikdo nehraje, můžeš se při čekání na <code>/home</code>, <code>/rtp</code> a
-            <code>/tpa</code> volně pohybovat bez zrušení teleportu!
-          </p>
-        </div>
         <div class="media-benefit-card media-benefit-card--replay">
-          <div class="media-benefit-icon">🎥</div>
-          <h3>Povolený Replay Mod</h3>
-          <p>Exkluzivní povolení pro natáčení cinematic záběrů, časosběrů a videí pomocí <strong>Replay Modu</strong>
-            (pro ostatní hráče je zakázán a blokován anticheatem).</p>
+          <div class="media-benefit-badge">Exkluzivní</div>
+          <div class="media-benefit-icon-box">
+            <i class="fa-solid fa-video"></i>
+          </div>
+          <h3>Oficiálně povolený Replay Mod</h3>
+          <p>Exkluzivní výjimka z anticheatu! Můžeš bezpečně natáčet dechberoucí filmové záběry, průlety a časosběry (pro běžné hráče je Replay Mod přísně blokován).</p>
         </div>
+
+        <div class="media-benefit-card">
+          <div class="media-benefit-badge">Ochrana</div>
+          <div class="media-benefit-icon-box">
+            <i class="fa-solid fa-mask"></i>
+          </div>
+          <h3>Vlastní Nickname (/nick)</h3>
+          <p>Změň si herní přezdívku na cokoliv chceš. Maximální ochrana proti stream sniperům, cílenému stalkingu a nechtěným rušitelům během natáčení.</p>
+        </div>
+
+        <div class="media-benefit-card">
+          <div class="media-benefit-badge">Dohled</div>
+          <div class="media-benefit-icon-box">
+            <i class="fa-solid fa-binoculars"></i>
+          </div>
+          <h3>Zvýšený Render Distance (15 chunků)</h3>
+          <p>Vidíš podstatně dále než ostatní hráči. Server ti renderuje 15 chunků, což zaručuje krásné a dalekonosné scenérie pro tvé záběry.</p>
+        </div>
+
+        <div class="media-benefit-card">
+          <div class="media-benefit-badge">Prestiž</div>
+          <div class="media-benefit-icon-box">
+            <i class="fa-solid fa-crown"></i>
+          </div>
+          <h3>Exkluzivní 📹 Media Prefix</h3>
+          <p>Získáš nepřehlédnutelnou fialovou kameru <code>📹</code> před jménem (<code>📹 Nick</code>) v herním chatu, v tablistu i nad postavou. Žádné hranaté závorky – pouze čistý odznak.</p>
+        </div>
+
+        <div class="media-benefit-card">
+          <div class="media-benefit-badge">Ekonomika</div>
+          <div class="media-benefit-icon-box">
+            <i class="fa-solid fa-store"></i>
+          </div>
+          <h3>Rozšířená Tržnice (/shop)</h3>
+          <p>Do <code>/shop</code> můžeš vložit až <strong>15 současných nabídek</strong> naráz pro rychlý a bezproblémový obchod se svými diváky i hráči.</p>
+        </div>
+
+        <div class="media-benefit-card">
+          <div class="media-benefit-badge">Komfort</div>
+          <div class="media-benefit-icon-box">
+            <i class="fa-solid fa-person-running"></i>
+          </div>
+          <h3>Volný pohyb při teleportaci</h3>
+          <p>Když blízko tebe nikdo nehraje, můžeš se při 5s odpočtech na <code>/home</code>, <code>/rtp</code> a <code>/tpa</code> volně hýbat bez zrušení teleportu!</p>
+        </div>
+
         <div class="media-benefit-card media-benefit-card--plus">
-          <div class="media-benefit-icon">⭐</div>
-          <h3>Vylepšení na Media+</h3>
-          <p>Dokoupením <strong>SMP+</strong> k roli Media získáš exkluzivní rank <strong>Media+</strong>, který ti
-            odemkne <strong>všechny SMP+ výhody</strong> (včetně 2x větší Ender Truhly s 54 sloty, změny barvy nicku
-            <code>/cc</code>, 14 domovů, změny barvy postele, 4 warpů a rychlého <code>/back</code>).
-          </p>
-        </div>
-      </div>
-
-      <div class="media-section-divider"></div>
-
-      <!-- Podmínky pro získání -->
-      <h2 class="media-req-section-title">Podmínky pro <span>získání</span></h2>
-      <div class="media-req-grid">
-        <div class="media-req-card">
-          <div class="media-req-icon">🎥</div>
-          <h3>YouTuber</h3>
-          <p>Odběratelé na kanále</p>
-          <span class="media-req-value">100+</span>
-        </div>
-        <div class="media-req-card">
-          <div class="media-req-icon">🟢</div>
-          <h3>Kick Streamer</h3>
-          <p>Sledující na kanále</p>
-          <span class="media-req-value">50+</span>
-        </div>
-        <div class="media-req-card">
-          <div class="media-req-icon">📱</div>
-          <h3>TikTok Creator</h3>
-          <p>Sledující na profilu</p>
-          <span class="media-req-value">200+</span>
-        </div>
-        <div class="media-req-card">
-          <div class="media-req-icon">👾</div>
-          <h3>Twitch Streamer</h3>
-          <p>Sledující na kanále</p>
-          <span class="media-req-value">50+</span>
-        </div>
-      </div>
-
-      <div class="media-section-divider"></div>
-
-      <!-- Main action panel -->
-      <h2 class="media-apply-section-title">Odeslat <span>Žádost</span></h2>
-      <div class="media-card-panel">
-        <!-- 1. Not Logged In Box -->
-        <div id="media-login-box" class="media-login-box">
-          <h2>🔐 Nutné přihlášení</h2>
-          <p>Pro podání žádosti se nejprve musíš přihlásit přes svůj Discord účet, abychom věděli, komu rank udělit.</p>
-          <button onclick="loginViaDiscord()" class="btn-discord-login">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px;">
-              <path
-                d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.873-.894.077.077 0 0 1-.008-.128c.126-.093.252-.19.372-.287a.075.075 0 0 1 .077-.011 13.983 13.983 0 0 0 10.194 0 .075.075 0 0 1 .078.01c.12.098.246.195.373.289a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.156-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.156 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.156-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.156 2.418z" />
-            </svg>
-            Přihlásit se přes Discord
-          </button>
-        </div>
-
-        <!-- 2. Status Box -->
-        <div id="media-status-box" style="display: none;">
-          <div class="spinner-circle"></div>
-          <p>Načítám stav žádosti...</p>
-        </div>
-
-        <!-- 3. Form Box -->
-        <form id="media-apply-form" style="display: none;" onsubmit="submitMediaApplication(event)">
-          <h2 style="font-size: 1.8rem; color: #fff; margin-bottom: 12px; text-align: center;">🎬 Podat žádost</h2>
-          <p style="color: var(--text-muted); margin-bottom: 30px; text-align: center; font-size: 0.95rem;">
-            Vyplň svůj Minecraft nick a aspoň jeden kanál. Náš systém automaticky zkontroluje počet
-            odběratelů/sledujících.
-          </p>
-
-          <div class="media-form-group" style="margin-bottom: 24px;">
-            <label for="media-mc-nick"><i class="fa-solid fa-user" style="color:#2ecc71;"></i> Tvůj Minecraft
-              Nick</label>
-            <input type="text" id="media-mc-nick" class="media-input" placeholder="Zadej svůj přesný nick ve hře..."
-              required>
+          <div class="media-benefit-badge">SMP+ Synergy</div>
+          <div class="media-benefit-icon-box">
+            <i class="fa-solid fa-star"></i>
           </div>
-
-          <div class="media-form-grid">
-            <div class="media-form-group">
-              <label for="media-yt"><i class="fa-brands fa-youtube" style="color:#ff0000;"></i> YouTube odkaz /
-                @kanal</label>
-              <input type="text" id="media-yt" class="media-input" placeholder="https://youtube.com/@TvujKanal">
-            </div>
-
-            <div class="media-form-group">
-              <label for="media-kick"><i class="fa-brands fa-kickstarter" style="color:#53fc18;"></i> Kick odkaz</label>
-              <input type="text" id="media-kick" class="media-input" placeholder="https://kick.com/TvujKanal">
-            </div>
-
-            <div class="media-form-group">
-              <label for="media-tt"><i class="fa-brands fa-tiktok" style="color:#fff;"></i> TikTok odkaz /
-                @jmeno</label>
-              <input type="text" id="media-tt" class="media-input" placeholder="https://tiktok.com/@TvujProfil">
-            </div>
-
-            <div class="media-form-group">
-              <label for="media-twitch"><i class="fa-brands fa-twitch" style="color:#9146ff;"></i> Twitch odkaz</label>
-              <input type="text" id="media-twitch" class="media-input" placeholder="https://twitch.tv/TvujKanal">
-            </div>
-          </div>
-
-          <div class="media-form-group media-checkbox-group">
-            <label for="media-age-confirm" class="media-checkbox-label">
-              <input type="checkbox" id="media-age-confirm" /> Je mi více než 10 let
-            </label>
-          </div>
-
-          <div class="media-form-group media-checkbox-group" style="margin-top: -6px;">
-            <label for="media-terms-confirm" class="media-checkbox-label">
-              <input type="checkbox" id="media-terms-confirm" required /> Souhlasím s <a href="#terms"
-                onclick="showTab('terms')" style="color:var(--accent-primary); text-decoration:underline;">pravidly
-                serveru</a> a beru na vědomí <a href="#privacy" onclick="showTab('privacy')"
-                style="color:var(--accent-primary); text-decoration:underline;">ochranu údajů</a>.
-            </label>
-          </div>
-
-          <button type="submit" id="btn-media-submit" class="btn-media-verify">Odeslat k ověření a schválení</button>
-        </form>
+          <h3>Synergie s SMP+ (Hodnost Media+)</h3>
+          <p>Dokoupením <strong>SMP+</strong> k roli Media se tvůj prefix automaticky spojí do unikátní kombinace <code>📹+Nick</code> a odemkne se ti kompletní balík výhod obou členství.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- BUGS -->
   <section id="tab-bugs" class="tab-section media-section-ambient">
-    <div class="media-header text-center">
+    <div class="bug-header text-center">
       <div class="bug-badge-pill"><i class="fa-solid fa-wrench"></i> Nahlášení problému</div>
-      <h1 class="media-hero-title">Našel jsi na serveru <span>chybu</span>?</h1>
-      <p class="media-hero-subtitle">Dej nám vědět, co přesně nefunguje. Každé potvrzené hlášení odměňujeme <strong>dia blocky podle závažnosti</strong> a u kritických chyb i <strong>netherite ingoty</strong> přímo ve hře!</p>
+      <h1 class="bug-hero-title">Našel jsi na serveru <span>chybu</span>?</h1>
+      <p class="bug-hero-subtitle">Dej nám vědět, co přesně nefunguje. Každé ověřené nahlášení odměňujeme hodnotnými herními předměty – od <strong>diamantových bloků</strong> podle závažnosti až po vzácné <strong>Netherite bloky</strong> u kritických chyb a exploitů.</p>
       <div class="bug-reward-pill">
         <i class="fa-solid fa-gem"></i>
-        <span>Odměna: <strong>Dia blocky</strong> dle závažnosti &amp; <strong>Netherite ingoty</strong> za kritické chyby!</span>
+        <span>Herní odměna: <strong>Diamantové bloky</strong> a <strong>Netherite</strong> podle závažnosti!</span>
       </div>
     </div>
 
@@ -1074,7 +1441,7 @@
               <i class="fa-solid fa-gamepad"></i> Herní bug
             </button>
             <button type="button" class="bug-cat-chip" data-cat="economy" onclick="selectBugCategory('economy')">
-              <i class="fa-solid fa-coins"></i> Ekonomika &amp; Shop
+              <i class="fa-solid fa-coins"></i> Ekonomika a Shop
             </button>
             <button type="button" class="bug-cat-chip" data-cat="web" onclick="selectBugCategory('web')">
               <i class="fa-solid fa-globe"></i> Web / Discord
@@ -1163,7 +1530,7 @@
 
             <div class="ticket-reward-banner">
               <i class="fa-solid fa-gem"></i>
-              <span>Odměna v podobě <strong>dia blocků</strong> (a u vážných chyb i <strong>netherite ingotů</strong>) ti bude předána ve hře po ověření adminem!</span>
+              <span>Odměna v podobě <strong>diamantových bloků</strong> (u kritických chyb i <strong>Netherite bloků</strong>) ti bude předána přímo ve hře po ověření adminem!</span>
             </div>
 
             <div class="ticket-user-preview">
@@ -1171,7 +1538,7 @@
                 class="ticket-user-avatar-img">
               <div class="ticket-user-text">
                 <strong id="ticket-user-name">Player</strong>
-                <span>Díky za pomoc serveru! Po ověření chybky tě ve hře čekají <strong>dia blocky / netherite</strong> podle závažnosti.</span>
+                <span>Díky za pomoc serveru! Po ověření chybky tě ve hře čeká herní odměna podle závažnosti.</span>
               </div>
             </div>
 
@@ -1412,7 +1779,7 @@
           <div class="legal-sidebar-sticky">
             <div class="legal-badge-header">
               <span class="legal-status-dot"></span>
-              <span>DOKUMENTACE &amp; PRIVACY</span>
+              <span>DOKUMENTACE A OCHRANA SOUKROMÍ</span>
             </div>
 
             <h1 class="legal-sidebar-title">Zásady ochrany osobních údajů</h1>
@@ -1439,13 +1806,13 @@
                     vaše údaje</a></li>
                 <li><a href="#privacy-sec-2" class="legal-toc-link"
                     onclick="smoothScrollToLegal('privacy-sec-2', event)"><span class="toc-num">02</span> Zpracovávané
-                    údaje &amp; důvody</a></li>
+                    údaje a důvody</a></li>
                 <li><a href="#privacy-sec-3" class="legal-toc-link"
                     onclick="smoothScrollToLegal('privacy-sec-3', event)"><span class="toc-num">03</span> Doba uchování
-                    &amp; partneři</a></li>
+                    a partneři</a></li>
                 <li><a href="#privacy-sec-4" class="legal-toc-link"
                     onclick="smoothScrollToLegal('privacy-sec-4', event)"><span class="toc-num">04</span> Práva dle GDPR
-                    &amp; ÚOOÚ</a></li>
+                    a ÚOOÚ</a></li>
                 <li><a href="#privacy-sec-5" class="legal-toc-link"
                     onclick="smoothScrollToLegal('privacy-sec-5', event)"><span class="toc-num">05</span> Ochrana
                     mladších hráčů</a></li>
@@ -1460,7 +1827,7 @@
                   Pixel.</li>
                 <li><i class="fa-solid fa-check"></i> <strong>Hashovaná hesla:</strong> Hesla nelze z databáze přečíst
                   (Argon2 / SHA-256).</li>
-                <li><i class="fa-solid fa-check"></i> <strong>Sociální sítě &amp; API:</strong> Transparentní kontrola
+                <li><i class="fa-solid fa-check"></i> <strong>Sociální sítě a API:</strong> Transparentní kontrola
                   kanálů u Media ranku.</li>
                 <li><i class="fa-solid fa-check"></i> <strong>Platby chrání Tebex:</strong> K platebním kartám nemáme
                   přístup.</li>
@@ -1495,7 +1862,7 @@
                 <span class="legal-detail-value">MYCHALSMP (mychalsmp.xyz)</span>
               </div>
               <div class="legal-detail-row">
-                <span class="legal-detail-label">Správce &amp; provozovatel</span>
+                <span class="legal-detail-label">Správce a provozovatel</span>
                 <span class="legal-detail-value">mychalVidea (majitel projektu a výhradní správce dat)</span>
               </div>
               <div class="legal-detail-row legal-detail-row--full">
@@ -1503,7 +1870,7 @@
                 <span class="legal-detail-value">Lokální vyhrazené stanice majitele; přístup má výhradně majitel</span>
               </div>
               <div class="legal-detail-row">
-                <span class="legal-detail-label">Oficiální kontakt &amp; DSA</span>
+                <span class="legal-detail-label">Oficiální kontakt a DSA</span>
                 <span class="legal-detail-value"><a href="mailto:admin@mychalsmp.xyz"
                     class="legal-link">admin@mychalsmp.xyz</a> / Discord ticket</span>
               </div>
@@ -1594,7 +1961,7 @@
                 seznamu členů kanálu pro příkaz <code>/cleniyt</code> a herní výhody.
               </li>
               <li>
-                <strong>Webové Push notifikace (OneSignal &amp; Web Push):</strong>
+                <strong>Webové Push notifikace (OneSignal a Web Push):</strong>
                 Pokud v prohlížeči dobrovolně potvrdíte příjem oznámení, ukládáme technický identifikátor zařízení
                 (OneSignal Subscription ID nebo Web Push endpoint, šifrovací klíče p256dh a auth), název zařízení a čas
                 poslední aktivity. Údaje zpracováváme na základě vašeho souhlasu (čl. 6 odst. 1 písm. a) GDPR) výhradně
@@ -1622,9 +1989,8 @@
                 výhod ve hře.
               </li>
               <li>
-                <strong>Anticheat telemetrie a férová hra:</strong>
-                Ochranné pluginy (SMPAC, GrimAC) v reálném čase analyzují pohybové vektory a síťové pakety postavy za
-                účelem detekce neférových výhod a hack klientů.
+                <strong>Zajištění férové hry a ochrana serveru:</strong>
+                Automatizované bezpečnostní systémy v reálném čase monitorují herní aktivitu za účelem detekce neférových výhod a ochrany integrity herního prostředí.
               </li>
               <li>
                 <strong>Hlášení chyb, žádosti o unban a nápady:</strong>
@@ -1643,8 +2009,8 @@
           <!-- Article 3 -->
           <article id="privacy-sec-3" class="legal-article">
             <div class="legal-article-marker">
-              <span class="legal-marker-tag">03 · UCHOVÁVÁNÍ &amp; PŘEDÁVÁNÍ</span>
-              <span class="legal-marker-ref">Čl. 13 odst. 2 &amp; Kapitola V GDPR</span>
+              <span class="legal-marker-tag">03 · UCHOVÁVÁNÍ A PŘEDÁVÁNÍ</span>
+              <span class="legal-marker-ref">Čl. 13 odst. 2 a Kapitola V GDPR</span>
             </div>
             <h2 class="legal-article-title">Doba uchovávání dat a prověření partneři</h2>
 
@@ -1682,7 +2048,7 @@
                 asistence). Certifikováno v rámci EU-U.S. Data Privacy Framework.</li>
               <li><strong>OneSignal Inc. (USA):</strong> Technická infrastruktura pro bezpečné doručování webových push
                 notifikací (EU-U.S. Data Privacy Framework).</li>
-              <li><strong>ip-api.com &amp; ipwho.is:</strong> Dotazování bezpečnostních GeoIP a AntiVPN rozhraní pro
+              <li><strong>ip-api.com a ipwho.is:</strong> Dotazování bezpečnostních GeoIP a AntiVPN rozhraní pro
                 detekci nebezpečných proxy sítí, hostingových datacenter a blokování VPN z důvodu obrany před útoky.
               </li>
               <li><strong>Oracle Corporation (Oracle Cloud Infrastructure – EU, Frankfurt):</strong> Poskytovatel
@@ -1769,7 +2135,7 @@
           <div class="legal-sidebar-sticky">
             <div class="legal-badge-header">
               <span class="legal-status-dot"></span>
-              <span>DOKUMENTACE &amp; PODMÍNKY</span>
+              <span>DOKUMENTACE A PODMÍNKY</span>
             </div>
 
             <h1 class="legal-sidebar-title">Podmínky služby a nákupu</h1>
@@ -1795,17 +2161,17 @@
                     onclick="smoothScrollToLegal('terms-sec-1', event)"><span class="toc-num">01</span> Vztah ke
                     společnosti Mojang</a></li>
                 <li><a href="#terms-sec-2" class="legal-toc-link"
-                    onclick="smoothScrollToLegal('terms-sec-2', event)"><span class="toc-num">02</span> Pravidla &amp;
+                    onclick="smoothScrollToLegal('terms-sec-2', event)"><span class="toc-num">02</span> Pravidla a
                     moderace (DSA)</a></li>
                 <li><a href="#terms-sec-3" class="legal-toc-link"
                     onclick="smoothScrollToLegal('terms-sec-3', event)"><span class="toc-num">03</span> Nákupy SMP+
-                    &amp; Tebex MoR</a></li>
+                    a Tebex MoR</a></li>
                 <li><a href="#terms-sec-4" class="legal-toc-link"
                     onclick="smoothScrollToLegal('terms-sec-4', event)"><span class="toc-num">04</span> Trvalost světa
-                    &amp; chyby pluginů</a></li>
+                    a chyby pluginů</a></li>
                 <li><a href="#terms-sec-5" class="legal-toc-link"
                     onclick="smoothScrollToLegal('terms-sec-5', event)"><span class="toc-num">05</span> Bezpečnost účtu
-                    &amp; sdílení hesel</a></li>
+                    a sdílení hesel</a></li>
                 <li><a href="#terms-sec-6" class="legal-toc-link"
                     onclick="smoothScrollToLegal('terms-sec-6', event)"><span class="toc-num">06</span> Vymezení
                     odpovědnosti</a></li>
@@ -1825,7 +2191,7 @@
                   wipy.</li>
                 <li><i class="fa-solid fa-check"></i> <strong>Váš účet:</strong> Za heslo plně odpovídá hráč (výmluvy na
                   kamaráda neplatí).</li>
-                <li><i class="fa-solid fa-check"></i> <strong>Sociální sítě &amp; AI:</strong> Pravidla reklamy a lidský
+                <li><i class="fa-solid fa-check"></i> <strong>Sociální sítě a AI:</strong> Pravidla reklamy a lidský
                   přezkum trestů.</li>
               </ul>
             </div>
@@ -1857,8 +2223,8 @@
           <!-- Article 2 -->
           <article id="terms-sec-2" class="legal-article">
             <div class="legal-article-marker">
-              <span class="legal-marker-tag">02 · PRAVIDLA &amp; MODERACE</span>
-              <span class="legal-marker-ref">Digital Services Act &amp; AI Moderace</span>
+              <span class="legal-marker-tag">02 · PRAVIDLA A MODERACE</span>
+              <span class="legal-marker-ref">Digital Services Act a AI moderace</span>
             </div>
             <h2 class="legal-article-title">2. Přístup na server, pravidla komunity a moderace obsahu</h2>
 
@@ -1889,7 +2255,7 @@
                 neprodleně nahlásit. Záměrné zneužití pro vlastní obohacení se trestá trvalým banem.</li>
               <li><strong>Zákaz IRL obchodování:</strong> Je zakázán jakýkoliv prodej herních předmětů, měny či účtů za
                 reálné peníze mimo oficiální herní obchod.</li>
-              <li><strong>Transparentní moderace obsahu a asistence AI (Digital Services Act &amp; EU AI Act):</strong>
+              <li><strong>Transparentní moderace obsahu a asistence AI (Digital Services Act a EU AI Act):</strong>
                 K zajištění bezpečného prostředí využíváme automatizované skripty a asistenční modely umělé inteligence
                 (Google Gemini AI) pro detekci kyberšikany, extremismu a toxicity. Provozovatel si vyhrazuje právo
                 omezit nebo odebrat přístup (udělit ban či ztišení) hráči, který pravidla porušuje. Hráč je o důvodu
@@ -1901,8 +2267,8 @@
           <!-- Article 3 -->
           <article id="terms-sec-3" class="legal-article">
             <div class="legal-article-marker">
-              <span class="legal-marker-tag">03 · NÁKUPY &amp; TEBEX</span>
-              <span class="legal-marker-ref">Merchant of Record &amp; § 1837 písm. l) OZ</span>
+              <span class="legal-marker-tag">03 · NÁKUPY A TEBEX</span>
+              <span class="legal-marker-ref">Merchant of Record a § 1837 písm. l) OZ</span>
             </div>
             <h2 class="legal-article-title">3. Nákupy výhod (SMP+) a postavení společnosti Tebex Limited</h2>
 
@@ -1962,7 +2328,7 @@
           <!-- Article 4 -->
           <article id="terms-sec-4" class="legal-article">
             <div class="legal-article-marker">
-              <span class="legal-marker-tag">04 · HERNÍ SVĚT &amp; ZÁLOHY</span>
+              <span class="legal-marker-tag">04 · HERNÍ SVĚT A ZÁLOHY</span>
               <span class="legal-marker-ref">Specifika Minecraft provozu</span>
             </div>
             <h2 class="legal-article-title">4. Trvalost herního světa, absence běžných wipů a chyby pluginů</h2>
@@ -2056,7 +2422,7 @@
               odpovědnost za:</p>
             <ul class="legal-list">
               <li>Dočasnou nedostupnost herních serverů způsobenou nutnou technickou údržbou, výpadky internetového uzlu
-                či DDoS útoky třetích stran.</li>
+              či DDoS útoky třetích stran.</li>
               <li>Ztrátu virtuálních předmětů, herních peněz či staveb způsobenou smrtí postavy, chybou internetového
                 spojení na straně hráče, chybou samotné hry Minecraft nebo standardními herními mechanikami (včetně
                 povoleného griefingu na SMP světě /smp).</li>
@@ -2067,8 +2433,8 @@
           <!-- Article 7 -->
           <article id="terms-sec-7" class="legal-article">
             <div class="legal-article-marker">
-              <span class="legal-marker-tag">07 · SPORY &amp; KONTAKT</span>
-              <span class="legal-marker-ref">§ 14 Zákona č. 634/1992 Sb. &amp; DSA</span>
+              <span class="legal-marker-tag">07 · SPORY A KONTAKT</span>
+              <span class="legal-marker-ref">§ 14 Zákona č. 634/1992 Sb. a DSA</span>
             </div>
             <h2 class="legal-article-title">7. Mimosoudní řešení sporů (ČOI) a kontaktní místo</h2>
 
@@ -2202,7 +2568,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20260910"></script>
+  <script src="script.js?v=20260910_v14"></script>
 </body>
 
 </html>

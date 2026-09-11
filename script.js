@@ -2390,12 +2390,15 @@ function initStatsModule() {
   renderStatsChart();
   fetchLiveServerStats();
   fetchOnlinePlayers();
+  initMycoWayStream();
   if (!isStatsModuleInitialized) {
     isStatsModuleInitialized = true;
     window.addEventListener('resize', renderStatsChart);
     setInterval(() => {
       if (currentActiveTab === 'stats') {
-        fetchOnlinePlayers();
+        if (!mycoWaySocket || mycoWaySocket.readyState !== WebSocket.OPEN) {
+          fetchOnlinePlayers();
+        }
       }
     }, 15000);
   }
@@ -2831,12 +2834,55 @@ async function fetchLiveServerStats() {
   }
 }
 
-// Fetch and render live online players widget
-async function fetchOnlinePlayers() {
+function renderOnlinePlayersData(data) {
   const badge = document.getElementById('online-players-badge');
   const grid = document.getElementById('online-players-grid');
   if (!grid) return;
 
+  const maxCount = data?.max || 50;
+
+  if (!data || !data.players || data.players.length === 0) {
+    if (badge) badge.innerHTML = `<i class="fa-solid fa-users"></i> 0 / ${maxCount}`;
+    grid.innerHTML = `
+      <div class="online-players-empty">
+        <div class="empty-icon"><i class="fa-solid fa-moon"></i></div>
+        <div class="empty-text">
+          <h4>Na serveru zrovna nikdo nehraje</h4>
+          <p>Buď první a připoj se na <strong>mychalsmp.xyz</strong>!</p>
+        </div>
+        <button class="btn-copy-ip-mini" onclick="copyIP(event)">
+          <i class="fa-solid fa-copy"></i> Zkopírovat IP
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  if (badge) badge.innerHTML = `<i class="fa-solid fa-users"></i> ${data.players.length} / ${maxCount}`;
+
+  grid.innerHTML = data.players.map(player => {
+    const badgeClass = player.rank_badge === 'owner' ? 'badge-owner' : (player.rank_badge === 'smpplus' ? 'badge-smpplus' : 'badge-player');
+    const badgeIcon = player.rank_badge === 'owner' ? '<i class="fa-solid fa-crown"></i> ' : (player.rank_badge === 'smpplus' ? '<i class="fa-solid fa-gem"></i> ' : '<i class="fa-solid fa-user"></i> ');
+    const avatarUrl = player.avatar || `https://mc-heads.net/avatar/${encodeURIComponent(player.name)}/64`;
+    const playtime = player.playtime_hours !== undefined ? `${player.playtime_hours} hod.` : 'Nové';
+
+    return `
+      <div class="player-card">
+        <img src="${avatarUrl}" alt="${player.name}" class="player-card-avatar" loading="lazy" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+        <div class="player-card-info">
+          <span class="player-card-name" title="${player.name}">${player.name}</span>
+          <div class="player-card-meta">
+            <span class="player-badge ${badgeClass}">${badgeIcon}${player.rank || 'Hráč'}</span>
+            <span class="player-playtime"><i class="fa-regular fa-clock"></i> ${playtime}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Fetch and render live online players widget (HTTP fallback & initial load)
+async function fetchOnlinePlayers() {
   try {
     const apiEndpoints = [
       '/api/online-players',
@@ -2852,49 +2898,56 @@ async function fetchOnlinePlayers() {
         }
       } catch (e) { }
     }
-
-    const maxCount = data?.max || 50;
-
-    if (!data || !data.players || data.players.length === 0) {
-      if (badge) badge.innerHTML = `<i class="fa-solid fa-users"></i> 0 / ${maxCount}`;
-      grid.innerHTML = `
-        <div class="online-players-empty">
-          <div class="empty-icon"><i class="fa-solid fa-moon"></i></div>
-          <div class="empty-text">
-            <h4>Na serveru zrovna nikdo nehraje</h4>
-            <p>Buď první a připoj se na <strong>mychalsmp.xyz</strong>!</p>
-          </div>
-          <button class="btn-copy-ip-mini" onclick="copyIP(event)">
-            <i class="fa-solid fa-copy"></i> Zkopírovat IP
-          </button>
-        </div>
-      `;
-      return;
-    }
-
-    if (badge) badge.innerHTML = `<i class="fa-solid fa-users"></i> ${data.players.length} / ${maxCount}`;
-
-    grid.innerHTML = data.players.map(player => {
-      const badgeClass = player.rank_badge === 'owner' ? 'badge-owner' : (player.rank_badge === 'smpplus' ? 'badge-smpplus' : 'badge-player');
-      const badgeIcon = player.rank_badge === 'owner' ? '<i class="fa-solid fa-crown"></i> ' : (player.rank_badge === 'smpplus' ? '<i class="fa-solid fa-gem"></i> ' : '<i class="fa-solid fa-user"></i> ');
-      const avatarUrl = player.avatar || `https://mc-heads.net/avatar/${encodeURIComponent(player.name)}/64`;
-      const playtime = player.playtime_hours !== undefined ? `${player.playtime_hours} hod.` : 'Nové';
-
-      return `
-        <div class="player-card">
-          <img src="${avatarUrl}" alt="${player.name}" class="player-card-avatar" loading="lazy" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-          <div class="player-card-info">
-            <span class="player-card-name" title="${player.name}">${player.name}</span>
-            <div class="player-card-meta">
-              <span class="player-badge ${badgeClass}">${badgeIcon}${player.rank || 'Hráč'}</span>
-              <span class="player-playtime"><i class="fa-regular fa-clock"></i> ${playtime}</span>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join('');
+    renderOnlinePlayersData(data);
   } catch (err) {
     console.warn('[ONLINE PLAYERS] Error:', err);
+  }
+}
+
+// ─── MYCOWAY REAL-TIME LIVE WEBSOCKET STREAM ─────────────────────────
+let mycoWaySocket = null;
+let mycoWayReconnectTimer = null;
+
+function initMycoWayStream() {
+  if (mycoWaySocket && (mycoWaySocket.readyState === WebSocket.OPEN || mycoWaySocket.readyState === WebSocket.CONNECTING)) return;
+
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const host = window.location.hostname === 'mychalsmp.xyz' || window.location.hostname.endsWith('mychalsmp.xyz')
+    ? 'api.6767111.xyz'
+    : (window.location.host || 'localhost:3000');
+  const wsUrl = `${protocol}//${host}/mycoway/ws`;
+
+  try {
+    mycoWaySocket = new WebSocket(wsUrl);
+
+    mycoWaySocket.onopen = () => {
+      try {
+        mycoWaySocket.send(JSON.stringify({ type: 'SUBSCRIBE', role: 'web' }));
+      } catch (_) {}
+    };
+
+    mycoWaySocket.onmessage = (event) => {
+      try {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'INIT' || msg.type === 'PLAYERS_UPDATE') {
+          renderOnlinePlayersData(msg);
+        } else if (msg.type === 'PLAYER_JOIN' || msg.type === 'PLAYER_QUIT') {
+          fetchOnlinePlayers();
+        }
+      } catch (_) {}
+    };
+
+    mycoWaySocket.onclose = () => {
+      mycoWaySocket = null;
+      clearTimeout(mycoWayReconnectTimer);
+      mycoWayReconnectTimer = setTimeout(initMycoWayStream, 6000);
+    };
+
+    mycoWaySocket.onerror = () => {
+      try { mycoWaySocket.close(); } catch (_) {}
+    };
+  } catch (_) {
+    // V případě chyby běží HTTP fetch fallback
   }
 }
 

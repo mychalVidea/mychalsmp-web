@@ -2,6 +2,41 @@
    MYCHAL SMP – script.js
    ============================================= */
 
+// ---- SECURE & RESILIENT API FETCH WRAPPER ----
+const API_BASE_URL = 'https://api.6767111.xyz';
+
+/**
+ * Bezpečné volání API s nastavitelným timeoutem, ochranou proti pádu skriptu
+ * a detekcí chyb spojení či SSL certifikátu.
+ */
+async function apiFetch(urlOrPath, options = {}, timeoutMs = 8000) {
+  const url = (typeof urlOrPath === 'string' && (urlOrPath.startsWith('http://') || urlOrPath.startsWith('https://')))
+    ? urlOrPath
+    : `${API_BASE_URL}${urlOrPath.startsWith('/') ? '' : '/'}${urlOrPath}`;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => {
+    controller.abort();
+  }, timeoutMs);
+
+  try {
+    const fetchOptions = {
+      ...options,
+      signal: controller.signal
+    };
+    return await fetch(url, fetchOptions);
+  } catch (err) {
+    if (err && err.name === 'AbortError') {
+      console.warn(`[API FETCH TIMEOUT] Požadavek na ${url} vypršel po ${timeoutMs}ms.`);
+    } else {
+      console.warn(`[API FETCH ERROR] Chyba komunikace s ${url}:`, (err && err.message) || err);
+    }
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 // ---- TAB SWITCHING & ROUTING ----
 function showTab(name) {
   executeTabSwitch(name, true);
@@ -217,10 +252,10 @@ function copyCommand(cmd, el) {
   navigator.clipboard.writeText(cmd).then(() => {
     showToast(`⚡ Příkaz <code>${cmd}</code> byl zkopírován!`);
     if (el) {
-      const hint = el.querySelector('.cmd-copy-hint') || 
-                   el.querySelector('.gm-card-cmd-chip i') || 
-                   el.querySelector('.join-cmd-box i') || 
-                   el.querySelector('i.fa-copy');
+      const hint = el.querySelector('.cmd-copy-hint') ||
+        el.querySelector('.gm-card-cmd-chip i') ||
+        el.querySelector('.join-cmd-box i') ||
+        el.querySelector('i.fa-copy');
       if (hint) {
         const originalHtml = hint.outerHTML;
         hint.outerHTML = '<i class="fa-solid fa-check text-green-accent" style="color: #21DE00;"></i>';
@@ -421,7 +456,7 @@ async function loadStats() {
     let data = null;
     for (const url of apiEndpoints) {
       try {
-        const res = await fetch(url);
+        const res = await apiFetch(url, {}, 6000);
         if (res.ok) {
           data = await res.json();
           if (data && (data.whitelist_count !== undefined || data.total_money !== undefined)) break;
@@ -639,31 +674,49 @@ async function checkoutSMP() {
   }
 
   const btn = document.querySelector('.btn-purchase');
-  const originalText = btn.innerHTML;
-  btn.innerHTML = '<span class="btn-spinner"></span> Načítám košík...';
-  btn.disabled = true;
+  const originalText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.innerHTML = '<span class="btn-spinner"></span> Načítám košík...';
+    btn.disabled = true;
+  }
 
   try {
-    const response = await fetch('https://api.6767111.xyz/api/tebex/checkout', {
+    const response = await apiFetch('https://api.6767111.xyz/api/tebex/checkout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ nickname })
-    });
+    }, 10000);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
 
     const data = await response.json();
     if (data.success && data.url) {
       window.open(data.url, '_blank');
     } else {
-      alert('Chyba: ' + (data.message || 'Nepodařilo se vytvořit checkout odkaz. Zkontroluj konfiguraci v .env.'));
+      const errMsg = data.message || 'Nepodařilo se vytvořit platební odkaz.';
+      if (typeof showToast === 'function') {
+        showToast('❌ ' + errMsg);
+      } else {
+        alert(errMsg);
+      }
     }
   } catch (err) {
-    console.error(err);
-    alert('Chyba při komunikaci se serverem.');
+    console.error('[CHECKOUT ERR]', err);
+    const fallbackMsg = 'Herní pokladna je momentálně nedostupná. Zkus to prosím za chvíli.';
+    if (typeof showToast === 'function') {
+      showToast('❌ ' + fallbackMsg);
+    } else {
+      alert(fallbackMsg);
+    }
   } finally {
-    btn.innerHTML = originalText;
-    btn.disabled = false;
+    if (btn) {
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }
   }
 }
 
@@ -831,9 +884,9 @@ async function checkSmpPlusStatus() {
   `;
 
   try {
-    const res = await fetch('https://api.6767111.xyz/api/smpplus/status', {
+    const res = await apiFetch('https://api.6767111.xyz/api/smpplus/status', {
       headers: getAuthHeaders()
-    });
+    }, 8000);
 
     if (res.status === 401 || res.status === 403) {
       localStorage.removeItem('auth_token');
@@ -846,6 +899,10 @@ async function checkSmpPlusStatus() {
         </div>
       `;
       return;
+    }
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
     }
 
     const data = await res.json();
@@ -922,8 +979,11 @@ async function checkSmpPlusStatus() {
   } catch (err) {
     console.error('[CHECK SMP+ STATUS ERR]', err);
     container.innerHTML = `
-      <div style="color: #ef4444; padding: 10px 0;">
-        Nepodařilo se načíst stav členství. <button type="button" onclick="checkSmpPlusStatus()" style="background: none; border: none; color: #38bdf8; cursor: pointer; text-decoration: underline;">Zkusit znovu</button>
+      <div class="smp-manage-status-box" style="text-align: center; padding: 20px;">
+        <p class="smp-manage-desc" style="color: #94a3b8; margin-bottom: 12px;">Herní server nebo API je momentálně nedostupné. Tvé členství ve hře stále běží.</p>
+        <button type="button" onclick="checkSmpPlusStatus()" class="btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;">
+          <i class="fa-solid fa-arrows-rotate"></i> Zkusit znovu
+        </button>
       </div>
     `;
   }
@@ -958,13 +1018,17 @@ async function executeCancelSmpPlus() {
   if (spinner) spinner.style.display = 'inline-block';
 
   try {
-    const res = await fetch('https://api.6767111.xyz/api/smpplus/cancel', {
+    const res = await apiFetch('https://api.6767111.xyz/api/smpplus/cancel', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         ...getAuthHeaders()
       }
-    });
+    }, 10000);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
 
     const data = await res.json();
     closeCancelModal();
@@ -983,7 +1047,7 @@ async function executeCancelSmpPlus() {
     console.error('[CANCEL SMP+ ERR]', err);
     closeCancelModal();
     if (typeof showToast === 'function') {
-      showToast('❌ Chyba při komunikaci se serverem.');
+      showToast('❌ Server je dočasně nedostupný. Zkus to prosím za chvíli.');
     }
   } finally {
     if (btn) btn.disabled = false;
@@ -1013,9 +1077,9 @@ async function checkMediaStatus() {
   statusBox.innerHTML = '<div class="media-status-center"><div class="status-pending-icon"><span class="status-question">?</span><div class="status-spinner"></div></div><p style="text-align:center; margin-top:12px;">Ověřuji stav tvé žádosti...</p></div>';
 
   try {
-    const res = await fetch('https://api.6767111.xyz/api/media/status', {
+    const res = await apiFetch('https://api.6767111.xyz/api/media/status', {
       headers: getAuthHeaders()
-    });
+    }, 8000);
 
     if (res.status === 401) {
       localStorage.removeItem('auth_token');
@@ -1023,6 +1087,10 @@ async function checkMediaStatus() {
       applyForm.style.display = 'none';
       loginBox.style.display = 'block';
       return;
+    }
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
     }
 
     const data = await res.json();
@@ -1123,8 +1191,17 @@ async function checkMediaStatus() {
       `;
     }
   } catch (err) {
-
-    statusBox.innerHTML = '<p class="error-text" style="color: #ef4444; text-align: center;">Chyba při komunikaci se serverem.</p>';
+    console.error('[CHECK MEDIA STATUS ERR]', err);
+    statusBox.innerHTML = `
+      <div class="media-status-card" style="text-align: center;">
+        <div class="status-icon" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #f59e0b; font-size: 1.5rem;">⚠️</div>
+        <h3>Ověření je dočasně nedostupné</h3>
+        <p style="color: #94a3b8; margin: 10px 0 18px 0;">Nepodařilo se navázat spojení s ověřovacím serverem. Zkus to prosím za okamžik.</p>
+        <button type="button" onclick="checkMediaStatus()" class="btn-primary" style="padding: 10px 20px;">
+          <i class="fa-solid fa-arrows-rotate"></i> Obnovit stav
+        </button>
+      </div>
+    `;
   }
 }
 
@@ -1266,7 +1343,7 @@ async function submitMediaApplication(event) {
   await sleep(1500);
 
   try {
-    const res = await fetch('https://api.6767111.xyz/api/media/apply', {
+    const res = await apiFetch('https://api.6767111.xyz/api/media/apply', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1280,7 +1357,11 @@ async function submitMediaApplication(event) {
         kickUrl: kick,
         ageConfirm: ageConfirm
       })
-    });
+    }, 15000);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
 
     const data = await res.json();
 
@@ -1322,13 +1403,14 @@ async function submitMediaApplication(event) {
       `;
     }
   } catch (err) {
+    console.error('[APPLY MEDIA ERR]', err);
     document.getElementById('step-scrape').className = 'verification-step-item failed';
     await sleep(1000);
     statusBox.innerHTML = `
       <div class="media-status-card">
         <div class="status-icon">❌</div>
         <h3>Chyba spojení</h3>
-        <p>Nepodařilo se navázat spojení s ověřovacím serverem. Zkus to prosím později.</p>
+        <p style="color: #94a3b8;">Ověřovací server momentálně neodpovídá. Žádost nebyla ztracena, zkus ji prosím odeslat za chvíli.</p>
         <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zpět na formulář</button>
       </div>
     `;
@@ -1697,11 +1779,11 @@ async function submitBugReport(e) {
 
     for (const ep of endpoints) {
       try {
-        const res = await fetch(ep, {
+        const res = await apiFetch(ep, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ nick, bug, images, isUnban })
-        });
+        }, 12000);
         const json = await res.json().catch(() => null);
 
         if (res.ok && json && json.success) {
@@ -1753,7 +1835,7 @@ async function submitBugReport(e) {
 
       startBugCooldownTimer(60);
     } else {
-      const errMsg = resErrorMsg || (data && data.error) || 'Nepodařilo se odeslat nahlášení.';
+      const errMsg = resErrorMsg || (data && data.error) || 'Systém pro nahlášení je momentálně nedostupný. Zkus to prosím za chvíli.';
       showToast(`❌ ${errMsg}`);
       if (resRetryAfter || (data && data.retryAfter)) {
         startBugCooldownTimer(resRetryAfter || data.retryAfter);
@@ -1761,7 +1843,7 @@ async function submitBugReport(e) {
     }
   } catch (err) {
     console.error('Error submitting bug:', err);
-    showToast('❌ Chyba při odesílání.');
+    showToast('❌ Spojení se serverem selhalo. Zkus to prosím za chvíli.');
   } finally {
     if (!bugCooldownInterval) {
       submitBtn.disabled = false;
@@ -1818,9 +1900,14 @@ async function loadIdeasTab() {
   surface.innerHTML = '<div class="whiteboard-empty"><i class="fa-solid fa-spinner fa-spin"></i><p>Načítám nápady...</p></div>';
 
   try {
-    const res = await fetch('https://api.6767111.xyz/api/napady/list', {
+    const res = await apiFetch('https://api.6767111.xyz/api/napady/list', {
       headers: getAuthHeaders()
-    });
+    }, 8000);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
     const data = await res.json();
     currentIdeasData = data;
 
@@ -1899,7 +1986,15 @@ async function loadIdeasTab() {
 
   } catch (err) {
     console.error('Error loading ideas tab:', err);
-    surface.innerHTML = '<div class="whiteboard-empty"><i class="fa-solid fa-circle-exclamation"></i><p>Chyba při načítání nápadů z API.</p></div>';
+    surface.innerHTML = `
+      <div class="whiteboard-empty">
+        <i class="fa-solid fa-lightbulb" style="opacity: 0.4;"></i>
+        <p style="color: #94a3b8; margin: 8px 0 14px 0;">Nástěnka nápadů je dočasně nedostupná.</p>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="loadIdeasTab()">
+          <i class="fa-solid fa-arrows-rotate"></i> Zkusit znovu
+        </button>
+      </div>
+    `;
   }
 }
 
@@ -1985,9 +2080,10 @@ function setupIdeasSilentInterval() {
 
 async function silentUpdateIdeas() {
   try {
-    const res = await fetch('https://api.6767111.xyz/api/napady/list', {
+    const res = await apiFetch('https://api.6767111.xyz/api/napady/list', {
       headers: getAuthHeaders()
-    });
+    }, 6000);
+    if (!res.ok) return;
     const data = await res.json();
     if (!data.success || !data.ideas) return;
 
@@ -2063,14 +2159,19 @@ async function voteIdea(ideaId, type, event) {
   if (box) box.classList.add('voting-busy');
 
   try {
-    const res = await fetch(`https://api.6767111.xyz/api/napady/vote/${ideaId}`, {
+    const res = await apiFetch(`https://api.6767111.xyz/api/napady/vote/${ideaId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         ...getAuthHeaders()
       },
       body: JSON.stringify({ type })
-    });
+    }, 8000);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
     const data = await res.json();
     if (data.success) {
       updateCardVoteState(ideaId, data.score, data.userVote);
@@ -2079,7 +2180,7 @@ async function voteIdea(ideaId, type, event) {
     }
   } catch (e) {
     console.error('Error voting on idea:', e);
-    showToast('❌ Chyba při spojení se serverem.');
+    showToast('❌ Spojení se serverem je dočasně nedostupné.');
   } finally {
     if (box) box.classList.remove('voting-busy');
   }
@@ -2178,14 +2279,19 @@ async function submitInlineIdea() {
   if (btn) btn.disabled = true;
 
   try {
-    const res = await fetch('https://api.6767111.xyz/api/napady/add', {
+    const res = await apiFetch('https://api.6767111.xyz/api/napady/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         ...getAuthHeaders()
       },
       body: JSON.stringify({ text })
-    });
+    }, 10000);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
     const data = await res.json();
     if (data.success) {
       showToast('✅ ' + data.message);
@@ -2196,9 +2302,46 @@ async function submitInlineIdea() {
     }
   } catch (e) {
     console.error('Error submitting inline idea:', e);
-    showToast('❌ Spojení se serverem selhalo.');
+    showToast('❌ Server je dočasně nedostupný. Zkus to prosím za okamžik.');
   } finally {
     if (btn) btn.disabled = false;
+  }
+}
+
+async function submitNewIdea() {
+  const textarea = document.getElementById('idea-input-text');
+  const text = textarea ? textarea.value.trim() : '';
+
+  if (text.length < 5) {
+    showToast('❌ Napiš prosím podrobnější nápad (min. 5 znaků).');
+    return;
+  }
+
+  try {
+    const res = await apiFetch('https://api.6767111.xyz/api/napady/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders()
+      },
+      body: JSON.stringify({ text })
+    }, 10000);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    if (data.success) {
+      showToast('✅ ' + data.message);
+      closeIdeaModal();
+      loadIdeasTab();
+    } else {
+      showToast('❌ ' + (data.message || 'Chyba při přidávání nápadu.'));
+    }
+  } catch (e) {
+    console.error('Error submitting modal idea:', e);
+    showToast('❌ Server je dočasně nedostupný. Zkus to prosím za okamžik.');
   }
 }
 
@@ -2208,10 +2351,15 @@ async function aiProcessIdea(id) {
   if (btn) btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
 
   try {
-    const res = await fetch(`https://api.6767111.xyz/api/napady/ai-process/${id}`, {
+    const res = await apiFetch(`https://api.6767111.xyz/api/napady/ai-process/${id}`, {
       method: 'POST',
       headers: getAuthHeaders()
-    });
+    }, 10000);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
     const data = await res.json();
     if (data.success) {
       showToast('🤖 Nápad byl zpracován AI a odeslán do Discord roomky!');
@@ -2222,7 +2370,7 @@ async function aiProcessIdea(id) {
     }
   } catch (e) {
     console.error('Error AI processing idea:', e);
-    showToast('❌ Chyba při spojení se serverem.');
+    showToast('❌ Server je dočasně nedostupný.');
     if (btn) btn.innerHTML = '❓';
   }
 }
@@ -2231,10 +2379,15 @@ async function approveIdea(id) {
   if (!confirm('Opravdu chceš tento nápad SCHVÁLIT? Udělí autorovi +1 bod a pošle oznámení do Discordu.')) return;
 
   try {
-    const res = await fetch(`https://api.6767111.xyz/api/napady/approve/${id}`, {
+    const res = await apiFetch(`https://api.6767111.xyz/api/napady/approve/${id}`, {
       method: 'POST',
       headers: getAuthHeaders()
-    });
+    }, 10000);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
     const data = await res.json();
     if (data.success) {
       showToast('🎉 Nápad byl schválen a autor získal +1 bod!');
@@ -2244,7 +2397,7 @@ async function approveIdea(id) {
     }
   } catch (e) {
     console.error('Error approving idea:', e);
-    showToast('❌ Chyba při spojení se serverem.');
+    showToast('❌ Server je dočasně nedostupný.');
   }
 }
 
@@ -2252,10 +2405,15 @@ async function rejectIdea(id) {
   if (!confirm('Opravdu chceš tento nápad ZAMÍTNUT a smazat z nástěnky?')) return;
 
   try {
-    const res = await fetch(`https://api.6767111.xyz/api/napady/reject/${id}`, {
+    const res = await apiFetch(`https://api.6767111.xyz/api/napady/reject/${id}`, {
       method: 'POST',
       headers: getAuthHeaders()
-    });
+    }, 10000);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
     const data = await res.json();
     if (data.success) {
       showToast('🗑️ Nápad byl zamítnut a odstraněn.');
@@ -2265,7 +2423,7 @@ async function rejectIdea(id) {
     }
   } catch (e) {
     console.error('Error rejecting idea:', e);
-    showToast('❌ Chyba při spojení se serverem.');
+    showToast('❌ Server je dočasně nedostupný.');
   }
 }
 
@@ -2712,7 +2870,7 @@ async function fetchLiveServerStats() {
     let data = null;
     for (const url of apiEndpoints) {
       try {
-        const res = await fetch(url);
+        const res = await apiFetch(url, {}, 7000);
         if (res.ok) {
           data = await res.json();
           if (data && data.success) break;
@@ -2891,7 +3049,7 @@ async function fetchOnlinePlayers() {
     let data = null;
     for (const url of apiEndpoints) {
       try {
-        const res = await fetch(url);
+        const res = await apiFetch(url, {}, 5000);
         if (res.ok) {
           data = await res.json();
           if (data && data.success) break;
@@ -2911,10 +3069,9 @@ let mycoWayReconnectTimer = null;
 function initMycoWayStream() {
   if (mycoWaySocket && (mycoWaySocket.readyState === WebSocket.OPEN || mycoWaySocket.readyState === WebSocket.CONNECTING)) return;
 
-  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const host = window.location.hostname === 'mychalsmp.xyz' || window.location.hostname.endsWith('mychalsmp.xyz')
-    ? 'api.6767111.xyz'
-    : (window.location.host || 'localhost:3000');
+  const isDev = window.location.hostname === '127.0.0.1' || window.location.hostname.endsWith('.local');
+  const protocol = isDev && window.location.protocol === 'http:' ? 'ws:' : 'wss:';
+  const host = isDev ? window.location.host : 'api.6767111.xyz';
   const wsUrl = `${protocol}//${host}/mycoway/ws`;
 
   try {
@@ -2923,7 +3080,7 @@ function initMycoWayStream() {
     mycoWaySocket.onopen = () => {
       try {
         mycoWaySocket.send(JSON.stringify({ type: 'SUBSCRIBE', role: 'web' }));
-      } catch (_) {}
+      } catch (_) { }
     };
 
     mycoWaySocket.onmessage = (event) => {
@@ -2934,7 +3091,7 @@ function initMycoWayStream() {
         } else if (msg.type === 'PLAYER_JOIN' || msg.type === 'PLAYER_QUIT') {
           fetchOnlinePlayers();
         }
-      } catch (_) {}
+      } catch (_) { }
     };
 
     mycoWaySocket.onclose = () => {
@@ -2944,7 +3101,7 @@ function initMycoWayStream() {
     };
 
     mycoWaySocket.onerror = () => {
-      try { mycoWaySocket.close(); } catch (_) {}
+      try { mycoWaySocket.close(); } catch (_) { }
     };
   } catch (_) {
     // V případě chyby běží HTTP fetch fallback

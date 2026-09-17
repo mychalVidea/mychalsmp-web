@@ -1616,6 +1616,14 @@
               <td class="col-free">1 zakázka</td>
               <td class="col-plus"><strong>Až 4 zakázky současně</strong></td>
             </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-users"></i> Kapacita v týmu (/team)</div>
+                <div class="feat-desc">Maximální počet členů ve tvém týmu</div>
+              </td>
+              <td class="col-free">8 členů</td>
+              <td class="col-plus"><strong>16 členů</strong> <span class="tag-highlight">2x větší tým</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -3160,7 +3168,28 @@
     </div>
   </div>
 
-  <script src="script.js?v=20260917_v16"></script>
+  <!-- Reject Idea Modal with Reason -->
+  <div id="idea-reject-modal" class="idea-modal">
+    <div class="idea-modal-content">
+      <div class="idea-modal-header">
+        <h3 style="display: flex; align-items: center; gap: 8px;">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          <span style="color: #f8fafc;">Zamítnout nápad</span>
+        </h3>
+        <button class="idea-modal-close" onclick="closeRejectIdeaModal()">&times;</button>
+      </div>
+      <div class="idea-modal-body">
+        <p class="idea-modal-sub">Zadej důvod zamítnutí nápadu. Tento důvod bude automaticky odeslán autorovi nápadu do soukromé zprávy (DM) na Discordu.</p>
+        <textarea id="idea-reject-reason" class="idea-textarea" placeholder="Např. Tento nápad bohužel nezapadá do plánů serveru..." maxlength="500"></textarea>
+      </div>
+      <div class="idea-modal-footer">
+        <button class="btn btn-secondary" onclick="closeRejectIdeaModal()">Zrušit</button>
+        <button class="btn" id="btn-confirm-reject-idea" onclick="confirmRejectIdea()" style="background: #f51515; color: #ffffff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;"><svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Zamítnout a poslat DM</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js?v=20260917_v17"></script>
 </body>
 
 </html>

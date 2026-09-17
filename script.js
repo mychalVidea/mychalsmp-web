@@ -2439,13 +2439,58 @@ async function approveIdea(id) {
   }
 }
 
-async function rejectIdea(id) {
-  if (!confirm('Opravdu chceš tento nápad ZAMÍTNUT a smazat z nástěnky?')) return;
+let pendingRejectIdeaId = null;
 
+function rejectIdea(id) {
+  pendingRejectIdeaId = id;
+  const modal = document.getElementById('idea-reject-modal');
+  const textarea = document.getElementById('idea-reject-reason');
+  if (textarea) {
+    textarea.value = '';
+    setTimeout(() => textarea.focus(), 50);
+  }
+  if (modal) {
+    modal.classList.add('active');
+  } else {
+    const reason = prompt('Zadej důvod zamítnutí nápadu (bude odeslán autorovi do DM na Discordu):');
+    if (reason === null) return;
+    if (!reason.trim()) {
+      showToast('❌ Musíš uvést důvod zamítnutí.');
+      return;
+    }
+    executeRejectIdea(id, reason.trim());
+  }
+}
+
+function closeRejectIdeaModal() {
+  pendingRejectIdeaId = null;
+  const modal = document.getElementById('idea-reject-modal');
+  if (modal) modal.classList.remove('active');
+}
+
+async function confirmRejectIdea() {
+  if (!pendingRejectIdeaId) return;
+  const textarea = document.getElementById('idea-reject-reason');
+  const reason = textarea ? textarea.value.trim() : '';
+  if (!reason) {
+    showToast('❌ Musíš uvést důvod zamítnutí.');
+    if (textarea) textarea.focus();
+    return;
+  }
+  const ideaId = pendingRejectIdeaId;
+  closeRejectIdeaModal();
+  await executeRejectIdea(ideaId, reason);
+}
+
+async function executeRejectIdea(id, reason) {
   try {
     const res = await apiFetch(`https://api.6767111.xyz/api/napady/reject/${id}`, {
       method: 'POST',
-      headers: getAuthHeaders()
+      headers: {
+        ...getAuthHeaders(),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ reason })
     }, 10000);
 
     if (!res.ok) {
@@ -2454,7 +2499,7 @@ async function rejectIdea(id) {
 
     const data = await res.json();
     if (data.success) {
-      showToast('🗑️ Nápad byl zamítnut a odstraněn.');
+      showToast(data.dmSent ? '🗑️ Nápad byl zamítnut a důvod odeslán autorovi do DM.' : '🗑️ Nápad byl zamítnut (autor má uzavřené DM).');
       loadIdeasTab();
     } else {
       showToast('❌ ' + (data.message || 'Chyba při zamítání nápadu.'));

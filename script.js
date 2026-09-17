@@ -3642,10 +3642,11 @@ function handleDynamicQuizAnswer(optIndex, isCorrect, buttonElement) {
     const safeExplanation = typeof escapeHtml === 'function' ? escapeHtml(scenario.explanation) : scenario.explanation;
     feedbackBox.className = 'quiz-feedback-box is-correct';
     feedbackBox.innerHTML = `
-      <div class="feedback-inner">
-        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        <span>${safeExplanation}</span>
+      <div class="modtest-feedback-header is-correct">
+        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>SPRÁVNĚ</span>
       </div>
+      <div class="modtest-feedback-content">${safeExplanation}</div>
     `;
 
     const total = currentDynamicQuizScenarios.length || 4;
@@ -3667,21 +3668,22 @@ function handleDynamicQuizAnswer(optIndex, isCorrect, buttonElement) {
         isRulesFlipping = false;
         renderCurrentRulesQuestionCard(true);
       }, 380);
-    }, 780);
+    }, 950);
   } else {
     buttonElement.classList.add('selected-wrong');
     const safeWrong = typeof escapeHtml === 'function' ? escapeHtml(scenario.wrongFeedback) : scenario.wrongFeedback;
     feedbackBox.className = 'quiz-feedback-box is-wrong';
     feedbackBox.innerHTML = `
-      <div class="feedback-inner">
-        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        <span>${safeWrong}</span>
+      <div class="modtest-feedback-header is-wrong">
+        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span>ŠPATNÁ ODPOVĚĎ</span>
       </div>
+      <div class="modtest-feedback-content">${safeWrong}</div>
     `;
 
     setTimeout(() => {
       buttonElement.classList.remove('selected-wrong');
-    }, 1200);
+    }, 1400);
   }
 }
 
@@ -3707,7 +3709,7 @@ const MODTEST_SCENARIOS_POOL = [
     isMandatory: true,
     tag: 'ZNEUŽITÍ CHYB & STALKING',
     title: 'Případ cíleného stalkingu základny vedení serveru',
-    description: 'Hráč byl zachycen při zneužití bezpečnostní chyby ještě před přihlášením přes /login – neoprávněně získal polohu soukromé základny s cílem provést masivní destrukci. Jaký trest a postup uplatníš?',
+    description: 'Hráč byl zachycen při **zneužití bezpečnostní chyby ještě před přihlášením** přes /login – neoprávněně získal polohu soukromé základny s cílem provést masivní destrukci. **Jaký trest a postup uplatníš?**',
     options: [
       {
         text: 'Dát mu ban na 1 hodinu, protože v momentě činu ještě nebyl plně přihlášen přes /login.',
@@ -3722,36 +3724,36 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Zneužití bezpečnostních chyb a stalking základen před přihlášením představuje závažné narušení chodu sítě. Následuje okamžitý permanentní IP a UUID ban bez možnosti odvolání.'
+    explanation: '**Zneužití bezpečnostních chyb** a stalking základen před přihlášením představuje závažné narušení chodu sítě. Následuje **okamžitý permanentní IP a UUID ban** bez možnosti odvolání.'
   },
   {
     phase: 1,
     isMandatory: true,
     tag: 'ZÁKAZ MINIMAP & RADARŮ',
     title: 'Minimapový mýtus: „Vždyť mám radar na hráče vypnutý!“',
-    description: 'Hráč v chatu argumentuje: „Mám nainstalovaný Xaero\'s Minimap, ale radar na hráče a jeskyně mám v nastavení vypnutý! Mám tam jen body a terén, to je přece v pohodě!“. Jak zní striktní pravidlo MYCHAL SMP?',
+    description: 'Hráč v chatu argumentuje: „Mám nainstalovaný **Xaero\'s Minimap**, ale **radar na hráče a jeskyně mám v nastavení vypnutý**! Mám tam jen body a terén, to je přece v pohodě!“. Jak zní striktní pravidlo MYCHAL SMP?',
     options: [
       {
         text: 'Pokud je radar vypnutý, minimapa je tolerována pro orientaci v krajině.',
         isCorrect: false
       },
       {
-        text: 'Veškeré minimapy (včetně Xaero\'s a JourneyMap) i waypoint módy jsou na celém serveru PŘÍSNĚ ZAKÁZÁNY bez výjimky. Trestem je BAN.',
+        text: 'Ne! Veškeré minimapy (včetně Xaero\'s Minimap, JourneyMap a jiných) i vestavěné waypoint mody jsou na MYCHAL SMP přísně zakázány bez výjimky.',
         isCorrect: true
       },
       {
-        text: 'Minimapa je zakázaná jen pro hráče bez VIP / SMP+ hodnosti.',
+        text: 'Minimapa je povolená pouze na Survival světě, ale na SMP světě se musí vypnout.',
         isCorrect: false
       }
     ],
-    explanation: 'Pravidlo 1 serveru v /rules nezná žádné kompromisy. Veškeré minimapy a waypoint módy jsou striktně zakázány. Hráči se orientují poctivě kompasem, mapami a F3 souřadnicemi.'
+    explanation: '**Pravidlo 1** serveru v /rules nezná žádné kompromisy. **Veškeré minimapy a waypoint módy jsou striktně zakázány** bez výjimky. Hráči se orientují poctivě kompasem, mapami a F3 souřadnicemi.'
   },
   {
     phase: 1,
     isMandatory: true,
     tag: 'SMP RAIDING VS SURVIVAL',
     title: 'Griefing na /smp a výhrůžka Tebex Chargebackem',
-    description: 'SMP+ sponzor si postavil obří hrad na světě /smp. Konkurenční klan mu hrad legálně odpálil TNT děly. Hráč v ticketu zuří: „Okamžitě mi vraťte věci a zabanujte je, jinak otevřu spor na PayPalu a dám serveru chargeback!“. Co uděláš?',
+    description: '**SMP+ sponzor** si postavil obří hrad na světě **/smp**. Konkurenční klan mu hrad **legálně** odpálil TNT děly. Hráč v ticketu zuří: „Okamžitě mi vraťte věci a zabanujte je, jinak otevřu spor na PayPalu a dám serveru **chargeback**!“. Co uděláš?',
     options: [
       {
         text: 'Vrátit mu suroviny z Creative módu, aby se předešlo platebnímu sporu na Tebexu.',
@@ -3766,14 +3768,14 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: true
       }
     ],
-    explanation: 'Svět /smp je nekompromisní hardcore zóna s povoleným raidem. Vydírání chargebackem a chargeback spory navíc znamenají okamžitý globální ban platebního profilu.'
+    explanation: 'Svět **/smp** je **hardcore zóna s povoleným raidem** – griefing je zde zákony serveru dovolený. **Výhrůžka chargebackem** znamená okamžitý globální ban platního profilu.'
   },
   {
     phase: 1,
     isMandatory: true,
     tag: 'EKONOMIKA & DUPOVÁNÍ',
     title: 'Tajemný nález: „Našel jsem 8 shulkerů netheritu v lese pod stromem!“',
-    description: 'Při kontrole databáze inventářů narazíš na nováčka, který má ve skrýši 8 shulker boxů plných Netherite Blocků. Tvrdí: „Já jsem nic neduplikoval, našel jsem je položené pod břízou v lese, přísahám!“. Jak s tím naložíš?',
+    description: 'Při kontrole databáze inventářů narazíš na nováčka, který má ve skrýši **8 shulker boxů plných Netherite Blocků**. Tvrdí: *„Já jsem nic neduplikoval, našel jsem je položené pod břízou v lese, přísahám!“*. **Jak s tím naložíš?**',
     options: [
       {
         text: 'Předměty mu nechat, protože princip nálezného v lese není v pravidlech explicitně zakázán.',
@@ -3788,14 +3790,14 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Pravidlo o zneužívání chyb a nepovolených itemů zakazuje nejen duplikaci, ale i vědomé přechovávání a zatajování ilegálního bohatství. Předměty se mažou a účet je zabanován.'
+    explanation: 'Pravidlo o zneužívání chyb zakazuje nejen duplikaci, ale i **vědomé přechovávání a zatajování ilegálního bohatství**. Nelegální itemy se mažou a účet je zabanován.'
   },
   {
     phase: 1,
     isMandatory: true,
     tag: 'KORUPCE & ÚPLATKY',
     title: 'Úplatek 500 Kč Paysafecard za unban kamaráda',
-    description: 'V soukromé zprávě na Discordu ti píše zabanovaný cheater: „Čau bro, pošlu ti PSC na 500 Kč, když kámošovi potají smažeš ban v databázi. Nikdo to nezjistí, koupíš si oběd.“. Tvoje reakce?',
+    description: 'V soukromé zprávě na Discordu ti píše zabanovaný cheater: *„Čau bro, pošlu ti PSC na 500 Kč, když kámošovi potají smažeš ban v databázi. Nikdo to nezjistí, koupíš si oběd.“*. **Tvoje reakce?**',
     options: [
       {
         text: 'Kód přijmout, unban neudělat a hráče si zablokovat.',
@@ -3810,7 +3812,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Jakýkoliv pokus o uplácení moderátora musí být neprodleně nahlášen vedení s důkazy. Integrita a důvěra ve staff tým je nedotknutelná.'
+    explanation: 'Jakýkoliv **pokus o uplácení moderátora** musí být **neprodleně nahlášen vedení s důkazy**. Integrita a důvěra ve staff tým je nedotknutelná.'
   },
   {
     phase: 1,
@@ -4035,24 +4037,24 @@ const MODTEST_SCENARIOS_POOL = [
   {
     phase: 1,
     isMandatory: false,
-    tag: 'LÁVOVÉ PASTI',
-    title: 'Stavba nevyhnutelné smrtící pasti u Nether portálu na Survivalu',
-    description: 'Hráč na Survivalu postavil portál tak, že kdokoli jím projde z Netheru, okamžitě padá do 20 bloků hluboké lávové šachty obložené obsidiánem bez možnosti záchrany.',
+    tag: 'PASTI NA SURVIVALU',
+    title: 'Stavba smrtící pasti na Survivalu a stížnost poškozeného hráče',
+    description: 'Hráč na Survivalu postavil důmyslnou past (propadlo do lávy / redstone nástrahu s písty), do které spadl jiný hráč, zemřel a přišel o věci. Poražený hráč podává rozhořčený ticket: „Byla to zákeřná past, vraťte mi věci a zabanujte ho!“. Jak má moderátor reagovat?',
     options: [
       {
-        text: 'Past je geniální stavitelské dílo a má právo tam zůstat.',
-        isCorrect: false
-      },
-      {
-        text: 'Na Survivalu jsou nevyhnutelné teleportační a portálové lávové pasti zakázány. Past zbourat a hráče potrestat za pasivní zabíjení a ničení cizích věcí.',
+        text: 'Hráči vysvětlit, že pasti jsou na Survivalu plně povoleny jako legitimní herní mechanika. Stavitel pasti nic neporušil, ban se neuděluje a ztracené věci se nenahrazují.',
         isCorrect: true
       },
       {
-        text: 'Postavit vedle cedulku „Pozor láva“ a nechat to být.',
+        text: 'Stavitele pasti okamžitě zabanovat za zákeřnost, past smazat a hráči vrátit věci z creative módu.',
+        isCorrect: false
+      },
+      {
+        text: 'Vyhlásit na celém serveru zákaz redstonu a hráče se stížností jmenovat moderátorem.',
         isCorrect: false
       }
     ],
-    explanation: 'Zneužití herní mechaniky generování portálů k likvidaci cizích hráčů a jejich inventářů na mírumilovném Survivalu je přísně zakázáno.'
+    explanation: 'Pasti a nástrahy jsou na Survivalu plně povolené herní mechaniky. Hráči si na nebezpečí v herním světě musí dávat pozor sami. Moderátor v takovém případě věci nevrací ani neuděluje trest.'
   },
   {
     phase: 1,
@@ -4107,54 +4109,76 @@ const MODTEST_SCENARIOS_POOL = [
     isMandatory: true,
     tag: 'DŮVĚRA V DETEKCE & FLAGE',
     title: 'Máme 100% důvěru v anticheat a věříme každému alertu?',
-    description: 'Vidíš v administrátorských hlášeních, že na hráče vyskočilo několik flagů/upozornění na pohyb nebo boj (např. Speed, Reach, Killaura). Znamená každý běžný alert okamžitý trest a jak se liší od hloubkové analýzy SMPAC-DA (Detailed Analysis)?',
+    description: 'V administraci se objevilo několik alertů na pohyb a boj (**Speed, Reach, Killaura**). **Znamená každý flag okamžitý trest** a jak se liší od hloubkové analýzy **SMPAC-DA**?',
     options: [
       {
-        text: 'Ano, anticheat je neomylný program. Jakmile systém vyhodí flag, moderátor má povinnost hráče bez váhání zabanovat na 100 %.',
+        text: 'Ano, anticheat je neomylný. Při každém vyvolaném flagu má moderátor hráče okamžitě zabanovat.',
         isCorrect: false
       },
       {
-        text: 'Rozhodně ne! Běžné flagy z pohybu a boje mají vysokou chybovost (reálná spolehlivost bývá jen kolem 30 % kvůli lagům a pingu). Naproti tomu hloubková analýza SMPAC-DA (Detailed Analysis) dosahuje vysoké přesnosti (~90 %). U běžných flagů se podezřelý hráč musí trpělivě a diskrétně prověřovat i několik týdnů, sbírat důkazy a nic neuspěchat.',
+        text: 'Rozhodně ne! Běžné flagy pohybu a boje mají spolehlivost jen ~30 % (lagy, ping) a vyžadují týdny prověřování. Pouze hloubková analýza SMPAC-DA dosahuje ~90 % přesnosti.',
         isCorrect: true
       },
       {
-        text: 'Anticheat i SMPAC-DA jsou úplně k ničemu, moderátoři by měli veškeré alerty v konzoli ignorovat a řešit cheatery jen když je nahlásí kamarád.',
+        text: 'Anticheat i systém SMPAC-DA zcela ignorovat a cheaty řešit pouze při osobním nahlášení od kamaráda.',
         isCorrect: false
       }
     ],
-    explanation: 'Zbrklý moderátor napáchá víc škody než užitku. Běžné pohybové alerty vznikají i špatným připojením či desynchronizací (~30% úspěšnost). Pouze hloubková systémová analýza SMPAC-DA (Detailed Analysis) dosahuje ~90% jistoty. U nejasných případů a běžných flagů je nutné dlouhodobé sledování v řádu týdnů.'
+    explanation: 'Zbrklý moderátor napáchá víc škody než užitku. **Běžné pohybové alerty mají spolehlivost jen ~30 %** (vznikají i lagem či pingem). Pouze **hloubková analýza SMPAC-DA dosahuje ~90 % jistoty**. U nejasných případů je nutné dlouhodobé prověřování v řádu týdnů.'
+  },
+  {
+    phase: 2,
+    isMandatory: true,
+    tag: 'FILOZOFIE TRESTŮ & SYSTÉM SMPAC',
+    title: 'Dáváme permanentní bany pro každý cheat a jak SMPAC trestá?',
+    description: 'Hráč byl usvědčen z cheatování (**Fly, X-Ray nebo Baritone**). **Uděluje server ihned trvalý permanentní ban** a jak funguje systém trestů v pluginu SMPAC?',
+    options: [
+      {
+        text: 'Permanentní bany se téměř nedávají. SMPAC využívá přesně odstupňované tempbany (Fly/Hacky 60d, Dupe 30d, X-Ray/Freecam 20d, Baritone 16d, Minimapa po varování 7d) a 5minutový delayed ban.',
+        isCorrect: true
+      },
+      {
+        text: 'Ano, server na jakýkoliv cheat uděluje okamžitý trvalý permanentní ban bez výjimky.',
+        isCorrect: false
+      },
+      {
+        text: 'Cheateři se na serveru netrestají vůbec, moderátor jim pouze odebere věci.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Na MYCHAL SMP se **permanentní bany téměř nepoužívají**. SMPAC disponuje přesnými presety (/punish) s odstupňovanými tempbany (**60d, 30d, 20d, 16d, 7d**). Navíc využívá **5minutové zpoždění banu (delayed ban)**, aby cheater neodhalil trigger detekce.'
   },
   {
     phase: 2,
     isMandatory: true,
     tag: 'SLOŽKA MÓDŮ, KOŠ & DETEKCE',
     title: 'Čistá složka módů a prázdný koš vs systém SMPAC-DA',
-    description: 'Hráč v ticketu tvrdí, že nikdy necheatoval, a jako „důkaz“ posílá snímek své složky .minecraft/mods (kde má jen Sodium) a vysypaného koše v systému. Systém SMPAC-DA (Detailed Analysis) na serveru však eviduje jednoznačný záznam o nepovoleném klientu. Co uděláš?',
+    description: 'Hráč v ticketu tvrdí, že nikdy necheatoval, a jako důkaz posílá snímek složky **.minecraft/mods** (jen Sodium) a **prázdného koše**. Záznam ze systému SMPAC-DA však **potvrzuje cheat klienta**. Co uděláš?',
     options: [
       {
-        text: 'Omluvit se hráči a unbanovat ho, protože má složku módů i koš prokazatelně čisté.',
+        text: 'Omluvit se hráči a unbanovat ho, protože jeho složka módů i koš jsou prokazatelně čisté.',
         isCorrect: false
       },
       {
-        text: 'Snímky složky módů a koše jako důkaz odmítnout. Složku lze po odpojení za vteřinu promazat, koš vysypat nebo cheat spustit injekcí z paměti / externího disku. Autoritativní záznam ze systému SMPAC-DA (Detailed Analysis) má vždy absolutní přednost.',
+        text: 'Snímky jako důkaz odmítnout. Složku lze po odpojení ihned promazat, koš vysypat nebo cheat spustit externě z paměti. Výstup SMPAC-DA má absolutní přednost.',
         isCorrect: true
       },
       {
-        text: 'Nainstalovat si do svého počítače vzdálenou plochu a jít mu soukromě prohledávat soubory a registry v počítači.',
+        text: 'Nainstalovat si do počítače vzdálenou plochu a jít mu soukromě prohledávat registry a disk.',
         isCorrect: false
       }
     ],
-    explanation: 'Moderátor nikdy nerozhoduje na základě snímků lokálních složek (mods, stažené soubory, koš) zaslaných hráčem – ty lze kdykoliv po odpojení smazat, vysypat či upravit, nebo klient funguje injekcí. Detekce SMPAC-DA na straně serveru je závazná a žádné interní technické detaily se hráči neprozrazují.'
+    explanation: 'Moderátor **nikdy nerozhoduje podle snímků lokálních složek** zaslaných hráčem – lze je kdykoliv promazat, vysypat, nebo cheat běží z paměti. **Autoritativní výstup SMPAC-DA na serveru je závazný.**'
   },
   {
     phase: 2,
     isMandatory: true,
     tag: 'PODEZŘELÁ TĚŽBA & X-RAY',
     title: 'Případ těžby v podzemí a trapné výmluvy',
-    description: 'Interní bezpečnostní systém serveru spolehlivě zachytil hráče s provokativním nickem, jak v netheru kope přesné úhly přímo do skrytých ložisek ancient debris bez jakéhokoliv průzkumu. Hráč v chatu tvrdí: „Mám prostě štěstí a poslouchám zvuky lávy!“. Jak rozhodneš?',
+    description: 'Bezpečnostní systém zachytil hráče, jak v Netheru kope **přesné úhly přímo do ložisek ancient debris** bez průzkumu. Hráč tvrdí: *„Mám prostě štěstí a poslouchám zvuky lávy!“*. **Jak rozhodneš?**',
     options: [
       {
-        text: 'Udělit permanentní ban za zakázané herní modifikace (X-Ray / cheaty) a nevhodný nick. Autoritativní detekce serveru je konečná a výmluvy na štěstí se neuznávají.',
+        text: 'Udělit tempban na 20 dní za X-Ray dle presetů SMPAC. Autoritativní detekce anomálií je konečná a výmluvy na štěstí se neuznávají.',
         isCorrect: true
       },
       {
@@ -4166,21 +4190,21 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Výmluva na „zvuk lávy“ je notoricky známý cheaterský mýtus. Detekční systém serveru vyhodnocuje anomálie těžby a moderátor se opírá o autoritativní verdikt systému bez zbytečného dohadování.'
+    explanation: 'Výmluva na zvuk lávy je známý cheaterský mýtus. V sazebníku SMPAC se **X-Ray postihuje 20denním tempbanem** a výmluvy se neuznávají.'
   },
   {
     phase: 2,
     isMandatory: true,
     tag: 'TÝMOVÉ PODVÁDĚNÍ',
     title: '50/50 Cheating: Jeden létá s killaura, zbytek sbírá diamantové věci',
-    description: 'Ve 4-členném klanu jeden hráč evidentně používá killaura a fly a masakruje protivníky. Zbylí tři hráči z klanu stojí za ním, nefackují se a vesele plní truhly věcmi z obětí. Jak potrestáš tento tým?',
+    description: 'Ve 4-členném klanu jeden hráč **používá killaura a fly** a masakruje protivníky. **Zbylí tři stojí za ním a plní truhly věcmi z obětí**. Jak potrestáš tento tým?',
     options: [
       {
-        text: 'Zabanovat pouze cheatera. Ostatní tři přece jen stáli opodál a nikoho nezabili.',
+        text: 'Potrestat pouze cheatera. Ostatní tři přece jen stáli opodál a nikoho nezabili.',
         isCorrect: false
       },
       {
-        text: 'Zabanovat cheatera za killaura/fly a ostatní členy potrestat za vědomou spoluúčast a obohacování se z cheatů (tzv. boosting). Uloupený loot zkonfiskovat.',
+        text: 'Cheaterovi udělit tempban 60 dní za killaura/fly a ostatním členům trest za spoluvinu (60 dní dle cheatera). Uloupený loot zkonfiskovat.',
         isCorrect: true
       },
       {
@@ -4188,21 +4212,21 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Pasivní krytí cheatera a sbírání lootu z jeho nelegální výhody představuje vědomou spoluvinu na podvádění. Trestá se jak cheater, tak celá profitující skupina.'
+    explanation: 'V SMPAC se **krytí a profit z cheatů (boosting) trestá stejnou sazbou** jako samotný cheat (**tempban 60 dní**). Trestá se cheater i celá profitující skupina.'
   },
   {
     phase: 2,
     isMandatory: true,
     tag: 'KAMERY & VOLNÝ POHYB',
     title: 'Freecam vs Replay Mod: Tvůrce točí video bez oprávnění',
-    description: 'Hráč stojí AFK na spawnu, ale v chatu přesně navádí kamaráda v podzemí a ví, kde za zdí stojí nepřátelé. Brání se: „Používám jen Replay Mod a točím cinematic pro YouTube! Nemám cheaty!“. Hráč ale nemá status Media. Jak postupovat?',
+    description: 'Hráč **stojí AFK na spawnu**, ale v chatu navádí kamaráda a **přesně ví, kde za zdí stojí nepřátelé**. Brání se: *„Točím cinematic video pro YouTube přes Replay Mod!“*. Nemá Media rank. **Postup?**',
     options: [
       {
         text: 'Pokud tvrdí, že točí na YouTube, povolit mu to a nechat ho být.',
         isCorrect: false
       },
       {
-        text: 'Bez schváleného Media programu a dohledu administrátora je jakýkoliv volný pohyb kamery v reálném čase posuzován jako Freecam/ESP cheat. Následuje BAN.',
+        text: 'Bez Media ranku jde o Freecam (tempban 20 dní). Pokud šlo o Replay Mod, následuje napoprvé kick s varováním, při opakování tempban na 3 dny.',
         isCorrect: true
       },
       {
@@ -4210,14 +4234,14 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Používání nepovolených modifikací umožňujících pohled skrz zdi v reálném čase je přísně zakázáno. Status Media pro filmování podléhá oficiálnímu schválení s přísnými pravidly.'
+    explanation: 'Volný pohyb kamerou v reálném čase bez Media ranku je **Freecam (20d tempban)**. U nepovoleného Replay Modu SMPAC napoprvé uděluje **kick s varováním, opakovaně 3d tempban**.'
   },
   {
     phase: 2,
     isMandatory: true,
     tag: 'SERVER STABILITA & LAGY',
     title: 'Lagovací mašina nejlepšího kamaráda (400 pístů)',
-    description: 'Tvůj dlouholetý kamarád postavil obří automat na štěrk s 400 písty a shazovačem itemů, kvůli kterému kleslo TPS serveru z 20 na 12. Píše ti: „Nech to běžet do rána, dodělávám farmu, nebuď svině!“. Tvoje rozhodnutí?',
+    description: 'Tvůj dlouholetý kamarád postavil obří automat na štěrk s **400 písty a shazovačem itemů**, kvůli kterému **kleslo TPS serveru z 20 na 12**. Píše ti: *„Nech to běžet do rána, dodělávám farmu, nebuď svině!“*. **Tvoje rozhodnutí?**',
     options: [
       {
         text: 'Stroj nechat běžet a hráčům v chatu říct, že laguje samotný server hosting.',
@@ -4232,21 +4256,21 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Kamarádství a protekce v týmu nemají místo. Stabilita serveru pro desítky poctivých hráčů má absolutní prioritu před pístovou farmou kohokoliv.'
+    explanation: 'Kamarádství a protekce v týmu nemají místo. **Stabilita serveru pro desítky poctivých hráčů má absolutní prioritu** před pístovou farmou kohokoliv.'
   },
   {
     phase: 2,
     isMandatory: false,
     tag: 'AUTO-TOTEM CHEAT',
     title: 'Bleskový swap totemů v PvP během jediné sekundy',
-    description: 'Hráč v aréně schytá 4 smrtelné zásahy krystaly během 800 milisekund. Přestože nepřestává sprintovat a má plný hlavní inventář, do levé ruky se mu okamžitě dosazují nové totemy bez otevření inventáře.',
+    description: 'Hráč v aréně schytá **4 smrtelné zásahy krystaly během 800 milisekund**. Přestože nepřestává sprintovat a má plný hlavní inventář, do levé ruky se mu **okamžitě dosazují nové totemy bez otevření inventáře**.',
     options: [
       {
         text: 'Hráč má neuvěřitelně rychlé prsty a trénuje to na klávesnici.',
         isCorrect: false
       },
       {
-        text: 'Jde o nepovolený cheat Auto-Totem (nebo Offhand swap macro), který automaticky doplňuje totemy z inventáře na packetové úrovni. Zaznamenat a zabanovat.',
+        text: 'Jde o nepovolený cheat Auto-Totem (nebo Offhand swap macro), který automaticky doplňuje totemy z inventáře na packetové úrovni. Zaznamenat a udělit tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
@@ -4254,7 +4278,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Fyzická nemožnost lidské reakce na dosazení totemů bez otevření inventáře za zlomek sekundy jasně indikuje klientský cheat. Trestem je trvalý ban.'
+    explanation: 'Fyzická nemožnost lidské reakce na dosazení totemů bez otevření inventáře za zlomek sekundy jasně indikuje klientský cheat. **V sazebníku SMPAC následuje tempban na 60 dní.**'
   },
   {
     phase: 2,
@@ -4393,14 +4417,14 @@ const MODTEST_SCENARIOS_POOL = [
     isMandatory: false,
     tag: 'ANTI-KNOCKBACK (VELOCITY)',
     title: 'Nulový odraz z úderu palicí Mace nebo šípem Punch II',
-    description: 'Hráč dostane přímý zásah palicí Mace z výšky a následně šípem s Punch II, ale jeho postava se nepohne z místa ani o jediný centimetr.',
+    description: 'Hráč dostane **přímý zásah palicí Mace z výšky a následně šípem s Punch II**, ale jeho postava **se nepohne z místa ani o jediný centimetr**.',
     options: [
       {
         text: 'Měl těžké netherite boty, které dávají stoprocentní imunitu vůči odhození.',
         isCorrect: false
       },
       {
-        text: 'Hráč používá Velocity cheat (Anti-Knockback nastavený na 0 %), který ruší zpětný ráz od útoků. Zaznamenat situaci a udělit trvalý ban.',
+        text: 'Hráč používá Velocity cheat (Anti-Knockback nastavený na 0 %), který ruší zpětný ráz od útoků. Zaznamenat situaci a udělit tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
@@ -4408,7 +4432,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Netheritové brnění poskytuje pouze částečnou odolnost vůči knockbacku. Úplná absence jakéhokoliv odhození při silném zásahu je důkazem Velocity cheatu.'
+    explanation: 'Netheritové brnění poskytuje pouze částečnou odolnost vůči knockbacku. Úplná absence jakéhokoliv odhození při silném zásahu je důkazem Velocity cheatu (**tempban 60 dní**).'
   },
   {
     phase: 2,
@@ -4459,14 +4483,14 @@ const MODTEST_SCENARIOS_POOL = [
     isMandatory: false,
     tag: 'SCAFFOLD CHEAT',
     title: 'Běh pozpátku plnou rychlostí s automatickým mostem',
-    description: 'Hráč běží pozpátku plným sprintem přes lávové jezero a pod jeho nohama se plynule tvoří most z bloků, aniž by se hráč otočil, skrčil nebo pohnul hlavou dolů.',
+    description: 'Hráč běží **pozpátku plným sprintem přes lávové jezero** a pod jeho nohama se **plynule tvoří most z bloků**, aniž by se hráč otočil, skrčil nebo pohnul hlavou dolů.',
     options: [
       {
         text: 'Je to zkušený bridge stavitel s rychlými reflexy.',
         isCorrect: false
       },
       {
-        text: 'Jde o nepovolený modul Scaffold / Auto-Bridge, který automaticky pokládá bloky pod nohy hráče v neplatných úhlech. Následuje trvalý ban.',
+        text: 'Jde o nepovolený modul Scaffold / Auto-Bridge, který automaticky pokládá bloky pod nohy hráče v neplatných úhlech. Následuje tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
@@ -4474,7 +4498,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Pokládání bloků pod sebe při plném běhu pozpátku bez míření pohledu na hranu bloku je z fyzikálního hlediska hry bez cheatů nemožné.'
+    explanation: 'Pokládání bloků pod sebe při plném běhu pozpátku bez míření pohledu na hranu bloku je z fyzikálního hlediska hry bez cheatů nemožné. V SMPAC následuje **tempban na 60 dní**.'
   },
   {
     phase: 2,
@@ -4507,7 +4531,7 @@ const MODTEST_SCENARIOS_POOL = [
     isMandatory: true,
     tag: 'PRÁVNÍ BLUFF & ZASTRAŠOVÁNÍ',
     title: 'Hrozba kriminální policií PČR kvůli ukládání IP adres',
-    description: 'Zabanovaný hráč v ticketu tvrdí, že zjišťování jeho VPN a ukládání IP adresy serverem porušuje GDPR, a píše: „Můj táta je právník a zítra podáváme trestní oznámení na Policii ČR na majitele serveru!“. Jak zareaguješ?',
+    description: 'Zabanovaný hráč v ticketu tvrdí, že **zjišťování VPN a ukládání IP adresy serverem porušuje GDPR**, a píše: *„Můj táta je právník a zítra podáváme trestní oznámení na Policii ČR na majitele serveru!“*. **Jak zareaguješ?**',
     options: [
       {
         text: 'V panice hráče odbanovat a smazat záznamy z databáze banů.',
@@ -4522,14 +4546,14 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Ukládání síťových identifikátorů pro zajištění bezpečnosti a prevenci obcházení zákazů je zcela v souladu s čl. 6 odst. 1 písm. f) GDPR. Právní výhrůžky zabanovaných hráčů jsou běžný zastrašovací pokus.'
+    explanation: 'Ukládání síťových identifikátorů pro zajištění bezpečnosti a prevenci obcházení zákazů je zcela v souladu s **čl. 6 odst. 1 písm. f) GDPR (oprávněný zájem)**. **Právní výhrůžky zabanovaných hráčů jsou běžný zastrašovací pokus.**'
   },
   {
     phase: 3,
     isMandatory: true,
     tag: 'BEZPEČNOST ÚČTŮ & PARANOIA',
     title: 'Dotaz nováčka: „Vidí majitel moje heslo v databázi?“',
-    description: 'Nervózní hráč v ticketu odmítá dokončit registraci přes /register s tím, že mu majitel serveru prý přečte heslo a ukradne mu Discord a e-mail. Jak mu profesionálně vysvětlíš bezpečnost?',
+    description: 'Nervózní hráč v ticketu odmítá dokončit registraci přes /register s tím, že mu **majitel serveru prý přečte heslo a ukradne mu Discord a e-mail**. **Jak mu profesionálně vysvětlíš bezpečnost?**',
     options: [
       {
         text: 'Napsat mu: „Klid, majitel na tvůj účet nemá čas.“',
@@ -4544,14 +4568,14 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Profesionální moderátor dokáže uklidnit komunitu technicky přesnými fakty. Jednosměrný hash s kryptografickou solí garantuje, že původní řetězec hesla nikde uložen není.'
+    explanation: 'Profesionální moderátor dokáže uklidnit komunitu technicky přesnými fakty. **Jednosměrný hash s kryptografickou solí (BCrypt)** garantuje, že **původní řetězec hesla nikde uložen není** a nikdo k němu nemá přístup.'
   },
   {
     phase: 3,
     isMandatory: true,
     tag: 'TROLL BOTI & PROXY NICKY',
     title: 'Troll útok s rasistickými jmény přes rotující proxy IP',
-    description: 'Zabanovaný troll se připojuje pod urážlivými nicky jako Ja_jsem_negr_2, 67hitler a spamuje chat. Jaká je nejefektivnější a nejklidnější reakce?',
+    description: 'Zabanovaný troll se připojuje pod **urážlivými nicky** a **spamuje herní chat přes rotující proxy IP adresy**. **Jaká je nejefektivnější a nejklidnější reakce?**',
     options: [
       {
         text: 'Začít na něj v chatu křičet velkými písmeny a vyhrožovat mu fyzickým násilím.',
@@ -4566,14 +4590,14 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Trollové se živí pozorností a reakcemi administrátorů. Nejlepším řešením je okamžitý tichý technický zásah, vyčištění chatu a nulová komunikace.'
+    explanation: 'Trollové se živí pozorností a reakcemi administrátorů. Nejlepším řešením je **okamžitý tichý technický zásah**, **vyčištění chatu (/clearchat)** a **nulová komunikace**.'
   },
   {
     phase: 3,
     isMandatory: true,
     tag: 'ABSURDNÍ NOČNÍ TICKETY',
     title: 'Ticket ve 3:15 ráno: „Pomoc, ztratil jsem se a došly mi louče!“',
-    description: 'Hráč tě v noci označí v urgentním ticketu: „ADMIN POMOC!! Spadnul jsem do díry, došly mi pochodně a bojím se pavouků, okamžitě mě teleportujte na spawn!“. Co uděláš?',
+    description: 'Hráč tě v noci označí v urgentním ticketu: *„ADMIN POMOC!! Spadnul jsem do díry, došly mi pochodně a bojím se pavouků, okamžitě mě teleportujte na spawn!“*. **Co uděláš?**',
     options: [
       {
         text: 'Okamžitě zapnout počítač a hráče teleportovat na spawn.',
@@ -4588,14 +4612,14 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Moderátor není herní sluha ani taxi služba. Do běžného survival gameplaye se nezasahuje a noční panika z pavouků se řeší klidným odkázáním na herní mechaniky.'
+    explanation: '**Moderátor není herní sluha ani taxi služba.** Do běžného survival gameplaye se nezasahuje a noční panika z pavouků se řeší **klidným odkázáním na herní mechaniky (/spawn, /home)**.'
   },
   {
     phase: 3,
     isMandatory: true,
     tag: 'OBCHÁZENÍ FILTRŮ REKLAMY',
     title: 'Propagace cizího serveru v soukromé zprávě /msg',
-    description: 'Hráč posílá do /msg pozvánky na cizí Minecraft server. Když ho konfrontuješ, brání se: „Pravidla zakazují reklamu v chatu! V /msg to není veřejné, takže jsem nic neporušil!“. Jak zní pravidlo?',
+    description: 'Hráč posílá do /msg **pozvánky na cizí Minecraft server**. Když ho konfrontuješ, brání se: *„Pravidla zakazují reklamu v chatu! V /msg to není veřejné, takže jsem nic neporušil!“*. **Jak zní pravidlo?**',
     options: [
       {
         text: 'Má pravdu, soukromé zprávy /msg jsou privátní a reklama se tam trestat nesmí.',
@@ -4610,14 +4634,14 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Využití soukromých zpráv k odlákávání hráčů je typický pokus o obcházení filtru reklamy. Zákaz platí pro jakoukoliv formu přenosu na síti.'
+    explanation: 'Využití soukromých zpráv k odlákávání hráčů je typický pokus o obcházení filtru reklamy. **Zákaz reklamy platí pro jakoukoliv formu přenosu na síti** (chat, /msg, cedulky, knihy i Discord).'
   },
   {
     phase: 3,
     isMandatory: true,
     tag: 'KLANOVÁ DRAMATA & FLAMEWAR',
     title: 'Hysterická válka klanů v ticketu bez důkazů',
-    description: 'Dva rivalské klany zahltí ticketový systém desítkami hádek a vzájemných obvinění z radarů a autokliku, aniž by kdokoliv doložil nezestříhaný videozáznam. Jak zjednáš pořádek?',
+    description: 'Dva rivalské klany zahltí ticketový systém **desítkami hádek a vzájemných obvinění z radarů a autokliku**, aniž by kdokoliv doložil **nezestříhaný videozáznam**. **Jak zjednáš pořádek?**',
     options: [
       {
         text: 'Zabanovat náhodně půlku obou klanů pro výstrahu.',
@@ -4632,7 +4656,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Moderátor musí zůstat naprosto nestranným a chladným arbitrem. Flamewar se ukončí striktním požadavkem na hmatatelné důkazy a fakta.'
+    explanation: 'Moderátor musí zůstat **naprosto nestranným a chladným arbitrem**. Flamewar se ukončí **striktním požadavkem na hmatatelné důkazy a fakta**.'
   },
   {
     phase: 3,
@@ -4862,6 +4886,21 @@ let modtestScore = 0;
 let isModTestFlipping = false;
 let modtestAnswersHistory = [];
 
+/**
+ * Renders modtest text: escapes HTML, then converts **bold** markers to <strong>.
+ * Only allows <strong> tags – no other HTML injection possible.
+ */
+function renderModtestText(str) {
+  if (!str) return '';
+  const escaped = str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+  return escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
 function prepareRandomModTestQuestions() {
   // 1. Rozdělení poolu do 3 fází
   const p1Pool = MODTEST_SCENARIOS_POOL.filter(s => s.phase === 1);
@@ -4958,7 +4997,7 @@ function renderModTestCard(isTransition = false) {
   const qNum = currentModTestIndex + 1;
   const safeTag = typeof escapeHtml === 'function' ? escapeHtml(sc.tag) : sc.tag;
   const safeTitle = typeof escapeHtml === 'function' ? escapeHtml(sc.title) : sc.title;
-  const safeDesc = typeof escapeHtml === 'function' ? escapeHtml(sc.description) : sc.description;
+  const safeDesc = renderModtestText(sc.description);
 
   const optionsToRender = sc.shuffledOptions || sc.options;
   const optionsHtml = optionsToRender.map((opt, optIndex) => {
@@ -5006,40 +5045,43 @@ function handleModTestAnswer(optIndex, isCorrect, btnElement) {
   const optionsList = sc.shuffledOptions || sc.options;
 
   if (isCorrect) {
-    btnElement.classList.add('selected-correct');
+    btnElement.classList.add('selected-correct', 'is-selected-correct');
     modtestScore++;
     modtestAnswersHistory.push({ index: currentModTestIndex, correct: true });
 
-    const safeExplanation = typeof escapeHtml === 'function' ? escapeHtml(sc.explanation) : sc.explanation;
+    const safeExplanation = renderModtestText(sc.explanation);
     feedbackBox.className = 'modtest-feedback-box is-correct';
     feedbackBox.innerHTML = `
-      <div class="feedback-inner">
-        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        <span><strong>Správně!</strong> ${safeExplanation}</span>
+      <div class="modtest-feedback-header is-correct">
+        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>SPRÁVNÉ ROZHODNUTÍ</span>
       </div>
+      <div class="modtest-feedback-content">${safeExplanation}</div>
     `;
   } else {
-    btnElement.classList.add('selected-wrong');
+    btnElement.classList.add('selected-wrong', 'is-selected-wrong');
     modtestAnswersHistory.push({ index: currentModTestIndex, correct: false });
 
-    // Highlight the correct one
+    // Highlight the correct one so applicant clearly sees the right answer
     optionsList.forEach((opt, idx) => {
       if (opt.isCorrect && allBtns[idx]) {
-        allBtns[idx].classList.add('selected-correct');
+        allBtns[idx].classList.add('selected-correct', 'is-selected-correct');
       }
     });
 
-    const safeExplanation = typeof escapeHtml === 'function' ? escapeHtml(sc.explanation) : sc.explanation;
+    const safeExplanation = renderModtestText(sc.explanation);
     feedbackBox.className = 'modtest-feedback-box is-wrong';
     feedbackBox.innerHTML = `
-      <div class="feedback-inner">
-        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        <span><strong>Chyba!</strong> ${safeExplanation}</span>
+      <div class="modtest-feedback-header is-wrong">
+        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span>CHYBNÝ POSTUP</span>
       </div>
+      <div class="modtest-feedback-content">${safeExplanation}</div>
     `;
   }
 
   // Smooth Apple 3D flip to next question
+  const flipDelay = isCorrect ? 1200 : 1800;
   setTimeout(() => {
     activeCard.classList.remove('is-flipping-in');
     activeCard.classList.add('is-flipping-out');
@@ -5049,7 +5091,7 @@ function handleModTestAnswer(optIndex, isCorrect, btnElement) {
       isModTestFlipping = false;
       renderModTestCard(true);
     }, 380);
-  }, 950);
+  }, flipDelay);
 }
 
 function initOrRenderModTest() {

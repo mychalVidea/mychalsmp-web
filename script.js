@@ -59,6 +59,8 @@ function handleUrlRouting() {
     executeTabSwitch('join', false);
   } else if (route === 'rules' || route === 'pravidla') {
     executeTabSwitch('rules', false);
+  } else if (route === 'modtest' || route === 'moderator' || route === 'mod' || route === 'zkouska') {
+    executeTabSwitch('modtest', false);
   } else if (route === 'napady' || route === 'napad' || route === 'ideas') {
     executeTabSwitch('napady', false);
   } else if (route === 'privacy' || route === 'gdpr' || route === 'soukromi' || route === 'data') {
@@ -122,19 +124,36 @@ function executeTabSwitch(name, updateUrl = true) {
     initStatsModule();
   } else if (name === 'smp-plus') {
     checkSmpPlusStatus();
+  } else if (name === 'privacy' || name === 'terms') {
+    if (typeof updateLegalProgressGlobal === 'function') {
+      setTimeout(updateLegalProgressGlobal, 100);
+    }
+  } else if (name === 'rules') {
+    if (typeof initOrRenderRulesQuiz === 'function') {
+      initOrRenderRulesQuiz();
+    }
+  } else if (name === 'modtest') {
+    if (typeof initOrRenderModTest === 'function') {
+      initOrRenderModTest();
+    }
   }
 
-  if (updateUrl) {
+  if (updateUrl && window.location.protocol !== 'file:') {
     let urlPath = '/' + name;
     if (name === 'smp-plus') urlPath = '/smpplus';
     else if (name === 'stats') urlPath = '/statistiky';
     else if (name === 'join') urlPath = '/howto';
     else if (name === 'bugs') urlPath = '/bug';
     else if (name === 'napady') urlPath = '/napady';
+    else if (name === 'modtest') urlPath = '/modtest';
     else if (name === 'home') urlPath = '/';
 
     if (window.location.pathname !== urlPath) {
-      history.pushState({ tab: name }, '', urlPath);
+      try {
+        history.pushState({ tab: name }, '', urlPath);
+      } catch (e) {
+        // Ignorováno pro file:/// a restriktivní lokální kontexty
+      }
     }
   }
 
@@ -152,125 +171,140 @@ function toggleMenu() {
   menu.classList.toggle('open');
 }
 
+// ---- UNIVERSAL CLIPBOARD COPY HELPER (SECURE CONTEXT + FILE:/// FALLBACK) ----
+function copyTextToClipboard(text) {
+  if (!text) return Promise.resolve();
+
+  if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+    return navigator.clipboard.writeText(text).catch(() => {
+      return fallbackCopyTextToClipboard(text);
+    });
+  }
+
+  return fallbackCopyTextToClipboard(text);
+}
+
+function fallbackCopyTextToClipboard(text) {
+  return new Promise((resolve, reject) => {
+    try {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      textArea.style.top = "-9999px";
+      textArea.style.opacity = "0";
+      textArea.setAttribute('readonly', '');
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      textArea.setSelectionRange(0, 99999);
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      if (successful) {
+        resolve();
+      } else {
+        reject(new Error('execCommand copy returned false'));
+      }
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+// ---- TACTILE BUTTON FEEDBACK HELPER ----
+function triggerButtonFeedback(btnElement, copiedText = 'Zkopírováno!') {
+  if (!btnElement) return;
+
+  btnElement.classList.add('copied', 'is-copied');
+
+  // If button has structured label
+  const label = btnElement.querySelector('.btn-copy-label') || btnElement.querySelector('.btn-gm-label');
+  let origLabel = null;
+  if (label) {
+    origLabel = label.textContent;
+    label.textContent = copiedText;
+  }
+
+  // Clear existing timer if clicked multiple times
+  if (btnElement._resetTimer) {
+    clearTimeout(btnElement._resetTimer);
+  }
+
+  btnElement._resetTimer = setTimeout(() => {
+    btnElement.classList.remove('copied', 'is-copied');
+    if (label && origLabel !== null) {
+      label.textContent = origLabel;
+    }
+    btnElement._resetTimer = null;
+  }, 2000);
+}
+
 // ---- COPY IP ----
 function copyIP(event) {
+  if (event) {
+    if (typeof event.stopPropagation === 'function') event.stopPropagation();
+    if (typeof event.preventDefault === 'function') event.preventDefault();
+  }
+
   const ip = 'mychalsmp.xyz';
-  navigator.clipboard.writeText(ip).then(() => {
-    // 1. Show beautiful toast notification
-    showToast('📋 IP zkopírována!');
 
-    // 2. Local feedback updates
-    if (event && event.currentTarget) {
-      const element = event.currentTarget;
+  // 1. Okamžitě najít tlačítko a kontejner pro hmatovou odezvu
+  let btnToFeedback = null;
+  let barToHighlight = null;
 
-      // If it's the copy button on the Home hero
-      if (element.id === 'copy-btn' || element.classList.contains('hero-ip-bar')) {
-        const copyBtn = document.getElementById('copy-btn');
-        if (copyBtn) {
-          const origText = copyBtn.innerHTML;
-          copyBtn.innerHTML = '✅ Zkopírováno!';
-          copyBtn.classList.add('copied');
-          setTimeout(() => {
-            copyBtn.innerHTML = origText;
-            copyBtn.classList.remove('copied');
-          }, 2000);
-        }
-      }
-      // If it's the quickstart ip box
-      else if (element.classList.contains('quickstart-ip-box')) {
-        const copyBtn = element.querySelector('.quickstart-copy-btn');
-        if (copyBtn) {
-          const origText = copyBtn.innerHTML;
-          copyBtn.innerHTML = '<i class="fa-solid fa-check" style="color: #4ade80;"></i>';
-          setTimeout(() => {
-            copyBtn.innerHTML = origText;
-          }, 2000);
-        }
-      }
-      // If it's the join-quick-ip-card or join-quick-ip-address
-      else if (element.classList.contains('join-quick-ip-address') || element.closest('.join-quick-ip-card')) {
-        const copyBtn = element.querySelector('.join-quick-copy-btn') || element.closest('.join-quick-ip-card').querySelector('.join-quick-copy-btn');
-        if (copyBtn) {
-          const origText = copyBtn.innerHTML;
-          copyBtn.innerHTML = '✅ Zkopírováno!';
-          copyBtn.classList.add('copied');
-          setTimeout(() => {
-            copyBtn.innerHTML = origText;
-            copyBtn.classList.remove('copied');
-          }, 2000);
-        }
-      }
-      // If it's the join-step-ip-box
-      else if (element.classList.contains('join-step-ip-box') || element.closest('.join-step-ip-box')) {
-        const box = element.classList.contains('join-step-ip-box') ? element : element.closest('.join-step-ip-box');
-        const copyBtn = box.querySelector('.join-step-copy-btn');
-        if (copyBtn) {
-          const origText = copyBtn.innerHTML;
-          copyBtn.innerHTML = '<i class="fa-solid fa-check" style="color: #21DE00;"></i> Zkopírováno!';
-          box.classList.add('copied');
-          setTimeout(() => {
-            copyBtn.innerHTML = origText;
-            box.classList.remove('copied');
-          }, 2000);
-        }
-      }
-      // If it's the join-ip-container in the header
-      else if (element.classList.contains('join-ip-container')) {
-        const copyBtn = element.querySelector('.join-ip-copy-btn');
-        if (copyBtn) {
-          const origText = copyBtn.innerHTML;
-          copyBtn.innerHTML = '✅ Zkopírováno!';
-          copyBtn.classList.add('copied');
-          setTimeout(() => {
-            copyBtn.innerHTML = origText;
-            copyBtn.classList.remove('copied');
-          }, 2000);
-        }
-      }
-      // If it's the join-timeline-ip container in step 2
-      else if (element.classList.contains('join-timeline-ip')) {
-        const indicator = element.querySelector('.join-copy-indicator');
-        if (indicator) {
-          const origText = indicator.innerHTML;
-          indicator.innerHTML = '✅ Zkopírováno!';
-          element.classList.add('copied');
-          setTimeout(() => {
-            indicator.innerHTML = origText;
-            element.classList.remove('copied');
-          }, 2000);
-        }
-      }
+  const target = event ? (event.currentTarget || event.target) : null;
+  if (target) {
+    if (target.id === 'copy-btn') {
+      btnToFeedback = target;
+      barToHighlight = document.querySelector('.hero-ip-bar');
+    } else if (target.classList.contains('hero-ip-bar') || target.closest('.hero-ip-bar')) {
+      barToHighlight = target.classList.contains('hero-ip-bar') ? target : target.closest('.hero-ip-bar');
+      btnToFeedback = barToHighlight.querySelector('#copy-btn') || barToHighlight.querySelector('button');
+    } else if (target.classList.contains('quickstart-ip-box') || target.closest('.quickstart-ip-box')) {
+      barToHighlight = target.classList.contains('quickstart-ip-box') ? target : target.closest('.quickstart-ip-box');
+      btnToFeedback = barToHighlight.querySelector('.quickstart-copy-btn') || barToHighlight.querySelector('button');
+    } else if (target.classList.contains('join-quick-ip-address') || target.closest('.join-quick-ip-card') || target.closest('.join-quick-ip-address')) {
+      barToHighlight = target.closest('.join-quick-ip-card') || target.closest('.join-quick-ip-address') || target;
+      btnToFeedback = barToHighlight.querySelector('.join-quick-copy-btn') || barToHighlight.querySelector('button');
+    } else if (target.classList.contains('join-compact-ip-box') || target.closest('.join-compact-ip-box')) {
+      barToHighlight = target.classList.contains('join-compact-ip-box') ? target : target.closest('.join-compact-ip-box');
+      btnToFeedback = barToHighlight.querySelector('.join-compact-copy-btn') || barToHighlight.querySelector('button');
+    } else {
+      btnToFeedback = target.tagName === 'BUTTON' ? target : target.querySelector('button');
     }
-  }).catch(err => {
-    console.error('Failed to copy: ', err);
+  }
+
+  if (!btnToFeedback) {
+    btnToFeedback = document.getElementById('copy-btn');
+  }
+
+  // 2. Okamžitá hmatová reakce a morph ikon v tlačítku (žádné čekání na asynchronní operaci)
+  if (btnToFeedback) {
+    triggerButtonFeedback(btnToFeedback, 'Zkopírováno!');
+  }
+  if (barToHighlight) {
+    barToHighlight.classList.add('copied');
+    setTimeout(() => barToHighlight.classList.remove('copied'), 2000);
+  }
+
+  // 3. Kopírování do schránky s automatickým fallbackem pro file:///
+  copyTextToClipboard(ip).catch(err => {
+    console.warn('Clipboard write fallback error:', err);
   });
 }
 
 // ---- COPY COMMAND TO CLIPBOARD ----
 function copyCommand(cmd, el) {
   if (!cmd) return;
-  navigator.clipboard.writeText(cmd).then(() => {
-    showToast(`⚡ Příkaz <code>${cmd}</code> byl zkopírován!`);
-    if (el) {
-      const hint = el.querySelector('.cmd-copy-hint') ||
-        el.querySelector('.gm-card-cmd-chip i') ||
-        el.querySelector('.join-cmd-box i') ||
-        el.querySelector('i.fa-copy');
-      if (hint) {
-        const originalHtml = hint.outerHTML;
-        hint.outerHTML = '<i class="fa-solid fa-check text-green-accent" style="color: #21DE00;"></i>';
-        el.classList.add('command-copied');
-        setTimeout(() => {
-          const checkIcon = el.querySelector('i.text-green-accent') || el.querySelector('.fa-check');
-          if (checkIcon) {
-            checkIcon.outerHTML = originalHtml;
-          }
-          el.classList.remove('command-copied');
-        }, 1800);
-      }
-    }
-  }).catch(() => {
-    showToast(`Příkaz: ${cmd}`);
+  if (el) {
+    triggerButtonFeedback(el, 'Zkopírováno!');
+    el.classList.add('command-copied', 'copied');
+    setTimeout(() => {
+      el.classList.remove('command-copied', 'copied');
+    }, 2000);
+  }
+  copyTextToClipboard(cmd).catch(err => {
+    console.warn('Failed to copy command:', err);
   });
 }
 
@@ -279,16 +313,12 @@ function copyTicketId(e) {
   const ticketIdEl = document.getElementById('ticket-id-display');
   if (!ticketIdEl) return;
   const text = ticketIdEl.textContent.trim();
-  navigator.clipboard.writeText(text).then(() => {
-    showToast(`📋 Číslo tiketu ${text} zkopírováno!`);
-    const btn = document.querySelector('.ticket-copy-btn');
-    if (btn) {
-      const orig = btn.innerHTML;
-      btn.innerHTML = '<i class="fa-solid fa-check" style="color: #4ade80;"></i>';
-      setTimeout(() => { btn.innerHTML = orig; }, 2000);
-    }
-  }).catch(() => {
-    showToast(`Číslo tiketu: ${text}`);
+  const btn = document.querySelector('.ticket-copy-btn');
+  if (btn) {
+    triggerButtonFeedback(btn, 'Zkopírováno!');
+  }
+  copyTextToClipboard(text).catch(err => {
+    console.warn('Failed to copy ticket ID:', err);
   });
 }
 
@@ -736,7 +766,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const token = urlParams.get('token');
   if (token) {
     localStorage.setItem('auth_token', token);
-    window.history.replaceState({}, document.title, window.location.pathname);
+    if (window.location.protocol !== 'file:') {
+      try {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } catch (e) {
+        // Ignorováno pro restriktivní lokální prostředí
+      }
+    }
     showTab('media');
   } else {
     handleUrlRouting();
@@ -841,6 +877,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize PC Interactive Canvas Particles
   initHeroParticles();
+
+  // Initialize Rules Situational Quiz if element exists
+  if (typeof initOrRenderRulesQuiz === 'function') {
+    initOrRenderRulesQuiz();
+  }
 });
 
 // ---- DISCORD LOGIN ----
@@ -989,12 +1030,9 @@ async function checkSmpPlusStatus() {
   }
 }
 
-function copyDlinkCmd() {
-  navigator.clipboard.writeText('/dlink').then(() => {
-    if (typeof showToast === 'function') {
-      showToast('📋 Příkaz /dlink byl zkopírován do schránky!');
-    }
-  }).catch(() => { });
+function copyDlinkCmd(btn) {
+  const el = btn || (typeof event !== 'undefined' && event ? event.currentTarget : null);
+  triggerButtonFeedback(el, '/dlink');
 }
 
 function confirmCancelSmpPlus() {
@@ -3164,7 +3202,9 @@ function smoothScrollToLegal(targetId, event) {
   window.scrollTo({ top: y, behavior: 'smooth' });
 }
 
-// Sledování průběhu čtení a aktivní kapitoly v TOC
+let updateLegalProgressGlobal = function() {};
+
+// Sledování průběhu čtení a aktivní kapitoly v TOC (Clamped Sticky Rail)
 (function initLegalReader() {
   function updateLegalProgress() {
     const activeSection = document.querySelector('.tab-section.legal-section.active');
@@ -3179,7 +3219,7 @@ function smoothScrollToLegal(targetId, event) {
     const firstRect = articles[0].getBoundingClientRect();
     const lastRect = articles[articles.length - 1].getBoundingClientRect();
     const totalHeight = lastRect.bottom - firstRect.top;
-    const scrollPos = (window.innerHeight / 2) - firstRect.top;
+    const scrollPos = (window.innerHeight * 0.35) - firstRect.top;
 
     const pct = Math.max(0, Math.min(100, Math.round((scrollPos / totalHeight) * 100)));
     if (progressBar) {
@@ -3187,12 +3227,24 @@ function smoothScrollToLegal(targetId, event) {
     }
 
     let activeId = '';
+    let closestDist = Infinity;
+    const targetY = window.innerHeight * 0.35;
+
     articles.forEach(art => {
       const r = art.getBoundingClientRect();
-      if (r.top <= 200 && r.bottom >= 100) {
+      // Focus on the article nearest to the reading midline
+      if (r.top <= targetY && r.bottom >= 60) {
         activeId = art.id;
       }
     });
+
+    if (!activeId && articles.length) {
+      if (articles[0].getBoundingClientRect().top > targetY) {
+        activeId = articles[0].id;
+      } else {
+        activeId = articles[articles.length - 1].id;
+      }
+    }
 
     if (activeId && tocLinks.length) {
       tocLinks.forEach(link => {
@@ -3206,6 +3258,1980 @@ function smoothScrollToLegal(targetId, event) {
     }
   }
 
+  updateLegalProgressGlobal = updateLegalProgress;
   window.addEventListener('scroll', updateLegalProgress, { passive: true });
   window.addEventListener('resize', updateLegalProgress, { passive: true });
 })();
+
+// ---- INTERACTIVE RULES FILTER ----
+function filterRules(category, btnElement) {
+  if (btnElement) {
+    const parent = btnElement.closest('.rules-filter-bar');
+    if (parent) {
+      parent.querySelectorAll('.rules-filter-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+    }
+    btnElement.classList.add('active');
+    btnElement.setAttribute('aria-selected', 'true');
+  }
+
+  const cards = document.querySelectorAll('#rules-card-grid .rule-card');
+  cards.forEach(card => {
+    const cardCat = card.getAttribute('data-category');
+    if (category === 'all' || cardCat === category) {
+      card.classList.remove('rule-card-hidden');
+    } else {
+      card.classList.add('rule-card-hidden');
+    }
+  });
+}
+
+// ---- INTERACTIVE SITUATIONAL SERVER QUIZ (10 RANDOMIZED REAL-WORLD CASES) ----
+const RULES_QUIZ_SCENARIOS = [
+  {
+    id: 'dup-covert',
+    tag: 'SMP & Duplikace',
+    question: 'Kámoš ti na serveru hodil 3 shulker boxy plné netherite bloků se slovy: „Rychle si to schovej do své ender truhly a nikomu nic neříkej, našel jsem nový dupe glitch.“ Co uděláš?',
+    options: [
+      {
+        text: 'Schovám si je do své ender truhly, protože co je v ender chestce, to admini v logách nevidí.',
+        isCorrect: false
+      },
+      {
+        text: 'Okamžitě vytvořím ticket na Discordu nebo napíšu /report s nickem kamaráda a věci odevzdám. Přechovávání dupnutých itemů je spolupachatelství a hrozí ban i wipe inventáře.',
+        isCorrect: true
+      },
+      {
+        text: 'Itemy si nechám a hned je rozprodám v /shopu nebo ostatním hráčům za herní coiny, abych nebyl podezřelý.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Skvělá volba! Přechovávání nelegálních nebo dupnutých věcí se posuzuje stejně přísně jako samotný dupe – trvalým banem a smazáním účtu. Nahlášením navíc získáš oficiální odměnu v diamantových blocích!',
+    wrongFeedback: 'Pozor! Admin logy zachycují veškeré přesuny itemů, dropy na zem i obsah ender truhel. Přechovávání dupnutých itemů vede k okamžitému permanentnímu banu!'
+  },
+  {
+    id: 'smp-raid',
+    tag: 'SMP Svět (/smp)',
+    question: 'Hraješ na SMP světě (/smp). Cizí klan ti pomocí TNT kanónů prorazil hradby, vyhodil základnu do povětří, zničil truhly a pobil tvůj tým. Jaká je správná reakce?',
+    options: [
+      {
+        text: 'Začnu v globálním chatu psát vulgární nadávky na jejich rodiny a spamovat administrátory.',
+        isCorrect: false
+      },
+      {
+        text: 'Otevřu na Discordu ticket a budu požadovat zabanování útočníků a vrácení odpálených truhel administrátory.',
+        isCorrect: false
+      },
+      {
+        text: 'Je to plně v rámci pravidel – na novém SMP světě (/smp) jsou přepady, pasti a ničení cizích základen legální herní mechanikou. Zabezpečím bázi lépe a naplánuji pomstu ve hře.',
+        isCorrect: true
+      }
+    ],
+    explanation: 'Přesně tak! SMP svět (/smp) je stvořený pro volný boj, přepady klanů a ničení bází. Pokud preferuješ klid a ochranu staveb, stačí se přepnout na klasický Survival svět (/survival).',
+    wrongFeedback: 'Chyba! Na SMP světě (/smp) je ničení staveb a boj výslovně povoleno. Pro klidné stavění bez griefingu slouží klasický svět /survival s rezidencemi.'
+  },
+  {
+    id: 'survival-chest',
+    tag: 'Survival Svět (/survival)',
+    question: 'Na Survival světě (/survival) prozkoumáváš krajinu a narazíš na cizí rozestavěný dům. Truhly nejsou v rezidenci a nejsou uzamčené. Smíš je vybrat a suroviny si odnést?',
+    options: [
+      {
+        text: 'Ne! Na Survival světě je krádež i ničení cizích staveb zakázáno bez ohledu na to, zda má hráč rezidenci. Všechny interakce navíc zaznamenává CoreProtect.',
+        isCorrect: true
+      },
+      {
+        text: 'Ano, pokud si majitel nevytvořil rezidenci, je to jeho chyba a všechno v truhlách je volná kořist pro každého.',
+        isCorrect: false
+      },
+      {
+        text: 'Smím si vzít jen diamanty a cenné rudy, stavební bloky tam musím nechat.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Výborně! Na klasickém Survivalu platí absolutní zákaz krádeží a griefingu. CoreProtect loguje každý otevřený kontejner a zásah do bloků – viník je vždy odhalen a potrestán.',
+    wrongFeedback: 'Špatně! Na Survivalu je vybírání cizích truhel i ničení staveb bez svolení majitele přísně zakázáno i mimo rezidenci.'
+  },
+  {
+    id: 'irl-trade-psc',
+    tag: 'Ekonomika & Účty',
+    question: 'Hráč ti do soukromé zprávy (/msg) napíše: „Dám ti kód na 200 Kč Paysafecard, když mi ve hře dáš svůj full netherite gear a 50 000 coinů.“ Jak zareaguješ?',
+    options: [
+      {
+        text: 'Odmítnu a hráče nahlásím adminům se screenshotem zprávy. IRL obchod (prodej herních věcí za reálné peníze) je přísně zakázán a trestá se perma banem pro obě strany.',
+        isCorrect: true
+      },
+      {
+        text: 'Nabídku hned přijmu, skutečné peníze za virtuální herní itemy jsou přece super obchod.',
+        isCorrect: false
+      },
+      {
+        text: 'Napíšu mu, ať mi pošle Paysafecard kód jako první, abych měl jistotu, že mě neokrade.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Správně! IRL obchodování je na MYCHAL SMP zakázáno. Chráníme komunitu před podvody a scamem. Za pokus o prodej či nákup za reálné peníze dostávají obě strany trvalý ban.',
+    wrongFeedback: 'Pozor! IRL Trade (prodej za reálné peníze, PSC či krypto) je přísně zakázán. Znamená okamžitý permanentní ban pro kupujícího i prodávajícího bez výjimky!'
+  },
+  {
+    id: 'xray-texture',
+    tag: 'Fair-Play & Anticheat',
+    question: 'Kamarád tvrdí: „Když si dáš průhledný X-Ray texture pack místo hack klienta, anticheat to nepozná, protože textury jsou čistě na straně klienta.“ Má pravdu?',
+    options: [
+      {
+        text: 'Ano, anticheat kontroluje jen nepovolené mody a pakety, textury odhalit neumí.',
+        isCorrect: false
+      },
+      {
+        text: 'Nemá pravdu! Anticheat a heuristické filtry sledují poměr těženého kamene k rudám, trajektorie chůze i přímé kopání k diamantům. Následuje okamžitý permanentní ban.',
+        isCorrect: true
+      },
+      {
+        text: 'Texture pack je povolený, pokud s ním hráč těží pouze uhlí a železo pro stavbu.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Přesně tak! Náš server disponuje pokročilým anti-xray systémem i heuristickou analýzou těžby. Rentgenový texture pack je postaven na roveň cheatům a vede k okamžitému banu.',
+    wrongFeedback: 'Chyba! X-Ray textury jsou posuzovány jako plnohodnotný cheat. Systém anomálie spolehlivě zachytí a trest je okamžitý permanentní ban bez varování.'
+  },
+  {
+    id: 'lag-machine',
+    tag: 'Technická pravidla',
+    question: 'Postavil jsi obří létající redstone stroj se 400 písty a sleduješ, že po jeho spuštění kleslo TPS celého serveru z 20 na 5. Co je tvou povinností udělat?',
+    options: [
+      {
+        text: 'Nechám ho běžet dál, protože jsem si aktivoval SMP+ a mám právo využívat server na maximum.',
+        isCorrect: false
+      },
+      {
+        text: 'Stroj okamžitě zastavím a upravím nebo zmenším. Vědomé i nedbalostní přetěžování serveru a shazování TPS je zakázáno.',
+        isCorrect: true
+      },
+      {
+        text: 'Postavím kolem stroje vysokou obsidiánovou zeď, aby si admini nevšimli, kde lag mašina běží.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Výborně! Všichni hráči mají právo na stabilní zážitek na 20 TPS. Automatické farmy a stroje jsou vítané, ale nikdy nesmí způsobovat lag celému serveru.',
+    wrongFeedback: 'Ne! Stabilita serveru pro všechny hráče je prioritou číslo jedna. Záměrné i ignorované lagování vede ke smazání mechanismu a postihu.'
+  },
+  {
+    id: 'mute-evasion',
+    tag: 'Komunita & Tresty',
+    question: 'Dostal jsi od moderátora 2hodinový Mute za urážky v globálním chatu. Můžeš se připojit z bratrova účtu nebo psát hráčům přejmenováváním věcí v kovadlině?',
+    options: [
+      {
+        text: 'Ano, mute je na konkrétní nick, takže jiný účet je v naprostém pořádku.',
+        isCorrect: false
+      },
+      {
+        text: 'V žádném případě! Jakékoliv obcházení trestu (alt účty, cedulky, knihy, kovadliny) vede k okamžitému prodloužení na permanentní ban na IP i všechny propojené účty.',
+        isCorrect: true
+      },
+      {
+        text: 'Můžu psát zprávy házením přejmenovaných mečů na zem, protože to není chatovací zpráva.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Přesně tak! Obcházení uděleného trestu je závažnější přestupek než původní prohřešek. Pokud má hráč k trestu výhrady, řeší se to slušně přes ticket na Discordu.',
+    wrongFeedback: 'Chyba! Obcházení mute (jak přes druhý účet, tak přes přejmenované itemy či cedulky) se trestá okamžitým permanentním banem.'
+  },
+  {
+    id: 'replay-mod',
+    tag: 'Klient & Mody',
+    question: 'Chceš si natočit cinematic video své nové báze s volnou kamerou přes Replay Mod. Jaká pravidla pro tento mod platí?',
+    options: [
+      {
+        text: 'Replay Mod je povolen výhradně pro schválené tvůrce s Media rankem. Běžní hráči jej nesmí mít aktivní, aby nedocházelo ke zneužití volné kamery jako Freecamu.',
+        isCorrect: true
+      },
+      {
+        text: 'Replay mod může mít libovolný hráč a používat volnou kameru i k prohlížení cizích podzemních základen.',
+        isCorrect: false
+      },
+      {
+        text: 'Replay mod je celkově zakázán i pro ověřené YouTubery a oficiální tvůrce.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Skvěle! Replay Mod má jasný schvalovací proces pro tvůrce s Media rankem. Běžným hráčům není povolen, aby byl zachován princip férovosti bez Freecamu.',
+    wrongFeedback: 'Pozor! Běžný hráč Replay Mod používat nesmí – volná kamera bez ověřeného Media ranku je brána jako zakázaný Freecam cheat.'
+  },
+  {
+    id: 'shop-glitch',
+    tag: 'Ekonomika & /shop',
+    question: 'V herním /shopu narazíš na chybu: při rychlém nákupu určitého itemu ti server neodečte peníze, ale naopak ti přičte $500 na konto. Jak se zachováš?',
+    options: [
+      {
+        text: 'Budu klikat hodinu v kuse, nakoupím si maxované netherite sety a zbytek coinů převedu kamarádovi.',
+        isCorrect: false
+      },
+      {
+        text: 'Chybu ihned přestanu využívat a nahlásím ji do ticketu na Discordu. Získám odměnu v diamantových blocích a ochráním ekonomiku serveru před znehodnocením.',
+        isCorrect: true
+      },
+      {
+        text: 'Napíšu to do globálního chatu, ať si všichni stihnou naklikat peníze, než to admini stihnou opravit.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Jednoznačně správně! Nahlášení ekonomické chyby ti přinese zaslouženou odměnu v diamantových blocích. Zneužití chyby (bug abuse) vede k okamžitému banu a resetu konta.',
+    wrongFeedback: 'Chyba! Zneužívání chyb ekonomiky (bug abuse) je nejpřísněji trestaný delikt vedoucí k perma banu a smazání veškerého majetku.'
+  },
+  {
+    id: 'private-ads',
+    tag: 'Chat & Komunita',
+    question: 'Hráč ti do soukromé zprávy (/msg) zašle pozvánku na jiný Minecraft server: „Pojď k nám na server, rozdáváme VIP zdarma a máme lepší Survival.“ Co o této situaci platí?',
+    options: [
+      {
+        text: 'V soukromých zprávách (/msg) je posílání pozvánek na cizí servery v pořádku, zakázané je to jen v globálním chatu.',
+        isCorrect: false
+      },
+      {
+        text: 'Reklama na cizí servery a projekty v jakékoliv formě (veřejný chat, /msg, knihy, cedulky) je přísně zakázána a trestá se okamžitým banem.',
+        isCorrect: true
+      },
+      {
+        text: 'Reklama je zakázána jen tehdy, pokud obsahuje vulgární slova.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Správně! Zákaz reklamy na cizí servery a projekty platí bez výjimky ve všech komunikačních kanálech. Nahlášením takového chování pomáháš udržovat server čistý.',
+    wrongFeedback: 'Špatně! Zákaz propagace cizích projektů je absolutní – platí pro globální chat, /msg, mail i herní předměty.'
+  },
+  {
+    id: 'minimap-ban',
+    tag: 'Klient & Minimapy',
+    question: 'Můžeš na serveru používat Xaero\'s Minimap nebo JourneyMap, pokud si v nastavení modu vypneš radar na jeskyně, rudy a ostatní hráče?',
+    options: [
+      {
+        text: 'Ano, základní minimapa zobrazující pouze povrch s waypointy je povolená.',
+        isCorrect: false
+      },
+      {
+        text: 'Ne! Veškeré minimapy (včetně Xaero\'s Minimap, JourneyMap a jiných) i vestavěné waypoint mody jsou na MYCHAL SMP přísně zakázány bez výjimky.',
+        isCorrect: true
+      },
+      {
+        text: 'Minimapa je povolená pouze na Survival světě, ale na SMP světě se musí vypnout.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Přesně tak! Pravidlo 1 serveru v /rules výslovně zakazuje veškeré minimapy a waypoint mody bez výjimky. Hráči se orientují poctivě pomocí souřadnic a herních map.',
+    wrongFeedback: 'Chyba! Pravidlo 1 v /rules výslovně zakazuje všechny minimapy (Xaero\'s Minimap, JourneyMap atd.) i waypointy bez ohledu na to, jak si je v klientovi nastavíš!'
+  }
+];
+
+let currentDynamicQuizScenarios = [];
+let currentRulesQuestionIndex = 0;
+let isRulesFlipping = false;
+
+function shuffleQuizArray(arr) {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function renderCurrentRulesQuestionCard(isTransition = false) {
+  const container = document.getElementById('rules-quiz-dynamic-questions');
+  if (!container) return;
+
+  const total = currentDynamicQuizScenarios.length || 4;
+
+  if (currentRulesQuestionIndex >= total) {
+    container.innerHTML = '';
+    const successCard = document.getElementById('quiz-success-card');
+    if (successCard) {
+      successCard.style.display = 'block';
+      setTimeout(() => {
+        successCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 200);
+    }
+    return;
+  }
+
+  const sc = currentDynamicQuizScenarios[currentRulesQuestionIndex];
+  if (!sc) return;
+
+  const qNumber = currentRulesQuestionIndex + 1;
+  const safeTag = typeof escapeHtml === 'function' ? escapeHtml(sc.tag) : sc.tag;
+  const safeQuestion = typeof escapeHtml === 'function' ? escapeHtml(sc.question) : sc.question;
+
+  const optionsHtml = sc.shuffledOptions.map((opt, optIndex) => {
+    const safeOptText = typeof escapeHtml === 'function' ? escapeHtml(opt.text) : opt.text;
+    return `
+      <button class="quiz-option-btn" type="button" data-optindex="${optIndex}" onclick="handleDynamicQuizAnswer(${optIndex}, ${opt.isCorrect}, this)">
+        <span class="quiz-option-indicator" aria-hidden="true"></span>
+        <span class="quiz-option-label">${safeOptText}</span>
+      </button>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="quiz-question-box ${isTransition ? 'is-flipping-in' : ''}" id="quiz-active-box">
+      <div class="quiz-question-head">
+        <span class="quiz-number">${qNumber}</span>
+        <div class="quiz-question-meta">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px;">
+            <span class="quiz-scenario-tag">${safeTag}</span>
+            <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600;">Otázka ${qNumber} z ${total}</span>
+          </div>
+          <h4 class="quiz-question-text">${safeQuestion}</h4>
+        </div>
+      </div>
+      <div class="quiz-options-grid">
+        ${optionsHtml}
+      </div>
+      <div class="quiz-feedback-box" id="quiz-active-feedback"></div>
+    </div>
+  `;
+}
+
+function resetAndShuffleQuiz() {
+  const container = document.getElementById('rules-quiz-dynamic-questions');
+  if (!container) return;
+
+  // Pick 4 random scenarios from the pool of 10
+  const shuffledPool = shuffleQuizArray(RULES_QUIZ_SCENARIOS);
+  const pickedScenarios = shuffledPool.slice(0, 4).map(sc => {
+    return {
+      ...sc,
+      shuffledOptions: shuffleQuizArray(sc.options)
+    };
+  });
+
+  currentDynamicQuizScenarios = pickedScenarios;
+  currentRulesQuestionIndex = 0;
+  isRulesFlipping = false;
+
+  // Reset UI
+  const bar = document.getElementById('rules-quiz-progress-bar');
+  const counter = document.getElementById('rules-quiz-counter');
+  const successCard = document.getElementById('quiz-success-card');
+  if (bar) bar.style.width = '0%';
+  if (counter) counter.textContent = 'Vyřešeno 0 ze 4 situací';
+  if (successCard) successCard.style.display = 'none';
+
+  renderCurrentRulesQuestionCard(false);
+}
+
+function handleDynamicQuizAnswer(optIndex, isCorrect, buttonElement) {
+  if (isRulesFlipping) return;
+
+  const scenario = currentDynamicQuizScenarios[currentRulesQuestionIndex];
+  if (!scenario) return;
+
+  const activeBox = document.getElementById('quiz-active-box');
+  const feedbackBox = document.getElementById('quiz-active-feedback');
+  if (!activeBox || !feedbackBox) return;
+
+  if (isCorrect) {
+    isRulesFlipping = true;
+    const buttons = activeBox.querySelectorAll('.quiz-option-btn');
+    buttons.forEach(b => {
+      b.disabled = true;
+      b.classList.remove('selected-wrong');
+    });
+    buttonElement.classList.add('selected-correct');
+    activeBox.classList.add('is-completed');
+
+    const safeExplanation = typeof escapeHtml === 'function' ? escapeHtml(scenario.explanation) : scenario.explanation;
+    feedbackBox.className = 'quiz-feedback-box is-correct';
+    feedbackBox.innerHTML = `
+      <div class="feedback-inner">
+        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>${safeExplanation}</span>
+      </div>
+    `;
+
+    const total = currentDynamicQuizScenarios.length || 4;
+    const currentCompleted = currentRulesQuestionIndex + 1;
+    const pct = Math.round((currentCompleted / total) * 100);
+
+    const bar = document.getElementById('rules-quiz-progress-bar');
+    const counter = document.getElementById('rules-quiz-counter');
+    if (bar) bar.style.width = pct + '%';
+    if (counter) counter.textContent = `Vyřešeno ${currentCompleted} ze ${total} situací`;
+
+    // Satisfying Apple 3D flip out to next question
+    setTimeout(() => {
+      activeBox.classList.remove('is-flipping-in');
+      activeBox.classList.add('is-flipping-out');
+
+      setTimeout(() => {
+        currentRulesQuestionIndex++;
+        isRulesFlipping = false;
+        renderCurrentRulesQuestionCard(true);
+      }, 380);
+    }, 780);
+  } else {
+    buttonElement.classList.add('selected-wrong');
+    const safeWrong = typeof escapeHtml === 'function' ? escapeHtml(scenario.wrongFeedback) : scenario.wrongFeedback;
+    feedbackBox.className = 'quiz-feedback-box is-wrong';
+    feedbackBox.innerHTML = `
+      <div class="feedback-inner">
+        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span>${safeWrong}</span>
+      </div>
+    `;
+
+    setTimeout(() => {
+      buttonElement.classList.remove('selected-wrong');
+    }, 1200);
+  }
+}
+
+function initOrRenderRulesQuiz() {
+  const container = document.getElementById('rules-quiz-dynamic-questions');
+  if (!container) return;
+  if (currentDynamicQuizScenarios.length === 0 || container.children.length === 0) {
+    resetAndShuffleQuiz();
+  }
+}
+
+// =========================================================================
+// SECRET MODERATOR APPLICANT TEST (/modtest) - POOL OF 52 AUTHENTIC SCENARIOS
+// Dynamicky se náhodně losuje 20 otázek se zachováním klíčových situací
+// =========================================================================
+
+const MODTEST_SCENARIOS_POOL = [
+  // -----------------------------------------------------------------------
+  // FÁZE 1: ZÁKONY, PRAVIDLA & EKONOMIKA SERVERU (Otázky 1 až 18 v poolu)
+  // -----------------------------------------------------------------------
+  {
+    phase: 1,
+    isMandatory: true,
+    tag: 'ZNEUŽITÍ CHYB & STALKING',
+    title: 'Případ cíleného stalkingu základny vedení serveru',
+    description: 'Hráč byl zachycen při zneužití bezpečnostní chyby ještě před přihlášením přes /login – neoprávněně získal polohu soukromé základny s cílem provést masivní destrukci. Jaký trest a postup uplatníš?',
+    options: [
+      {
+        text: 'Dát mu ban na 1 hodinu, protože v momentě činu ještě nebyl plně přihlášen přes /login.',
+        isCorrect: false
+      },
+      {
+        text: 'Okamžitý trvalý IP & UUID BAN za kritický exploit a pokus o sabotáž serveru + nahlásit bezpečnostní incident vedení.',
+        isCorrect: true
+      },
+      {
+        text: 'Ignorovat to, protože situace nastala před zadáním přihlašovacího příkazu.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Zneužití bezpečnostních chyb a stalking základen před přihlášením představuje závažné narušení chodu sítě. Následuje okamžitý permanentní IP a UUID ban bez možnosti odvolání.'
+  },
+  {
+    phase: 1,
+    isMandatory: true,
+    tag: 'ZÁKAZ MINIMAP & RADARŮ',
+    title: 'Minimapový mýtus: „Vždyť mám radar na hráče vypnutý!“',
+    description: 'Hráč v chatu argumentuje: „Mám nainstalovaný Xaero\'s Minimap, ale radar na hráče a jeskyně mám v nastavení vypnutý! Mám tam jen body a terén, to je přece v pohodě!“. Jak zní striktní pravidlo MYCHAL SMP?',
+    options: [
+      {
+        text: 'Pokud je radar vypnutý, minimapa je tolerována pro orientaci v krajině.',
+        isCorrect: false
+      },
+      {
+        text: 'Veškeré minimapy (včetně Xaero\'s a JourneyMap) i waypoint módy jsou na celém serveru PŘÍSNĚ ZAKÁZÁNY bez výjimky. Trestem je BAN.',
+        isCorrect: true
+      },
+      {
+        text: 'Minimapa je zakázaná jen pro hráče bez VIP / SMP+ hodnosti.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Pravidlo 1 serveru v /rules nezná žádné kompromisy. Veškeré minimapy a waypoint módy jsou striktně zakázány. Hráči se orientují poctivě kompasem, mapami a F3 souřadnicemi.'
+  },
+  {
+    phase: 1,
+    isMandatory: true,
+    tag: 'SMP RAIDING VS SURVIVAL',
+    title: 'Griefing na /smp a výhrůžka Tebex Chargebackem',
+    description: 'SMP+ sponzor si postavil obří hrad na světě /smp. Konkurenční klan mu hrad legálně odpálil TNT děly. Hráč v ticketu zuří: „Okamžitě mi vraťte věci a zabanujte je, jinak otevřu spor na PayPalu a dám serveru chargeback!“. Co uděláš?',
+    options: [
+      {
+        text: 'Vrátit mu suroviny z Creative módu, aby se předešlo platebnímu sporu na Tebexu.',
+        isCorrect: false
+      },
+      {
+        text: 'Zabanovat útočící klan za ničení cizích staveb na serveru.',
+        isCorrect: false
+      },
+      {
+        text: 'Klidně vysvětlit, že na /smp je raidování a ničení bází povolené. Věci se nevrací a výhrůžka chargebackem je důvodem k trvalému zablokování účtu.',
+        isCorrect: true
+      }
+    ],
+    explanation: 'Svět /smp je nekompromisní hardcore zóna s povoleným raidem. Vydírání chargebackem a chargeback spory navíc znamenají okamžitý globální ban platebního profilu.'
+  },
+  {
+    phase: 1,
+    isMandatory: true,
+    tag: 'EKONOMIKA & DUPOVÁNÍ',
+    title: 'Tajemný nález: „Našel jsem 8 shulkerů netheritu v lese pod stromem!“',
+    description: 'Při kontrole databáze inventářů narazíš na nováčka, který má ve skrýši 8 shulker boxů plných Netherite Blocků. Tvrdí: „Já jsem nic neduplikoval, našel jsem je položené pod břízou v lese, přísahám!“. Jak s tím naložíš?',
+    options: [
+      {
+        text: 'Předměty mu nechat, protože princip nálezného v lese není v pravidlech explicitně zakázán.',
+        isCorrect: false
+      },
+      {
+        text: 'Předměty okamžitě zkonfiskovat a smazat. Hráče zabanovat za přechovávání a krytí duplikovaných surovin a prověřit logy kontejnerů.',
+        isCorrect: true
+      },
+      {
+        text: 'Dva shulkery zabavit na odměny do eventů a zbytek mu nechat.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Pravidlo o zneužívání chyb a nepovolených itemů zakazuje nejen duplikaci, ale i vědomé přechovávání a zatajování ilegálního bohatství. Předměty se mažou a účet je zabanován.'
+  },
+  {
+    phase: 1,
+    isMandatory: true,
+    tag: 'KORUPCE & ÚPLATKY',
+    title: 'Úplatek 500 Kč Paysafecard za unban kamaráda',
+    description: 'V soukromé zprávě na Discordu ti píše zabanovaný cheater: „Čau bro, pošlu ti PSC na 500 Kč, když kámošovi potají smažeš ban v databázi. Nikdo to nezjistí, koupíš si oběd.“. Tvoje reakce?',
+    options: [
+      {
+        text: 'Kód přijmout, unban neudělat a hráče si zablokovat.',
+        isCorrect: false
+      },
+      {
+        text: 'Pořídit screenshot celé konverzace, odeslat hlášení vedení do interního staff chatu a hráče trvale zablokovat za pokus o korupci a rozvrat týmu.',
+        isCorrect: true
+      },
+      {
+        text: 'Napsat mu, že 500 Kč je málo a ať pošle raději 1 000 Kč.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Jakýkoliv pokus o uplácení moderátora musí být neprodleně nahlášen vedení s důkazy. Integrita a důvěra ve staff tým je nedotknutelná.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'REÁLNÉ PENÍZE & RMT',
+    title: 'Inzerát na prodej herních předmětů za reálné koruny (RMT)',
+    description: 'Hráč v chatu píše: „Prodám 64 Netherite Ingotů za 200 Kč převodem na účet nebo Revolut, pište do /msg!“. Jak se staví pravidla MYCHAL SMP k reálnému obchodu?',
+    options: [
+      {
+        text: 'Pokud oba hráči souhlasí s cenou, je to jejich soukromý obchod a server do toho nezasahuje.',
+        isCorrect: false
+      },
+      {
+        text: 'Real Money Trading (RMT) je přísně zakázán. Hráče okamžitě trvale zabanovat za pokus o nelegální obchod a ohrožení bezpečnosti ostatních.',
+        isCorrect: true
+      },
+      {
+        text: 'Dát mu pouze pokutu $500 v herní měně na serveru.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Obchodování herních položek za reálné peníze mimo oficiální Tebex store je přísně zakázáno. RMT otevírá prostor pro podvody a je trestáno permanentním banem.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'SDÍLENÍ ÚČTŮ & ODPOVĚDNOST',
+    title: 'Klasická výmluva: „Cheatoval na mém účtu mladší bratr!“',
+    description: 'Zabanovaný hráč v odvolání píše: „Přísahám, že já jsem necheatoval! Půjčil jsem počítač mladšímu bráchovi, který si tam stáhl hacky bez mého vědomí. Můžete mě odbanovat?“.',
+    options: [
+      {
+        text: 'Hráče odbanovat a požádat ho, aby bratrovi zahesloval Windows.',
+        isCorrect: false
+      },
+      {
+        text: 'Žádost zamítnout. Za veškerou aktivitu na herním účtu nese stoprocentní odpovědnost jeho registrovaný vlastník. Výmluvy na rodinné příslušníky se neuznávají.',
+        isCorrect: true
+      },
+      {
+        text: 'Zkrátit ban na polovinu jako kompromis pro rodinu.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Zlaté pravidlo bezpečnosti: Vlastník účtu zodpovídá za vše, co se z jeho účtu na serveru odehraje. Přenesení viny na třetí osoby nelze ověřit ani akceptovat.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'CLAIM BLOKOVÁNÍ & GRIEFING',
+    title: 'Záměrné obestavění cizího pozemku cobblestonovou zdí',
+    description: 'Hráč na Survivalu zjistil, kde má soused claim, a těsně za jeho hranicí postavil masivní zeď z cobblestonu až do stavebního limitu Y=319, aby soused neměl výhled a nemohl rozšiřovat bázi.',
+    options: [
+      {
+        text: 'Nechat zeď stát, protože je postavená mimo cizí claim a na své volné parcele si může každý stavět co chce.',
+        isCorrect: false
+      },
+      {
+        text: 'Považovat to za záměrný griefing a obtěžování komunity. Hráče vyzvat k okamžitému zbourání, případně zeď smazat administrátorsky a hráče potrestat.',
+        isCorrect: true
+      },
+      {
+        text: 'Doporučit sousedovi, ať si postaví ještě vyšší zeď.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Záměrné blokování sousedních pozemků, stavba nesmyslných zdí a omezování ostatních hráčů je hodnoceno jako nepřípustné obtěžování a pasivní griefing.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'SURVIVAL PRAVIDLA & TRUHLY',
+    title: 'Vykradení neuzamčené truhly nováčka na Survivalu',
+    description: 'Nováček na Survival světě zapomněl zamknout truhlu před svým domem. Jiný hráč šel kolem a vzal si z ní všechno dřevo a železo. Nováček brečí v chatu. Jak to řešíš?',
+    options: [
+      {
+        text: 'Napsat nováčkovi: „Tvoje smůla, nemáš bejt hloupej,“ a zloděje pochválit za všímavost.',
+        isCorrect: false
+      },
+      {
+        text: 'Na Survivalu je úmyslné vykrádání a poškozování cizího majetku zakázáno. Pomocí logů kontejneru zjistit viníka, věci nováčkovi navrátit a viníka potrestat varováním / dočasným banem.',
+        isCorrect: true
+      },
+      {
+        text: 'Nováčkovi dát plný inventář netheritu z Creative módu.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Survival svět je zaměřen na klidnou a poctivou komunitní hru. Nepozornost nováčka neopravňuje ostatní k parazitování a krádežím. K tomu slouží hardcore /smp svět.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'AUTOCLICKER & MAKRA',
+    title: 'AFK těžba kamene se závažím na myši a makrem',
+    description: 'Hráč stojí v generátoru kamene, nepřetržitě kope rychlostí 40 kliků za sekundu, ale neodpovídá na zprávy. Po teleportaci zjistíš, že má na myši položené těžítko nebo puštěné macro.',
+    options: [
+      {
+        text: 'Je to povolená vychytávka, pokud u počítače zrovna pije čaj.',
+        isCorrect: false
+      },
+      {
+        text: 'Jakákoliv automatizace těžby či boje bez fyzické přítomnosti hráče (autoclicker, závaží, hardware makra) je zakázána. Následuje trest za nepovolenou automatizaci.',
+        isCorrect: true
+      },
+      {
+        text: 'Pouze mu vyměnit krumpáč za dřevěný.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Získávání herních surovin a ekonomických výhod bez aktivního hraní a pozornosti narušuje férovou soutěž serveru. Autoclickery a makra jsou zakázané.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'NEVHODNÉ STAVBY & SYMBOLY',
+    title: 'Stavba nenávistných a vulgárních symbolů v krajině',
+    description: 'Hráč na viditelném kopci postavil z černého betonu nacistický hákový kříž a do chatu se tomu směje. Co musí moderátor udělat jako první?',
+    options: [
+      {
+        text: 'Objekt okamžitě beze stopy odstranit (případně rollbacknout), hráče trvale zabanovat za propagaci nenávisti a vyčistit chat.',
+        isCorrect: true
+      },
+      {
+        text: 'Počkat do večera, až na serveru bude majitel, ať se na to podívá.',
+        isCorrect: false
+      },
+      {
+        text: 'Požádat hráče, ať to přebarví na růžovo.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Nenávistné symboly a projevy extremismu mají na serveru nulovou toleranci. Odstranění stavby a okamžitý přísný trest jsou prioritou číslo jedna.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'NETHER ROOF EXPLOIT',
+    title: 'Proražení bedrocku na střechu Netheru pro nelegální farmu',
+    description: 'Hráč pomocí perel a stromů prorazil strop Netheru a staví na střeše Netheru obří farmu na goldy, ačkoliv je v /rules jasně stanoven zákaz pobytu na bedrocku. Jak zasáhneš?',
+    options: [
+      {
+        text: 'Nechat ho tam, protože stavět na střeše Netheru je v Minecraftu běžný zvyk.',
+        isCorrect: false
+      },
+      {
+        text: 'Hráče teleportovat zpět pod bedrock, ilegální farmu smazat, suroviny zabavit a hráče potrestat za obcházení limitů světa a zneužití chyby.',
+        isCorrect: true
+      },
+      {
+        text: 'Zastavět mu díru bedrockem a nechat ho tam umřít hladem.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Zneužití glitchů k proniknutí za hranice povolené mapy porušuje pravidla integrity serveru. Stavby na střeše Netheru se nepovolují.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'PŘEPRODEJ ÚČTŮ',
+    title: 'Prodej celého Minecraft účtu s hodností SMP+ v chatu',
+    description: 'Hráč nabízí: „Končím s Minecraftem, prodám svůj origo účet s rankem SMP+ a full netheritem za 300 Kč PaySafeCard, kdo chce napište.“. Co na to pravidla?',
+    options: [
+      {
+        text: 'Je to v pořádku, každý může se svým účtem nakládat podle sebe.',
+        isCorrect: false
+      },
+      {
+        text: 'Přeprodej herních účtů i zakoupených výhod je zakázán provozními podmínkami serveru i Mojang EULA. Účet zablokovat a zprávu smazat.',
+        isCorrect: true
+      },
+      {
+        text: 'Účet odkoupit pro sebe jako moderátor.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Prodej účtů třetím stranám odporuje bezpečnostním zásadám i licenčním podmínkám. Je to častý zdroj podvodů a krádeží.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'ŠIKANA NOVÁČKŮ',
+    title: 'Cílený spawn killing bezbranných nově připojených hráčů',
+    description: 'Plně vygearovaný hráč stojí na přesné hranici bezpečného spawnu a opakovaně zabíjí nováčky v koženém brnění hned při jejich prvním vykročení ze spawnu, aniž by jim dal šanci se nadechnout.',
+    options: [
+      {
+        text: 'Zabíjení mimo spawn je povoleno, nováčci se mají naučit utíkat rychleji.',
+        isCorrect: false
+      },
+      {
+        text: 'Soustavná toxická šikana a spawn camping ničící herní zážitek nováčků porušuje zásady komunity. Hráče napomenout, vykázat z oblasti a při opakování zabanovat.',
+        isCorrect: true
+      },
+      {
+        text: 'Vypnout PvP na celém serveru.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Server chrání přátelskou atmosféru pro nově příchozí. Cílený lov bezbranných hráčů na hranici spawnu vyhání nováčky a je posuzován jako toxické chování.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'SCAMOVÁNÍ V AUKCI',
+    title: 'Podvodný předmět v aukci /ah: dřevěná motyka jako relikvie',
+    description: 'Podvodník dal do aukce dřevěnou motyku přejmenovanou v kovadlině na „NETHERITE GOD SWORD +999“ za $80,000, aby napálil nepozorného hráče na rychlý nákup. Je to povolené?',
+    options: [
+      {
+        text: 'Ano, hráči mají číst lore itemu a kontrolovat si ikonu.',
+        isCorrect: false
+      },
+      {
+        text: 'Ne. Záměrné klamání a uvádění hráčů v omyl za účelem neoprávněného obohacení je scamming. Předmět z aukce smazat a hráče potrestat.',
+        isCorrect: true
+      },
+      {
+        text: 'Motyku koupit z administrátorského účtu.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Falešné popisy itemů na aukci sloužící k okradení nezkušených hráčů jsou zakázanou formou podvodu. Férová ekonomika takové chování netoleruje.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'LÁVOVÉ PASTI',
+    title: 'Stavba nevyhnutelné smrtící pasti u Nether portálu na Survivalu',
+    description: 'Hráč na Survivalu postavil portál tak, že kdokoli jím projde z Netheru, okamžitě padá do 20 bloků hluboké lávové šachty obložené obsidiánem bez možnosti záchrany.',
+    options: [
+      {
+        text: 'Past je geniální stavitelské dílo a má právo tam zůstat.',
+        isCorrect: false
+      },
+      {
+        text: 'Na Survivalu jsou nevyhnutelné teleportační a portálové lávové pasti zakázány. Past zbourat a hráče potrestat za pasivní zabíjení a ničení cizích věcí.',
+        isCorrect: true
+      },
+      {
+        text: 'Postavit vedle cedulku „Pozor láva“ a nechat to být.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Zneužití herní mechaniky generování portálů k likvidaci cizích hráčů a jejich inventářů na mírumilovném Survivalu je přísně zakázáno.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'DUPOVÁNÍ VE VANILLE',
+    title: 'Duplikace kolejí a koberců: „Vždyť to funguje i v čistém Minecraftu!“',
+    description: 'Hráč postavil pístový duplikátor na kolejnice a koberce a v ticketu se hájí: „To není zakázaný dupe, to je oficiální mechanika vanilla Minecraftu, dělají to všichni na YouTube!“. Jak zní pravidlo?',
+    options: [
+      {
+        text: 'Pokud to funguje ve vanille bez módů, je to zcela legální.',
+        isCorrect: false
+      },
+      {
+        text: 'Jakékoliv duplikování předmětů pomocí pístových glitchů nebo herních chyb je na serveru striktně zakázáno bez ohledu na to, zda jde o chybu vanilly.',
+        isCorrect: true
+      },
+      {
+        text: 'Duplikovat se smí jen koberce, kolejnice ne.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Všechny duplikační glitche narušují ekonomiku a férovou rovnováhu. Tvrzení „funguje to ve vanille“ neopravňuje k obcházení pravidel serveru.'
+  },
+  {
+    phase: 1,
+    isMandatory: false,
+    tag: 'SABOTÁŽ KOMUNITY',
+    title: 'Griefing komunitní ledové dálnice postavené hráči',
+    description: 'Skupina hráčů věnovala desítky hodin stavbě veřejné ledové dráhy v Netheru pro rychlý přesun celé komunity. Troll přišel a vykopal z ní 100 bloků modrého ledu. Jak zareaguješ?',
+    options: [
+      {
+        text: 'Říct stavitelům, ať si postaví novou.',
+        isCorrect: false
+      },
+      {
+        text: 'Trolla zabanovat za úmyslné poškozování veřejné infrastruktury a sabotáž komunitního díla, dráhu vrátit do původního stavu.',
+        isCorrect: true
+      },
+      {
+        text: 'Zabanovat stavitele za to, že si stavbu neochránili claimem.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Komunitní projekty sloužící všem hráčům jsou pod ochranou pravidel. Cílené ničení veřejných děl je trestáno jako závažný griefing.'
+  },
+
+  // -----------------------------------------------------------------------
+  // FÁZE 2: BEZPEČNOST, DETEKCE & TECHNIKA (Otázky 19 až 36 v poolu)
+  // -----------------------------------------------------------------------
+  {
+    phase: 2,
+    isMandatory: true,
+    tag: 'DŮVĚRA V DETEKCE & FLAGE',
+    title: 'Máme 100% důvěru v anticheat a věříme každému alertu?',
+    description: 'Vidíš v administrátorských hlášeních, že na hráče vyskočilo několik flagů/upozornění na pohyb nebo boj (např. Speed, Reach, Killaura). Znamená každý běžný alert okamžitý trest a jak se liší od hloubkové analýzy SMPAC-DA (Detailed Analysis)?',
+    options: [
+      {
+        text: 'Ano, anticheat je neomylný program. Jakmile systém vyhodí flag, moderátor má povinnost hráče bez váhání zabanovat na 100 %.',
+        isCorrect: false
+      },
+      {
+        text: 'Rozhodně ne! Běžné flagy z pohybu a boje mají vysokou chybovost (reálná spolehlivost bývá jen kolem 30 % kvůli lagům a pingu). Naproti tomu hloubková analýza SMPAC-DA (Detailed Analysis) dosahuje vysoké přesnosti (~90 %). U běžných flagů se podezřelý hráč musí trpělivě a diskrétně prověřovat i několik týdnů, sbírat důkazy a nic neuspěchat.',
+        isCorrect: true
+      },
+      {
+        text: 'Anticheat i SMPAC-DA jsou úplně k ničemu, moderátoři by měli veškeré alerty v konzoli ignorovat a řešit cheatery jen když je nahlásí kamarád.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Zbrklý moderátor napáchá víc škody než užitku. Běžné pohybové alerty vznikají i špatným připojením či desynchronizací (~30% úspěšnost). Pouze hloubková systémová analýza SMPAC-DA (Detailed Analysis) dosahuje ~90% jistoty. U nejasných případů a běžných flagů je nutné dlouhodobé sledování v řádu týdnů.'
+  },
+  {
+    phase: 2,
+    isMandatory: true,
+    tag: 'SLOŽKA MÓDŮ, KOŠ & DETEKCE',
+    title: 'Čistá složka módů a prázdný koš vs systém SMPAC-DA',
+    description: 'Hráč v ticketu tvrdí, že nikdy necheatoval, a jako „důkaz“ posílá snímek své složky .minecraft/mods (kde má jen Sodium) a vysypaného koše v systému. Systém SMPAC-DA (Detailed Analysis) na serveru však eviduje jednoznačný záznam o nepovoleném klientu. Co uděláš?',
+    options: [
+      {
+        text: 'Omluvit se hráči a unbanovat ho, protože má složku módů i koš prokazatelně čisté.',
+        isCorrect: false
+      },
+      {
+        text: 'Snímky složky módů a koše jako důkaz odmítnout. Složku lze po odpojení za vteřinu promazat, koš vysypat nebo cheat spustit injekcí z paměti / externího disku. Autoritativní záznam ze systému SMPAC-DA (Detailed Analysis) má vždy absolutní přednost.',
+        isCorrect: true
+      },
+      {
+        text: 'Nainstalovat si do svého počítače vzdálenou plochu a jít mu soukromě prohledávat soubory a registry v počítači.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Moderátor nikdy nerozhoduje na základě snímků lokálních složek (mods, stažené soubory, koš) zaslaných hráčem – ty lze kdykoliv po odpojení smazat, vysypat či upravit, nebo klient funguje injekcí. Detekce SMPAC-DA na straně serveru je závazná a žádné interní technické detaily se hráči neprozrazují.'
+  },
+  {
+    phase: 2,
+    isMandatory: true,
+    tag: 'PODEZŘELÁ TĚŽBA & X-RAY',
+    title: 'Případ těžby v podzemí a trapné výmluvy',
+    description: 'Interní bezpečnostní systém serveru spolehlivě zachytil hráče s provokativním nickem, jak v netheru kope přesné úhly přímo do skrytých ložisek ancient debris bez jakéhokoliv průzkumu. Hráč v chatu tvrdí: „Mám prostě štěstí a poslouchám zvuky lávy!“. Jak rozhodneš?',
+    options: [
+      {
+        text: 'Udělit permanentní ban za zakázané herní modifikace (X-Ray / cheaty) a nevhodný nick. Autoritativní detekce serveru je konečná a výmluvy na štěstí se neuznávají.',
+        isCorrect: true
+      },
+      {
+        text: 'Věřit mu, že má dobrá herní sluchátka a lávu skutečně slyšel.',
+        isCorrect: false
+      },
+      {
+        text: 'Dát mu varování do chatu a sebrat mu na hodinu krumpáč.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Výmluva na „zvuk lávy“ je notoricky známý cheaterský mýtus. Detekční systém serveru vyhodnocuje anomálie těžby a moderátor se opírá o autoritativní verdikt systému bez zbytečného dohadování.'
+  },
+  {
+    phase: 2,
+    isMandatory: true,
+    tag: 'TÝMOVÉ PODVÁDĚNÍ',
+    title: '50/50 Cheating: Jeden létá s killaura, zbytek sbírá diamantové věci',
+    description: 'Ve 4-členném klanu jeden hráč evidentně používá killaura a fly a masakruje protivníky. Zbylí tři hráči z klanu stojí za ním, nefackují se a vesele plní truhly věcmi z obětí. Jak potrestáš tento tým?',
+    options: [
+      {
+        text: 'Zabanovat pouze cheatera. Ostatní tři přece jen stáli opodál a nikoho nezabili.',
+        isCorrect: false
+      },
+      {
+        text: 'Zabanovat cheatera za killaura/fly a ostatní členy potrestat za vědomou spoluúčast a obohacování se z cheatů (tzv. boosting). Uloupený loot zkonfiskovat.',
+        isCorrect: true
+      },
+      {
+        text: 'Nechat je být, protože Minecraft je hra o klanové spolupráci.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Pasivní krytí cheatera a sbírání lootu z jeho nelegální výhody představuje vědomou spoluvinu na podvádění. Trestá se jak cheater, tak celá profitující skupina.'
+  },
+  {
+    phase: 2,
+    isMandatory: true,
+    tag: 'KAMERY & VOLNÝ POHYB',
+    title: 'Freecam vs Replay Mod: Tvůrce točí video bez oprávnění',
+    description: 'Hráč stojí AFK na spawnu, ale v chatu přesně navádí kamaráda v podzemí a ví, kde za zdí stojí nepřátelé. Brání se: „Používám jen Replay Mod a točím cinematic pro YouTube! Nemám cheaty!“. Hráč ale nemá status Media. Jak postupovat?',
+    options: [
+      {
+        text: 'Pokud tvrdí, že točí na YouTube, povolit mu to a nechat ho být.',
+        isCorrect: false
+      },
+      {
+        text: 'Bez schváleného Media programu a dohledu administrátora je jakýkoliv volný pohyb kamery v reálném čase posuzován jako Freecam/ESP cheat. Následuje BAN.',
+        isCorrect: true
+      },
+      {
+        text: 'Dát mu okamžitě bez ověření rank Media, aby mohl dotočit video.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Používání nepovolených modifikací umožňujících pohled skrz zdi v reálném čase je přísně zakázáno. Status Media pro filmování podléhá oficiálnímu schválení s přísnými pravidly.'
+  },
+  {
+    phase: 2,
+    isMandatory: true,
+    tag: 'SERVER STABILITA & LAGY',
+    title: 'Lagovací mašina nejlepšího kamaráda (400 pístů)',
+    description: 'Tvůj dlouholetý kamarád postavil obří automat na štěrk s 400 písty a shazovačem itemů, kvůli kterému kleslo TPS serveru z 20 na 12. Píše ti: „Nech to běžet do rána, dodělávám farmu, nebuď svině!“. Tvoje rozhodnutí?',
+    options: [
+      {
+        text: 'Stroj nechat běžet a hráčům v chatu říct, že laguje samotný server hosting.',
+        isCorrect: false
+      },
+      {
+        text: 'Okamžitě stroj deaktivovat. Pravidlo o zákazů lag-mašin platí pro všechny bez výjimek a protekce. Kamarádovi vysvětlit šetrnou alternativu.',
+        isCorrect: true
+      },
+      {
+        text: 'Zvýšit kamarádovi prioritu tickování v nastavení chunků.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Kamarádství a protekce v týmu nemají místo. Stabilita serveru pro desítky poctivých hráčů má absolutní prioritu před pístovou farmou kohokoliv.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'AUTO-TOTEM CHEAT',
+    title: 'Bleskový swap totemů v PvP během jediné sekundy',
+    description: 'Hráč v aréně schytá 4 smrtelné zásahy krystaly během 800 milisekund. Přestože nepřestává sprintovat a má plný hlavní inventář, do levé ruky se mu okamžitě dosazují nové totemy bez otevření inventáře.',
+    options: [
+      {
+        text: 'Hráč má neuvěřitelně rychlé prsty a trénuje to na klávesnici.',
+        isCorrect: false
+      },
+      {
+        text: 'Jde o nepovolený cheat Auto-Totem (nebo Offhand swap macro), který automaticky doplňuje totemy z inventáře na packetové úrovni. Zaznamenat a zabanovat.',
+        isCorrect: true
+      },
+      {
+        text: 'Zakázat na celém serveru používání totemů nesmrtelnosti.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Fyzická nemožnost lidské reakce na dosazení totemů bez otevření inventáře za zlomek sekundy jasně indikuje klientský cheat. Trestem je trvalý ban.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'REACH & HITBOX CHEAT',
+    title: 'Údery na vzdálenost 4.5 bloku bez pohybu a pingu',
+    description: 'Při sledování PvP duelu zaznamenáš, že hráč zasahuje své protivníky mečem z konstantní vzdálenosti přes 4.2 bloku, přičemž oba hráči mají stabilní ping 15 ms. Co to znamená?',
+    options: [
+      {
+        text: 'Minecraft má v novějších verzích běžný dosah až 5 bloků.',
+        isCorrect: false
+      },
+      {
+        text: 'Základní dosah zásahu ve vanille je 3.0 bloku. Konstantní zásahy z 4+ bloků znamenají použití cheatů Reach nebo rozšířených Hitboxů. Následuje ban.',
+        isCorrect: true
+      },
+      {
+        text: 'Hráč má delší ruku díky skinu postavy.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Vanilla dosah v boji nepřesahuje 3.0 bloku. Jakékoliv systematické překračování tohoto dosahu je nepopiratelný combat cheat.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'ELYTRA EXPLOIT',
+    title: 'Rovný let s elytrou rychlostí 90 m/s bez použití rachejtlí',
+    description: 'Sleduješ hráče s elytrou, který letí vodorovně v jedné výšce neuvěřitelnou rychlostí přes 80 bloků za sekundu, nestoupá ani neklesá a nepoužil ani jednu rachejtli. Jak situaci posoudíš?',
+    options: [
+      {
+        text: 'Chytil dobrý vítr a plachtí na termických proudech.',
+        isCorrect: false
+      },
+      {
+        text: 'Používá ElytraFly / Timer exploit, který manipuluje s packetovým vektorem pohybu křídel. Jde o zakázaný movement cheat, následuje okamžitý ban.',
+        isCorrect: true
+      },
+      {
+        text: 'Dát mu pokutu za překročení povolené rychlosti na mapě.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Udržet stálou vysokou rychlost bez úbytku výšky a bez ohňostrojů je ve standardní fyzice nemožné. Jde o zjevný klientský pohybový cheat.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'NOFALL EXPLOIT',
+    title: 'Pád z výšky 250 bloků na kámen s nulovým poškozením',
+    description: 'Hráč skočí z vrcholu věže z výšky 250 bloků na tvrdou skálu. Nemá elytru, mace ani vodu, přistane přímo na břichu a neztratí ani půl srdíčka. Co to indikuje?',
+    options: [
+      {
+        text: 'Měl na sobě brnění s Feather Falling IV, které kompletně neguje pád z jakékoliv výšky.',
+        isCorrect: false
+      },
+      {
+        text: 'Jde o NoFall cheat – hráčský klient před dopadem odeslal na server falešný packet o stání na zemi, čímž vynuloval pádovou vzdálenost. Následuje ban.',
+        isCorrect: true
+      },
+      {
+        text: 'Skála byla měkká.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Enchant Feather Falling IV pouze redukuje část škod, pád z 250 bloků bez poškození je ve vanille nemožný. Jde o typický NoFall cheat.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'BARITONE BOT',
+    title: 'Autonomní těžební bot kopající 14 hodin v kuse',
+    description: 'Hráč v dole kope tunely strojovou přesností už 14 hodin. Nereaguje na zprávy v chatu, a když ho teleportuješ do uzavřené místnosti, okamžitě začne autonomně hledat cestu ven podle pathfindingu.',
+    options: [
+      {
+        text: 'Hráč je nesmírně vytrvalý těžař, který rád relaxuje u kopání.',
+        isCorrect: false
+      },
+      {
+        text: 'Používá Baritone nebo podobného autonomního bota pro automatickou těžbu a pathfinding. Účet zabanovat a vytěžené suroviny smazat.',
+        isCorrect: true
+      },
+      {
+        text: 'Nalít před něj lávu a čekat, jestli shoří.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Plně automatizované hraní pomocí botů simulujících lidské ovládání je zakázáno. Hráč musí být schopen reagovat a hrát osobně.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'NOSLOWDOWN CHEAT',
+    title: 'Sprint plnou rychlostí s plně nataženým lukem',
+    description: 'Hráč v PvP souboji sprintuje maximální rychlostí dopředu, skáče a přitom má celou dobu plně natažený luk a pálí šípy, aniž by ho nátah luku jakkoliv zpomalil.',
+    options: [
+      {
+        text: 'Má lektvar Swiftness II, který ruší zpomalení z luku.',
+        isCorrect: false
+      },
+      {
+        text: 'Jedná se o NoSlowdown cheat, který ruší klientské zpomalení při používání předmětů (luk, jídlo, štít). Následuje ban za nepovolené modifikace.',
+        isCorrect: true
+      },
+      {
+        text: 'Je to nová mechanika combat updatu.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Používání luku, konzumace jídla i krytí štítem musí hráče dle mechanik hry zpomalit. Ignorování tohoto stavu je jasným NoSlowdown cheatem.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'FASTBREAK / NUKER',
+    title: 'Lámání 35 bloků kamene za sekundu v řadě za sebou',
+    description: 'Hráč běží chodbou a kamenné bloky před ním mizí rychlostí kulometu (35 bloků/s), přestože má obyčejný železný krumpáč bez Haste efektu.',
+    options: [
+      {
+        text: 'Hráč má jen vysoké FPS a dobrý monitor.',
+        isCorrect: false
+      },
+      {
+        text: 'Jde o klientský exploit FastBreak / Nuker, který ignoruje dobu potřebnou k vytěžení bloku. Následuje okamžitý ban za závažný cheat.',
+        isCorrect: true
+      },
+      {
+        text: 'Krumpáč byl zřejmě kouzelný.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Čas potřebný k rozbití bloku je dán pevnými herními pravidly. Lámání bloků vyšší rychlostí je závažná manipulace s klientem.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'ANTI-KNOCKBACK (VELOCITY)',
+    title: 'Nulový odraz z úderu palicí Mace nebo šípem Punch II',
+    description: 'Hráč dostane přímý zásah palicí Mace z výšky a následně šípem s Punch II, ale jeho postava se nepohne z místa ani o jediný centimetr.',
+    options: [
+      {
+        text: 'Měl těžké netherite boty, které dávají stoprocentní imunitu vůči odhození.',
+        isCorrect: false
+      },
+      {
+        text: 'Hráč používá Velocity cheat (Anti-Knockback nastavený na 0 %), který ruší zpětný ráz od útoků. Zaznamenat situaci a udělit trvalý ban.',
+        isCorrect: true
+      },
+      {
+        text: 'Protivník má špatný šíp.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Netheritové brnění poskytuje pouze částečnou odolnost vůči knockbacku. Úplná absence jakéhokoliv odhození při silném zásahu je důkazem Velocity cheatu.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'TRIGGERBOT DETEKCE',
+    title: 'TriggerBot vs poctivý lidský jitter-click',
+    description: 'Jak zkušený moderátor pozná rozdíl mezi hráčem s poctivým vysokým CPS (16 kliků za sekundu) a hráčem s cheat modulem TriggerBot?',
+    options: [
+      {
+        text: 'Lidský hráč kliká vždy přesně na milisekundu stejně, TriggerBot náhodně.',
+        isCorrect: false
+      },
+      {
+        text: 'TriggerBot udeří roboticky v přesně stejný tick, kdy křížek mine hitbox cíle, s nulovým zpožděním a nulovými údery do vzduchu, zatímco člověk má přirozený rozptyl a kliká i naprázdno.',
+        isCorrect: true
+      },
+      {
+        text: 'Mezi nimi není žádný rozdíl, klikání je vždy stejné.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Lidská ruka kliká s přirozenou fluktuací a kliká i před a po kontaktu s cílem. TriggerBot aktivuje úder výhradně v momentě překrytí hitboxu bez jediného zbytečného kliku.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'CRASHER & DOS PACKETY',
+    title: 'Pokus o shození serveru záplavou neplatných packetů',
+    description: 'Konzole serveru začne zaznamenávat masivní nápor poškozených síťových packetů od jednoho hráče (5 000 packetů/s) a TPS prudce klesá. Co je cílem hráče?',
+    options: [
+      {
+        text: 'Snaží se stáhnout skin ze serveru.',
+        isCorrect: false
+      },
+      {
+        text: 'Provádí crasher útok s cílem zahltit síťovou vrstvu a shodit instanci serveru. Okamžitě uplatnit IP ban a síťové odstřihnutí.',
+        isCorrect: true
+      },
+      {
+        text: 'Má slabý počítač, který se nestíhá synchronizovat.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Cílené odesílání nevalidních velkých packetů je útok na integritu infrastruktury. Řeší se okamžitým zablokováním přístupu a síťovou filtrací.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'SCAFFOLD CHEAT',
+    title: 'Běh pozpátku plnou rychlostí s automatickým mostem',
+    description: 'Hráč běží pozpátku plným sprintem přes lávové jezero a pod jeho nohama se plynule tvoří most z bloků, aniž by se hráč otočil, skrčil nebo pohnul hlavou dolů.',
+    options: [
+      {
+        text: 'Je to zkušený bridge stavitel s rychlými reflexy.',
+        isCorrect: false
+      },
+      {
+        text: 'Jde o nepovolený modul Scaffold / Auto-Bridge, který automaticky pokládá bloky pod nohy hráče v neplatných úhlech. Následuje trvalý ban.',
+        isCorrect: true
+      },
+      {
+        text: 'Používá speciální lektvar stavění.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Pokládání bloků pod sebe při plném běhu pozpátku bez míření pohledu na hranu bloku je z fyzikálního hlediska hry bez cheatů nemožné.'
+  },
+  {
+    phase: 2,
+    isMandatory: false,
+    tag: 'CRITICALS EXPLOIT',
+    title: 'Kritické údery při každém zásahu bez skákání',
+    description: 'Hráč v boji rozdává 100 % kritických zásahů (s částicemi hvězdiček), přestože stojí nohama pevně na zemi a ani jednou nevyskočil. Jak to funguje?',
+    options: [
+      {
+        text: 'Má na meči skrytý enchant Critical Boost.',
+        isCorrect: false
+      },
+      {
+        text: 'Používá Criticals exploit, který těsně před úderem odešle falešný packet o mini-skoku (0.06 bloku), aby oklamal server a vynutil kritický zásah. Jde o cheat, následuje ban.',
+        isCorrect: true
+      },
+      {
+        text: 'Hráč má prostě silné paže.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Kritický zásah vyžaduje pádový pohyb hráče. Pokud hráč rozdává kritické údery ze země, jeho klient manipuluje s výškou v odesílaných packetech.'
+  },
+
+  // -----------------------------------------------------------------------
+  // FÁZE 3: PSYCHOLOGIE, TICKETY, TROLLING & KOMUNIKACE (Otázky 37 až 52)
+  // -----------------------------------------------------------------------
+  {
+    phase: 3,
+    isMandatory: true,
+    tag: 'PRÁVNÍ BLUFF & ZASTRAŠOVÁNÍ',
+    title: 'Hrozba kriminální policií PČR kvůli ukládání IP adres',
+    description: 'Zabanovaný hráč v ticketu tvrdí, že zjišťování jeho VPN a ukládání IP adresy serverem porušuje GDPR, a píše: „Můj táta je právník a zítra podáváme trestní oznámení na Policii ČR na majitele serveru!“. Jak zareaguješ?',
+    options: [
+      {
+        text: 'V panice hráče odbanovat a smazat záznamy z databáze banů.',
+        isCorrect: false
+      },
+      {
+        text: 'Zachovat klid a profesionální odstup. Zpracování IP adresy pro ochranu infrastruktury a prevenci DDoS/obcházení trestů spadá pod oprávněný zájem dle GDPR. Ticket věcně uzavřít.',
+        isCorrect: true
+      },
+      {
+        text: 'Začít se s hráčem hádat a urážet jeho rodinu.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Ukládání síťových identifikátorů pro zajištění bezpečnosti a prevenci obcházení zákazů je zcela v souladu s čl. 6 odst. 1 písm. f) GDPR. Právní výhrůžky zabanovaných hráčů jsou běžný zastrašovací pokus.'
+  },
+  {
+    phase: 3,
+    isMandatory: true,
+    tag: 'BEZPEČNOST ÚČTŮ & PARANOIA',
+    title: 'Dotaz nováčka: „Vidí majitel moje heslo v databázi?“',
+    description: 'Nervózní hráč v ticketu odmítá dokončit registraci přes /register s tím, že mu majitel serveru prý přečte heslo a ukradne mu Discord a e-mail. Jak mu profesionálně vysvětlíš bezpečnost?',
+    options: [
+      {
+        text: 'Napsat mu: „Klid, majitel na tvůj účet nemá čas.“',
+        isCorrect: false
+      },
+      {
+        text: 'Vysvětlit, že hesla jsou v databázi kryptograficky hashována se solí (BCrypt) jednosměrným algoritmem – nikdo na serveru, ani majitel, je v otevřené podobě nevidí ani nemůže dešifrovat.',
+        isCorrect: true
+      },
+      {
+        text: 'Říct mu, ať si jako heslo nastaví 123456.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Profesionální moderátor dokáže uklidnit komunitu technicky přesnými fakty. Jednosměrný hash s kryptografickou solí garantuje, že původní řetězec hesla nikde uložen není.'
+  },
+  {
+    phase: 3,
+    isMandatory: true,
+    tag: 'TROLL BOTI & PROXY NICKY',
+    title: 'Troll útok s rasistickými jmény přes rotující proxy IP',
+    description: 'Zabanovaný troll se připojuje pod urážlivými nicky jako Ja_jsem_negr_2, 67hitler a spamuje chat. Jaká je nejefektivnější a nejklidnější reakce?',
+    options: [
+      {
+        text: 'Začít na něj v chatu křičet velkými písmeny a vyhrožovat mu fyzickým násilím.',
+        isCorrect: false
+      },
+      {
+        text: 'Tiše udělit IP/subnet ban na proxy rozsah, vyčistit herní chat (/clearchat) a neposkytovat trollovi žádnou pozornost ani reakci v chatu.',
+        isCorrect: true
+      },
+      {
+        text: 'Odpojit se ze serveru a jít spát.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Trollové se živí pozorností a reakcemi administrátorů. Nejlepším řešením je okamžitý tichý technický zásah, vyčištění chatu a nulová komunikace.'
+  },
+  {
+    phase: 3,
+    isMandatory: true,
+    tag: 'ABSURDNÍ NOČNÍ TICKETY',
+    title: 'Ticket ve 3:15 ráno: „Pomoc, ztratil jsem se a došly mi louče!“',
+    description: 'Hráč tě v noci označí v urgentním ticketu: „ADMIN POMOC!! Spadnul jsem do díry, došly mi pochodně a bojím se pavouků, okamžitě mě teleportujte na spawn!“. Co uděláš?',
+    options: [
+      {
+        text: 'Okamžitě zapnout počítač a hráče teleportovat na spawn.',
+        isCorrect: false
+      },
+      {
+        text: 'Upozornit hráče na zneužití urgentního označení. Vysvětlit, že moderátoři nezasahují do survival mechanik a nefungují jako bezplatné taxi. Odkázat ho na herní příkazy (/spawn, /home) nebo vykopání.',
+        isCorrect: true
+      },
+      {
+        text: 'Za trest ho v jeskyni rovnou zabít příkazem /kill.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Moderátor není herní sluha ani taxi služba. Do běžného survival gameplaye se nezasahuje a noční panika z pavouků se řeší klidným odkázáním na herní mechaniky.'
+  },
+  {
+    phase: 3,
+    isMandatory: true,
+    tag: 'OBCHÁZENÍ FILTRŮ REKLAMY',
+    title: 'Propagace cizího serveru v soukromé zprávě /msg',
+    description: 'Hráč posílá do /msg pozvánky na cizí Minecraft server. Když ho konfrontuješ, brání se: „Pravidla zakazují reklamu v chatu! V /msg to není veřejné, takže jsem nic neporušil!“. Jak zní pravidlo?',
+    options: [
+      {
+        text: 'Má pravdu, soukromé zprávy /msg jsou privátní a reklama se tam trestat nesmí.',
+        isCorrect: false
+      },
+      {
+        text: 'Zákaz reklamy na cizí servery a Discordy platí bez výjimky v celém herním i komunikačním prostoru (chat, /msg, cedulky, knihy i Discord). Následuje permanentní ban.',
+        isCorrect: true
+      },
+      {
+        text: 'Dát mu varování a doporučit mu psát to jen na cedulky.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Využití soukromých zpráv k odlákávání hráčů je typický pokus o obcházení filtru reklamy. Zákaz platí pro jakoukoliv formu přenosu na síti.'
+  },
+  {
+    phase: 3,
+    isMandatory: true,
+    tag: 'KLANOVÁ DRAMATA & FLAMEWAR',
+    title: 'Hysterická válka klanů v ticketu bez důkazů',
+    description: 'Dva rivalské klany zahltí ticketový systém desítkami hádek a vzájemných obvinění z radarů a autokliku, aniž by kdokoliv doložil nezestříhaný videozáznam. Jak zjednáš pořádek?',
+    options: [
+      {
+        text: 'Zabanovat náhodně půlku obou klanů pro výstrahu.',
+        isCorrect: false
+      },
+      {
+        text: 'Okamžitě zastavit flame war v ticketu, stanovit věcná pravidla komunikace a vyzvat k doložení nezestříhaných videozáznamů s časovými značkami. Varovat před trestem za spam a křivá nařčení.',
+        isCorrect: true
+      },
+      {
+        text: 'Přidat se k hádce a podpořit ten klan, který má více sponzorských ranků.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Moderátor musí zůstat naprosto nestranným a chladným arbitrem. Flamewar se ukončí striktním požadavkem na hmatatelné důkazy a fakta.'
+  },
+  {
+    phase: 3,
+    isMandatory: false,
+    tag: 'CITOVÝ NÁTLAK & SEBEPOŠKOZENÍ',
+    title: 'Vydírání sebepoškozováním v odvolání proti banu',
+    description: 'Zabanovaný hráč v ticketu píše: „Jestli mi okamžitě nedáte unban, ublížím si a bude to vaše vina! Máte 5 minut!“. Jak se v takto citlivé a extrémní situaci zachovat?',
+    options: [
+      {
+        text: 'Okamžitě hráče odbanovat ze strachu, že svá slova myslí vážně.',
+        isCorrect: false
+      },
+      {
+        text: 'Zachovat klid a nepodléhat citovému vydírání. Poskytnout oficiální kontakty na bezplatnou psychologickou pomoc a Linku bezpečí, ticket uzamknout a eskalovat incident vedení serveru.',
+        isCorrect: true
+      },
+      {
+        text: 'Vysmát se mu do chatu a napsat mu, ať to klidně udělá.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Moderátor nesmí podléhat citovému nátlaku ani situaci zlehčovat. Správný postup je poskytnutí kontaktů na odbornou pomoc (Linka bezpečí) a předání případu vedení.'
+  },
+  {
+    phase: 3,
+    isMandatory: false,
+    tag: 'CITOVÉ VYDÍRÁNÍ O VIP',
+    title: 'Výmluva na věrnost: „Hrál jsem tu od bety a koupil jsem si VIP!“',
+    description: 'Hráč usvědčený z cheatování argumentuje: „Jsem na serveru přes dva roky a koupil jsem si hodnost za tisíc korun! Jak si dovolujete mě zabanovat? Chci okamžitý unban za věrnost!“.',
+    options: [
+      {
+        text: 'Vzhledem k podpoře serveru mu ban prominout a dát mu ještě jeden rank zdarma.',
+        isCorrect: false
+      },
+      {
+        text: 'Délka hraní ani finanční podpora nikoho neopravňuje k porušování pravidel. Pravidla platí pro všechny stejně bez protekce. Žádost o unban zamítnout.',
+        isCorrect: true
+      },
+      {
+        text: 'Vrátit mu peníze z vlastní peněženky.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Férovost je základem důvěry v komunitu. Koupě VIP ranku je dobrovolná podpora chodu serveru, nikoliv povolenka k podvádění.'
+  },
+  {
+    phase: 3,
+    isMandatory: false,
+    tag: 'CHLADNOKREVNÝ PŘÍSTUP',
+    title: 'Hráč zabije moderátora v PvP a posílá posměšky do chatu',
+    description: 'Hraješ na serveru, hráč tě v poctivém PvP zabije a napíše do globálního chatu: „L moderátor je ez noob, nemá na mě!“. Tvoje reakce jako člena týmu?',
+    options: [
+      {
+        text: 'Okamžitě mu dát permanentní ban za neúctu k moderátorskému týmu.',
+        isCorrect: false
+      },
+      {
+        text: 'Zůstat nad věcí s chladnou hlavou. Pokud posměšek nepřekračuje meze běžného herního špičkování do vulgárních urážek, neřešit ho z pozice moci.',
+        isCorrect: true
+      },
+      {
+        text: 'Vrátit se v neviditelnosti a shodit na něj kovadlinu z výšky.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Zneužití moderátorských pravomocí k řešení vlastního herního ega je nepřijatelné. Moderátor musí unést běžné herní situace bez zbrklých trestů.'
+  },
+  {
+    phase: 3,
+    isMandatory: false,
+    tag: 'NEOPRÁVNĚNÉ REFUNDY',
+    title: 'Požadavek na vrácení věcí po skoku do lávy vlastní vinou',
+    description: 'Hráč v Netheru spadl do lávového jezera a shořela mu výbava. V ticketu hystericky vyžaduje vrácení s tím, že mu „na sekundu lagla klávesnice“. Co mu odpovíš?',
+    options: [
+      {
+        text: 'Všechny věci mu v Creative módu znovu vycraftit a omluvit se za klávesnici.',
+        isCorrect: false
+      },
+      {
+        text: 'Klidně vysvětlit, že server nenese odpovědnost za hardware a herní chyby na straně hráče. Věci ztracené běžnou herní smrtí se nevracejí. Ticket uzavřít.',
+        isCorrect: true
+      },
+      {
+        text: 'Smazat mu z inventáře i zbytek věcí v truhlách.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Survival mechaniky počítají s rizikem smrti. Vrácení věcí na základě vlastních chyb by zcela zničilo hodnotu itemů a ekonomiku serveru.'
+  },
+  {
+    phase: 3,
+    isMandatory: false,
+    tag: 'SPAM V /HELPOP',
+    title: 'Zneužívání /helpop k nezávaznému pokecu z nudy',
+    description: 'Hráč každou minutu posílá do /helpop: „Čau modi, jak se máte? Nudím se, portněte se za mnou a dejte mi nějaký úkol!“. Co uděláš?',
+    options: [
+      {
+        text: 'Okamžitě se k němu portnout a hrát si s ním schovku.',
+        isCorrect: false
+      },
+      {
+        text: 'Upozornit hráče, že příkaz /helpop je vyhrazen výhradně pro hlášení technických potíží a porušení pravidel. Při opakovaném spamu udělit varování či krátký mute.',
+        isCorrect: true
+      },
+      {
+        text: 'Zabanovat ho na rok za spam konzole.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Komunikační kanál /helpop musí zůstat volný pro skutečné urgentní problémy. Moderátor nastaví jasné hranice slušně a věcně.'
+  },
+  {
+    phase: 3,
+    isMandatory: false,
+    tag: 'PROVOKACE K VĚKU',
+    title: 'Urážky věku: „Kolik ti je, 12? Zavolej mi majitele, děcko!“',
+    description: 'Arogantní hráč v ticketu odmítá komunikovat a posmívá se tvému věku či hlasu: „S tebou se bavit nebudu, zavolej mi dospělého majitele!“. Jak zareaguješ?',
+    options: [
+      {
+        text: 'Začít se s ním hádat o svém věku a posílat mu fotku občanského průkazu.',
+        isCorrect: false
+      },
+      {
+        text: 'Nenechat se vyprovokovat. Uvést, že jako moderátor jednáš v plném pověření vedení serveru. Vyzvat ho k věcnému řešení problému, v případě pokračování urážek ticket uzavřít.',
+        isCorrect: true
+      },
+      {
+        text: 'Hráče okamžitě vulgárně urazit zpět.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Autorita moderátora nevychází z věku, ale z jeho profesionality, věcnosti a vystupování. Osobní útoky ignorujeme a držíme se faktů.'
+  },
+  {
+    phase: 3,
+    isMandatory: false,
+    tag: 'POPUDIT KOMUNITU',
+    title: 'Šíření poplašných zpráv o údajném zániku a wipu serveru',
+    description: 'Hráč v globálním chatu spamuje: „Kámoš z týmu mi psal, že server dnes o půlnoci končí a maže se celá mapa! Všechny věci zahoďte a pojďte jinam!“. Polovina chatu panikaří.',
+    options: [
+      {
+        text: 'Čekat, jestli na to zareaguje někdo z ostatních hráčů.',
+        isCorrect: false
+      },
+      {
+        text: 'Okamžitě v chatu uvést informaci na pravou míru oficiálním oznámením. Hráče ztlumit (mute) nebo zabanovat za šíření nepravdivých poplašných zpráv a rozvracení komunity.',
+        isCorrect: true
+      },
+      {
+        text: 'Napsat do chatu: „Možná má pravdu, uvidíme o půlnoci.“',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Šíření lží o wipu světa či konci serveru poškozuje dobré jméno projektu a vyvolává hysterii. Vyžaduje okamžité vyvrácení a rázný trest.'
+  },
+  {
+    phase: 3,
+    isMandatory: false,
+    tag: 'IMPERSONACE VEDENÍ',
+    title: 'Falešný Discord účet vydávající se za administrátora',
+    description: 'Podvodník si nastavil stejný nick a avatar jako majitel serveru a v soukromých zprávách píše hráčům, ať mu pošlou své cennosti k „povinné kontrole duplikovaných itemů“.',
+    options: [
+      {
+        text: 'Požádat ho, ať si změní profilový obrázek.',
+        isCorrect: false
+      },
+      {
+        text: 'Okamžitý permanentní IP a Discord ban za vydávání se za člena vedení a pokus o okradení komunity + varovat hráče veřejným oznámením.',
+        isCorrect: true
+      },
+      {
+        text: 'Počkat, jestli mu někdo nějaké věci pošle.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Impersonace staff týmu je jedním z nejnebezpečnějších sociálních podvodů. Reakce musí být blesková a nekompromisní.'
+  },
+  {
+    phase: 3,
+    isMandatory: false,
+    tag: 'FALEŠNÉ ZTRÁTY VĚCÍ',
+    title: 'Výmysl o pádu serveru za účelem zisku netheritového setu',
+    description: 'Hráč v ticketu tvrdí, že mu včera v 15:30 při pádu serveru zmizel shulker plný netheritu. Záznamy v monitoringu však jasně ukazují, že server včera běžel nepřetržitě s nulovým výpadkem.',
+    options: [
+      {
+        text: 'Pro jistotu mu věci dát, aby nebyl smutný.',
+        isCorrect: false
+      },
+      {
+        text: 'Předložit důkaz z logu, že k žádnému pádu nedošlo. Žádost zamítnout a hráče důrazně varovat před pokusy o podvod na moderátorském týmu.',
+        isCorrect: true
+      },
+      {
+        text: 'Zabanovat ho za to, že hraje Minecraft.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Všechna tvrzení o pádech a ztrátách se vždy konfrontují se serverovými logy a metrikami. Lhaní týmu za účelem zisku itemů se netoleruje.'
+  },
+  {
+    phase: 3,
+    isMandatory: false,
+    tag: 'ORGANIZOVANÝ TLAK',
+    title: 'Svolání pěti kamarádů do ticketu k hromadnému nátlaku',
+    description: 'Zabanovaný hráč pozve do ticketu pět svých kamarádů z klanu, kteří začnou hromadně spamovat: „Dejte mu unban, nic neudělal, jste neschopní modi!“. Jak obnovíš pořádek?',
+    options: [
+      {
+        text: 'Pod tlakem přesily hráče raději odbanovat, aby byl klid.',
+        isCorrect: false
+      },
+      {
+        text: 'Neautorizované osoby z ticketu okamžitě odebrat nebo ticket uzamknout pro ostatní. Věcně řešit odvolání pouze s dotyčným hráčem na základě faktů a důkazů.',
+        isCorrect: true
+      },
+      {
+        text: 'Začít se s celou pětičlennou skupinou v ticketu hádat.',
+        isCorrect: false
+      }
+    ],
+    explanation: 'Ticket slouží výhradně pro komunikaci mezi dotčeným hráčem a týmem. Vytváření umělého davového nátlaku se eliminuje vykázáním neoprávněných osob.'
+  }
+];
+
+let currentActiveModTestScenarios = [];
+let currentModTestIndex = 0;
+let modtestScore = 0;
+let isModTestFlipping = false;
+let modtestAnswersHistory = [];
+
+function prepareRandomModTestQuestions() {
+  // 1. Rozdělení poolu do 3 fází
+  const p1Pool = MODTEST_SCENARIOS_POOL.filter(s => s.phase === 1);
+  const p2Pool = MODTEST_SCENARIOS_POOL.filter(s => s.phase === 2);
+  const p3Pool = MODTEST_SCENARIOS_POOL.filter(s => s.phase === 3);
+
+  // 2. Povinné klíčové otázky (garantované v každém testu!)
+  const p1Mandatory = p1Pool.filter(s => s.isMandatory);
+  const p1Optional = shuffleQuizArray(p1Pool.filter(s => !s.isMandatory));
+
+  const p2Mandatory = p2Pool.filter(s => s.isMandatory);
+  const p2Optional = shuffleQuizArray(p2Pool.filter(s => !s.isMandatory));
+
+  const p3Mandatory = p3Pool.filter(s => s.isMandatory);
+  const p3Optional = shuffleQuizArray(p3Pool.filter(s => !s.isMandatory));
+
+  // 3. Losování přesně 20 otázek:
+  // Fáze 1: 5 povinných + 1 náhodná z 13 volitelných = 6 otázek
+  // Fáze 2: 6 povinných (včetně důvěry v anticheat / SMPAC-DA 30%/90%) + 1 náhodná z 12 volitelných = 7 otázek
+  // Fáze 3: 6 povinných + 1 náhodná z 10 volitelných = 7 otázek
+  // Celkem: 6 + 7 + 7 = přesně 20 otázek!
+  const p1Picked = [...p1Mandatory, ...p1Optional.slice(0, 6 - p1Mandatory.length)];
+  const p2Picked = [...p2Mandatory, ...p2Optional.slice(0, 7 - p2Mandatory.length)];
+  const p3Picked = [...p3Mandatory, ...p3Optional.slice(0, 7 - p3Mandatory.length)];
+
+  // 4. Náhodné zamíchání pořadí otázek uvnitř každé fáze a zamíchání možností
+  const pickedAll = [
+    ...shuffleQuizArray(p1Picked),
+    ...shuffleQuizArray(p2Picked),
+    ...shuffleQuizArray(p3Picked)
+  ];
+
+  currentActiveModTestScenarios = pickedAll.map(sc => {
+    return {
+      ...sc,
+      shuffledOptions: shuffleQuizArray(sc.options)
+    };
+  });
+}
+
+function updateModTestPhaseUI(phaseNumber) {
+  const p1 = document.getElementById('modtest-pstep-1');
+  const p2 = document.getElementById('modtest-pstep-2');
+  const p3 = document.getElementById('modtest-pstep-3');
+  if (!p1 || !p2 || !p3) return;
+
+  p1.classList.remove('active', 'completed');
+  p2.classList.remove('active', 'completed');
+  p3.classList.remove('active', 'completed');
+
+  if (phaseNumber === 1) {
+    p1.classList.add('active');
+  } else if (phaseNumber === 2) {
+    p1.classList.add('completed');
+    p2.classList.add('active');
+  } else {
+    p1.classList.add('completed');
+    p2.classList.add('completed');
+    p3.classList.add('active');
+  }
+}
+
+function renderModTestCard(isTransition = false) {
+  const activeCard = document.getElementById('modtest-active-card');
+  const viewport = document.getElementById('modtest-viewport');
+  const applicantForm = document.getElementById('modtest-applicant-form');
+  const certCard = document.getElementById('modtest-certificate-card');
+
+  if (!activeCard || !viewport) return;
+
+  if (currentActiveModTestScenarios.length === 0) {
+    prepareRandomModTestQuestions();
+  }
+
+  const total = currentActiveModTestScenarios.length || 20;
+
+  if (currentModTestIndex >= total) {
+    viewport.style.display = 'none';
+    if (certCard) certCard.style.display = 'none';
+    if (applicantForm) {
+      applicantForm.style.display = 'block';
+      setTimeout(() => {
+        applicantForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 200);
+    }
+    return;
+  }
+
+  const sc = currentActiveModTestScenarios[currentModTestIndex];
+  if (!sc) return;
+
+  updateModTestPhaseUI(sc.phase);
+
+  const qNum = currentModTestIndex + 1;
+  const safeTag = typeof escapeHtml === 'function' ? escapeHtml(sc.tag) : sc.tag;
+  const safeTitle = typeof escapeHtml === 'function' ? escapeHtml(sc.title) : sc.title;
+  const safeDesc = typeof escapeHtml === 'function' ? escapeHtml(sc.description) : sc.description;
+
+  const optionsToRender = sc.shuffledOptions || sc.options;
+  const optionsHtml = optionsToRender.map((opt, optIndex) => {
+    const safeText = typeof escapeHtml === 'function' ? escapeHtml(opt.text) : opt.text;
+    return `
+      <button type="button" class="modtest-opt-btn" data-opt="${optIndex}" onclick="handleModTestAnswer(${optIndex}, ${opt.isCorrect}, this)">
+        <span class="modtest-opt-indicator"></span>
+        <span class="modtest-opt-text">${safeText}</span>
+      </button>
+    `;
+  }).join('');
+
+  activeCard.className = `modtest-card ${isTransition ? 'is-flipping-in' : ''}`;
+  activeCard.innerHTML = `
+    <div class="modtest-card-head">
+      <div class="modtest-meta-line">
+        <span class="modtest-scenario-tag">${safeTag}</span>
+        <span class="modtest-counter-badge">Otázka ${qNum} z ${total}</span>
+      </div>
+      <h3 class="modtest-question-title">${safeTitle}</h3>
+      <p class="modtest-question-desc">${safeDesc}</p>
+    </div>
+    <div class="modtest-options-list">
+      ${optionsHtml}
+    </div>
+    <div class="modtest-feedback-box" id="modtest-feedback-box"></div>
+  `;
+}
+
+function handleModTestAnswer(optIndex, isCorrect, btnElement) {
+  if (isModTestFlipping) return;
+
+  const sc = currentActiveModTestScenarios[currentModTestIndex];
+  if (!sc) return;
+
+  const activeCard = document.getElementById('modtest-active-card');
+  const feedbackBox = document.getElementById('modtest-feedback-box');
+  if (!activeCard || !feedbackBox) return;
+
+  isModTestFlipping = true;
+
+  const allBtns = activeCard.querySelectorAll('.modtest-opt-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  const optionsList = sc.shuffledOptions || sc.options;
+
+  if (isCorrect) {
+    btnElement.classList.add('selected-correct');
+    modtestScore++;
+    modtestAnswersHistory.push({ index: currentModTestIndex, correct: true });
+
+    const safeExplanation = typeof escapeHtml === 'function' ? escapeHtml(sc.explanation) : sc.explanation;
+    feedbackBox.className = 'modtest-feedback-box is-correct';
+    feedbackBox.innerHTML = `
+      <div class="feedback-inner">
+        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span><strong>Správně!</strong> ${safeExplanation}</span>
+      </div>
+    `;
+  } else {
+    btnElement.classList.add('selected-wrong');
+    modtestAnswersHistory.push({ index: currentModTestIndex, correct: false });
+
+    // Highlight the correct one
+    optionsList.forEach((opt, idx) => {
+      if (opt.isCorrect && allBtns[idx]) {
+        allBtns[idx].classList.add('selected-correct');
+      }
+    });
+
+    const safeExplanation = typeof escapeHtml === 'function' ? escapeHtml(sc.explanation) : sc.explanation;
+    feedbackBox.className = 'modtest-feedback-box is-wrong';
+    feedbackBox.innerHTML = `
+      <div class="feedback-inner">
+        <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span><strong>Chyba!</strong> ${safeExplanation}</span>
+      </div>
+    `;
+  }
+
+  // Smooth Apple 3D flip to next question
+  setTimeout(() => {
+    activeCard.classList.remove('is-flipping-in');
+    activeCard.classList.add('is-flipping-out');
+
+    setTimeout(() => {
+      currentModTestIndex++;
+      isModTestFlipping = false;
+      renderModTestCard(true);
+    }, 380);
+  }, 950);
+}
+
+function initOrRenderModTest() {
+  const viewport = document.getElementById('modtest-viewport');
+  const applicantForm = document.getElementById('modtest-applicant-form');
+  const certCard = document.getElementById('modtest-certificate-card');
+
+  if (!viewport) return;
+
+  if (currentActiveModTestScenarios.length === 0) {
+    prepareRandomModTestQuestions();
+  }
+
+  if (currentModTestIndex === 0 && (!applicantForm || applicantForm.style.display === 'none') && (!certCard || certCard.style.display === 'none')) {
+    viewport.style.display = 'block';
+    renderModTestCard(false);
+  }
+}
+
+async function submitModeratorApplication(event) {
+  if (event && event.preventDefault) event.preventDefault();
+
+  const nickInput = document.getElementById('modtest-nick');
+  const discordInput = document.getElementById('modtest-discord');
+  const btnSubmit = document.getElementById('btn-submit-modtest');
+
+  const nick = nickInput ? nickInput.value.trim() : '';
+  const discord = discordInput ? discordInput.value.trim() : '';
+
+  if (!nick || !discord) {
+    alert('Prosím vyplň svůj Minecraft nick i Discord.');
+    return;
+  }
+
+  if (btnSubmit) {
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = '<span>Odesílám vyhodnocení...</span>';
+  }
+
+  const total = currentActiveModTestScenarios.length || 20; // 20
+  const stressScore = Math.round((modtestScore / total) * 100);
+  const passed = modtestScore >= 16; // 80 %
+
+  const cleanNick = nick.replace(/[^a-zA-Z0-9_]/g, '').toUpperCase() || 'CADET';
+  const randomSalt = Math.random().toString(36).substring(2, 8).toUpperCase();
+  const certCode = `MYCHAL-MOD-${cleanNick}-${randomSalt}`;
+
+  // Notify backend API endpoint
+  try {
+    await fetch('/api/modtest/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mcNick: nick,
+        discordTag: discord,
+        score: modtestScore,
+        total: total,
+        stressScore: stressScore,
+        passed: passed,
+        certCode: certCode
+      })
+    });
+  } catch (err) {
+    console.warn('[MODTEST SUBMIT ERR]', err);
+  }
+
+  // Hide form and show certificate
+  const applicantForm = document.getElementById('modtest-applicant-form');
+  const certCard = document.getElementById('modtest-certificate-card');
+  if (applicantForm) applicantForm.style.display = 'none';
+
+  if (certCard) {
+    certCard.style.display = 'block';
+
+    const statScore = document.getElementById('modtest-stat-score');
+    const statStress = document.getElementById('modtest-stat-stress');
+    const statStatus = document.getElementById('modtest-stat-status');
+    const certTitle = document.getElementById('modtest-cert-title');
+    const certRank = document.getElementById('modtest-cert-rank');
+    const certDesc = document.getElementById('modtest-cert-desc');
+    const certCodeEl = document.getElementById('modtest-cert-code');
+
+    if (statScore) statScore.textContent = `${modtestScore} / ${total}`;
+    if (statStress) statStress.textContent = `${stressScore} %`;
+
+    if (statStatus) {
+      if (passed) {
+        statStatus.textContent = 'SCHVÁLEN';
+        statStatus.style.color = '#21DE00';
+      } else {
+        statStatus.textContent = 'NEPROŠEL';
+        statStatus.style.color = '#f51515';
+      }
+    }
+
+    if (certRank) {
+      if (modtestScore >= 19) {
+        certRank.textContent = 'LEGENDA S OCELOVÝMI NERVY (ELITNÍ MODERÁTOR)';
+        certRank.style.color = '#21DE00';
+      } else if (modtestScore >= 16) {
+        certRank.textContent = 'ZKUŠENÝ MODERÁTOR (PROVĚŘEN BOJEM)';
+        certRank.style.color = '#0a67e5';
+      } else if (modtestScore >= 11) {
+        certRank.textContent = 'REKRUT V PŘÍPRAVĚ (POTŘEBUJE DOHLED)';
+        certRank.style.color = '#ffaa00';
+      } else {
+        certRank.textContent = 'UKAMENOVÁN HRÁČI DO 5 MINUT (NEDOPORUČENO)';
+        certRank.style.color = '#f51515';
+      }
+    }
+
+    if (certDesc) {
+      if (passed) {
+        certDesc.textContent = `Gratulujeme, ${nick}! Prokázal jsi neprůstřelnou znalost zákonů serveru i psychickou odolnost vůči vydírání a trollingu (${modtestScore} z ${total} správně). Zkopíruj si kód níže a pošli ho do ticketu na Discordu.`;
+      } else {
+        certDesc.textContent = `Bohužel, ${nick}, v několika situacích tě hráči zmanipulovali nebo jsi přehlédl klíčová pravidla serveru (${modtestScore} z ${total}). Můžeš si pravidla znovu pročíst a zkusit test znovu s novými otázkami.`;
+      }
+    }
+
+    if (certCodeEl) certCodeEl.textContent = certCode;
+
+    setTimeout(() => {
+      certCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 200);
+  }
+
+  if (btnSubmit) {
+    btnSubmit.disabled = false;
+    btnSubmit.innerHTML = `
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      <span>Vyhodnotit & Odeslat přihlášku</span>
+    `;
+  }
+}
+
+function copyModTestResult() {
+  const codeEl = document.getElementById('modtest-cert-code');
+  if (!codeEl) return;
+  const text = codeEl.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.btn-copy-code');
+    if (btn) {
+      const orig = btn.textContent;
+      btn.textContent = 'Zkopírováno!';
+      setTimeout(() => { btn.textContent = orig; }, 2000);
+    }
+  }).catch(() => {
+    alert('Kód certifikátu: ' + text);
+  });
+}
+
+function restartModTest() {
+  prepareRandomModTestQuestions();
+  currentModTestIndex = 0;
+  modtestScore = 0;
+  isModTestFlipping = false;
+  modtestAnswersHistory = [];
+
+  const viewport = document.getElementById('modtest-viewport');
+  const applicantForm = document.getElementById('modtest-applicant-form');
+  const certCard = document.getElementById('modtest-certificate-card');
+
+  if (applicantForm) applicantForm.style.display = 'none';
+  if (certCard) certCard.style.display = 'none';
+  if (viewport) viewport.style.display = 'block';
+
+  renderModTestCard(false);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Global window exposure for inline handlers
+window.RULES_QUIZ_SCENARIOS = RULES_QUIZ_SCENARIOS;
+window.resetAndShuffleQuiz = resetAndShuffleQuiz;
+window.handleDynamicQuizAnswer = handleDynamicQuizAnswer;
+window.initOrRenderRulesQuiz = initOrRenderRulesQuiz;
+
+window.MODTEST_SCENARIOS_POOL = MODTEST_SCENARIOS_POOL;
+window.currentActiveModTestScenarios = currentActiveModTestScenarios;
+window.MODTEST_SCENARIOS = currentActiveModTestScenarios;
+window.prepareRandomModTestQuestions = prepareRandomModTestQuestions;
+window.initOrRenderModTest = initOrRenderModTest;
+window.handleModTestAnswer = handleModTestAnswer;
+window.submitModeratorApplication = submitModeratorApplication;
+window.copyModTestResult = copyModTestResult;
+window.restartModTest = restartModTest;

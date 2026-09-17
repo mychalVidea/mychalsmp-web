@@ -17,7 +17,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20260910_v14" />
+  <link rel="stylesheet" href="style.css?v=20260917_v12" />
 </head>
 
 <body>
@@ -30,28 +30,76 @@
         <span class="nav-logo-text">MYCHAL <span class="nav-logo-accent">SMP</span></span>
       </a>
       <div class="nav-links">
-        <button id="tab-btn-home" class="nav-link active" onclick="showTab('home')">🏠 Domů</button>
-        <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">🔗 Jak se připojit</button>
-        <button id="tab-btn-smp-plus" class="nav-link" onclick="showTab('smp-plus')">👑 SMP+</button>
-        <button id="tab-btn-media" class="nav-link" onclick="showTab('media')">🎬 Media</button>
-        <button id="tab-btn-napady" class="nav-link" onclick="showTab('napady')">💡 Nápady</button>
-        <button id="tab-btn-stats" class="nav-link" onclick="showTab('stats')">📊 Statistiky</button>
-        <button id="tab-btn-bugs" class="nav-link" onclick="showTab('bugs')">🐛 Bugy</button>
-        <button id="tab-btn-rules" class="nav-link" onclick="showTab('rules')">📜 Pravidla</button>
+        <button id="tab-btn-home" class="nav-link active" onclick="showTab('home')">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Domů</span>
+        </button>
+        <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          <span>Jak se připojit</span>
+        </button>
+        <button id="tab-btn-smp-plus" class="nav-link nav-link--smp" onclick="showTab('smp-plus')">
+          <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z"/></svg>
+          <span>SMP+</span>
+        </button>
+        <button id="tab-btn-media" class="nav-link" onclick="showTab('media')">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          <span>Media</span>
+        </button>
+        <button id="tab-btn-napady" class="nav-link" onclick="showTab('napady')">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"/></svg>
+          <span>Nápady</span>
+        </button>
+        <button id="tab-btn-stats" class="nav-link" onclick="showTab('stats')">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>Statistiky</span>
+        </button>
+        <button id="tab-btn-bugs" class="nav-link" onclick="showTab('bugs')">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="14" x="8" y="6" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 19-3-2"/><path d="m5 19 3-2"/><path d="M20 13h-4"/><path d="M4 13h4"/><path d="m10 4 1 2"/><path d="m14 4-1 2"/></svg>
+          <span>Bugy</span>
+        </button>
+        <button id="tab-btn-rules" class="nav-link" onclick="showTab('rules')">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Pravidla</span>
+        </button>
       </div>
       <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
         <span></span><span></span><span></span>
       </button>
     </div>
     <div class="mobile-menu" id="mobile-menu">
-      <button class="nav-link" id="top-nav-home" onclick="showTab('home');toggleMenu()">🏠 Domů</button>
-      <button class="nav-link" id="top-nav-join" onclick="showTab('join');toggleMenu()">🔗 Jak se připojit</button>
-      <button class="nav-link" id="top-nav-smp-plus" onclick="showTab('smp-plus');toggleMenu()">👑 SMP+</button>
-      <button class="nav-link" id="top-nav-media" onclick="showTab('media');toggleMenu()">🎬 Media</button>
-      <button class="nav-link" id="top-nav-napady" onclick="showTab('napady');toggleMenu()">💡 Nápady</button>
-      <button class="nav-link" id="top-nav-stats" onclick="showTab('stats');toggleMenu()">📊 Statistiky</button>
-      <button class="nav-link" id="top-nav-bugs" onclick="showTab('bugs');toggleMenu()">🐛 Bugy</button>
-      <button class="nav-link" id="top-nav-rules" onclick="showTab('rules');toggleMenu()">📜 Pravidla</button>
+      <button class="nav-link" id="top-nav-home" onclick="showTab('home');toggleMenu()">
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Domů</span>
+      </button>
+      <button class="nav-link" id="top-nav-join" onclick="showTab('join');toggleMenu()">
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        <span>Jak se připojit</span>
+      </button>
+      <button class="nav-link" id="top-nav-smp-plus" onclick="showTab('smp-plus');toggleMenu()">
+        <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z"/></svg>
+        <span>SMP+</span>
+      </button>
+      <button class="nav-link" id="top-nav-media" onclick="showTab('media');toggleMenu()">
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        <span>Media</span>
+      </button>
+      <button class="nav-link" id="top-nav-napady" onclick="showTab('napady');toggleMenu()">
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"/></svg>
+        <span>Nápady</span>
+      </button>
+      <button class="nav-link" id="top-nav-stats" onclick="showTab('stats');toggleMenu()">
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Statistiky</span>
+      </button>
+      <button class="nav-link" id="top-nav-bugs" onclick="showTab('bugs');toggleMenu()">
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="14" x="8" y="6" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 19-3-2"/><path d="m5 19 3-2"/><path d="M20 13h-4"/><path d="M4 13h4"/><path d="m10 4 1 2"/><path d="m14 4-1 2"/></svg>
+        <span>Bugy</span>
+      </button>
+      <button class="nav-link" id="top-nav-rules" onclick="showTab('rules');toggleMenu()">
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>Pravidla</span>
+      </button>
     </div>
   </nav>
 
@@ -63,13 +111,6 @@
         <div class="hero-overlay"></div>
       </div>
       <div class="hero-content">
-        <!-- Live Server Status Chip -->
-        <div class="hero-status-pill">
-          <span class="hero-live-dot"></span>
-          <span class="hero-live-text">Java Edition • <strong>26.2 (Doporučeno)</strong> •
-            <strong>1.21.11</strong></span>
-        </div>
-
         <h1 class="sr-only">MYCHAL SMP</h1>
         <img src="imgs/mychalSMP-SERVERICONtestv2 (2).webp" alt="MYCHAL SMP Logo" class="hero-logo" />
         <p class="hero-subtitle">
@@ -84,19 +125,24 @@
             <span class="hero-ip-label">SERVER IP:</span>
             <span class="hero-ip-text">mychalsmp.xyz</span>
           </div>
-          <button class="hero-copy-btn" id="copy-btn" aria-label="Kopírovat IP">
-            <i class="fa-regular fa-copy"></i>
-            <span>Zkopírovat IP</span>
+          <button class="hero-copy-btn" id="copy-btn" aria-label="Kopírovat IP" type="button" onclick="copyIP(event)">
+            <span class="btn-copy-icon-wrap">
+              <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span class="btn-copy-label">Zkopírovat IP</span>
           </button>
         </div>
 
         <!-- Modern High-Craft CTA Row -->
         <div class="hero-cta-row">
           <button class="btn-hero-primary" onclick="showTab('join')">
-            <i class="fa-solid fa-link"></i> Jak se připojit
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            <span>Jak se připojit</span>
           </button>
           <button class="btn-hero-smp" onclick="showTab('smp-plus')">
-            <i class="fa-solid fa-crown text-gold"></i> Výhody SMP+
+            <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z"/></svg>
+            <span>Výhody SMP+</span>
           </button>
           <a href="https://discord.gg/HwZUGWGVD9" target="_blank" rel="noopener" class="btn-hero-discord">
             <i class="fa-brands fa-discord"></i> Discord
@@ -162,15 +208,36 @@
                 Edition</strong>.
             </p>
             <div class="info-tags-row">
-              <span class="info-chip">⚔️ Nové SMP (/smp)</span>
-              <span class="info-chip">🌲 Klasika (/survival)</span>
-              <span class="info-chip">🔥 Perma PvP na SMP</span>
-              <span class="info-chip">🛒 Shop a Orders</span>
-              <span class="info-chip">☕ Java Edition</span>
+              <span class="info-chip">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" y1="14" x2="9" y2="18"/><line x1="7" y1="17" x2="4" y2="20"/><line x1="3" y1="19" x2="5" y2="21"/></svg>
+                <span>Nové SMP (/smp)</span>
+              </span>
+              <span class="info-chip">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 19 22 19 12 2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                <span>Klasika (/survival)</span>
+              </span>
+              <span class="info-chip">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+                <span>Perma PvP na SMP</span>
+              </span>
+              <span class="info-chip">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#0a67e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <span>Shop a Orders</span>
+              </span>
+              <span class="info-chip">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <span>Java Edition 26.2</span>
+              </span>
             </div>
             <div class="info-actions">
-              <button class="btn-primary" onclick="showTab('join')" id="info-join-btn">🔗 Jak se připojit</button>
-              <button class="btn-secondary" onclick="showTab('smp-plus')">👑 Získat SMP+</button>
+              <button class="btn-primary" onclick="showTab('join')" id="info-join-btn">
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                <span>Jak se připojit</span>
+              </button>
+              <button class="btn-secondary" onclick="showTab('smp-plus')">
+                <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z"/></svg>
+                <span>Získat SMP+</span>
+              </button>
             </div>
           </div>
           <div class="info-imgs">
@@ -207,7 +274,10 @@
               <div class="gm-card-cmd-chip" onclick="event.stopPropagation(); copyCommand('/smp', this)"
                 title="Kliknutím zkopíruješ příkaz">
                 <code>/smp</code>
-                <i class="fa-regular fa-copy"></i>
+                <span class="btn-copy-icon-wrap">
+                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
               </div>
             </div>
 
@@ -261,7 +331,11 @@
 
               <div class="gm-card-actions">
                 <button class="btn-gm-action btn-gm--smp" onclick="copyCommand('/smp', this)">
-                  <i class="fa-solid fa-bolt"></i> Zkopírovat <code>/smp</code> pro vstup
+                  <span class="btn-copy-icon-wrap">
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="btn-gm-label">Zkopírovat <code>/smp</code> pro vstup</span>
                 </button>
               </div>
             </div>
@@ -279,7 +353,10 @@
               <div class="gm-card-cmd-chip" onclick="event.stopPropagation(); copyCommand('/survival', this)"
                 title="Kliknutím zkopíruješ příkaz">
                 <code>/survival</code>
-                <i class="fa-regular fa-copy"></i>
+                <span class="btn-copy-icon-wrap">
+                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
               </div>
             </div>
 
@@ -326,14 +403,18 @@
                   <div class="gm-feat-icon text-gold"><i class="fa-solid fa-monument"></i></div>
                   <div class="gm-feat-info">
                     <strong>Stavitelské projekty</strong>
-                    <span>Tradiční svět s dlouhou historií a přátelskou komunitou.</span>
+                    <span>Tradiční svět s dlouhodobostí a přátelskou komunitou.</span>
                   </div>
                 </div>
               </div>
 
               <div class="gm-card-actions">
                 <button class="btn-gm-action btn-gm--survival" onclick="copyCommand('/survival', this)">
-                  <i class="fa-solid fa-person-walking-arrow-right"></i> Zkopírovat <code>/survival</code> pro vstup
+                  <span class="btn-copy-icon-wrap">
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="btn-gm-label">Zkopírovat <code>/survival</code> pro vstup</span>
                 </button>
               </div>
             </div>
@@ -356,31 +437,40 @@
             <div class="quickstart-step">
               <div class="quickstart-step-num">1</div>
               <h3 class="quickstart-step-title">Zkopíruj serverovou IP</h3>
-              <div class="quickstart-ip-box" onclick="copyIP(event)">
+              <div class="quickstart-ip-box" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP">
                 <span class="quickstart-ip-code">mychalsmp.xyz</span>
-                <button class="quickstart-copy-btn" aria-label="Zkopírovat IP"><i
-                    class="fa-regular fa-copy"></i></button>
+                <span class="btn-copy-icon-wrap">
+                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
               </div>
-              <span class="quickstart-step-hint">Java Edition • <strong>26.2</strong> (nejvíce stabilní) •
-                <strong>1.21.11</strong></span>
+              <span class="quickstart-step-hint">Java Edition • <strong>26.2</strong></span>
             </div>
 
             <div class="quickstart-step">
               <div class="quickstart-step-num">2</div>
               <h3 class="quickstart-step-title">Přidej server do hry</h3>
-              <p class="quickstart-step-desc">V Minecraftu zvol <strong>Multiplayer</strong> → <strong>Add
-                  Server</strong> a vlož naši IP.</p>
+              <div class="quickstart-guide-box">
+                <span class="quickstart-path-step">Multiplayer</span>
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <span class="quickstart-path-step">Přidat server</span>
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <span class="quickstart-path-step quickstart-path-step--active">Vložit IP</span>
+              </div>
               <span class="quickstart-step-hint">Server má vlastní balíček textur</span>
             </div>
 
             <div class="quickstart-step">
               <div class="quickstart-step-num">3</div>
               <h3 class="quickstart-step-title">Přihlas se a hraj</h3>
-              <div class="quickstart-cmd-box">
+              <div class="quickstart-cmd-box" onclick="copyCommand('/register heslo heslo', this)" title="Kliknutím zkopíruješ příkaz">
                 <code>/register &lt;heslo&gt; &lt;heslo&gt;</code>
+                <span class="btn-copy-icon-wrap">
+                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
               </div>
-              <span class="quickstart-step-hint">Originální účty: <strong>Automatické přihlášení bez hesla!</strong>
-                (Warez: /register)</span>
+              <span class="quickstart-step-hint">Originální účty: <strong>Automatické přihlášení</strong></span>
             </div>
           </div>
         </div>
@@ -401,18 +491,24 @@
         <!-- Live Quick-Join IP Card -->
         <div class="join-quick-ip-card">
           <div class="join-quick-ip-info">
-            <span class="join-quick-ip-tag"><span class="hero-live-dot"></span> Java Edition • 26.2 (Doporučeno) •
-              1.21.11</span>
+            <span class="join-quick-ip-tag">
+              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg>
+              <span>Java Edition • <strong>26.2</strong></span>
+            </span>
             <div class="join-quick-ip-address" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP adresu">
               <code class="join-ip-code-text">mychalsmp.xyz</code>
-              <button class="join-quick-copy-btn" aria-label="Zkopírovat IP"><i class="fa-regular fa-copy"></i>
-                Kopírovat IP</button>
+              <button class="join-quick-copy-btn" aria-label="Zkopírovat IP">
+                <span class="btn-copy-icon-wrap">
+                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="btn-copy-label">Kopírovat IP</span>
+              </button>
             </div>
           </div>
           <div class="join-quick-badges">
             <span class="join-pill"><i class="fa-solid fa-bolt text-yellow"></i> Bez Whitelistu</span>
-            <span class="join-pill"><i class="fa-solid fa-shield-halved text-green"></i> Auto-Login pro
-              Originálky</span>
+            <span class="join-pill"><i class="fa-solid fa-shield-halved text-green"></i> Auto-Login pro Originálky</span>
             <span class="join-pill"><i class="fa-solid fa-gamepad text-blue"></i> Podpora i pro Warez</span>
           </div>
         </div>
@@ -426,14 +522,10 @@
         <!-- Krok 1: Spuštění hry a výběr verze -->
         <div class="join-step-row">
           <div class="join-step-info">
-            <div class="join-step-badge-row">
-              <span class="join-step-pill">01</span>
-              <span class="join-tag-pill">Spuštění a verze</span>
-            </div>
-            <h3 class="join-step-title">Spusť Minecraft ve verzi 26.2 nebo 1.21.11</h3>
+            <h3 class="join-step-title"><span class="join-step-pill">01</span> Spusť Minecraft ve verzi 26.2</h3>
             <p class="join-step-text">
-              Server podporuje Java Edition verze <strong>1.21.11 až 26.2</strong>. Pro maximální plynulost, nejnovější
-              mechaniky a bezchybnou stabilitu doporučujeme verzi <strong>26.2 (nejvíce stabilní)</strong>.
+              Server běží na nejnovější a stabilní verzi <strong>26.2</strong>. Pro maximální plynulost, nejnovější
+              mechaniky a bezchybnou stabilitu se připojuj ve verzi <strong>26.2</strong>.
             </p>
             <div class="join-step-action-bar">
               <span class="join-step-chip"><i class="fa-solid fa-arrow-pointer text-blue"></i> V hlavním menu klikni na
@@ -456,11 +548,7 @@
         <!-- Krok 2: Přidání nového serveru -->
         <div class="join-step-row">
           <div class="join-step-info">
-            <div class="join-step-badge-row">
-              <span class="join-step-pill">02</span>
-              <span class="join-tag-pill">Seznam serverů</span>
-            </div>
-            <h3 class="join-step-title">Klikni na Přidat server (Add Server)</h3>
+            <h3 class="join-step-title"><span class="join-step-pill">02</span> Klikni na Přidat server (Add Server)</h3>
             <p class="join-step-text">
               V dolní liště seznamu serverů klikni na tlačítko <strong>Přidej server (Add Server)</strong>. Název
               serveru si zadej libovolně (např. <code>MYCHAL SMP</code>), abys server v seznamu snadno poznal.
@@ -486,11 +574,7 @@
         <!-- Krok 3: Zadání IP adresy -->
         <div class="join-step-row">
           <div class="join-step-info">
-            <div class="join-step-badge-row">
-              <span class="join-step-pill">03</span>
-              <span class="join-tag-pill">Adresa serveru</span>
-            </div>
-            <h3 class="join-step-title">Zadej IP adresu a zapni textury</h3>
+            <h3 class="join-step-title"><span class="join-step-pill">03</span> Zadej IP adresu a zapni textury</h3>
             <p class="join-step-text">
               Do pole <em>Adresa serveru (Server Address)</em> zadej <code>mychalsmp.xyz</code>. Položku <strong>Server
                 Resource Packs</strong> nastav na <strong>Enabled (Povoleno)</strong> nebo <strong>Prompt (Dotázat
@@ -498,9 +582,14 @@
             </p>
             <div class="join-step-action-bar">
               <div class="join-compact-ip-box" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP adresu">
-                <span class="hero-live-dot"></span>
                 <code class="join-compact-ip-code">mychalsmp.xyz</code>
-                <button class="join-compact-copy-btn"><i class="fa-regular fa-copy"></i> Kopírovat</button>
+                <button class="join-compact-copy-btn">
+                  <span class="btn-copy-icon-wrap">
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="btn-copy-label">Kopírovat</span>
+                </button>
               </div>
             </div>
           </div>
@@ -520,11 +609,7 @@
         <!-- Krok 4: Vstup do hry -->
         <div class="join-step-row">
           <div class="join-step-info">
-            <div class="join-step-badge-row">
-              <span class="join-step-pill">04</span>
-              <span class="join-tag-pill">Vstup do hry</span>
-            </div>
-            <h3 class="join-step-title">Připoj se a začni hrát</h3>
+            <h3 class="join-step-title"><span class="join-step-pill">04</span> Připoj se a začni hrát</h3>
             <p class="join-step-text">
               Vyber MYCHAL SMP v seznamu a klikni na <strong>Připojit se</strong>. Přihlášení je plně optimalizováno pro
               oba typy hráčů:
@@ -542,7 +627,10 @@
                 <div class="join-mini-cmd" onclick="copyCommand('/register heslo123 heslo123', this)"
                   title="Kliknutím zkopíruješ příkaz">
                   <code>/register &lt;heslo&gt; &lt;heslo&gt;</code>
-                  <i class="fa-regular fa-copy"></i>
+                  <span class="btn-copy-icon-wrap">
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
                 </div>
               </div>
             </div>
@@ -563,8 +651,6 @@
         <!-- Step 5 / Community Card: Discord a podpora -->
         <div class="join-community-card">
           <div class="join-community-left">
-            <div class="join-badge-pill join-badge-pill--discord"><i class="fa-brands fa-discord"></i> Komunita a
-              podpora</div>
             <h3 class="join-community-title">Připoj se k nám na Discord</h3>
             <p class="join-community-desc">
               Nejčerstvější novinky, komunitní eventy, pokec s hráči a přímý ticket systém podpory od administrátorů.
@@ -604,7 +690,7 @@
           </button>
           <div class="faq-content">
             <p>Není potřeba žádný whitelist! Náš server je plně veřejný pro všechny hráče. Stačí v Minecraftu zadat IP
-              mychalsmp.xyz a připojit se ve verzi 26.2 nebo 1.21.11.</p>
+              mychalsmp.xyz a připojit se ve verzi 26.2.</p>
           </div>
         </div>
         <div class="faq-card">
@@ -613,8 +699,7 @@
             <span class="faq-icon-chevron">+</span>
           </button>
           <div class="faq-content">
-            <p>Server podporuje verzi <strong>1.21.11</strong> až <strong>26.2</strong>. Pro nejlepší herní stabilitu a
-              plynulost doporučujeme připojit se s verzí <strong>26.2</strong> (nejvíce stabilní).</p>
+            <p>Server běží na stabilní verzi <strong>26.2</strong>. Připoj se přímo přes IP <strong>mychalsmp.xyz</strong>.</p>
           </div>
         </div>
         <div class="faq-card">
@@ -644,122 +729,537 @@
   <!-- RULES -->
   <section id="tab-rules" class="tab-section rules-section-ambient">
     <div class="container rules-container">
-      <div class="rules-grid">
-        <!-- Rule 1 -->
-        <div class="rule-card rule-card--ban">
-          <div class="rule-badge">BAN</div>
-          <h3>Cheaty a modifikace</h3>
-          <p>Jakýkoliv cheat, hack nebo modifikace dávající neférovou výhodu je přísně zakázána. Cheaty nesmějí být v
-            aktuální relaci Minecraftu zapnuté ani nainstalované.</p>
-          <ul class="rule-bullet-list">
-            <li><strong>Replay Mod:</strong> Povolen <strong>pouze pro hráče s Media rankem</strong> (pro tvorbu videí).
-              Běžným hráčům je zakázán.</li>
-            <li><strong>Spoluúčast a krytí:</strong> Pomoc cheaterům, dupování ilegálních věcí nebo jejich krytí se
-              trestá podobným BANEM jako samotné cheatování!</li>
-          </ul>
+
+      <!-- 3 spacious value pillars (Direct Start as in Screenshot) -->
+      <div class="rules-pillars-grid">
+        <div class="rules-pillar-card">
+          <div class="rules-pillar-icon rules-pillar-icon--blue">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <div class="rules-pillar-info">
+            <span class="rules-pillar-title">100% Fair-Play</span>
+            <span class="rules-pillar-desc">Nulová tolerance pro cheaty, hacky a X-Ray modifikace.</span>
+          </div>
         </div>
 
-        <!-- Rule 2 -->
-        <div class="rule-card rule-card--ban">
-          <div class="rule-badge">BAN</div>
-          <h3>X-Ray a ESP</h3>
-          <p>Využívání x-ray modů nebo texture packů je zakázáno.</p>
-          <ul class="rule-bullet-list">
-            <li>X-Ray mody a texture packy</li>
-            <li>Cave finder a vyhledávače dungeonů</li>
-            <li>Entity ESP a vyhledávání hráčů</li>
-          </ul>
+        <div class="rules-pillar-card">
+          <div class="rules-pillar-icon rules-pillar-icon--orange">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/></svg>
+          </div>
+          <div class="rules-pillar-info">
+            <span class="rules-pillar-title">Světy podle tebe</span>
+            <span class="rules-pillar-desc">SMP = volný boj a ničení, Survival = klid a bezpečí.</span>
+          </div>
         </div>
 
-        <!-- Rule: Zákaz IRL Trade -->
-        <div class="rule-card rule-card--ban">
-          <div class="rule-badge">PERMANENTNÍ BAN</div>
-          <h3>Zákaz IRL Trade</h3>
-          <p>Přísný zákaz jakéhokoliv nákupu, prodeje nebo směny herních předmětů, měny, účtů či služeb za reálné
-            peníze.</p>
-          <ul class="rule-bullet-list">
-            <li>Prodej/nákup itemů nebo coinů za reálné peníze</li>
-            <li>Přeprodej herních účtů či výhod</li>
-            <li>Permanentní ban pro kupujícího i prodávajícího</li>
-          </ul>
-        </div>
-
-        <!-- Rule 3 -->
-        <div class="rule-card rule-card--ban">
-          <div class="rule-badge">BAN + WIPE</div>
-          <h3>Zneužívání bugů a duplikace</h3>
-          <p>Záměrné využívání bugů pro vlastní prospěch a duplikování itemů je přísně zakázáno. Nalezené chyby je hráč neprodleně povinen nahlásit do ticketu na Discordu, do hlášení chyb na webu (https://mychalsmp.xyz/#bugs) nebo přes /report ve hře.</p>
-          <ul class="rule-bullet-list">
-            <li>Duplikační glitche předmětů a exploitů</li>
-            <li><strong>Spoluúčast na dupování:</strong> Pomoc duperům, krytí duperů a společné
-              zneužívání chyb se trestá BANEM a kompletním smazáním inventáře i truhel!</li>
-            <li>Noclip a zneužití špatného nastavení</li>
-          </ul>
-        </div>
-
-        <!-- Rule 4 -->
-        <div class="rule-card rule-card--warning">
-          <div class="rule-badge">SMP POVOLENO</div>
-          <h3>Pravidla Griefování</h3>
-          <p>Griefování je <strong>povoleno pouze na SMP světe (/smp)</strong>. Na klasickém Survivalu (/survival) je
-            ničení zakázáno.</p>
-          <ul class="rule-bullet-list">
-            <li>SMP (/smp): Griefing je POVOLEN</li>
-            <li>Lag machiny a přetěžování serveru jsou ZAKÁZÁNY všude!</li>
-            <li>Survival (/survival): Griefing je ZAKÁZÁN</li>
-          </ul>
-        </div>
-
-        <!-- Rule 5 -->
-        <div class="rule-card rule-card--warning">
-          <div class="rule-badge">VAROVÁNÍ / BAN</div>
-          <h3>Toxické chování</h3>
-          <p>Respekt je základ. Chceme příjemnou komunitu pro všechny hráče.</p>
-          <ul class="rule-bullet-list">
-            <li>Šikana, stalking a harassment</li>
-            <li>Spamování v chatu</li>
-            <li>Provokování a vyvolávání sporů</li>
-          </ul>
-        </div>
-
-        <!-- Rule 6 -->
-        <div class="rule-card rule-card--warning">
-          <div class="rule-badge">VAROVÁNÍ / KICK</div>
-          <h3>Urážky a vulgarity</h3>
-          <p>Udržuj chat čistý a přátelský. Nadávky a vulgarity jsou na serveru zakázány.</p>
-          <ul class="rule-bullet-list">
-            <li>Vulgarismy směřované na hráče</li>
-            <li>Zasílání nevhodného (NSFW) obsahu</li>
-            <li>Propagace jiných serverů</li>
-          </ul>
-        </div>
-
-        <!-- Rule 7 -->
-        <div class="rule-card rule-card--warning">
-          <div class="rule-badge">TIMEOUT / BAN</div>
-          <h3>Žádosti o Unban & Unmute</h3>
-          <p>Veřejné žebrání o zrušení trestu v chatu je přísně zakázáno.</p>
-          <ul class="rule-bullet-list">
-            <li>Žádosti se řeší výhradně přes tickety na Discordu</li>
-            <li>Žebrání a spamování v chatu je zakázáno</li>
-            <li>Opakované porušení = Timeout na 30 minut</li>
-          </ul>
+        <div class="rules-pillar-card">
+          <div class="rules-pillar-icon rules-pillar-icon--green">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="rules-pillar-info">
+            <span class="rules-pillar-title">Odměny za bugy</span>
+            <span class="rules-pillar-desc">Našel jsi chybu? Nahlas ji a získej diamantové bloky!</span>
+          </div>
         </div>
       </div>
 
-      <!-- Consent banner -->
+      <!-- VISUAL SIDE-BY-SIDE BATTLE CARD: CO SMÍŠ vs. CO NESMÍŠ -->
+      <div class="rules-compare-section">
+        <div class="rules-compare-grid">
+          <!-- ALLOWED (DOs) -->
+          <div class="rules-compare-card rules-compare-card--allowed">
+            <div class="rules-compare-card-head">
+              <div class="rules-compare-badge rules-compare-badge--allowed">
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>CO JE POVOLENO & VÍTÁNO</span>
+              </div>
+              <h3 class="rules-compare-title">Hraj svobodně a užívej si hru</h3>
+            </div>
+
+            <ul class="rules-compare-items">
+              <li class="rules-compare-item">
+                <div class="rules-compare-icon-wrap rules-compare-icon-wrap--allowed">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="rules-compare-item-body">
+                  <strong>Optimalizační a grafické mody</strong>
+                  <p>Sodium, Iris Shaders, Lithium, FerriteCore i OptiFine pro plynulý běh hry.</p>
+                </div>
+              </li>
+
+              <li class="rules-compare-item">
+                <div class="rules-compare-icon-wrap rules-compare-icon-wrap--allowed">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="rules-compare-item-body">
+                  <strong>Informační a HUD doplňky</strong>
+                  <p>Ukazatel FPS, pingu, stavu zbroje (Armor HUD) a souřadnice na klávese F3.</p>
+                </div>
+              </li>
+
+              <li class="rules-compare-item">
+                <div class="rules-compare-icon-wrap rules-compare-icon-wrap--allowed">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="rules-compare-item-body">
+                  <strong>Boj, pasti a ničení na SMP světě (/smp)</strong>
+                  <p>Na novém SMP světě jsou přepady, pasti a ničení legální herní mechanikou!</p>
+                </div>
+              </li>
+
+              <li class="rules-compare-item">
+                <div class="rules-compare-icon-wrap rules-compare-icon-wrap--allowed">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="rules-compare-item-body">
+                  <strong>Automatické farmy a stavitelské projekty</strong>
+                  <p>Stavěj cokoliv tě baví – stačí, když stroje nezpůsobují lag celému serveru.</p>
+                </div>
+              </li>
+
+              <li class="rules-compare-item">
+                <div class="rules-compare-icon-wrap rules-compare-icon-wrap--allowed">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="rules-compare-item-body">
+                  <strong>Replay Mod pro ověřené tvůrce</strong>
+                  <p>Hráči s Media rankem mohou točit filmové záběry pro svá videa a streamy.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- FORBIDDEN (DON'Ts) -->
+          <div class="rules-compare-card rules-compare-card--forbidden">
+            <div class="rules-compare-card-head">
+              <div class="rules-compare-badge rules-compare-badge--forbidden">
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>CO JE PŘÍSNĚ ZAKÁZÁNO</span>
+              </div>
+              <h3 class="rules-compare-title">Nulová tolerance pro podvádění</h3>
+            </div>
+
+            <ul class="rules-compare-items">
+              <li class="rules-compare-item">
+                <div class="rules-compare-icon-wrap rules-compare-icon-wrap--forbidden">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+                <div class="rules-compare-item-body">
+                  <strong>Cheaty, Hack klienti a veškeré Minimapy</strong>
+                  <p>Killaura, Fly, Speed, Auto-totem, Baritone, Xaero's Minimap, JourneyMap a všechny mody s minimapou či waypointy.</p>
+                </div>
+              </li>
+
+              <li class="rules-compare-item">
+                <div class="rules-compare-icon-wrap rules-compare-icon-wrap--forbidden">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+                <div class="rules-compare-item-body">
+                  <strong>X-Ray ve všech podobách</strong>
+                  <p>X-Ray mody, průhledné texture packy, cave findery i vyhledávače dungeonů.</p>
+                </div>
+              </li>
+
+              <li class="rules-compare-item">
+                <div class="rules-compare-icon-wrap rules-compare-icon-wrap--forbidden">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+                <div class="rules-compare-item-body">
+                  <strong>Ničení staveb na Survivalu (/survival)</strong>
+                  <p>Na klasickém Survivalu je griefing a krádež v rezidencích zakázána.</p>
+                </div>
+              </li>
+
+              <li class="rules-compare-item">
+                <div class="rules-compare-icon-wrap rules-compare-icon-wrap--forbidden">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+                <div class="rules-compare-item-body">
+                  <strong>Duplikace itemů a bug abuse</strong>
+                  <p>Zneužití chyb vede k okamžitému banu a smazání inventáře. Chyby hlásíme!</p>
+                </div>
+              </li>
+
+              <li class="rules-compare-item">
+                <div class="rules-compare-icon-wrap rules-compare-icon-wrap--forbidden">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+                <div class="rules-compare-item-body">
+                  <strong>IRL Trade – prodej za reálné peníze</strong>
+                  <p>Přísný zákaz prodeje herních věcí, měny či účtů za koruny nebo eura.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE CATEGORY FILTER -->
+      <div class="rules-filter-bar" role="tablist" aria-label="Filtrovat pravidla podle kategorie">
+        <button class="rules-filter-btn active" onclick="filterRules('all', this)" role="tab" aria-selected="true">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>Všechna pravidla (8)</span>
+        </button>
+        <button class="rules-filter-btn" onclick="filterRules('fairplay', this)" role="tab" aria-selected="false">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Fair-Play & Cheaty</span>
+        </button>
+        <button class="rules-filter-btn" onclick="filterRules('worlds', this)" role="tab" aria-selected="false">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#0a67e5" stroke-width="2"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/></svg>
+          <span>Světy & Ničení</span>
+        </button>
+        <button class="rules-filter-btn" onclick="filterRules('community', this)" role="tab" aria-selected="false">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Chat & Komunita</span>
+        </button>
+        <button class="rules-filter-btn" onclick="filterRules('economy', this)" role="tab" aria-selected="false">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span>Ekonomika & Účty</span>
+        </button>
+      </div>
+
+      <!-- DETAILED RULES GRID -->
+      <div class="rules-grid" id="rules-card-grid">
+
+        <!-- Rule 1: Cheaty, Minimapy a Hacky -->
+        <article class="rule-card rule-card--ban" data-category="fairplay">
+          <div class="rule-card-header">
+            <span class="rule-penalty-badge rule-penalty-badge--ban">PERMANENTNÍ BAN</span>
+            <span class="rule-category-chip">Fair-Play</span>
+          </div>
+          <h3 class="rule-title">Zákaz cheatů, minimap a nepovolených modů</h3>
+          <p class="rule-summary">Jakýkoliv cheat, hack klient, minimapa či makro dávající neférovou výhodu je přísně zakázáno.</p>
+          <div class="rule-details">
+            <ul class="rule-bullet-list">
+              <li>Zakázány jsou hack klienti (Meteor, Wurst apod.), Killaura, Fly, Speed, Jesus, Reach, Auto-totem a Baritone.</li>
+              <li><strong>Zákaz všech minimap:</strong> Xaero's Minimap, JourneyMap i veškeré modifikace zobrazující minimapu či vestavěné waypointy jsou přísně zakázány!</li>
+              <li>Cheaty ani minimapy nesmějí být ve složce s mody ani v paměti klienta, i když jsou momentálně vypnuté.</li>
+              <li><strong>Spoluúčast se trestá:</strong> Pomoc cheaterům, krytí viníků a přechovávání nelegálních věcí se trestá BANEM!</li>
+              <li><strong>Replay Mod:</strong> Je povolen výhradně pro schválené tvůrce s Media rankem.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Rule 2: X-Ray a ESP -->
+        <article class="rule-card rule-card--ban" data-category="fairplay">
+          <div class="rule-card-header">
+            <span class="rule-penalty-badge rule-penalty-badge--ban">PERMANENTNÍ BAN</span>
+            <span class="rule-category-chip">Fair-Play</span>
+          </div>
+          <h3 class="rule-title">Zákaz X-Ray, cave finderů a ESP</h3>
+          <p class="rule-summary">Využívání rentgenových modů nebo průhledných texture packů pro hledání rud je zakázáno.</p>
+          <div class="rule-details">
+            <ul class="rule-bullet-list">
+              <li>X-Ray modifikace i průhledné texture packy pro odhalování diamantů, netheritu či jiných rud.</li>
+              <li>Cave findery, vyhledávače dungeonů a vyhledávače pevných struktur.</li>
+              <li>Entity ESP, tracery a neférové zaměřování hráčů přes stěny.</li>
+              <li>Anticheat a personál automaticky analyzují statistiky těžby a neobvyklé trajektorie.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Rule 3: Duplikace a bugy -->
+        <article class="rule-card rule-card--ban" data-category="fairplay">
+          <div class="rule-card-header">
+            <span class="rule-penalty-badge rule-penalty-badge--wipe">BAN + RESET DAT</span>
+            <span class="rule-category-chip">Fair-Play</span>
+          </div>
+          <h3 class="rule-title">Zákaz duplikace a zneužívání chyb</h3>
+          <p class="rule-summary">Záměrné zneužití chyby pro získání itemů vede k okamžitému banu a kompletnímu smazání inventáře.</p>
+          <div class="rule-details">
+            <ul class="rule-bullet-list">
+              <li>Zákaz duplikování předmětů, coinů a využívání chyb v pluginech či generaci světa.</li>
+              <li><strong>Odměna za poctivost:</strong> Našel jsi bug? Nahlaste ho do ticketu na Discordu nebo přes /report – poctivost odměňujeme diamantovými bloky!</li>
+              <li>Krytí duperů, braní dupovaných itemů a zamlčování chyb se trestá úplným wipem.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Rule 4: Pravidla světů - SMP -->
+        <article class="rule-card rule-card--allowed-world" data-category="worlds">
+          <div class="rule-card-header">
+            <span class="rule-penalty-badge rule-penalty-badge--allowed">SMP: POVOLENO</span>
+            <span class="rule-category-chip">Světy & Ničení</span>
+          </div>
+          <h3 class="rule-title">Nové SMP (/smp): Boj a griefing je legální</h3>
+          <p class="rule-summary">Na novém SMP světě jsou přepady, pasti a ničení základen plnohodnotnou herní mechanikou.</p>
+          <div class="rule-details">
+            <ul class="rule-bullet-list">
+              <li>Můžeš ničit základny, stavět pasti, loupit suroviny a vést války s ostatními hráči.</li>
+              <li>Žádné bezpečné rezidence ani ochrana truhel – musíš si postavit tajnou a nedobytnou bázi.</li>
+              <li>Stále však platí zákaz cheatů, lag machin a IRL obchodu!</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Rule 5: Pravidla světů - Survival -->
+        <article class="rule-card rule-card--warning" data-category="worlds">
+          <div class="rule-card-header">
+            <span class="rule-penalty-badge rule-penalty-badge--ban">SURVIVAL: ZÁKAZ GRIEFU</span>
+            <span class="rule-category-chip">Světy & Ničení</span>
+          </div>
+          <h3 class="rule-title">Klasický Survival (/survival): Klid a stavění</h3>
+          <p class="rule-summary">Na klasickém Survivalu je ničení cizích staveb, krádeže a neoprávněné zasahování zakázáno.</p>
+          <div class="rule-details">
+            <ul class="rule-bullet-list">
+              <li>Chraň své stavby příkazem pro rezidenci (/res create).</li>
+              <li>Ničení v těsné blízkosti cizích pozemků a krádeže nechráněných truhel se trestá banem a rollbackem.</li>
+              <li>Chceme mít místo, kde můžeš v klidu stavět své vysněné stavitelské projekty.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Rule 6: Lag machiny a přetěžování -->
+        <article class="rule-card rule-card--warning" data-category="worlds">
+          <div class="rule-card-header">
+            <span class="rule-penalty-badge rule-penalty-badge--ban">SMAZÁNÍ STROJE + BAN</span>
+            <span class="rule-category-chip">Světy & Ničení</span>
+          </div>
+          <h3 class="rule-title">Zákaz lag machin a přetěžování serveru</h3>
+          <p class="rule-summary">Stavění mechanismů, které úmyslně snižují TPS serveru nebo shazují spojení, je přísně zakázáno.</p>
+          <div class="rule-details">
+            <ul class="rule-bullet-list">
+              <li>Extrémní redstone hodiny bez vypínače, hromadné odpalování stovek TNT a spawner spam.</li>
+              <li>Neomezené množení mobů a zvířat na jednom bloku (entity cramming lag).</li>
+              <li>Automatické farmy stavěj ohleduplně a při odchodu od stroje jej vždy vypni.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Rule 7: Chat a slušné chování -->
+        <article class="rule-card rule-card--warning" data-category="community">
+          <div class="rule-card-header">
+            <span class="rule-penalty-badge rule-penalty-badge--mute">VAROVÁNÍ / ZTIŠENÍ</span>
+            <span class="rule-category-chip">Chat & Komunita</span>
+          </div>
+          <h3 class="rule-title">Slušné chování, žádné vulgarity a šikana</h3>
+          <p class="rule-summary">Respektuj ostatní hráče. Udržujeme přátelskou atmosféru, kde se každý může cítit bezpečně.</p>
+          <div class="rule-details">
+            <ul class="rule-bullet-list">
+              <li>Zákaz hrubých vulgarismů, osobních útoků, šikany a provokací v herním chatu i na Discordu.</li>
+              <li>Zákaz spamu, velkých písmen (CAPS-LOCK) a posílání nevhodného (NSFW) obsahu.</li>
+              <li><strong>Zákaz reklamy:</strong> Propagace cizích Minecraft serverů, Discordů či webů znamená okamžitý mute.</li>
+              <li>Žádosti o unban/unmute se řeší výhradně přes tickety na Discordu, ne v herním chatu.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Rule 8: Zákaz IRL Trade & Účty -->
+        <article class="rule-card rule-card--ban" data-category="economy">
+          <div class="rule-card-header">
+            <span class="rule-penalty-badge rule-penalty-badge--ban">TRVALÝ BAN OBOU STRAN</span>
+            <span class="rule-category-chip">Ekonomika & Účty</span>
+          </div>
+          <h3 class="rule-title">Zákaz IRL Trade & Zabezpečení účtu</h3>
+          <p class="rule-summary">Přísný zákaz prodeje herních předmětů, měny či účtů za reálné koruny nebo eura.</p>
+          <div class="rule-details">
+            <ul class="rule-bullet-list">
+              <li>Jakákoliv nabídka prodeje věcí za peníze (převod na účet, Paysafecard, krypto) je trestána trvalým banem.</li>
+              <li>Za bezpečnost svého herního účtu a hesla odpovídá každý hráč sám. Výmluvy na kamaráda neplatí.</li>
+              <li>Sdílení přihlašovacích údajů s cizími lidmi je riskantní – chraň si svůj postup a inventář.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <!-- INTERACTIVE SITUATIONAL SERVER QUIZ: ZNALEC PRAVIDEL -->
+      <div class="rules-quiz-container" id="rules-quiz">
+        <div class="rules-quiz-header">
+          <div class="rules-quiz-badge-pro">
+            <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>HERNÍ SITUAČNÍ TEST ZE SERVERU</span>
+          </div>
+          <h3 class="rules-quiz-title">Znáš pravidla v reálných situacích ze hry?</h3>
+          <p class="rules-quiz-subtitle">
+            Žádná suchá teorie. Tady tě čekají <strong>4 náhodně vylosované situace</strong> z reálného hraní na MYCHAL SMP. Zvládneš je vyřešit bez jediné chyby?
+          </p>
+
+          <div class="rules-quiz-controls-row">
+            <div class="rules-quiz-progress-track">
+              <div class="rules-quiz-progress-bar" id="rules-quiz-progress-bar"></div>
+            </div>
+            <div class="rules-quiz-meta-info">
+              <span class="rules-quiz-counter" id="rules-quiz-counter">Vyřešeno 0 ze 4 situací</span>
+              <button class="btn-refresh-quiz" type="button" onclick="resetAndShuffleQuiz()" title="Vylosovat jiné náhodné otázky">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                <span>Vylosovat jiné situace 🎲</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Questions Container with 3D Flip Viewport -->
+        <div class="rules-quiz-flip-viewport">
+          <div class="rules-quiz-questions" id="rules-quiz-dynamic-questions">
+            <!-- Dynamicky generováno pomocí JS ze scénářů -->
+          </div>
+        </div>
+
+        <!-- Quiz Completion Banner -->
+        <div class="quiz-success-card" id="quiz-success-card" style="display: none;">
+          <div class="quiz-success-badge">
+            <svg class="ui-icon-svg ui-icon-svg--lg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="16 9 10 15 8 13"/></svg>
+          </div>
+          <h4 class="quiz-success-title">Skvělá práce! Jsi oficiálně prověřený hráč</h4>
+          <p class="quiz-success-desc" id="quiz-success-desc">
+            Zvládl jsi všechny herní situace na 100 %! Přesně víš, co je na serveru fér a na co si dát pozor.
+          </p>
+          <div class="quiz-success-actions">
+            <button class="btn-primary" onclick="copyIP(event)">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>Zkopírovat IP mychalsmp.xyz</span>
+            </button>
+            <button class="btn-secondary" type="button" onclick="resetAndShuffleQuiz()">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              <span>Vyzkoušet další náhodné situace 🎲</span>
+            </button>
+            <button class="btn-secondary" onclick="showTab('join')">
+              <span>Jak se připojit do 1 minuty →</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOLDEN RULE FOOTER -->
       <div class="rules-footer-box">
         <div class="rules-footer-left">
-          <h3><img src="imgs/icons/Heart.webp" alt="Minecraft Heart" class="inline-game-icon animate-pulse" /> Zlaté
-            pravidlo a dodržování pravidel</h3>
-          <p>Chovej se k ostatním tak, jak chceš, aby se oni chovali k tobě. Respekt, fair-play a zábava pro všechny –
-            to je MYCHAL SMP. Porušení pravidel může vést k varování, dočasnému ztišení (mute) nebo permanentnímu banu.
+          <div class="rules-footer-badge">
+            <img src="imgs/icons/Heart.webp" alt="Minecraft Heart" class="inline-game-icon animate-pulse" />
+            <span>ZLATÉ PRAVIDLO SERVERU</span>
+          </div>
+          <h3>Chovej se k ostatním tak, jak chceš, aby se oni chovali k tobě</h3>
+          <p>
+            Respekt, fair-play a vzájemná zábava – to je základ MYCHAL SMP. Pokud si nejsi něčím jistý, zeptej se moderátorů na Discordu nebo přímo ve hře.
           </p>
         </div>
         <div class="rules-footer-right">
-          <button onclick="showTab('join')" class="btn-primary">Rozumím a chci hrát →</button>
+          <button onclick="showTab('join')" class="btn-primary">
+            <span>Rozumím a chci hrát →</span>
+          </button>
         </div>
       </div>
+
+    </div>
+  </section>
+
+  <!-- SECRET MODERATOR TEST (/modtest) - CLASSIFIED STAFF APPLICATION -->
+  <section id="tab-modtest" class="tab-section modtest-section">
+    <div class="container modtest-container">
+
+      <!-- Header -->
+      <div class="modtest-header">
+        <div class="modtest-badge-classified">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>CLASSIFIED • INTERNÍ MODERÁTORSKÝ TEST</span>
+        </div>
+        <h2 class="modtest-title">Zkouška nervů a psychické odolnosti</h2>
+        <p class="modtest-subtitle">
+          Tento test není pro každého. Čeká tě <strong>17 reálných, bizarních a extrémních situací</strong> z historie MYCHAL SMP – od pokusů o sabotáž a zneužití chyb přes X-Ray podvody a falešné screenshoty, až po noční tickety ve 3 ráno a výhrůžky policií. Zvládneš zachovat chladnou hlavu?
+        </p>
+
+        <!-- Phase Stepper -->
+        <div class="modtest-phase-bar" id="modtest-phase-bar">
+          <div class="modtest-phase-step active" id="modtest-pstep-1">
+            <div class="modtest-phase-num">Fáze 1 / 3</div>
+            <div class="modtest-phase-name">Zákony & Pravidla</div>
+          </div>
+          <div class="modtest-phase-step" id="modtest-pstep-2">
+            <div class="modtest-phase-num">Fáze 2 / 3</div>
+            <div class="modtest-phase-name">Anticheat & Technika</div>
+          </div>
+          <div class="modtest-phase-step" id="modtest-pstep-3">
+            <div class="modtest-phase-num">Fáze 3 / 3</div>
+            <div class="modtest-phase-name">Psychologie & Trolling</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question Viewport with 3D Flip/Morph Card -->
+      <div class="modtest-viewport" id="modtest-viewport">
+        <div class="modtest-card" id="modtest-active-card">
+          <!-- Dynamicky generováno pomocí JS -->
+        </div>
+      </div>
+
+      <!-- Applicant Form (Step 4: After completing all 16 questions) -->
+      <div class="modtest-form-card" id="modtest-applicant-form" style="display: none;">
+        <div class="rules-quiz-badge-pro">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>TEST DOKONČEN • OVĚŘENÍ ŽADATELE</span>
+        </div>
+        <h3 class="modtest-title" style="font-size: 1.8rem;">Kdo za tímto výkonem stojí?</h3>
+        <p class="modtest-subtitle" style="margin-bottom: 20px;">
+          Pro vygenerování oficiálního certifikátu a odeslání výsledků do staff místnosti zadej své údaje:
+        </p>
+
+        <form onsubmit="submitModeratorApplication(event)" class="modtest-form-inner">
+          <div class="modtest-form-grid">
+            <div class="modtest-input-group">
+              <label class="modtest-label" for="modtest-nick">Tvůj Minecraft Nick</label>
+              <input type="text" id="modtest-nick" class="modtest-input" placeholder="např. MychalVidea" required autocomplete="off" />
+            </div>
+            <div class="modtest-input-group">
+              <label class="modtest-label" for="modtest-discord">Tvůj Discord Nick / Tag</label>
+              <input type="text" id="modtest-discord" class="modtest-input" placeholder="např. mychal_dev" required autocomplete="off" />
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+            <button type="submit" class="btn-primary" id="btn-submit-modtest">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              <span>Vyhodnotit & Odeslat přihlášku</span>
+            </button>
+            <button type="button" class="btn-secondary" onclick="restartModTest()">
+              <span>Zkusit test znovu</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Certificate Result Card -->
+      <div class="modtest-certificate-card" id="modtest-certificate-card" style="display: none;">
+        <div class="modtest-cert-badge" id="modtest-cert-badge">
+          <svg class="ui-icon-svg ui-icon-svg--lg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3 class="modtest-cert-title" id="modtest-cert-title">Oficiální vyhodnocení způsobilosti</h3>
+        <div class="modtest-cert-rank" id="modtest-cert-rank">PROVĚŘENÝ MODERÁTOR S NERVY Z OCELI</div>
+        <p class="modtest-subtitle" id="modtest-cert-desc" style="max-width: 620px;">
+          Tvé psychické hodnocení a technické znalosti byly zaznamenány.
+        </p>
+
+        <div class="modtest-cert-stats-grid">
+          <div class="modtest-stat-box">
+            <div class="modtest-stat-val" id="modtest-stat-score">16 / 16</div>
+            <div class="modtest-stat-lbl">Úspěšnost</div>
+          </div>
+          <div class="modtest-stat-box">
+            <div class="modtest-stat-val" id="modtest-stat-stress">100 %</div>
+            <div class="modtest-stat-lbl">Psychická odolnost</div>
+          </div>
+          <div class="modtest-stat-box">
+            <div class="modtest-stat-val" id="modtest-stat-status" style="color: #21DE00;">SCHVÁLEN</div>
+            <div class="modtest-stat-lbl">Verdikt</div>
+          </div>
+        </div>
+
+        <div class="modtest-copy-box">
+          <span id="modtest-cert-code">MYCHAL-MOD-SEC-VERIFIED-...</span>
+          <button type="button" class="btn-copy-code" onclick="copyModTestResult()" style="background: rgba(255,255,255,0.1); border:none; color:#fff; padding:6px 12px; border-radius:6px; cursor:pointer;">
+            Kopírovat kód
+          </button>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <a href="https://discord.gg/HwZUGWGVD9" target="_blank" rel="noopener" class="btn-primary">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span>Přejít na Discord ticket</span>
+          </a>
+          <button type="button" class="btn-secondary" onclick="restartModTest()">
+            <span>Zopakovat test</span>
+          </button>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -771,126 +1271,74 @@
         <div class="smp-hero-overlay"></div>
       </div>
       <div class="container smp-hero-container">
-        <!-- LEFT COLUMN: Narrative & Tangible Value -->
+        <!-- LEFT COLUMN: Narrative & 4 Spacious Value Pillars -->
         <div class="smp-hero-left">
-          <div class="smp-premium-badge">
-            <i class="fa-solid fa-crown" style="color:#fbbf24; margin-right:6px;"></i> OFICIÁLNÍ ČLENSTVÍ SERVERU
-          </div>
           <h1 class="smp-hero-title">
             Hraj naplno s výhodami <span class="smp-text-blue">SMP</span><span class="smp-text-gold">+</span>
           </h1>
           <p class="smp-hero-subtitle">
-            Žádné Pay-to-Win prvky kazící hru ostatním. SMP+ je navrženo pro maximální komfort, bezpečí pro tvé
-            cennosti,
-            bleskové cestování a stylový status v komunitě.
+            Žádné Pay-to-Win prvky kazící hru ostatním. SMP+ je navrženo pro maximální komfort, bezpečí pro tvé cennosti, bleskové cestování a stylový status v komunitě.
           </p>
 
-          <!-- Highlight Showcase Cards -->
+          <!-- Curated 4-Pillar Value Grid -->
           <div class="smp-showcase-grid">
-            <!-- Feature 1 -->
+            <!-- Feature 1: Ender Chest -->
             <div class="smp-showcase-card">
-              <div class="smp-sc-icon-box">
-                <i class="fa-solid fa-box-archive"></i>
-              </div>
-              <div class="smp-sc-content">
-                <div class="smp-sc-head">
-                  <h4>2x větší Ender Truhla (54 slotů)</h4>
-                  <span class="smp-badge-tag smp-badge-tag--green">+100% místa</span>
+              <div class="smp-sc-head">
+                <div class="smp-sc-icon-box text-blue">
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><circle cx="12" cy="14" r="2"/></svg>
                 </div>
-                <p>Plných 6 řádků kapacity pro všechny tvé cennosti. Při vypršení předplatného se věci nikdy neztratí –
-                  automaticky se přesunou do tvého osobního Trezoru v <code>/ah</code>.</p>
+                <span class="smp-badge-tag smp-badge-tag--green">+100% místa</span>
               </div>
+              <h4>2x větší Ender Truhla (54 slotů)</h4>
+              <p>Plných 6 řádků kapacity. Při vypršení se věci nikdy neztratí – automaticky se přesunou do tvého Trezoru v <code>/ah</code>.</p>
             </div>
 
-            <!-- Feature 2 -->
+            <!-- Feature 2: Instant Warps -->
             <div class="smp-showcase-card">
-              <div class="smp-sc-icon-box">
-                <i class="fa-solid fa-bolt-lightning"></i>
-              </div>
-              <div class="smp-sc-content">
-                <div class="smp-sc-head">
-                  <h4>Instantní /back a bleskové 3s teleporty</h4>
-                  <span class="smp-badge-tag smp-badge-tag--blue">Bez čekání</span>
+              <div class="smp-sc-head">
+                <div class="smp-sc-icon-box text-gold">
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 </div>
-                <p>Zatímco běžní hráči čekají na odpočet, se SMP+ tě příkaz <code>/back</code> vrátí zpět přímo na místo
-                  smrti okamžitě bez čekání! Čekací doba na <code>/home</code>, <code>/rtp</code> a <code>/tpa</code> je
-                  navíc zkrácena na pouhé 3 sekundy.</p>
+                <span class="smp-badge-tag smp-badge-tag--blue">Bez čekání</span>
               </div>
+              <h4>Instantní /back a 3s teleporty</h4>
+              <p>Příkaz <code>/back</code> tě vrátí přímo na místo smrti okamžitě bez čekání. Zkrácený 3s odpočet na <code>/home</code>, <code>/rtp</code> a <code>/tpa</code>.</p>
             </div>
 
-            <!-- Feature 3 -->
+            <!-- Feature 3: Custom Nickname Color -->
             <div class="smp-showcase-card">
-              <div class="smp-sc-icon-box">
-                <i class="fa-solid fa-palette"></i>
-              </div>
-              <div class="smp-sc-content">
-                <div class="smp-sc-head">
-                  <h4>Prémiová paleta 24 barev jména (/cc)</h4>
-                  <span class="smp-badge-tag smp-badge-tag--gold">Stylový nick</span>
+              <div class="smp-sc-head">
+                <div class="smp-sc-icon-box text-purple">
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
                 </div>
-                <p>Změň si barvu svého jména v chatu, v tablistu i nad postavou příkazem <code>/cc</code>. Spolu s
-                  ikonickým modrým symbolem <code>+</code> přímo před jménem (<code>+Nick</code>) tě ve hře nikdo
-                  nepřehlédne.</p>
-                <div class="smp-color-dots" title="Kliknutím na barvu ji otestuješ v náhledu">
-                  <span class="smp-dot" style="background:#ffffff;" onclick="setPreviewNickColor('#ffffff')"
-                    title="Bílá (Výchozí)"></span>
-                  <span class="smp-dot" style="background:#55ffff;" onclick="setPreviewNickColor('#55ffff')"
-                    title="Světle modrá (Cyan)"></span>
-                  <span class="smp-dot" style="background:#ffaa00;" onclick="setPreviewNickColor('#ffaa00')"
-                    title="Zlatá (Gold)"></span>
-                  <span class="smp-dot" style="background:#55ff55;" onclick="setPreviewNickColor('#55ff55')"
-                    title="Zelená (Lime)"></span>
-                  <span class="smp-dot" style="background:#ff55ff;" onclick="setPreviewNickColor('#ff55ff')"
-                    title="Růžovo-fialová (Purple)"></span>
-                  <span class="smp-dot" style="background:#ffff55;" onclick="setPreviewNickColor('#ffff55')"
-                    title="Žlutá (Yellow)"></span>
-                  <span class="smp-dot" style="background:#ff5555;" onclick="setPreviewNickColor('#ff5555')"
-                    title="Červená (Red)"></span>
-                  <span class="smp-dot" style="background:#38bdf8;" onclick="setPreviewNickColor('#38bdf8')"
-                    title="Modrá (Sky Blue)"></span>
-                </div>
+                <span class="smp-badge-tag smp-badge-tag--gold">Stylový nick</span>
               </div>
+              <h4>24 prémiových barev jména (/cc)</h4>
+              <p>Změň si barvu jména v chatu i tablistu. Modrý symbol <code>+</code> přímo před tvým nickem (<code>+Nick</code>) ti dodá prestiž.</p>
             </div>
 
-            <!-- Feature 4 -->
+            <!-- Feature 4: Sethome & Bed Colors -->
             <div class="smp-showcase-card">
-              <div class="smp-sc-icon-box">
-                <i class="fa-solid fa-house-chimney"></i>
-              </div>
-              <div class="smp-sc-content">
-                <div class="smp-sc-head">
-                  <h4>14 domovů a barvy v /homes</h4>
-                  <span class="smp-badge-tag smp-badge-tag--blue">Dvojnásobek</span>
+              <div class="smp-sc-head">
+                <div class="smp-sc-icon-box text-green">
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 </div>
-                <p>Ulož si až 14 různých domovů (<code>/sethome</code>) oproti základním 7 a v herním menu
-                  <code>/homes</code> si přizpůsob barvu postele pro každou svou základnu či farmu.
-                </p>
+                <span class="smp-badge-tag smp-badge-tag--blue">Dvojnásobek</span>
               </div>
-            </div>
-
-            <!-- Feature 5 -->
-            <div class="smp-showcase-card">
-              <div class="smp-sc-icon-box">
-                <i class="fa-solid fa-coins"></i>
-              </div>
-              <div class="smp-sc-content">
-                <div class="smp-sc-head">
-                  <h4>Tržnice a zakázky Boost</h4>
-                  <span class="smp-badge-tag smp-badge-tag--green">15 slotů</span>
-                </div>
-                <p>Vystav v <code>/shop</code> až 15 položek k prodeji naráz a v <code>/orders</code> vypiš až 4 nákupní
-                  zakázky. Ideální pro vybudování vlastního obchodního impéria.</p>
-              </div>
+              <h4>14 domovů a barvy v /homes</h4>
+              <p>Až 14 uložených lokací (<code>/sethome</code>) pro základny i farmy. V herním menu si navíc přizpůsob barvu postele pro každý domov.</p>
             </div>
           </div>
 
           <!-- Fairness Guarantee Banner -->
           <div class="smp-fairness-banner">
-            <div class="smp-fairness-icon"><i class="fa-solid fa-shield-heart"></i></div>
+            <div class="smp-fairness-icon">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
             <div class="smp-fairness-text">
               <strong>Férový přístup bez Pay-to-Win:</strong>
-              <span>Všechny výhody jsou zaměřené na pohodlí a styl. Žádný hráč nezíská nezranitelnost ani neférovou sílu
-                v boji proti ostatním.</span>
+              <span>Všechny výhody jsou zaměřené na pohodlí a styl. Žádný hráč nezíská nezranitelnost ani neférovou sílu v PvP boji proti ostatním.</span>
             </div>
           </div>
         </div>
@@ -899,9 +1347,6 @@
         <div class="smp-hero-right">
           <div class="smp-checkout-card">
             <div class="smp-checkout-header">
-              <div class="smp-checkout-badge">
-                <i class="fa-solid fa-fire"></i> NEJOBLÍBENĚJŠÍ VOLBA
-              </div>
               <div class="smp-price-tag">
                 <span class="smp-price-currency">€</span>
                 <span class="smp-price-num">1.99</span>
@@ -964,8 +1409,7 @@
 
               <!-- Interactive /cc Color Picker in Preview Box -->
               <div class="smp-preview-cc-bar">
-                <span class="smp-preview-cc-title"><i class="fa-solid fa-palette"></i> Vyzkoušej barvu jména
-                  (/cc):</span>
+                <span class="smp-preview-cc-title"><i class="fa-solid fa-palette"></i> Vyzkoušej barvu jména (/cc):</span>
                 <div class="smp-preview-cc-swatches">
                   <span class="smp-swatch active" style="--swatch:#ffffff;"
                     onclick="setPreviewNickColor('#ffffff', this)" title="Bílá (Výchozí)"></span>
@@ -1024,7 +1468,7 @@
               <div class="smp-trust-badges">
                 <div class="trust-badge-item">
                   <i class="fa-solid fa-shield-halved"></i>
-                  <span>Zabezpečeno přes Tebex</span>
+                  <span>Zabezpečeno přes Tebex (MoR)</span>
                 </div>
                 <div class="trust-badge-item">
                   <i class="fa-solid fa-bolt"></i>
@@ -1089,7 +1533,7 @@
             <tr>
               <th class="col-feature">Herní funkce</th>
               <th class="col-free">Hráč bez ranku</th>
-              <th class="col-plus">SMP+ Člen <span>👑</span></th>
+              <th class="col-plus">SMP+ Člen <svg class="ui-icon-svg" style="width:16px;height:16px;vertical-align:-2px;color:#f59e0b;" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg></th>
             </tr>
           </thead>
           <tbody>
@@ -1307,7 +1751,6 @@
 
         <!-- Left Column: Overview, Criteria & Highlights -->
         <div class="media-intro-col">
-          <div class="media-badge-pill"><i class="fa-solid fa-clapperboard"></i> Partnerský Creator Program</div>
           <h1 class="media-hero-title">Žádost o <span>Media</span> Rank</h1>
           <p class="media-hero-subtitle">
             Tvoříš videa nebo streamuješ z Minecraftu? Získej oficiální status na <strong>MYCHAL SMP</strong>, prestižní
@@ -1486,14 +1929,12 @@
     <!-- Detailed Perks Section below -->
     <div class="container media-benefits-container">
       <div class="media-section-head text-center">
-        <span class="media-eyebrow">CO VŠECHNO ZÍSKÁŠ</span>
         <h2 class="media-section-title">Detailní přehled výhod pro <span>Media</span> rank</h2>
         <p class="media-section-subtitle">Exkluzivní herní nástroje navržené přímo pro pohodlné a kvalitní natáčení.</p>
       </div>
 
       <div class="media-benefits-grid">
         <div class="media-benefit-card media-benefit-card--replay">
-          <div class="media-benefit-badge">Exkluzivní</div>
           <div class="media-benefit-icon-box">
             <i class="fa-solid fa-video"></i>
           </div>
@@ -1503,7 +1944,6 @@
         </div>
 
         <div class="media-benefit-card">
-          <div class="media-benefit-badge">Ochrana</div>
           <div class="media-benefit-icon-box">
             <i class="fa-solid fa-mask"></i>
           </div>
@@ -1513,7 +1953,6 @@
         </div>
 
         <div class="media-benefit-card">
-          <div class="media-benefit-badge">Dohled</div>
           <div class="media-benefit-icon-box">
             <i class="fa-solid fa-binoculars"></i>
           </div>
@@ -1523,7 +1962,6 @@
         </div>
 
         <div class="media-benefit-card">
-          <div class="media-benefit-badge">Prestiž</div>
           <div class="media-benefit-icon-box">
             <i class="fa-solid fa-crown"></i>
           </div>
@@ -1533,7 +1971,6 @@
         </div>
 
         <div class="media-benefit-card">
-          <div class="media-benefit-badge">Ekonomika</div>
           <div class="media-benefit-icon-box">
             <i class="fa-solid fa-store"></i>
           </div>
@@ -1543,7 +1980,6 @@
         </div>
 
         <div class="media-benefit-card">
-          <div class="media-benefit-badge">Komfort</div>
           <div class="media-benefit-icon-box">
             <i class="fa-solid fa-person-running"></i>
           </div>
@@ -1554,7 +1990,6 @@
         </div>
 
         <div class="media-benefit-card media-benefit-card--plus">
-          <div class="media-benefit-badge">SMP+ Synergy</div>
           <div class="media-benefit-icon-box">
             <i class="fa-solid fa-star"></i>
           </div>
@@ -1570,15 +2005,10 @@
   <!-- BUGS -->
   <section id="tab-bugs" class="tab-section media-section-ambient">
     <div class="bug-header text-center">
-      <div class="bug-badge-pill"><i class="fa-solid fa-wrench"></i> Nahlášení problému</div>
       <h1 class="bug-hero-title">Našel jsi na serveru <span>chybu</span>?</h1>
       <p class="bug-hero-subtitle">Dej nám vědět, co přesně nefunguje. Každé ověřené nahlášení odměňujeme hodnotnými
         herními předměty – od <strong>diamantových bloků</strong> podle závažnosti až po vzácné <strong>Netherite
-          bloky</strong> u kritických chyb a exploitů.</p>
-      <div class="bug-reward-pill">
-        <i class="fa-solid fa-gem"></i>
-        <span>Herní odměna: <strong>Diamantové bloky</strong> a <strong>Netherite</strong> podle závažnosti!</span>
-      </div>
+          bloky</strong> u kritických exploitů.</p>
     </div>
 
     <div class="container" style="max-width: 720px;">
@@ -1732,7 +2162,6 @@
   <section id="tab-stats" class="tab-section">
     <div class="stats-page-container container">
       <div class="stats-page-header">
-        <span class="stats-page-badge"><i class="fa-solid fa-chart-line"></i> LIVE METRIKY</span>
         <h2 class="stats-page-title">Serverové <span class="accent-text">Statistiky</span></h2>
         <p class="stats-page-subtitle">Detailní grafy a přehled aktivity hráčů, serverové ekonomiky a vytížení.</p>
       </div>
@@ -1929,11 +2358,6 @@
         <!-- LEFT SIDEBAR (STICKY RAIL - F-PATTERN READING ANCHOR) -->
         <aside class="legal-sidebar">
           <div class="legal-sidebar-sticky">
-            <div class="legal-badge-header">
-              <span class="legal-status-dot"></span>
-              <span>DOKUMENTACE A OCHRANA SOUKROMÍ</span>
-            </div>
-
             <h1 class="legal-sidebar-title">Zásady ochrany osobních údajů</h1>
             <p class="legal-sidebar-meta">Platnost od: <strong>9. září 2026</strong> · Doba čtení: <strong>~3
                 min</strong></p>
@@ -2286,11 +2710,6 @@
         <!-- LEFT SIDEBAR (STICKY RAIL - F-PATTERN READING ANCHOR) -->
         <aside class="legal-sidebar">
           <div class="legal-sidebar-sticky">
-            <div class="legal-badge-header">
-              <span class="legal-status-dot"></span>
-              <span>DOKUMENTACE A PODMÍNKY</span>
-            </div>
-
             <h1 class="legal-sidebar-title">Podmínky služby a nákupu</h1>
             <p class="legal-sidebar-meta">Platnost od: <strong>9. září 2026</strong> · Doba čtení: <strong>~4
                 min</strong></p>
@@ -2654,10 +3073,22 @@
         </div>
       </div>
       <div class="footer-links">
-        <button onclick="showTab('bugs')" class="footer-link-btn">🐛 Nahlásit bug</button>
-        <button onclick="showTab('rules')" class="footer-link-btn">📜 Pravidla</button>
-        <button onclick="showTab('smp-plus')" class="footer-link-btn">👑 SMP+</button>
-        <button onclick="showTab('media')" class="footer-link-btn">🎬 Media</button>
+        <button onclick="showTab('bugs')" class="footer-link-btn">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="14" x="8" y="6" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 19-3-2"/><path d="m5 19 3-2"/><path d="M20 13h-4"/><path d="M4 13h4"/><path d="m10 4 1 2"/><path d="m14 4-1 2"/></svg>
+          <span>Nahlásit bug</span>
+        </button>
+        <button onclick="showTab('rules')" class="footer-link-btn">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Pravidla</span>
+        </button>
+        <button onclick="showTab('smp-plus')" class="footer-link-btn">
+          <svg class="ui-icon-svg ui-icon-svg--sm ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z"/></svg>
+          <span>SMP+</span>
+        </button>
+        <button onclick="showTab('media')" class="footer-link-btn">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          <span>Media</span>
+        </button>
         <button onclick="showTab('privacy')" class="footer-link-btn"><i class="fa-solid fa-shield-halved"></i> Ochrana
           údajů</button>
         <button onclick="showTab('terms')" class="footer-link-btn"><i class="fa-solid fa-scale-balanced"></i> Obchodní
@@ -2708,7 +3139,10 @@
   <div id="idea-modal" class="idea-modal">
     <div class="idea-modal-content">
       <div class="idea-modal-header">
-        <h3>💡 Přidat nový nápad</h3>
+        <h3>
+          <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"/></svg>
+          <span>Přidat nový nápad</span>
+        </h3>
         <button class="idea-modal-close" onclick="closeIdeaModal()">&times;</button>
       </div>
       <div class="idea-modal-body">
@@ -2726,7 +3160,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20260913_apifallback_v2"></script>
+  <script src="script.js?v=20260917_v12"></script>
 </body>
 
 </html>

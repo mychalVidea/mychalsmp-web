@@ -17,7 +17,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20260917_v14" />
+  <link rel="stylesheet" href="style.css?v=20260917_v16" />
 </head>
 
 <body>
@@ -200,8 +200,8 @@
             <h2 class="info-heading"><img src="imgs/icons/minecraft-world-icon-14.webp" alt="Minecraft Grass Block"
                 class="inline-game-icon" /> Co je <span class="accent-red">MYCHAL SMP</span>?</h2>
             <p class="info-body">MYCHAL SMP je komunitní Minecraft server, který nabízí dva unikátní herní světy:
-              <strong>nový akční SMP svět (/smp)</strong> bez claimů s permanentním PvP a <strong>klasický stavitelství
-                Survival (/survival)</strong> s rezidencemi a bezpečným stavěním!
+              <strong>nový akční SMP svět (/smp)</strong> bez claimů s permanentním PvP a <strong>klasický stavitelský
+                Survival (/survival)</strong> s claimy (GriefPrevention) a bezpečným stavěním!
             </p>
             <p class="info-body">Hráči spolu soupeří, obchodují na tržnici přes <strong>/shop</strong>, plní zakázky
               <strong>/orders</strong> a budují vlastní komunitní projekty. Server běží na <strong>Java
@@ -259,7 +259,7 @@
           <span class="info-eyebrow">DVA UNIKÁTNÍ SVĚTY</span>
           <h2 class="section-heading">Vyber si svůj <span class="accent-red">herní svět</span></h2>
           <p class="section-subheading">Ať už hledáš nekompromisní akční souboje na SMP nebo klidné stavění s
-            rezidencemi na Survivalu, na MYCHAL SMP si přijdeš na své.</p>
+            claimy na Survivalu, na MYCHAL SMP si přijdeš na své.</p>
         </div>
 
         <div class="gamemodes-grid">
@@ -346,10 +346,10 @@
             <!-- Visual Hero Header with Real Server Screenshot -->
             <div class="gm-card-media" onclick="openLightbox('imgs/2026-07-03_00.56.31.webp')"
               title="Kliknutím zvětšíš screenshot">
-              <img src="imgs/2026-07-03_00.56.31.webp" alt="Klasický Survival – Stavění a rezidence"
+              <img src="imgs/2026-07-03_00.56.31.webp" alt="Klasický Survival – Stavění a claimy"
                 class="gm-card-img" />
               <div class="gm-card-overlay"></div>
-              <div class="gm-card-badge gm-badge--survival"><i class="fa-solid fa-tree"></i> STAVĚNÍ • REZIDENCE</div>
+              <div class="gm-card-badge gm-badge--survival"><i class="fa-solid fa-tree"></i> STAVĚNÍ • CLAIMY</div>
               <div class="gm-card-cmd-chip" onclick="event.stopPropagation(); copyCommand('/survival', this)"
                 title="Kliknutím zkopíruješ příkaz">
                 <code>/survival</code>
@@ -372,7 +372,7 @@
               </div>
 
               <p class="gm-card-desc">
-                Původní osvědčený svět s rezidencemi a volitelným PvP pro bezpečné stavění monumentálních projektů,
+                Původní osvědčený svět s claimy a férovými duely pro bezpečné stavění monumentálních projektů,
                 komunitní obchodování a klidnou hru.
               </p>
 
@@ -386,10 +386,10 @@
                   </div>
                 </div>
                 <div class="gm-feat-tile">
-                  <div class="gm-feat-icon text-cyan"><i class="fa-solid fa-toggle-on"></i></div>
+                  <div class="gm-feat-icon text-cyan"><i class="fa-solid fa-swords"></i></div>
                   <div class="gm-feat-info">
-                    <strong>Volitelné PvP</strong>
-                    <span>Přepínej si PvP status podle nálady přes <code>/pvp</code>.</span>
+                    <strong>Férové duely</strong>
+                    <span>Vyzývej ostatní na arénové duely přes <code>/duel</code> a <code>/duelrtp</code>.</span>
                   </div>
                 </div>
                 <div class="gm-feat-tile">
@@ -866,7 +866,7 @@
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Ničení staveb na Survivalu (/survival)</strong>
-                  <p>Na klasickém Survivalu je griefing a krádež v rezidencích zakázána.</p>
+                  <p>Na klasickém Survivalu je griefing a krádež v claimu zakázána.</p>
                 </div>
               </li>
 
@@ -986,7 +986,7 @@
           <div class="rule-details">
             <ul class="rule-bullet-list">
               <li>Můžeš ničit základny, stavět pasti, loupit suroviny a vést války s ostatními hráči.</li>
-              <li>Žádné bezpečné rezidence ani ochrana truhel – musíš si postavit tajnou a nedobytnou bázi.</li>
+              <li>Žádné bezpečné claimy ani ochrana truhel – musíš si postavit tajnou a nedobytnou bázi.</li>
               <li>Stále však platí zákaz cheatů, lag machin a IRL obchodu!</li>
             </ul>
           </div>
@@ -1002,7 +1002,7 @@
           <p class="rule-summary">Na klasickém Survivalu je ničení cizích staveb, krádeže a neoprávněné zasahování zakázáno.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
-              <li>Chraň své stavby příkazem pro rezidenci (/res create).</li>
+              <li>Chraň své stavby zlatou lopatou nebo příkazem pro claim (/claim). Důvěru kamarádům udělíš přes /trust.</li>
               <li>Ničení v těsné blízkosti cizích pozemků a krádeže nechráněných truhel se trestá banem a rollbackem.</li>
               <li>Chceme mít místo, kde můžeš v klidu stavět své vysněné stavitelské projekty.</li>
             </ul>
@@ -3160,7 +3160,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20260917_v14"></script>
+  <script src="script.js?v=20260917_v16"></script>
 </body>
 
 </html>

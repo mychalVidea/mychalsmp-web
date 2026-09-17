@@ -3308,8 +3308,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Skvělá volba! Přechovávání nelegálních nebo dupnutých věcí se posuzuje stejně přísně jako samotný dupe – trvalým banem a smazáním účtu. Nahlášením navíc získáš oficiální odměnu v diamantových blocích!',
-    wrongFeedback: 'Pozor! Admin logy zachycují veškeré přesuny itemů, dropy na zem i obsah ender truhel. Přechovávání dupnutých itemů vede k okamžitému permanentnímu banu!'
+    explanation: 'Skvělá volba! Přechovávání nelegálních nebo dupnutých věcí se posuzuje stejně přísně jako samotný dupe – přísným banem (30 dní za dupe, 20 dní za spoluúčast dle sazebníku SMPAC) a smazáním účtu / wipe inventáře. Nahlášením navíc získáš oficiální odměnu v diamantových blocích!',
+    wrongFeedback: 'Pozor! Admin logy zachycují veškeré přesuny itemů, dropy na zem i obsah ender truhel. Přechovávání dupnutých itemů vede k okamžitému banu (dle sazebníku SMPAC) a kompletnímu wipu inventáře!'
   },
   {
     id: 'smp-raid',
@@ -3330,19 +3330,19 @@ const RULES_QUIZ_SCENARIOS = [
       }
     ],
     explanation: 'Přesně tak! SMP svět (/smp) je stvořený pro volný boj, přepady klanů a ničení bází. Pokud preferuješ klid a ochranu staveb, stačí se přepnout na klasický Survival svět (/survival).',
-    wrongFeedback: 'Chyba! Na SMP světě (/smp) je ničení staveb a boj výslovně povoleno. Pro klidné stavění bez griefingu slouží klasický svět /survival s rezidencemi.'
+    wrongFeedback: 'Chyba! Na SMP světě (/smp) je ničení staveb a boj výslovně povoleno. Pro klidné stavění bez griefingu slouží klasický svět /survival s claimy (GriefPrevention).'
   },
   {
     id: 'survival-chest',
     tag: 'Survival Svět (/survival)',
-    question: 'Na Survival světě (/survival) prozkoumáváš krajinu a narazíš na cizí rozestavěný dům. Truhly nejsou v rezidenci a nejsou uzamčené. Smíš je vybrat a suroviny si odnést?',
+    question: 'Na Survival světě (/survival) prozkoumáváš krajinu a narazíš na cizí rozestavěný dům. Truhly nejsou v claimu a nejsou uzamčené. Smíš je vybrat a suroviny si odnést?',
     options: [
       {
-        text: 'Ne! Na Survival světě je krádež i ničení cizích staveb zakázáno bez ohledu na to, zda má hráč rezidenci. Všechny interakce navíc zaznamenává CoreProtect.',
+        text: 'Ne! Na Survival světě je krádež i ničení cizích staveb zakázáno bez ohledu na to, zda má hráč vytvořený claim. Všechny interakce navíc zaznamenávají logy serveru.',
         isCorrect: true
       },
       {
-        text: 'Ano, pokud si majitel nevytvořil rezidenci, je to jeho chyba a všechno v truhlách je volná kořist pro každého.',
+        text: 'Ano, pokud si majitel nevytvořil claim, je to jeho chyba a všechno v truhlách je volná kořist pro každého.',
         isCorrect: false
       },
       {
@@ -3350,8 +3350,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Výborně! Na klasickém Survivalu platí absolutní zákaz krádeží a griefingu. CoreProtect loguje každý otevřený kontejner a zásah do bloků – viník je vždy odhalen a potrestán.',
-    wrongFeedback: 'Špatně! Na Survivalu je vybírání cizích truhel i ničení staveb bez svolení majitele přísně zakázáno i mimo rezidenci.'
+    explanation: 'Výborně! Na klasickém Survivalu platí absolutní zákaz krádeží a griefingu. Serverové logy evidují každý otevřený kontejner i zásah do bloků – viník je vždy odhalen a potrestán.',
+    wrongFeedback: 'Špatně! Na Survivalu je vybírání cizích truhel i ničení staveb bez svolení majitele přísně zakázáno i mimo claim.'
   },
   {
     id: 'irl-trade-psc',
@@ -3384,7 +3384,7 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       },
       {
-        text: 'Nemá pravdu! Anticheat a heuristické filtry sledují poměr těženého kamene k rudám, trajektorie chůze i přímé kopání k diamantům. Následuje okamžitý permanentní ban.',
+        text: 'Nemá pravdu! Anticheat a heuristické filtry sledují poměr těženého kamene k rudám, trajektorie chůze i přímé kopání k rudám. Následuje tempban na 20 dní dle sazebníku SMPAC a zabavení surovin.',
         isCorrect: true
       },
       {
@@ -3392,8 +3392,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Přesně tak! Náš server disponuje pokročilým anti-xray systémem i heuristickou analýzou těžby. Rentgenový texture pack je postaven na roveň cheatům a vede k okamžitému banu.',
-    wrongFeedback: 'Chyba! X-Ray textury jsou posuzovány jako plnohodnotný cheat. Systém anomálie spolehlivě zachytí a trest je okamžitý permanentní ban bez varování.'
+    explanation: 'Přesně tak! Náš server disponuje pokročilým anti-xray systémem i heuristickou analýzou těžby. Rentgenový texture pack je postaven na roveň cheatům a v sazebníku SMPAC vede k 20dennímu tempbanu a zabavení surovin.',
+    wrongFeedback: 'Chyba! X-Ray textury jsou posuzovány jako plnohodnotný cheat. Systém anomálie spolehlivě zachytí a trest je 20denní tempban dle sazebníku SMPAC!'
   },
   {
     id: 'lag-machine',
@@ -3426,7 +3426,7 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       },
       {
-        text: 'V žádném případě! Jakékoliv obcházení trestu (alt účty, cedulky, knihy, kovadliny) vede k okamžitému prodloužení na permanentní ban na IP i všechny propojené účty.',
+        text: 'V žádném případě! Jakékoliv obcházení trestu (alt účty, cedulky, knihy, kovadliny) vede k okamžitému přísnému trestu – 60dennímu banu (/punish obchazeni) na IP i propojené účty.',
         isCorrect: true
       },
       {
@@ -3435,7 +3435,7 @@ const RULES_QUIZ_SCENARIOS = [
       }
     ],
     explanation: 'Přesně tak! Obcházení uděleného trestu je závažnější přestupek než původní prohřešek. Pokud má hráč k trestu výhrady, řeší se to slušně přes ticket na Discordu.',
-    wrongFeedback: 'Chyba! Obcházení mute (jak přes druhý účet, tak přes přejmenované itemy či cedulky) se trestá okamžitým permanentním banem.'
+    wrongFeedback: 'Chyba! Obcházení mute (jak přes druhý účet, tak přes přejmenované itemy či cedulky) se trestá 60denním banem dle sazebníku SMPAC (/punish obchazeni).'
   },
   {
     id: 'replay-mod',
@@ -3489,7 +3489,7 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       },
       {
-        text: 'Reklama na cizí servery a projekty v jakékoliv formě (veřejný chat, /msg, knihy, cedulky) je přísně zakázána a trestá se okamžitým banem.',
+        text: 'Reklama na cizí servery a projekty v jakékoliv formě (veřejný chat, /msg, knihy, cedulky) je přísně zakázána a v sazebníku SMPAC se trestá okamžitým 12hodinovým mutem (/punish reklama), při opakování banem.',
         isCorrect: true
       },
       {
@@ -3497,8 +3497,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Správně! Zákaz reklamy na cizí servery a projekty platí bez výjimky ve všech komunikačních kanálech. Nahlášením takového chování pomáháš udržovat server čistý.',
-    wrongFeedback: 'Špatně! Zákaz propagace cizích projektů je absolutní – platí pro globální chat, /msg, mail i herní předměty.'
+    explanation: 'Správně! Zákaz reklamy na cizí servery a projekty platí bez výjimky ve všech komunikačních kanálech. V sazebníku SMPAC je trestána 12hodinovým mutem (/punish reklama).',
+    wrongFeedback: 'Špatně! Zákaz propagace cizích projektů je absolutní – platí pro globální chat, /msg, mail i herní předměty a trestá se 12h mutem dle presetů SMPAC.'
   },
   {
     id: 'minimap-ban',
@@ -3885,14 +3885,14 @@ const MODTEST_SCENARIOS_POOL = [
     isMandatory: false,
     tag: 'SURVIVAL PRAVIDLA & TRUHLY',
     title: 'Vykradení neuzamčené truhly nováčka na Survivalu',
-    description: 'Nováček na Survival světě zapomněl zamknout truhlu před svým domem. Jiný hráč šel kolem a vzal si z ní všechno dřevo a železo. Nováček brečí v chatu. Jak to řešíš?',
+    description: 'Nováček na Survival světě **zapomněl zamknout truhlu** před svým domem. Jiný hráč šel kolem a **vzal si z ní všechno dřevo a železo**. Nováček brečí v chatu. **Jak to řešíš?**',
     options: [
       {
         text: 'Napsat nováčkovi: „Tvoje smůla, nemáš bejt hloupej,“ a zloděje pochválit za všímavost.',
         isCorrect: false
       },
       {
-        text: 'Na Survivalu je úmyslné vykrádání a poškozování cizího majetku zakázáno. Pomocí logů kontejneru zjistit viníka, věci nováčkovi navrátit a viníka potrestat varováním / dočasným banem.',
+        text: 'Na Survivalu je úmyslné vykrádání cizího majetku zakázáno. Pomocí logů kontejneru zjistit viníka, věci nováčkovi navrátit a viníka potrestat (např. varování nebo tempban 14 dní za grief dle presetů SMPAC).',
         isCorrect: true
       },
       {
@@ -3900,7 +3900,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Survival svět je zaměřen na klidnou a poctivou komunitní hru. Nepozornost nováčka neopravňuje ostatní k parazitování a krádežím. K tomu slouží hardcore /smp svět.'
+    explanation: 'Survival svět je zaměřen na klidnou a poctivou komunitní hru. Nepozornost nováčka neopravňuje ostatní k parazitování a krádežím (**tempban 14 dní za grief** dle sazebníku SMPAC). K tomu slouží hardcore /smp svět.'
   },
   {
     phase: 1,
@@ -3932,7 +3932,7 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč na viditelném kopci postavil z černého betonu nacistický hákový kříž a do chatu se tomu směje. Co musí moderátor udělat jako první?',
     options: [
       {
-        text: 'Objekt okamžitě beze stopy odstranit (případně rollbacknout), hráče trvale zabanovat za propagaci nenávisti a vyčistit chat.',
+        text: 'Objekt okamžitě beze stopy odstranit, hráče trvale zabanovat za propagaci nenávisti a v chatu incident zbytečně nerozebírat.',
         isCorrect: true
       },
       {
@@ -4285,14 +4285,14 @@ const MODTEST_SCENARIOS_POOL = [
     isMandatory: false,
     tag: 'REACH & HITBOX CHEAT',
     title: 'Údery na vzdálenost 4.5 bloku bez pohybu a pingu',
-    description: 'Při sledování PvP duelu zaznamenáš, že hráč zasahuje své protivníky mečem z konstantní vzdálenosti přes 4.2 bloku, přičemž oba hráči mají stabilní ping 15 ms. Co to znamená?',
+    description: 'Při sledování PvP duelu zaznamenáš, že hráč zasahuje své protivníky mečem z **konstantní vzdálenosti přes 4.2 bloku**, přičemž oba hráči mají **stabilní ping 15 ms**. Co to znamená?',
     options: [
       {
         text: 'Minecraft má v novějších verzích běžný dosah až 5 bloků.',
         isCorrect: false
       },
       {
-        text: 'Základní dosah zásahu ve vanille je 3.0 bloku. Konstantní zásahy z 4+ bloků znamenají použití cheatů Reach nebo rozšířených Hitboxů. Následuje ban.',
+        text: 'Základní dosah zásahu ve vanille je 3.0 bloku. Konstantní zásahy z 4+ bloků znamenají použití cheatů Reach nebo rozšířených Hitboxů. Následuje tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
@@ -4300,21 +4300,21 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Vanilla dosah v boji nepřesahuje 3.0 bloku. Jakékoliv systematické překračování tohoto dosahu je nepopiratelný combat cheat.'
+    explanation: 'Vanilla dosah v boji nepřesahuje 3.0 bloku. Jakékoliv systematické překračování tohoto dosahu je combat cheat (**tempban 60 dní**).'
   },
   {
     phase: 2,
     isMandatory: false,
     tag: 'ELYTRA EXPLOIT',
     title: 'Rovný let s elytrou rychlostí 90 m/s bez použití rachejtlí',
-    description: 'Sleduješ hráče s elytrou, který letí vodorovně v jedné výšce neuvěřitelnou rychlostí přes 80 bloků za sekundu, nestoupá ani neklesá a nepoužil ani jednu rachejtli. Jak situaci posoudíš?',
+    description: 'Sleduješ hráče s elytrou, který **letí vodorovně v jedné výšce rychlostí přes 80 bloků/s**, nestoupá ani neklesá a **nepoužil ani jednu rachejtli**. Jak situaci posoudíš?',
     options: [
       {
         text: 'Chytil dobrý vítr a plachtí na termických proudech.',
         isCorrect: false
       },
       {
-        text: 'Používá ElytraFly / Timer exploit, který manipuluje s packetovým vektorem pohybu křídel. Jde o zakázaný movement cheat, následuje okamžitý ban.',
+        text: 'Používá ElytraFly / Timer exploit, který manipuluje s packetovým vektorem pohybu křídel. Jde o zakázaný movement cheat, následuje tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
@@ -4322,21 +4322,21 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Udržet stálou vysokou rychlost bez úbytku výšky a bez ohňostrojů je ve standardní fyzice nemožné. Jde o zjevný klientský pohybový cheat.'
+    explanation: 'Udržet stálou vysokou rychlost bez úbytku výšky a bez ohňostrojů je ve standardní fyzice nemožné. Jde o movement cheat (**tempban 60 dní**).'
   },
   {
     phase: 2,
     isMandatory: false,
     tag: 'NOFALL EXPLOIT',
     title: 'Pád z výšky 250 bloků na kámen s nulovým poškozením',
-    description: 'Hráč skočí z vrcholu věže z výšky 250 bloků na tvrdou skálu. Nemá elytru, mace ani vodu, přistane přímo na břichu a neztratí ani půl srdíčka. Co to indikuje?',
+    description: 'Hráč skočí z vrcholu věže z **výšky 250 bloků na tvrdou skálu**. Nemá elytru, mace ani vodu, přistane přímo na břichu a **neztratí ani půl srdíčka**. Co to indikuje?',
     options: [
       {
         text: 'Měl na sobě brnění s Feather Falling IV, které kompletně neguje pád z jakékoliv výšky.',
         isCorrect: false
       },
       {
-        text: 'Jde o NoFall cheat – hráčský klient před dopadem odeslal na server falešný packet o stání na zemi, čímž vynuloval pádovou vzdálenost. Následuje ban.',
+        text: 'Jde o NoFall cheat – hráčský klient před dopadem odeslal na server falešný packet o stání na zemi, čímž vynuloval pádovou vzdálenost. Následuje tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
@@ -4344,21 +4344,21 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Enchant Feather Falling IV pouze redukuje část škod, pád z 250 bloků bez poškození je ve vanille nemožný. Jde o typický NoFall cheat.'
+    explanation: 'Enchant Feather Falling IV pouze redukuje část škod, pád z 250 bloků bez poškození je ve vanille nemožný. Jde o NoFall cheat (**tempban 60 dní**).'
   },
   {
     phase: 2,
     isMandatory: false,
     tag: 'BARITONE BOT',
     title: 'Autonomní těžební bot kopající 14 hodin v kuse',
-    description: 'Hráč v dole kope tunely strojovou přesností už 14 hodin. Nereaguje na zprávy v chatu, a když ho teleportuješ do uzavřené místnosti, okamžitě začne autonomně hledat cestu ven podle pathfindingu.',
+    description: 'Hráč v dole kope tunely **strojovou přesností už 14 hodin**. Nereaguje na zprávy v chatu, a když ho teleportuješ do uzavřené místnosti, **okamžitě začne autonomně hledat cestu ven** podle pathfindingu.',
     options: [
       {
         text: 'Hráč je nesmírně vytrvalý těžař, který rád relaxuje u kopání.',
         isCorrect: false
       },
       {
-        text: 'Používá Baritone nebo podobného autonomního bota pro automatickou těžbu a pathfinding. Účet zabanovat a vytěžené suroviny smazat.',
+        text: 'Používá Baritone nebo podobného autonomního bota pro těžbu a pathfinding. Udělit tempban 16 dní dle presetů SMPAC (/punish baritone) a vytěžené suroviny zabavit.',
         isCorrect: true
       },
       {
@@ -4366,21 +4366,21 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Plně automatizované hraní pomocí botů simulujících lidské ovládání je zakázáno. Hráč musí být schopen reagovat a hrát osobně.'
+    explanation: 'Plně automatizované hraní pomocí botů simulujících lidské ovládání je zakázáno. V sazebníku SMPAC se Baritone postihuje **16denním tempbanem**.'
   },
   {
     phase: 2,
     isMandatory: false,
     tag: 'NOSLOWDOWN CHEAT',
     title: 'Sprint plnou rychlostí s plně nataženým lukem',
-    description: 'Hráč v PvP souboji sprintuje maximální rychlostí dopředu, skáče a přitom má celou dobu plně natažený luk a pálí šípy, aniž by ho nátah luku jakkoliv zpomalil.',
+    description: 'Hráč v PvP souboji **sprintuje maximální rychlostí dopředu, skáče a přitom má celou dobu plně natažený luk** a pálí šípy, aniž by ho nátah luku jakkoliv zpomalil.',
     options: [
       {
         text: 'Má lektvar Swiftness II, který ruší zpomalení z luku.',
         isCorrect: false
       },
       {
-        text: 'Jedná se o NoSlowdown cheat, který ruší klientské zpomalení při používání předmětů (luk, jídlo, štít). Následuje ban za nepovolené modifikace.',
+        text: 'Jedná se o NoSlowdown cheat, který ruší klientské zpomalení při používání předmětů (luk, jídlo, štít). Následuje tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
@@ -4388,21 +4388,21 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Používání luku, konzumace jídla i krytí štítem musí hráče dle mechanik hry zpomalit. Ignorování tohoto stavu je jasným NoSlowdown cheatem.'
+    explanation: 'Používání luku, konzumace jídla i krytí štítem musí hráče dle mechanik hry zpomalit. Ignorování tohoto stavu je NoSlowdown cheat (**tempban 60 dní**).'
   },
   {
     phase: 2,
     isMandatory: false,
     tag: 'FASTBREAK / NUKER',
     title: 'Lámání 35 bloků kamene za sekundu v řadě za sebou',
-    description: 'Hráč běží chodbou a kamenné bloky před ním mizí rychlostí kulometu (35 bloků/s), přestože má obyčejný železný krumpáč bez Haste efektu.',
+    description: 'Hráč běží chodbou a **kamenné bloky před ním mizí rychlostí kulometu (35 bloků/s)**, přestože má obyčejný železný krumpáč bez Haste efektu.',
     options: [
       {
         text: 'Hráč má jen vysoké FPS a dobrý monitor.',
         isCorrect: false
       },
       {
-        text: 'Jde o klientský exploit FastBreak / Nuker, který ignoruje dobu potřebnou k vytěžení bloku. Následuje okamžitý ban za závažný cheat.',
+        text: 'Jde o klientský exploit FastBreak / Nuker, který ignoruje dobu potřebnou k vytěžení bloku. Následuje tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
@@ -4410,7 +4410,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Čas potřebný k rozbití bloku je dán pevnými herními pravidly. Lámání bloků vyšší rychlostí je závažná manipulace s klientem.'
+    explanation: 'Čas potřebný k rozbití bloku je dán pevnými pravidly serveru. Lámání bloků vyšší rychlostí je závažná manipulace s pakety (**tempban 60 dní**).'
   },
   {
     phase: 2,
@@ -4505,14 +4505,14 @@ const MODTEST_SCENARIOS_POOL = [
     isMandatory: false,
     tag: 'CRITICALS EXPLOIT',
     title: 'Kritické údery při každém zásahu bez skákání',
-    description: 'Hráč v boji rozdává 100 % kritických zásahů (s částicemi hvězdiček), přestože stojí nohama pevně na zemi a ani jednou nevyskočil. Jak to funguje?',
+    description: 'Hráč v boji rozdává **100 % kritických zásahů**, přestože **stojí nohama pevně na zemi a ani jednou nevyskočil**. Jak to funguje?',
     options: [
       {
         text: 'Má na meči skrytý enchant Critical Boost.',
         isCorrect: false
       },
       {
-        text: 'Používá Criticals exploit, který těsně před úderem odešle falešný packet o mini-skoku (0.06 bloku), aby oklamal server a vynutil kritický zásah. Jde o cheat, následuje ban.',
+        text: 'Používá Criticals exploit, který těsně před úderem odešle falešný packet o mini-skoku (0.06 bloku), aby oklamal server. Následuje tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
@@ -4520,7 +4520,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Kritický zásah vyžaduje pádový pohyb hráče. Pokud hráč rozdává kritické údery ze země, jeho klient manipuluje s výškou v odesílaných packetech.'
+    explanation: 'Kritický zásah vyžaduje přirozený pádový pohyb hráče. Manipulace s výškovými packety za účelem vynucení criticalů je cheat (**tempban 60 dní**).'
   },
 
   // -----------------------------------------------------------------------
@@ -4582,7 +4582,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       },
       {
-        text: 'Tiše udělit IP/subnet ban na proxy rozsah, vyčistit herní chat (/clearchat) a neposkytovat trollovi žádnou pozornost ani reakci v chatu.',
+        text: 'Hráče okamžitě ztlumit (/mute), udělit IP ban (/ban-ip) na proxy rozsah, nahlásit bot útok vedení a v chatu trollovi nevěnovat žádnou pozornost.',
         isCorrect: true
       },
       {
@@ -4590,7 +4590,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Trollové se živí pozorností a reakcemi administrátorů. Nejlepším řešením je **okamžitý tichý technický zásah**, **vyčištění chatu (/clearchat)** a **nulová komunikace**.'
+    explanation: 'Trollové se živí pozorností a reakcemi administrátorů. Nejlepším řešením je **okamžitý tichý technický zásah (/mute, /ban-ip)**, nahlášení incidentu vedení a **nulová komunikace v chatu**.'
   },
   {
     phase: 3,
@@ -4604,7 +4604,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       },
       {
-        text: 'Upozornit hráče na zneužití urgentního označení. Vysvětlit, že moderátoři nezasahují do survival mechanik a nefungují jako bezplatné taxi. Odkázat ho na herní příkazy (/spawn, /home) nebo vykopání.',
+        text: 'Upozornit hráče na zneužití urgentního označení. Vysvětlit, že moderátoři nezasahují do survival mechanik a nefungují jako bezplatné taxi. Odkázat ho na herní příkazy (/home, /lobby, /trapped) nebo vykopání.',
         isCorrect: true
       },
       {
@@ -4612,7 +4612,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: '**Moderátor není herní sluha ani taxi služba.** Do běžného survival gameplaye se nezasahuje a noční panika z pavouků se řeší **klidným odkázáním na herní mechaniky (/spawn, /home)**.'
+    explanation: '**Moderátor není herní sluha ani taxi služba.** Do běžného survival gameplaye se nezasahuje a noční panika z pavouků se řeší **klidným odkázáním na herní mechaniky (/home, /lobby, /trapped)**.'
   },
   {
     phase: 3,
@@ -4626,7 +4626,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       },
       {
-        text: 'Zákaz reklamy na cizí servery a Discordy platí bez výjimky v celém herním i komunikačním prostoru (chat, /msg, cedulky, knihy i Discord). Následuje permanentní ban.',
+        text: 'Zákaz reklamy na cizí servery a Discordy platí bez výjimky v celém herním i komunikačním prostoru (chat, /msg, cedulky, knihy i Discord). Dle sazebníku SMPAC následuje ztlumení (/punish reklama na 12 hodin), při soustavném spamu přísnější trest.',
         isCorrect: true
       },
       {
@@ -4634,7 +4634,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Využití soukromých zpráv k odlákávání hráčů je typický pokus o obcházení filtru reklamy. **Zákaz reklamy platí pro jakoukoliv formu přenosu na síti** (chat, /msg, cedulky, knihy i Discord).'
+    explanation: 'Využití soukromých zpráv k odlákávání hráčů je typický pokus o obcházení filtru reklamy. **Zákaz reklamy platí pro jakoukoliv formu přenosu na síti** a v sazebníku SMPAC se trestá **12hodinovým mutem**.'
   },
   {
     phase: 3,
@@ -4749,16 +4749,16 @@ const MODTEST_SCENARIOS_POOL = [
   {
     phase: 3,
     isMandatory: false,
-    tag: 'SPAM V /HELPOP',
-    title: 'Zneužívání /helpop k nezávaznému pokecu z nudy',
-    description: 'Hráč každou minutu posílá do /helpop: „Čau modi, jak se máte? Nudím se, portněte se za mnou a dejte mi nějaký úkol!“. Co uděláš?',
+    tag: 'SPAM V /REPORT & TICKETECH',
+    title: 'Zneužívání /report a ticketů k nezávaznému pokecu z nudy',
+    description: 'Hráč opakovaně odesílá hlášení přes **/report** nebo zakládá Discord tickety: *„Čau modi, jak se máte? Nudím se, portněte se za mnou a dejte mi nějaký úkol!“*. **Co uděláš?**',
     options: [
       {
         text: 'Okamžitě se k němu portnout a hrát si s ním schovku.',
         isCorrect: false
       },
       {
-        text: 'Upozornit hráče, že příkaz /helpop je vyhrazen výhradně pro hlášení technických potíží a porušení pravidel. Při opakovaném spamu udělit varování či krátký mute.',
+        text: 'Upozornit hráče, že systém /report a Discord tickety jsou vyhrazeny výhradně pro hlášení porušení pravidel a technických potíží. Při opakovaném spamu udělit varování či krátký mute.',
         isCorrect: true
       },
       {
@@ -4766,7 +4766,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: false
       }
     ],
-    explanation: 'Komunikační kanál /helpop musí zůstat volný pro skutečné urgentní problémy. Moderátor nastaví jasné hranice slušně a věcně.'
+    explanation: 'Nástroje jako **/report** a Discord tickety musí zůstat volné pro skutečné problémy. Moderátor nastaví jasné hranice slušně a věcně.'
   },
   {
     phase: 3,

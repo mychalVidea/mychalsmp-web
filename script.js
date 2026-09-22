@@ -2,6 +2,10 @@
    MYCHAL SMP – script.js
    ============================================= */
 
+// ---- CONSOLE ANTI-SCAM WARNING ----
+console.log('%cSTOP!', 'color: #f51515; font-size: 40px; font-weight: bold;');
+console.log('%cPokud ti někdo řekl, abys sem vložil nějaký kód, snaží se ti ukrást účet!', 'color: #fff; font-size: 14px;');
+
 // ---- SECURE & RESILIENT API FETCH WRAPPER ----
 const API_BASE_URL = 'https://api.6767111.xyz';
 

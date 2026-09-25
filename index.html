@@ -17,7 +17,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20260917_v16" />
+  <link rel="stylesheet" href="style.css?v=20260924_v1" />
 </head>
 
 <body>
@@ -31,35 +31,77 @@
       </a>
       <div class="nav-links">
         <button id="tab-btn-home" class="nav-link active" onclick="showTab('home')">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
           <span>Domů</span>
         </button>
         <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polygon points="10 8 16 12 10 16 10 8" />
+          </svg>
           <span>Jak se připojit</span>
         </button>
         <button id="tab-btn-smp-plus" class="nav-link nav-link--smp" onclick="showTab('smp-plus')">
-          <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z" />
+          </svg>
           <span>SMP+</span>
         </button>
         <button id="tab-btn-media" class="nav-link" onclick="showTab('media')">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="23 7 16 12 23 17 23 7" />
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+          </svg>
           <span>Media</span>
         </button>
         <button id="tab-btn-napady" class="nav-link" onclick="showTab('napady')">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"/></svg>
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6" />
+            <path d="M10 22h4" />
+            <path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z" />
+          </svg>
           <span>Nápady</span>
         </button>
         <button id="tab-btn-stats" class="nav-link" onclick="showTab('stats')">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
           <span>Statistiky</span>
         </button>
         <button id="tab-btn-bugs" class="nav-link" onclick="showTab('bugs')">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="14" x="8" y="6" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 19-3-2"/><path d="m5 19 3-2"/><path d="M20 13h-4"/><path d="M4 13h4"/><path d="m10 4 1 2"/><path d="m14 4-1 2"/></svg>
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect width="8" height="14" x="8" y="6" rx="4" />
+            <path d="m19 7-3 2" />
+            <path d="m5 7 3 2" />
+            <path d="m19 19-3-2" />
+            <path d="m5 19 3-2" />
+            <path d="M20 13h-4" />
+            <path d="M4 13h4" />
+            <path d="m10 4 1 2" />
+            <path d="m14 4-1 2" />
+          </svg>
           <span>Bugy</span>
         </button>
         <button id="tab-btn-rules" class="nav-link" onclick="showTab('rules')">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
           <span>Pravidla</span>
         </button>
       </div>
@@ -69,35 +111,77 @@
     </div>
     <div class="mobile-menu" id="mobile-menu">
       <button class="nav-link" id="top-nav-home" onclick="showTab('home');toggleMenu()">
-        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
         <span>Domů</span>
       </button>
       <button class="nav-link" id="top-nav-join" onclick="showTab('join');toggleMenu()">
-        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <polygon points="10 8 16 12 10 16 10 8" />
+        </svg>
         <span>Jak se připojit</span>
       </button>
       <button class="nav-link" id="top-nav-smp-plus" onclick="showTab('smp-plus');toggleMenu()">
-        <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z"/></svg>
+        <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z" />
+        </svg>
         <span>SMP+</span>
       </button>
       <button class="nav-link" id="top-nav-media" onclick="showTab('media');toggleMenu()">
-        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="23 7 16 12 23 17 23 7" />
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+        </svg>
         <span>Media</span>
       </button>
       <button class="nav-link" id="top-nav-napady" onclick="showTab('napady');toggleMenu()">
-        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"/></svg>
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18h6" />
+          <path d="M10 22h4" />
+          <path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z" />
+        </svg>
         <span>Nápady</span>
       </button>
       <button class="nav-link" id="top-nav-stats" onclick="showTab('stats');toggleMenu()">
-        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </svg>
         <span>Statistiky</span>
       </button>
       <button class="nav-link" id="top-nav-bugs" onclick="showTab('bugs');toggleMenu()">
-        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="14" x="8" y="6" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 19-3-2"/><path d="m5 19 3-2"/><path d="M20 13h-4"/><path d="M4 13h4"/><path d="m10 4 1 2"/><path d="m14 4-1 2"/></svg>
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect width="8" height="14" x="8" y="6" rx="4" />
+          <path d="m19 7-3 2" />
+          <path d="m5 7 3 2" />
+          <path d="m19 19-3-2" />
+          <path d="m5 19 3-2" />
+          <path d="M20 13h-4" />
+          <path d="M4 13h4" />
+          <path d="m10 4 1 2" />
+          <path d="m14 4-1 2" />
+        </svg>
         <span>Bugy</span>
       </button>
       <button class="nav-link" id="top-nav-rules" onclick="showTab('rules');toggleMenu()">
-        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
         <span>Pravidla</span>
       </button>
     </div>
@@ -127,8 +211,15 @@
           </div>
           <button class="hero-copy-btn" id="copy-btn" aria-label="Kopírovat IP" type="button" onclick="copyIP(event)">
             <span class="btn-copy-icon-wrap">
-              <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
             </span>
             <span class="btn-copy-label">Zkopírovat IP</span>
           </button>
@@ -137,11 +228,17 @@
         <!-- Modern High-Craft CTA Row -->
         <div class="hero-cta-row">
           <button class="btn-hero-primary" onclick="showTab('join')">
-            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polygon points="10 8 16 12 10 16 10 8" />
+            </svg>
             <span>Jak se připojit</span>
           </button>
           <button class="btn-hero-smp" onclick="showTab('smp-plus')">
-            <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z"/></svg>
+            <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z" />
+            </svg>
             <span>Výhody SMP+</span>
           </button>
           <a href="https://discord.gg/HwZUGWGVD9" target="_blank" rel="noopener" class="btn-hero-discord">
@@ -209,33 +306,69 @@
             </p>
             <div class="info-tags-row">
               <span class="info-chip">
-                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" y1="14" x2="9" y2="18"/><line x1="7" y1="17" x2="4" y2="20"/><line x1="3" y1="19" x2="5" y2="21"/></svg>
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+                  <line x1="13" y1="19" x2="19" y2="13" />
+                  <line x1="16" y1="16" x2="20" y2="20" />
+                  <line x1="19" y1="21" x2="21" y2="19" />
+                  <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5" />
+                  <line x1="5" y1="14" x2="9" y2="18" />
+                  <line x1="7" y1="17" x2="4" y2="20" />
+                  <line x1="3" y1="19" x2="5" y2="21" />
+                </svg>
                 <span>Nové SMP (/smp)</span>
               </span>
               <span class="info-chip">
-                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 19 22 19 12 2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 19 22 19 12 2" />
+                  <line x1="12" y1="19" x2="12" y2="22" />
+                </svg>
                 <span>Klasika (/survival)</span>
               </span>
               <span class="info-chip">
-                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f97316"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+                </svg>
                 <span>Perma PvP na SMP</span>
               </span>
               <span class="info-chip">
-                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#0a67e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#0a67e5"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="21" r="1" />
+                  <circle cx="20" cy="21" r="1" />
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                </svg>
                 <span>Shop a Orders</span>
               </span>
               <span class="info-chip">
-                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                <span>Java Edition 26.2</span>
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#a855f7"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                  <line x1="12" y1="22.08" x2="12" y2="12" />
+                </svg>
+                <span>Java Edition 26.1 – 26.3</span>
+              </span>cord AI /chat</span>
               </span>
             </div>
             <div class="info-actions">
               <button class="btn-primary" onclick="showTab('join')" id="info-join-btn">
-                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polygon points="10 8 16 12 10 16 10 8" />
+                </svg>
                 <span>Jak se připojit</span>
               </button>
               <button class="btn-secondary" onclick="showTab('smp-plus')">
-                <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z"/></svg>
+                <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z" />
+                </svg>
                 <span>Získat SMP+</span>
               </button>
             </div>
@@ -275,8 +408,15 @@
                 title="Kliknutím zkopíruješ příkaz">
                 <code>/smp</code>
                 <span class="btn-copy-icon-wrap">
-                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </span>
               </div>
             </div>
@@ -332,8 +472,14 @@
               <div class="gm-card-actions">
                 <button class="btn-gm-action btn-gm--smp" onclick="copyCommand('/smp', this)">
                   <span class="btn-copy-icon-wrap">
-                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                      stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
                   </span>
                   <span class="btn-gm-label">Zkopírovat <code>/smp</code> pro vstup</span>
                 </button>
@@ -346,16 +492,22 @@
             <!-- Visual Hero Header with Real Server Screenshot -->
             <div class="gm-card-media" onclick="openLightbox('imgs/2026-07-03_00.56.31.webp')"
               title="Kliknutím zvětšíš screenshot">
-              <img src="imgs/2026-07-03_00.56.31.webp" alt="Klasický Survival – Stavění a claimy"
-                class="gm-card-img" />
+              <img src="imgs/2026-07-03_00.56.31.webp" alt="Klasický Survival – Stavění a claimy" class="gm-card-img" />
               <div class="gm-card-overlay"></div>
               <div class="gm-card-badge gm-badge--survival"><i class="fa-solid fa-tree"></i> STAVĚNÍ • CLAIMY</div>
               <div class="gm-card-cmd-chip" onclick="event.stopPropagation(); copyCommand('/survival', this)"
                 title="Kliknutím zkopíruješ příkaz">
                 <code>/survival</code>
                 <span class="btn-copy-icon-wrap">
-                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </span>
               </div>
             </div>
@@ -411,8 +563,16 @@
               <div class="gm-card-actions">
                 <button class="btn-gm-action btn-gm--survival" onclick="copyCommand('/survival', this)">
                   <span class="btn-copy-icon-wrap">
-                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                      <polyline points="10 17 15 12 10 7" />
+                      <line x1="15" y1="12" x2="3" y2="12" />
+                    </svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                      stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
                   </span>
                   <span class="btn-gm-label">Zkopírovat <code>/survival</code> pro vstup</span>
                 </button>
@@ -440,11 +600,18 @@
               <div class="quickstart-ip-box" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP">
                 <span class="quickstart-ip-code">mychalsmp.xyz</span>
                 <span class="btn-copy-icon-wrap">
-                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </span>
               </div>
-              <span class="quickstart-step-hint">Java Edition • <strong>26.2</strong></span>
+              <span class="quickstart-step-hint">Java Edition • <strong>26.1 – 26.3</strong> (Doporučeno 26.2)</span>
             </div>
 
             <div class="quickstart-step">
@@ -452,9 +619,15 @@
               <h3 class="quickstart-step-title">Přidej server do hry</h3>
               <div class="quickstart-guide-box">
                 <span class="quickstart-path-step">Multiplayer</span>
-                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
                 <span class="quickstart-path-step">Přidat server</span>
-                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
                 <span class="quickstart-path-step quickstart-path-step--active">Vložit IP</span>
               </div>
               <span class="quickstart-step-hint">Server má vlastní balíček textur</span>
@@ -463,11 +636,19 @@
             <div class="quickstart-step">
               <div class="quickstart-step-num">3</div>
               <h3 class="quickstart-step-title">Přihlas se a hraj</h3>
-              <div class="quickstart-cmd-box" onclick="copyCommand('/register heslo heslo', this)" title="Kliknutím zkopíruješ příkaz">
+              <div class="quickstart-cmd-box" onclick="copyCommand('/register heslo heslo', this)"
+                title="Kliknutím zkopíruješ příkaz">
                 <code>/register &lt;heslo&gt; &lt;heslo&gt;</code>
                 <span class="btn-copy-icon-wrap">
-                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </span>
               </div>
               <span class="quickstart-step-hint">Originální účty: <strong>Automatické přihlášení</strong></span>
@@ -492,15 +673,27 @@
         <div class="join-quick-ip-card">
           <div class="join-quick-ip-info">
             <span class="join-quick-ip-tag">
-              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg>
-              <span>Java Edition • <strong>26.2</strong></span>
+              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              </svg>
+              <span>Java Edition • <strong>26.1 – 26.3</strong></span>
             </span>
             <div class="join-quick-ip-address" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP adresu">
               <code class="join-ip-code-text">mychalsmp.xyz</code>
               <button class="join-quick-copy-btn" aria-label="Zkopírovat IP">
                 <span class="btn-copy-icon-wrap">
-                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </span>
                 <span class="btn-copy-label">Kopírovat IP</span>
               </button>
@@ -508,7 +701,8 @@
           </div>
           <div class="join-quick-badges">
             <span class="join-pill"><i class="fa-solid fa-bolt text-yellow"></i> Bez Whitelistu</span>
-            <span class="join-pill"><i class="fa-solid fa-shield-halved text-green"></i> Auto-Login pro Originálky</span>
+            <span class="join-pill"><i class="fa-solid fa-shield-halved text-green"></i> Auto-Login pro
+              Originálky</span>
             <span class="join-pill"><i class="fa-solid fa-gamepad text-blue"></i> Podpora i pro Warez</span>
           </div>
         </div>
@@ -522,10 +716,12 @@
         <!-- Krok 1: Spuštění hry a výběr verze -->
         <div class="join-step-row">
           <div class="join-step-info">
-            <h3 class="join-step-title"><span class="join-step-pill">01</span> Spusť Minecraft ve verzi 26.2</h3>
+            <h3 class="join-step-title"><span class="join-step-pill">01</span> Spusť Minecraft (verze 26.1 – 26.3)</h3>
             <p class="join-step-text">
-              Server běží na nejnovější a stabilní verzi <strong>26.2</strong>. Pro maximální plynulost, nejnovější
-              mechaniky a bezchybnou stabilitu se připojuj ve verzi <strong>26.2</strong>.
+              Server běží na nejnovější a stabilní verzi <strong>26.2</strong> a nově má plnou multi-version podporu
+              pro verze <strong>26.1, 26.1.1, 26.1.2</strong> až <strong>26.3</strong>! Pro maximální plynulost,
+              nejnovější
+              mechaniky a bezchybnou stabilitu doporučujeme verzi <strong>26.2</strong>.
             </p>
             <div class="join-step-action-bar">
               <span class="join-step-chip"><i class="fa-solid fa-arrow-pointer text-blue"></i> V hlavním menu klikni na
@@ -585,8 +781,15 @@
                 <code class="join-compact-ip-code">mychalsmp.xyz</code>
                 <button class="join-compact-copy-btn">
                   <span class="btn-copy-icon-wrap">
-                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                      stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
                   </span>
                   <span class="btn-copy-label">Kopírovat</span>
                 </button>
@@ -628,8 +831,15 @@
                   title="Kliknutím zkopíruješ příkaz">
                   <code>/register &lt;heslo&gt; &lt;heslo&gt;</code>
                   <span class="btn-copy-icon-wrap">
-                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                      stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
                   </span>
                 </div>
               </div>
@@ -651,11 +861,17 @@
         <!-- Step 5 / Community Card: Discord a podpora -->
         <div class="join-community-card">
           <div class="join-community-left">
-            <h3 class="join-community-title">Připoj se k nám na Discord</h3>
+            <h3 class="join-community-title">Připoj se k nám na Discord & AI M.A.M.L.A.S.</h3>
             <p class="join-community-desc">
-              Nejčerstvější novinky, komunitní eventy, pokec s hráči a přímý ticket systém podpory od administrátorů.
+              Nejčerstvější novinky, komunitní eventy, pokec s hráči, přímý ticket systém a náš chytrý Discord bot
+              M.A.M.L.A.S. s příkazem <code>/chat</code> pro okamžité odpovědi a hledání na webu.
             </p>
             <div class="join-bug-bounty">
+              <div class="join-bounty-item">
+                <i class="fa-solid fa-robot text-blue"></i>
+                <span><strong>AI asistent na Discordu:</strong> Příkazem <code>/chat</code> se můžeš bota M.A.M.L.A.S.
+                  zeptat na cokoliv ze serveru i z internetu.</span>
+              </div>
               <div class="join-bounty-item">
                 <img src="imgs/icons/minecraft-world-icon-14.webp" alt="Diamond Block" class="inline-game-icon">
                 <span><strong>Odměna za nahlášení chyb:</strong> Hodnotné <strong>diamantové bloky</strong> přímo ve hře
@@ -690,7 +906,7 @@
           </button>
           <div class="faq-content">
             <p>Není potřeba žádný whitelist! Náš server je plně veřejný pro všechny hráče. Stačí v Minecraftu zadat IP
-              mychalsmp.xyz a připojit se ve verzi 26.2.</p>
+              mychalsmp.xyz a připojit se ve verzi 26.1 až 26.3 (doporučena 26.2).</p>
           </div>
         </div>
         <div class="faq-card">
@@ -699,7 +915,9 @@
             <span class="faq-icon-chevron">+</span>
           </button>
           <div class="faq-content">
-            <p>Server běží na stabilní verzi <strong>26.2</strong>. Připoj se přímo přes IP <strong>mychalsmp.xyz</strong>.</p>
+            <p>Server běží primárně na stabilní verzi <strong>26.2</strong> a díky ProtocolBridge plně podporuje verze
+              <strong>26.1, 26.1.1, 26.1.2</strong> až <strong>26.3</strong>. Připoj se přímo přes IP
+              <strong>mychalsmp.xyz</strong>.</p>
           </div>
         </div>
         <div class="faq-card">
@@ -734,7 +952,10 @@
       <div class="rules-pillars-grid">
         <div class="rules-pillar-card">
           <div class="rules-pillar-icon rules-pillar-icon--blue">
-            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
           </div>
           <div class="rules-pillar-info">
             <span class="rules-pillar-title">100% Fair-Play</span>
@@ -744,7 +965,11 @@
 
         <div class="rules-pillar-card">
           <div class="rules-pillar-icon rules-pillar-icon--orange">
-            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/></svg>
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+              <line x1="13" y1="19" x2="19" y2="13" />
+              <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5" />
+            </svg>
           </div>
           <div class="rules-pillar-info">
             <span class="rules-pillar-title">Světy podle tebe</span>
@@ -754,7 +979,10 @@
 
         <div class="rules-pillar-card">
           <div class="rules-pillar-icon rules-pillar-icon--green">
-            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
           </div>
           <div class="rules-pillar-info">
             <span class="rules-pillar-title">Odměny za bugy</span>
@@ -770,7 +998,9 @@
           <div class="rules-compare-card rules-compare-card--allowed">
             <div class="rules-compare-card-head">
               <div class="rules-compare-badge rules-compare-badge--allowed">
-                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
                 <span>CO JE POVOLENO & VÍTÁNO</span>
               </div>
               <h3 class="rules-compare-title">Hraj svobodně a užívej si hru</h3>
@@ -779,7 +1009,10 @@
             <ul class="rules-compare-items">
               <li class="rules-compare-item">
                 <div class="rules-compare-icon-wrap rules-compare-icon-wrap--allowed">
-                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                    stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Optimalizační a grafické mody</strong>
@@ -789,7 +1022,10 @@
 
               <li class="rules-compare-item">
                 <div class="rules-compare-icon-wrap rules-compare-icon-wrap--allowed">
-                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                    stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Informační a HUD doplňky</strong>
@@ -799,7 +1035,10 @@
 
               <li class="rules-compare-item">
                 <div class="rules-compare-icon-wrap rules-compare-icon-wrap--allowed">
-                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                    stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Boj, pasti a ničení na SMP světě (/smp)</strong>
@@ -809,7 +1048,10 @@
 
               <li class="rules-compare-item">
                 <div class="rules-compare-icon-wrap rules-compare-icon-wrap--allowed">
-                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                    stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Automatické farmy a stavitelské projekty</strong>
@@ -819,7 +1061,10 @@
 
               <li class="rules-compare-item">
                 <div class="rules-compare-icon-wrap rules-compare-icon-wrap--allowed">
-                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                    stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Replay Mod pro ověřené tvůrce</strong>
@@ -833,7 +1078,10 @@
           <div class="rules-compare-card rules-compare-card--forbidden">
             <div class="rules-compare-card-head">
               <div class="rules-compare-badge rules-compare-badge--forbidden">
-                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
                 <span>CO JE PŘÍSNĚ ZAKÁZÁNO</span>
               </div>
               <h3 class="rules-compare-title">Nulová tolerance pro podvádění</h3>
@@ -842,17 +1090,26 @@
             <ul class="rules-compare-items">
               <li class="rules-compare-item">
                 <div class="rules-compare-icon-wrap rules-compare-icon-wrap--forbidden">
-                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515"
+                    stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Cheaty, Hack klienti a veškeré Minimapy</strong>
-                  <p>Killaura, Fly, Speed, Auto-totem, Baritone, Xaero's Minimap, JourneyMap a všechny mody s minimapou či waypointy.</p>
+                  <p>Killaura, Fly, Speed, Auto-totem, Baritone, Xaero's Minimap, JourneyMap a všechny mody s minimapou
+                    či waypointy.</p>
                 </div>
               </li>
 
               <li class="rules-compare-item">
                 <div class="rules-compare-icon-wrap rules-compare-icon-wrap--forbidden">
-                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515"
+                    stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>X-Ray ve všech podobách</strong>
@@ -862,7 +1119,11 @@
 
               <li class="rules-compare-item">
                 <div class="rules-compare-icon-wrap rules-compare-icon-wrap--forbidden">
-                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515"
+                    stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Ničení staveb na Survivalu (/survival)</strong>
@@ -872,7 +1133,11 @@
 
               <li class="rules-compare-item">
                 <div class="rules-compare-icon-wrap rules-compare-icon-wrap--forbidden">
-                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515"
+                    stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Duplikace itemů a bug abuse</strong>
@@ -882,7 +1147,11 @@
 
               <li class="rules-compare-item">
                 <div class="rules-compare-icon-wrap rules-compare-icon-wrap--forbidden">
-                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515"
+                    stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>IRL Trade – prodej za reálné peníze</strong>
@@ -897,23 +1166,40 @@
       <!-- INTERACTIVE CATEGORY FILTER -->
       <div class="rules-filter-bar" role="tablist" aria-label="Filtrovat pravidla podle kategorie">
         <button class="rules-filter-btn active" onclick="filterRules('all', this)" role="tab" aria-selected="true">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
           <span>Všechna pravidla (8)</span>
         </button>
         <button class="rules-filter-btn" onclick="filterRules('fairplay', this)" role="tab" aria-selected="false">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
           <span>Fair-Play & Cheaty</span>
         </button>
         <button class="rules-filter-btn" onclick="filterRules('worlds', this)" role="tab" aria-selected="false">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#0a67e5" stroke-width="2"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#0a67e5" stroke-width="2">
+            <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+            <line x1="13" y1="19" x2="19" y2="13" />
+            <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5" />
+          </svg>
           <span>Světy & Ničení</span>
         </button>
         <button class="rules-filter-btn" onclick="filterRules('community', this)" role="tab" aria-selected="false">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
           <span>Chat & Komunita</span>
         </button>
         <button class="rules-filter-btn" onclick="filterRules('economy', this)" role="tab" aria-selected="false">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
           <span>Ekonomika & Účty</span>
         </button>
       </div>
@@ -928,13 +1214,18 @@
             <span class="rule-category-chip">Fair-Play</span>
           </div>
           <h3 class="rule-title">Zákaz cheatů, minimap a nepovolených modů</h3>
-          <p class="rule-summary">Jakýkoliv cheat, hack klient, minimapa či makro dávající neférovou výhodu je přísně zakázáno.</p>
+          <p class="rule-summary">Jakýkoliv cheat, hack klient, minimapa či makro dávající neférovou výhodu je přísně
+            zakázáno.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
-              <li>Zakázány jsou hack klienti (Meteor, Wurst apod.), Killaura, Fly, Speed, Jesus, Reach, Auto-totem a Baritone.</li>
-              <li><strong>Zákaz všech minimap:</strong> Xaero's Minimap, JourneyMap i veškeré modifikace zobrazující minimapu či vestavěné waypointy jsou přísně zakázány!</li>
-              <li>Cheaty ani minimapy nesmějí být ve složce s mody ani v paměti klienta, i když jsou momentálně vypnuté.</li>
-              <li><strong>Spoluúčast se trestá:</strong> Pomoc cheaterům, krytí viníků a přechovávání nelegálních věcí se trestá BANEM!</li>
+              <li>Zakázány jsou hack klienti (Meteor, Wurst apod.), Killaura, Fly, Speed, Jesus, Reach, Auto-totem a
+                Baritone.</li>
+              <li><strong>Zákaz všech minimap:</strong> Xaero's Minimap, JourneyMap i veškeré modifikace zobrazující
+                minimapu či vestavěné waypointy jsou přísně zakázány!</li>
+              <li>Cheaty ani minimapy nesmějí být ve složce s mody ani v paměti klienta, i když jsou momentálně vypnuté.
+              </li>
+              <li><strong>Spoluúčast se trestá:</strong> Pomoc cheaterům, krytí viníků a přechovávání nelegálních věcí
+                se trestá BANEM!</li>
               <li><strong>Replay Mod:</strong> Je povolen výhradně pro schválené tvůrce s Media rankem.</li>
             </ul>
           </div>
@@ -947,7 +1238,8 @@
             <span class="rule-category-chip">Fair-Play</span>
           </div>
           <h3 class="rule-title">Zákaz X-Ray, cave finderů a ESP</h3>
-          <p class="rule-summary">Využívání rentgenových modů nebo průhledných texture packů pro hledání rud je zakázáno.</p>
+          <p class="rule-summary">Využívání rentgenových modů nebo průhledných texture packů pro hledání rud je
+            zakázáno.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
               <li>X-Ray modifikace i průhledné texture packy pro odhalování diamantů, netheritu či jiných rud.</li>
@@ -965,11 +1257,13 @@
             <span class="rule-category-chip">Fair-Play</span>
           </div>
           <h3 class="rule-title">Zákaz duplikace a zneužívání chyb</h3>
-          <p class="rule-summary">Záměrné zneužití chyby pro získání itemů vede k okamžitému banu a kompletnímu smazání inventáře.</p>
+          <p class="rule-summary">Záměrné zneužití chyby pro získání itemů vede k okamžitému banu a kompletnímu smazání
+            inventáře.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
               <li>Zákaz duplikování předmětů, coinů a využívání chyb v pluginech či generaci světa.</li>
-              <li><strong>Odměna za poctivost:</strong> Našel jsi bug? Nahlaste ho do ticketu na Discordu nebo přes /report – poctivost odměňujeme diamantovými bloky!</li>
+              <li><strong>Odměna za poctivost:</strong> Našel jsi bug? Nahlaste ho do ticketu na Discordu nebo přes
+                /report – poctivost odměňujeme diamantovými bloky!</li>
               <li>Krytí duperů, braní dupovaných itemů a zamlčování chyb se trestá úplným wipem.</li>
             </ul>
           </div>
@@ -982,7 +1276,8 @@
             <span class="rule-category-chip">Světy & Ničení</span>
           </div>
           <h3 class="rule-title">Nové SMP (/smp): Boj a griefing je legální</h3>
-          <p class="rule-summary">Na novém SMP světě jsou přepady, pasti a ničení základen plnohodnotnou herní mechanikou.</p>
+          <p class="rule-summary">Na novém SMP světě jsou přepady, pasti a ničení základen plnohodnotnou herní
+            mechanikou.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
               <li>Můžeš ničit základny, stavět pasti, loupit suroviny a vést války s ostatními hráči.</li>
@@ -999,11 +1294,14 @@
             <span class="rule-category-chip">Světy & Ničení</span>
           </div>
           <h3 class="rule-title">Klasický Survival (/survival): Klid a stavění</h3>
-          <p class="rule-summary">Na klasickém Survivalu je ničení cizích staveb, krádeže a neoprávněné zasahování zakázáno.</p>
+          <p class="rule-summary">Na klasickém Survivalu je ničení cizích staveb, krádeže a neoprávněné zasahování
+            zakázáno.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
-              <li>Chraň své stavby zlatou lopatou nebo příkazem pro claim (/claim). Důvěru kamarádům udělíš přes /trust.</li>
-              <li>Ničení v těsné blízkosti cizích pozemků a krádeže nechráněných truhel se trestá banem a rollbackem.</li>
+              <li>Chraň své stavby zlatou lopatou nebo příkazem pro claim (/claim). Důvěru kamarádům udělíš přes /trust.
+              </li>
+              <li>Ničení v těsné blízkosti cizích pozemků a krádeže nechráněných truhel se trestá banem a rollbackem.
+              </li>
               <li>Chceme mít místo, kde můžeš v klidu stavět své vysněné stavitelské projekty.</li>
             </ul>
           </div>
@@ -1016,7 +1314,8 @@
             <span class="rule-category-chip">Světy & Ničení</span>
           </div>
           <h3 class="rule-title">Zákaz lag machin a přetěžování serveru</h3>
-          <p class="rule-summary">Stavění mechanismů, které úmyslně snižují TPS serveru nebo shazují spojení, je přísně zakázáno.</p>
+          <p class="rule-summary">Stavění mechanismů, které úmyslně snižují TPS serveru nebo shazují spojení, je přísně
+            zakázáno.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
               <li>Extrémní redstone hodiny bez vypínače, hromadné odpalování stovek TNT a spawner spam.</li>
@@ -1033,12 +1332,14 @@
             <span class="rule-category-chip">Chat & Komunita</span>
           </div>
           <h3 class="rule-title">Slušné chování, žádné vulgarity a šikana</h3>
-          <p class="rule-summary">Respektuj ostatní hráče. Udržujeme přátelskou atmosféru, kde se každý může cítit bezpečně.</p>
+          <p class="rule-summary">Respektuj ostatní hráče. Udržujeme přátelskou atmosféru, kde se každý může cítit
+            bezpečně.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
               <li>Zákaz hrubých vulgarismů, osobních útoků, šikany a provokací v herním chatu i na Discordu.</li>
               <li>Zákaz spamu, velkých písmen (CAPS-LOCK) a posílání nevhodného (NSFW) obsahu.</li>
-              <li><strong>Zákaz reklamy:</strong> Propagace cizích Minecraft serverů, Discordů či webů znamená okamžitý mute.</li>
+              <li><strong>Zákaz reklamy:</strong> Propagace cizích Minecraft serverů, Discordů či webů znamená okamžitý
+                mute.</li>
               <li>Žádosti o unban/unmute se řeší výhradně přes tickety na Discordu, ne v herním chatu.</li>
             </ul>
           </div>
@@ -1054,7 +1355,8 @@
           <p class="rule-summary">Přísný zákaz prodeje herních předmětů, měny či účtů za reálné koruny nebo eura.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
-              <li>Jakákoliv nabídka prodeje věcí za peníze (převod na účet, Paysafecard, krypto) je trestána trvalým banem.</li>
+              <li>Jakákoliv nabídka prodeje věcí za peníze (převod na účet, Paysafecard, krypto) je trestána trvalým
+                banem.</li>
               <li>Za bezpečnost svého herního účtu a hesla odpovídá každý hráč sám. Výmluvy na kamaráda neplatí.</li>
               <li>Sdílení přihlašovacích údajů s cizími lidmi je riskantní – chraň si svůj postup a inventář.</li>
             </ul>
@@ -1066,12 +1368,17 @@
       <div class="rules-quiz-container" id="rules-quiz">
         <div class="rules-quiz-header">
           <div class="rules-quiz-badge-pro">
-            <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+              stroke-width="2.5">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
             <span>HERNÍ SITUAČNÍ TEST ZE SERVERU</span>
           </div>
           <h3 class="rules-quiz-title">Znáš pravidla v reálných situacích ze hry?</h3>
           <p class="rules-quiz-subtitle">
-            Žádná suchá teorie. Tady tě čekají <strong>4 náhodně vylosované situace</strong> z reálného hraní na MYCHAL SMP. Zvládneš je vyřešit bez jediné chyby?
+            Žádná suchá teorie. Tady tě čekají <strong>4 náhodně vylosované situace</strong> z reálného hraní na MYCHAL
+            SMP. Zvládneš je vyřešit bez jediné chyby?
           </p>
 
           <div class="rules-quiz-controls-row">
@@ -1080,8 +1387,14 @@
             </div>
             <div class="rules-quiz-meta-info">
               <span class="rules-quiz-counter" id="rules-quiz-counter">Vyřešeno 0 ze 4 situací</span>
-              <button class="btn-refresh-quiz" type="button" onclick="resetAndShuffleQuiz()" title="Vylosovat jiné náhodné otázky">
-                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              <button class="btn-refresh-quiz" type="button" onclick="resetAndShuffleQuiz()"
+                title="Vylosovat jiné náhodné otázky">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
+                  <polyline points="23 4 23 10 17 10" />
+                  <polyline points="1 20 1 14 7 14" />
+                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                </svg>
                 <span>Vylosovat jiné situace 🎲</span>
               </button>
             </div>
@@ -1098,7 +1411,11 @@
         <!-- Quiz Completion Banner -->
         <div class="quiz-success-card" id="quiz-success-card" style="display: none;">
           <div class="quiz-success-badge">
-            <svg class="ui-icon-svg ui-icon-svg--lg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="16 9 10 15 8 13"/></svg>
+            <svg class="ui-icon-svg ui-icon-svg--lg" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+              stroke-width="2.5">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="16 9 10 15 8 13" />
+            </svg>
           </div>
           <h4 class="quiz-success-title">Skvělá práce! Jsi oficiálně prověřený hráč</h4>
           <p class="quiz-success-desc" id="quiz-success-desc">
@@ -1106,11 +1423,18 @@
           </p>
           <div class="quiz-success-actions">
             <button class="btn-primary" onclick="copyIP(event)">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
               <span>Zkopírovat IP mychalsmp.xyz</span>
             </button>
             <button class="btn-secondary" type="button" onclick="resetAndShuffleQuiz()">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10" />
+                <polyline points="1 20 1 14 7 14" />
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+              </svg>
               <span>Vyzkoušet další náhodné situace 🎲</span>
             </button>
             <button class="btn-secondary" onclick="showTab('join')">
@@ -1129,7 +1453,8 @@
           </div>
           <h3>Chovej se k ostatním tak, jak chceš, aby se oni chovali k tobě</h3>
           <p>
-            Respekt, fair-play a vzájemná zábava – to je základ MYCHAL SMP. Pokud si nejsi něčím jistý, zeptej se moderátorů na Discordu nebo přímo ve hře.
+            Respekt, fair-play a vzájemná zábava – to je základ MYCHAL SMP. Pokud si nejsi něčím jistý, zeptej se
+            moderátorů na Discordu nebo přímo ve hře.
           </p>
         </div>
         <div class="rules-footer-right">
@@ -1149,12 +1474,18 @@
       <!-- Header -->
       <div class="modtest-header">
         <div class="modtest-badge-classified">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
           <span>CLASSIFIED • INTERNÍ MODERÁTORSKÝ TEST</span>
         </div>
         <h2 class="modtest-title">Zkouška nervů a psychické odolnosti</h2>
         <p class="modtest-subtitle">
-          Tento test není pro každého. Čeká tě <strong>20 reálných situací</strong> z prostředí MYCHAL SMP – od sabotáží a zneužití chyb přes X-Ray podvody a falešné screenshoty, až po výhrůžky a noční tickety ve 3 ráno. Zvládneš zachovat chladnou hlavu?
+          Tento test není pro každého. Čeká tě <strong>20 reálných situací</strong> z prostředí MYCHAL SMP – od sabotáží
+          a zneužití chyb přes X-Ray podvody a falešné screenshoty, až po výhrůžky a noční tickety ve 3 ráno. Zvládneš
+          zachovat chladnou hlavu?
         </p>
 
         <!-- Phase Stepper -->
@@ -1184,7 +1515,9 @@
       <!-- Applicant Form (Step 4: After completing all 16 questions) -->
       <div class="modtest-form-card" id="modtest-applicant-form" style="display: none;">
         <div class="rules-quiz-badge-pro">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
           <span>TEST DOKONČEN • OVĚŘENÍ ŽADATELE</span>
         </div>
         <h3 class="modtest-title" style="font-size: 1.8rem;">Kdo za tímto výkonem stojí?</h3>
@@ -1196,17 +1529,22 @@
           <div class="modtest-form-grid">
             <div class="modtest-input-group">
               <label class="modtest-label" for="modtest-nick">Tvůj Minecraft Nick</label>
-              <input type="text" id="modtest-nick" class="modtest-input" placeholder="např. MychalVidea" required autocomplete="off" />
+              <input type="text" id="modtest-nick" class="modtest-input" placeholder="např. MychalVidea" required
+                autocomplete="off" />
             </div>
             <div class="modtest-input-group">
               <label class="modtest-label" for="modtest-discord">Tvůj Discord Nick / Tag</label>
-              <input type="text" id="modtest-discord" class="modtest-input" placeholder="např. mychal_dev" required autocomplete="off" />
+              <input type="text" id="modtest-discord" class="modtest-input" placeholder="např. mychal_dev" required
+                autocomplete="off" />
             </div>
           </div>
 
           <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
             <button type="submit" class="btn-primary" id="btn-submit-modtest">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
               <span>Vyhodnotit & Odeslat přihlášku</span>
             </button>
             <button type="button" class="btn-secondary" onclick="restartModTest()">
@@ -1219,7 +1557,10 @@
       <!-- Certificate Result Card -->
       <div class="modtest-certificate-card" id="modtest-certificate-card" style="display: none;">
         <div class="modtest-cert-badge" id="modtest-cert-badge">
-          <svg class="ui-icon-svg ui-icon-svg--lg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--lg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
         </div>
         <h3 class="modtest-cert-title" id="modtest-cert-title">Oficiální vyhodnocení způsobilosti</h3>
         <div class="modtest-cert-rank" id="modtest-cert-rank">PROVĚŘENÝ MODERÁTOR S NERVY Z OCELI</div>
@@ -1244,14 +1585,17 @@
 
         <div class="modtest-copy-box">
           <span id="modtest-cert-code">MYCHAL-MOD-SEC-VERIFIED-...</span>
-          <button type="button" class="btn-copy-code" onclick="copyModTestResult()" style="background: rgba(255,255,255,0.1); border:none; color:#fff; padding:6px 12px; border-radius:6px; cursor:pointer;">
+          <button type="button" class="btn-copy-code" onclick="copyModTestResult()"
+            style="background: rgba(255,255,255,0.1); border:none; color:#fff; padding:6px 12px; border-radius:6px; cursor:pointer;">
             Kopírovat kód
           </button>
         </div>
 
         <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
           <a href="https://discord.gg/HwZUGWGVD9" target="_blank" rel="noopener" class="btn-primary">
-            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
             <span>Přejít na Discord ticket</span>
           </a>
           <button type="button" class="btn-secondary" onclick="restartModTest()">
@@ -1277,7 +1621,8 @@
             Hraj naplno s výhodami <span class="smp-text-blue">SMP</span><span class="smp-text-gold">+</span>
           </h1>
           <p class="smp-hero-subtitle">
-            Žádné Pay-to-Win prvky kazící hru ostatním. SMP+ je navrženo pro maximální komfort, bezpečí pro tvé cennosti, bleskové cestování a stylový status v komunitě.
+            Žádné Pay-to-Win prvky kazící hru ostatním. SMP+ je navrženo pro maximální komfort, bezpečí pro tvé
+            cennosti, bleskové cestování a stylový status v komunitě.
           </p>
 
           <!-- Curated 4-Pillar Value Grid -->
@@ -1286,59 +1631,82 @@
             <div class="smp-showcase-card">
               <div class="smp-sc-head">
                 <div class="smp-sc-icon-box text-blue">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><circle cx="12" cy="14" r="2"/></svg>
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="16" rx="2" />
+                    <path d="M3 10h18" />
+                    <circle cx="12" cy="14" r="2" />
+                  </svg>
                 </div>
                 <span class="smp-badge-tag smp-badge-tag--green">+100% místa</span>
               </div>
               <h4>2x větší Ender Truhla (54 slotů)</h4>
-              <p>Plných 6 řádků kapacity. Při vypršení se věci nikdy neztratí – automaticky se přesunou do tvého Trezoru v <code>/ah</code>.</p>
+              <p>Plných 6 řádků kapacity. Při vypršení se věci nikdy neztratí – automaticky se přesunou do tvého Trezoru
+                v <code>/ah</code>.</p>
             </div>
 
             <!-- Feature 2: Instant Warps -->
             <div class="smp-showcase-card">
               <div class="smp-sc-head">
                 <div class="smp-sc-icon-box text-gold">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
                 </div>
                 <span class="smp-badge-tag smp-badge-tag--blue">Bez čekání</span>
               </div>
               <h4>Instantní /back a 3s teleporty</h4>
-              <p>Příkaz <code>/back</code> tě vrátí přímo na místo smrti okamžitě bez čekání. Zkrácený 3s odpočet na <code>/home</code>, <code>/rtp</code> a <code>/tpa</code>.</p>
+              <p>Příkaz <code>/back</code> tě vrátí přímo na místo smrti okamžitě bez čekání. Zkrácený 3s odpočet na
+                <code>/home</code>, <code>/rtp</code> a <code>/tpa</code>.</p>
             </div>
 
             <!-- Feature 3: Custom Nickname Color -->
             <div class="smp-showcase-card">
               <div class="smp-sc-head">
                 <div class="smp-sc-icon-box text-purple">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="4" />
+                  </svg>
                 </div>
                 <span class="smp-badge-tag smp-badge-tag--gold">Stylový nick</span>
               </div>
               <h4>24 prémiových barev jména (/cc)</h4>
-              <p>Změň si barvu jména v chatu i tablistu. Modrý symbol <code>+</code> přímo před tvým nickem (<code>+Nick</code>) ti dodá prestiž.</p>
+              <p>Změň si barvu jména v chatu i tablistu. Modrý symbol <code>+</code> přímo před tvým nickem
+                (<code>+Nick</code>) ti dodá prestiž.</p>
             </div>
 
             <!-- Feature 4: Sethome & Bed Colors -->
             <div class="smp-showcase-card">
               <div class="smp-sc-head">
                 <div class="smp-sc-icon-box text-green">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg>
                 </div>
                 <span class="smp-badge-tag smp-badge-tag--blue">Dvojnásobek</span>
               </div>
               <h4>14 domovů a barvy v /homes</h4>
-              <p>Až 14 uložených lokací (<code>/sethome</code>) pro základny i farmy. V herním menu si navíc přizpůsob barvu postele pro každý domov.</p>
+              <p>Až 14 uložených lokací (<code>/sethome</code>) pro základny i farmy. V herním menu si navíc přizpůsob
+                barvu postele pro každý domov.</p>
             </div>
           </div>
 
           <!-- Fairness Guarantee Banner -->
           <div class="smp-fairness-banner">
             <div class="smp-fairness-icon">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
             </div>
             <div class="smp-fairness-text">
               <strong>Férový přístup bez Pay-to-Win:</strong>
-              <span>Všechny výhody jsou zaměřené na pohodlí a styl. Žádný hráč nezíská nezranitelnost ani neférovou sílu v PvP boji proti ostatním.</span>
+              <span>Všechny výhody jsou zaměřené na pohodlí a styl. Žádný hráč nezíská nezranitelnost ani neférovou sílu
+                v PvP boji proti ostatním.</span>
             </div>
           </div>
         </div>
@@ -1409,7 +1777,8 @@
 
               <!-- Interactive /cc Color Picker in Preview Box -->
               <div class="smp-preview-cc-bar">
-                <span class="smp-preview-cc-title"><i class="fa-solid fa-palette"></i> Vyzkoušej barvu jména (/cc):</span>
+                <span class="smp-preview-cc-title"><i class="fa-solid fa-palette"></i> Vyzkoušej barvu jména
+                  (/cc):</span>
                 <div class="smp-preview-cc-swatches">
                   <span class="smp-swatch active" style="--swatch:#ffffff;"
                     onclick="setPreviewNickColor('#ffffff', this)" title="Bílá (Výchozí)"></span>
@@ -1533,7 +1902,11 @@
             <tr>
               <th class="col-feature">Herní funkce</th>
               <th class="col-free">Hráč bez ranku</th>
-              <th class="col-plus">SMP+ Člen <svg class="ui-icon-svg" style="width:16px;height:16px;vertical-align:-2px;color:#f59e0b;" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg></th>
+              <th class="col-plus">SMP+ Člen <svg class="ui-icon-svg"
+                  style="width:16px;height:16px;vertical-align:-2px;color:#f59e0b;" viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z" />
+                </svg></th>
             </tr>
           </thead>
           <tbody>
@@ -2837,7 +3210,9 @@
                 kanálech tvůrce. V případě zjištění neaktivity po dobu delší než 30 dní a vyčerpání ochranné lhůty
                 (streak protection) je Media rank automaticky navržen k odebrání.</li>
               <li><strong>Zákaz zneužívání chyb:</strong> Nalezené technické chyby v mapě nebo pluginech je hráč povinen
-                neprodleně nahlásit do ticketu na Discordu, do hlášení chyb na webu SMP (https://mychalsmp.xyz/#bugs) nebo pomocí příkazu /report přímo ve hře. Záměrné zneužití, šíření či přechovávání nelegálně získaných předmětů pro vlastní obohacení se trestá trvalým banem a smazáním inventáře.</li>
+                neprodleně nahlásit do ticketu na Discordu, do hlášení chyb na webu SMP (https://mychalsmp.xyz/#bugs)
+                nebo pomocí příkazu /report přímo ve hře. Záměrné zneužití, šíření či přechovávání nelegálně získaných
+                předmětů pro vlastní obohacení se trestá trvalým banem a smazáním inventáře.</li>
               <li><strong>Zákaz IRL obchodování:</strong> Je zakázán jakýkoliv prodej herních předmětů, měny či účtů za
                 reálné peníze mimo oficiální herní obchod.</li>
               <li><strong>Transparentní moderace obsahu a asistence AI (Digital Services Act a EU AI Act):</strong>
@@ -3082,19 +3457,43 @@
       </div>
       <div class="footer-links">
         <button onclick="showTab('bugs')" class="footer-link-btn">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="14" x="8" y="6" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 19-3-2"/><path d="m5 19 3-2"/><path d="M20 13h-4"/><path d="M4 13h4"/><path d="m10 4 1 2"/><path d="m14 4-1 2"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="8" height="14" x="8" y="6" rx="4" />
+            <path d="m19 7-3 2" />
+            <path d="m5 7 3 2" />
+            <path d="m19 19-3-2" />
+            <path d="m5 19 3-2" />
+            <path d="M20 13h-4" />
+            <path d="M4 13h4" />
+            <path d="m10 4 1 2" />
+            <path d="m14 4-1 2" />
+          </svg>
           <span>Nahlásit bug</span>
         </button>
         <button onclick="showTab('rules')" class="footer-link-btn">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
           <span>Pravidla</span>
         </button>
         <button onclick="showTab('smp-plus')" class="footer-link-btn">
-          <svg class="ui-icon-svg ui-icon-svg--sm ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor"><path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2 19h20v2H2zM3 5l4.5 6L12 3l4.5 8L21 5v12H3z" />
+          </svg>
           <span>SMP+</span>
         </button>
         <button onclick="showTab('media')" class="footer-link-btn">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="23 7 16 12 23 17 23 7" />
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+          </svg>
           <span>Media</span>
         </button>
         <button onclick="showTab('privacy')" class="footer-link-btn"><i class="fa-solid fa-shield-halved"></i> Ochrana
@@ -3148,7 +3547,12 @@
     <div class="idea-modal-content">
       <div class="idea-modal-header">
         <h3>
-          <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"/></svg>
+          <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6" />
+            <path d="M10 22h4" />
+            <path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z" />
+          </svg>
           <span>Přidat nový nápad</span>
         </h3>
         <button class="idea-modal-close" onclick="closeIdeaModal()">&times;</button>
@@ -3173,23 +3577,36 @@
     <div class="idea-modal-content">
       <div class="idea-modal-header">
         <h3 style="display: flex; align-items: center; gap: 8px;">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
           <span style="color: #f8fafc;">Zamítnout nápad</span>
         </h3>
         <button class="idea-modal-close" onclick="closeRejectIdeaModal()">&times;</button>
       </div>
       <div class="idea-modal-body">
-        <p class="idea-modal-sub">Zadej důvod zamítnutí nápadu. Tento důvod bude automaticky odeslán autorovi nápadu do soukromé zprávy (DM) na Discordu.</p>
-        <textarea id="idea-reject-reason" class="idea-textarea" placeholder="Např. Tento nápad bohužel nezapadá do plánů serveru..." maxlength="500"></textarea>
+        <p class="idea-modal-sub">Zadej důvod zamítnutí nápadu. Tento důvod bude automaticky odeslán autorovi nápadu do
+          soukromé zprávy (DM) na Discordu.</p>
+        <textarea id="idea-reject-reason" class="idea-textarea"
+          placeholder="Např. Tento nápad bohužel nezapadá do plánů serveru..." maxlength="500"></textarea>
       </div>
       <div class="idea-modal-footer">
         <button class="btn btn-secondary" onclick="closeRejectIdeaModal()">Zrušit</button>
-        <button class="btn" id="btn-confirm-reject-idea" onclick="confirmRejectIdea()" style="background: #f51515; color: #ffffff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;"><svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Zamítnout a poslat DM</button>
+        <button class="btn" id="btn-confirm-reject-idea" onclick="confirmRejectIdea()"
+          style="background: #f51515; color: #ffffff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;"><svg
+            class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg> Zamítnout a poslat DM</button>
       </div>
     </div>
   </div>
 
-  <script src="script.js?v=20260922_v1"></script>
+  <script src="script.js?v=20260924_v1"></script>
 </body>
 
 </html>

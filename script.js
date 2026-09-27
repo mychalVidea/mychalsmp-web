@@ -3345,15 +3345,15 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'Kámoš ti na serveru hodil 3 shulker boxy plné netherite bloků se slovy: „Rychle si to schovej do své ender truhly a nikomu nic neříkej, našel jsem nový dupe glitch.“ Co uděláš?',
     options: [
       {
-        text: 'Schovám si je do své ender truhly, protože co je v ender chestce, to admini v logách nevidí.',
+        text: 'Věci v tichosti spálím v lávě a nikomu nic hlásit nebudu, abych do situace nebyl zatažen a vyhnul se jakémukoliv vyšetřování.',
         isCorrect: false
       },
       {
-        text: 'Okamžitě vytvořím ticket na Discordu nebo napíšu /report s nickem kamaráda a věci odevzdám. Přechovávání dupnutých itemů je spolupachatelství a hrozí ban i wipe inventáře.',
+        text: 'Okamžitě vytvořím ticket na Discordu nebo napíšu /report s nickem kamaráda a věci odevzdám, protože přechovávání dupu je trestné.',
         isCorrect: true
       },
       {
-        text: 'Itemy si nechám a hned je rozprodám v /shopu nebo ostatním hráčům za herní coiny, abych nebyl podezřelý.',
+        text: 'Věci si uložím do soukromého claimu a počkám, zda kamarád dostane ban; pokud systém nic nezachytí, suroviny si ponechám pro stavbu.',
         isCorrect: false
       }
     ],
@@ -3366,16 +3366,16 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'Hraješ na SMP světě (/smp). Cizí klan ti pomocí TNT kanónů prorazil hradby, vyhodil základnu do povětří, zničil truhly a pobil tvůj tým. Jaká je správná reakce?',
     options: [
       {
-        text: 'Začnu v globálním chatu psát vulgární nadávky na jejich rodiny a spamovat administrátory.',
+        text: 'Otevřu ticket na Discordu s žádostí o prověření griefingu a vrácení zničených truhel administrátory, protože ničení základen je zakázané.',
         isCorrect: false
       },
       {
-        text: 'Otevřu na Discordu ticket a budu požadovat zabanování útočníků a vrácení odpálených truhel administrátory.',
-        isCorrect: false
-      },
-      {
-        text: 'Je to plně v rámci pravidel – na novém SMP světě (/smp) jsou přepady, pasti a ničení cizích základen legální herní mechanikou. Zabezpečím bázi lépe a naplánuji pomstu ve hře.',
+        text: 'Je to plně v rámci pravidel – na SMP světě (/smp) jsou přepady i ničení bází povoleny. Zabezpečím stavbu lépe a naplánuji herní odvetu.',
         isCorrect: true
+      },
+      {
+        text: 'Nahlásím útočníky za neoprávněné použití TNT v blízkosti cizí stavby a budu po vedení požadovat kompenzaci ztracených netherite věcí.',
+        isCorrect: false
       }
     ],
     explanation: 'Přesně tak! SMP svět (/smp) je stvořený pro volný boj, přepady klanů a ničení bází. Pokud preferuješ klid a ochranu staveb, stačí se přepnout na klasický Survival svět (/survival).',
@@ -3387,15 +3387,15 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'Na Survival světě (/survival) prozkoumáváš krajinu a narazíš na cizí rozestavěný dům. Truhly nejsou v claimu a nejsou uzamčené. Smíš je vybrat a suroviny si odnést?',
     options: [
       {
-        text: 'Ne! Na Survival světě je krádež i ničení cizích staveb zakázáno bez ohledu na to, zda má hráč vytvořený claim. Všechny interakce navíc zaznamenávají logy serveru.',
-        isCorrect: true
-      },
-      {
-        text: 'Ano, pokud si majitel nevytvořil claim, je to jeho chyba a všechno v truhlách je volná kořist pro každého.',
+        text: 'Ano, pokud majitel neochránil své území claimem ani truhlu nezamkl, jedná se o volně ležící kořist, kterou si může kdokoliv vzít.',
         isCorrect: false
       },
       {
-        text: 'Smím si vzít jen diamanty a cenné rudy, stavební bloky tam musím nechat.',
+        text: 'Ne, na Survival světě je krádež i ničení cizích staveb zakázáno bez ohledu na to, zda má hráč vytvořený claim. Všechny akce logujeme.',
+        isCorrect: true
+      },
+      {
+        text: 'Smím si vzít pouze část surovin potřebných pro přežití a stavební bloky musím na místě nechat, aby stavba nebyla kompletně vybrána.',
         isCorrect: false
       }
     ],
@@ -3408,15 +3408,15 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'Hráč ti do soukromé zprávy (/msg) napíše: „Dám ti kód na 200 Kč Paysafecard, když mi ve hře dáš svůj full netherite gear a 50 000 coinů.“ Jak zareaguješ?',
     options: [
       {
-        text: 'Odmítnu a hráče nahlásím adminům se screenshotem zprávy. IRL obchod (prodej herních věcí za reálné peníze) je přísně zakázán a trestá se perma banem pro obě strany.',
-        isCorrect: true
-      },
-      {
-        text: 'Nabídku hned přijmu, skutečné peníze za virtuální herní itemy jsou přece super obchod.',
+        text: 'Nabídku přijmu pouze v případě, že mi hráč kód pošle jako první na Discord a unban riziko tím přejde kompletně na jeho stranu účtu.',
         isCorrect: false
       },
       {
-        text: 'Napíšu mu, ať mi pošle Paysafecard kód jako první, abych měl jistotu, že mě neokrade.',
+        text: 'Odmítnu a hráče nahlásím adminům se screenshotem zprávy. Obchod za reálné peníze (IRL trade) je přísně zakázán pod trestem perma banu.',
+        isCorrect: true
+      },
+      {
+        text: 'Není to zakázané, pokud obchod probíhá přes soukromé zprávy a nevytváří se zbytečný spam v hlavním veřejném chatu celého serveru.',
         isCorrect: false
       }
     ],
@@ -3429,15 +3429,15 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'Kamarád tvrdí: „Když si dáš průhledný X-Ray texture pack místo hack klienta, anticheat to nepozná, protože textury jsou čistě na straně klienta.“ Má pravdu?',
     options: [
       {
-        text: 'Ano, anticheat kontroluje jen nepovolené mody a pakety, textury odhalit neumí.',
+        text: 'Má pravdu, anticheat zachytává pouze injektované modifikace klienta a odesílané síťové pakety, samotné textury server nekontroluje.',
         isCorrect: false
       },
       {
-        text: 'Nemá pravdu! Anticheat a heuristické filtry sledují poměr těženého kamene k rudám, trajektorie chůze i přímé kopání k rudám. Následuje tempban na 20 dní dle sazebníku SMPAC a zabavení surovin.',
+        text: 'Nemá pravdu, anticheat i heuristika těžby spolehlivě odhalí nepřirozené trajektorie i poměry rud. Trestem je 20denní ban a zabavení věcí.',
         isCorrect: true
       },
       {
-        text: 'Texture pack je povolený, pokud s ním hráč těží pouze uhlí a železo pro stavbu.',
+        text: 'Textury jsou tolerovány na těžbu základních surovin jako je uhlí a železo, zakázané jsou pouze při cíleném vyhledávání netheritu.',
         isCorrect: false
       }
     ],
@@ -3450,15 +3450,15 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'Postavil jsi obří létající redstone stroj se 400 písty a sleduješ, že po jeho spuštění kleslo TPS celého serveru z 20 na 5. Co je tvou povinností udělat?',
     options: [
       {
-        text: 'Nechám ho běžet dál, protože jsem si aktivoval SMP+ a mám právo využívat server na maximum.',
+        text: 'Stroj mohu nechat v chodu mimo špičku, pokud na serveru hraje méně než deset hráčů a nikoho to při běžném těžení zásadně neomezuje.',
         isCorrect: false
       },
       {
-        text: 'Stroj okamžitě zastavím a upravím nebo zmenším. Vědomé i nedbalostní přetěžování serveru a shazování TPS je zakázáno.',
+        text: 'Stroj okamžitě zastavím a upravím nebo zmenším. Vědomé i nedbalostní přetěžování serveru a shazování TPS je přísně zakázáno pravidly.',
         isCorrect: true
       },
       {
-        text: 'Postavím kolem stroje vysokou obsidiánovou zeď, aby si admini nevšimli, kde lag mašina běží.',
+        text: 'Zpomalím interval spouštění o pár sekund a počkám, zda mě administrátoři sami kontaktují, abych nemusel celý systém zbytečně bourat.',
         isCorrect: false
       }
     ],
@@ -3471,15 +3471,15 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'Dostal jsi od moderátora 2hodinový Mute za urážky v globálním chatu. Můžeš se připojit z bratrova účtu nebo psát hráčům přejmenováváním věcí v kovadlině?',
     options: [
       {
-        text: 'Ano, mute je na konkrétní nick, takže jiný účet je v naprostém pořádku.',
+        text: 'Ano, mute postihuje pouze konkrétní uživatelské jméno a zákaz se nevztahuje na alternativní účty ani na herní předměty jako knihy.',
         isCorrect: false
       },
       {
-        text: 'V žádném případě! Jakékoliv obcházení trestu (alt účty, cedulky, knihy, kovadliny) vede k okamžitému přísnému trestu – 60dennímu banu (/punish obchazeni) na IP i propojené účty.',
+        text: 'V žádném případě! Jakékoliv obcházení trestu přes alt účty, cedulky či kovadliny je přísně zakázáno a trestá se 60denním banem.',
         isCorrect: true
       },
       {
-        text: 'Můžu psát zprávy házením přejmenovaných mečů na zem, protože to není chatovací zpráva.',
+        text: 'Přejmenování itemů v kovadlině je povolené, pokud text neobsahuje vulgarismy a slouží výhradně k domluvě na obchodu v /shopu.',
         isCorrect: false
       }
     ],
@@ -3492,15 +3492,15 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'Chceš si natočit cinematic video své nové báze s volnou kamerou přes Replay Mod. Jaká pravidla pro tento mod platí?',
     options: [
       {
-        text: 'Replay Mod je povolen výhradně pro schválené tvůrce s Media rankem. Běžní hráči jej nesmí mít aktivní, aby nedocházelo ke zneužití volné kamery jako Freecamu.',
-        isCorrect: true
-      },
-      {
-        text: 'Replay mod může mít libovolný hráč a používat volnou kameru i k prohlížení cizích podzemních základen.',
+        text: 'Replay Mod je povolen pro všechny běžné hráče za podmínky, že volnou kameru nevyužívají ke špehování podzemí a cizích základen.',
         isCorrect: false
       },
       {
-        text: 'Replay mod je celkově zakázán i pro ověřené YouTubery a oficiální tvůrce.',
+        text: 'Replay Mod je povolen výhradně pro schválené tvůrce s Media rankem. Běžní hráči jej nesmí mít aktivní kvůli riziku zneužití na Freecam.',
+        isCorrect: true
+      },
+      {
+        text: 'Replay Mod je na celém serveru kompletně zablokován a nesmí jej používat ani oficiální ověření partneři s vyšší hodností Media.',
         isCorrect: false
       }
     ],
@@ -3513,15 +3513,15 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'V herním /shopu narazíš na chybu: při rychlém nákupu určitého itemu ti server neodečte peníze, ale naopak ti přičte $500 na konto. Jak se zachováš?',
     options: [
       {
-        text: 'Budu klikat hodinu v kuse, nakoupím si maxované netherite sety a zbytek coinů převedu kamarádovi.',
+        text: 'Chybu využiji k vydělání menší částky na nákup základního vybavení a teprve poté situaci soukromě oznámím týmu na Discordu.',
         isCorrect: false
       },
       {
-        text: 'Chybu ihned přestanu využívat a nahlásím ji do ticketu na Discordu. Získám odměnu v diamantových blocích a ochráním ekonomiku serveru před znehodnocením.',
+        text: 'Chybu ihned přestanu využívat a nahlásím ji do ticketu na Discordu. Získám odměnu v diamantových blocích a ochráním ekonomiku.',
         isCorrect: true
       },
       {
-        text: 'Napíšu to do globálního chatu, ať si všichni stihnou naklikat peníze, než to admini stihnou opravit.',
+        text: 'Nakoupím itemy do zásoby pro celý svůj tým a peníze převedu na týmový účet, aby nebyly dohledatelné v mém osobním zůstatku.',
         isCorrect: false
       }
     ],
@@ -3534,15 +3534,15 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'Hráč ti do soukromé zprávy (/msg) zašle pozvánku na jiný Minecraft server: „Pojď k nám na server, rozdáváme VIP zdarma a máme lepší Survival.“ Co o této situaci platí?',
     options: [
       {
-        text: 'V soukromých zprávách (/msg) je posílání pozvánek na cizí servery v pořádku, zakázané je to jen v globálním chatu.',
+        text: 'Pozvánky v soukromých zprávách jsou povolené, pokud hráč neposílá odkazy opakovaně a neobtěžuje tím více než jednoho člověka.',
         isCorrect: false
       },
       {
-        text: 'Reklama na cizí servery a projekty v jakékoliv formě (veřejný chat, /msg, knihy, cedulky) je přísně zakázána a v sazebníku SMPAC se trestá okamžitým 12hodinovým mutem (/punish reklama), při opakování banem.',
+        text: 'Reklama na cizí servery v jakékoliv formě včetně /msg je přísně zakázána a v sazebníku se trestá 12h mutem a při opakování banem.',
         isCorrect: true
       },
       {
-        text: 'Reklama je zakázána jen tehdy, pokud obsahuje vulgární slova.',
+        text: 'Reklama se trestá pouze tehdy, pokud je v ní uveden přímý IP port nebo odkaz na web, pouhé zmínění názvu jiného serveru nevadí.',
         isCorrect: false
       }
     ],
@@ -3555,15 +3555,15 @@ const RULES_QUIZ_SCENARIOS = [
     question: 'Můžeš na serveru používat Xaero\'s Minimap nebo JourneyMap, pokud si v nastavení modu vypneš radar na jeskyně, rudy a ostatní hráče?',
     options: [
       {
-        text: 'Ano, základní minimapa zobrazující pouze povrch s waypointy je povolená.',
+        text: 'Ano, pokud v konfiguračním souboru deaktivuješ zobrazení entit a jeskynního systému, čistá povrchová mapa je plně povolená.',
         isCorrect: false
       },
       {
-        text: 'Ne! Veškeré minimapy (včetně Xaero\'s Minimap, JourneyMap a jiných) i vestavěné waypoint mody jsou na MYCHAL SMP přísně zakázány bez výjimky.',
+        text: 'Ne, veškeré minimapy i vestavěné waypoint mody jsou na MYCHAL SMP přísně zakázány bez výjimky. Hráči se orientují dle F3 souřadnic.',
         isCorrect: true
       },
       {
-        text: 'Minimapa je povolená pouze na Survival světě, ale na SMP světě se musí vypnout.',
+        text: 'Minimapa je povolená pouze v těžebním světě pro snazší návrat k portálu, na hlavním SMP a Survival světě však musí být vypnutá.',
         isCorrect: false
       }
     ],
@@ -3761,15 +3761,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč byl zachycen při **zneužití bezpečnostní chyby ještě před přihlášením** přes /login – neoprávněně získal polohu soukromé základny s cílem provést masivní destrukci. **Jaký trest a postup uplatníš?**',
     options: [
       {
-        text: 'Dát mu ban na 1 hodinu, protože v momentě činu ještě nebyl plně přihlášen přes /login.',
+        text: 'Udělit dočasný ban na 14 dní za nesportovní chování a nařídit hráči přesunout se minimálně 5 000 bloků od pozice vedení.',
         isCorrect: false
       },
       {
-        text: 'Okamžitý trvalý IP & UUID BAN za kritický exploit a pokus o sabotáž serveru + nahlásit bezpečnostní incident vedení.',
+        text: 'Okamžitý trvalý IP a UUID ban za kritický exploit a pokus o sabotáž serveru + neprodleně nahlásit bezpečnostní incident vedení.',
         isCorrect: true
       },
       {
-        text: 'Ignorovat to, protože situace nastala před zadáním přihlašovacího příkazu.',
+        text: 'Případ předat k prověření majiteli bez okamžitého trestu, jelikož k samotnému vniknutí ani destrukci bloků zatím fyzicky nedošlo.',
         isCorrect: false
       }
     ],
@@ -3783,15 +3783,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč v chatu argumentuje: „Mám nainstalovaný **Xaero\'s Minimap**, ale **radar na hráče a jeskyně mám v nastavení vypnutý**! Mám tam jen body a terén, to je přece v pohodě!“. Jak zní striktní pravidlo MYCHAL SMP?',
     options: [
       {
-        text: 'Pokud je radar vypnutý, minimapa je tolerována pro orientaci v krajině.',
+        text: 'Pokud má hráč vypnutý radar a v ticketu doloží snímek nastavení modu, minimapa je výjimečně tolerována pouze pro orientaci.',
         isCorrect: false
       },
       {
-        text: 'Ne! Veškeré minimapy (včetně Xaero\'s Minimap, JourneyMap a jiných) i vestavěné waypoint mody jsou na MYCHAL SMP přísně zakázány bez výjimky.',
+        text: 'Veškeré minimapy i waypoint mody jsou na MYCHAL SMP přísně zakázány bez výjimky. Hráč je vyzván k okamžitému smazání modu z klienta.',
         isCorrect: true
       },
       {
-        text: 'Minimapa je povolená pouze na Survival světě, ale na SMP světě se musí vypnout.',
+        text: 'Minimapa je zakázaná na novém SMP světě kvůli PvP, ale na klidném Survival světě ji hráči mohou mít se souhlasem moderátora.',
         isCorrect: false
       }
     ],
@@ -3805,15 +3805,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: '**SMP+ sponzor** si postavil obří hrad na světě **/smp**. Konkurenční klan mu hrad **legálně** odpálil TNT děly. Hráč v ticketu zuří: „Okamžitě mi vraťte věci a zabanujte je, jinak otevřu spor na PayPalu a dám serveru **chargeback**!“. Co uděláš?',
     options: [
       {
-        text: 'Vrátit mu suroviny z Creative módu, aby se předešlo platebnímu sporu na Tebexu.',
+        text: 'Vrátit hráči část ztracených netherite surovin z administrátorských zásob, aby se předešlo platebnímu sporu na platební bráně.',
         isCorrect: false
       },
       {
-        text: 'Zabanovat útočící klan za ničení cizích staveb na serveru.',
+        text: 'Útočící klan dočasně zablokovat na 7 dní pro porušení fair-play pravidel za použití nepřiměřeného množství TNT děl na stavbu.',
         isCorrect: false
       },
       {
-        text: 'Klidně vysvětlit, že na /smp je raidování a ničení bází povolené. Věci se nevrací a výhrůžka chargebackem je důvodem k trvalému zablokování účtu.',
+        text: 'Vysvětlit, že na /smp je raid povolen a suroviny se nevrací. Výhrůžka chargebackem je důvodem k okamžitému trvalému banu účtu.',
         isCorrect: true
       }
     ],
@@ -3827,15 +3827,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Při kontrole databáze inventářů narazíš na nováčka, který má ve skrýši **8 shulker boxů plných Netherite Blocků**. Tvrdí: *„Já jsem nic neduplikoval, našel jsem je položené pod břízou v lese, přísahám!“*. **Jak s tím naložíš?**',
     options: [
       {
-        text: 'Předměty mu nechat, protože princip nálezného v lese není v pravidlech explicitně zakázán.',
+        text: 'Suroviny hráči ponechat, pokud logy nepotvrdí přímé použití dupe glitchu na jeho herním účtu, a pouze zvýšit jeho dohled.',
         isCorrect: false
       },
       {
-        text: 'Předměty okamžitě zkonfiskovat a smazat. Hráče zabanovat za přechovávání a krytí duplikovaných surovin a prověřit logy kontejnerů.',
+        text: 'Předměty okamžitě zkonfiskovat a smazat. Hráče zabanovat za přechovávání nelegálních surovin a prověřit logy přesunů v databázi.',
         isCorrect: true
       },
       {
-        text: 'Dva shulkery zabavit na odměny do eventů a zbytek mu nechat.',
+        text: 'Zabavit pouze polovinu nalezených netherite bloků a zbytek mu nechat jako poctivou odměnu za dobrovolné přiznání nálezu v lese.',
         isCorrect: false
       }
     ],
@@ -3849,15 +3849,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'V soukromé zprávě na Discordu ti píše zabanovaný cheater: *„Čau bro, pošlu ti PSC na 500 Kč, když kámošovi potají smažeš ban v databázi. Nikdo to nezjistí, koupíš si oběd.“*. **Tvoje reakce?**',
     options: [
       {
-        text: 'Kód přijmout, unban neudělat a hráče si zablokovat.',
+        text: 'Hráči slušně odpovědět, že unbany se neprodávají, nabídku odmítnout a ticket bez dalšího hlášení uzavřít jako vyřešený.',
         isCorrect: false
       },
       {
-        text: 'Pořídit screenshot celé konverzace, odeslat hlášení vedení do interního staff chatu a hráče trvale zablokovat za pokus o korupci a rozvrat týmu.',
+        text: 'Pořídit screenshot celé konverzace, odeslat hlášení vedení do interního staff chatu a hráče trvale zablokovat za pokus o korupci.',
         isCorrect: true
       },
       {
-        text: 'Napsat mu, že 500 Kč je málo a ať pošle raději 1 000 Kč.',
+        text: 'Kód zkusit aktivovat a v případě platnosti jej odevzdat majiteli serveru jako sponzorský dar výměnou za zkrácení trestu o týden.',
         isCorrect: false
       }
     ],
@@ -3871,15 +3871,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč v chatu píše: „Prodám 64 Netherite Ingotů za 200 Kč převodem na účet nebo Revolut, pište do /msg!“. Jak se staví pravidla MYCHAL SMP k reálnému obchodu?',
     options: [
       {
-        text: 'Pokud oba hráči souhlasí s cenou, je to jejich soukromý obchod a server do toho nezasahuje.',
+        text: 'Pokud oba hráči souhlasí s cenou, jedná se o jejich soukromou dohodu a server do obchodování bez podvodů nijak nezasahuje.',
         isCorrect: false
       },
       {
-        text: 'Real Money Trading (RMT) je přísně zakázán. Hráče okamžitě trvale zabanovat za pokus o nelegální obchod a ohrožení bezpečnosti ostatních.',
+        text: 'Real Money Trading (RMT) je přísně zakázán. Hráče okamžitě trvale zabanovat za pokus o nelegální obchod a ohrožení bezpečnosti.',
         isCorrect: true
       },
       {
-        text: 'Dát mu pouze pokutu $500 v herní měně na serveru.',
+        text: 'Udělit hráči varování do chatu a dočasně mu na 24 hodin odebrat možnost využívat příkazy /msg, /mail a vytvářet nabídky v /ah.',
         isCorrect: false
       }
     ],
@@ -3893,15 +3893,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Zabanovaný hráč v odvolání píše: „Přísahám, že já jsem necheatoval! Půjčil jsem počítač mladšímu bráchovi, který si tam stáhl hacky bez mého vědomí. Můžete mě odbanovat?“.',
     options: [
       {
-        text: 'Hráče odbanovat a požádat ho, aby bratrovi zahesloval Windows.',
+        text: 'Žádosti vyhovět za podmínky, že hráč doloží potvrzení o změně hesla k účtu a slíbí, že k počítači nikoho dalšího nepustí.',
         isCorrect: false
       },
       {
-        text: 'Žádost zamítnout. Za veškerou aktivitu na herním účtu nese stoprocentní odpovědnost jeho registrovaný vlastník. Výmluvy na rodinné příslušníky se neuznávají.',
+        text: 'Žádost zamítnout. Za veškerou aktivitu na herním účtu nese stoprocentní odpovědnost jeho vlastník, výmluvy na rodinu neplatí.',
         isCorrect: true
       },
       {
-        text: 'Zkrátit ban na polovinu jako kompromis pro rodinu.',
+        text: 'Zkrátit původní 60denní trest na polovinu s tím, že při dalším incidentu bude udělena trvalá blokace bez možnosti odvolání.',
         isCorrect: false
       }
     ],
@@ -3915,15 +3915,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč na Survivalu zjistil, kde má soused claim, a těsně za jeho hranicí postavil masivní zeď z cobblestonu až do stavebního limitu Y=319, aby soused neměl výhled a nemohl rozšiřovat bázi.',
     options: [
       {
-        text: 'Nechat zeď stát, protože je postavená mimo cizí claim a na své volné parcele si může každý stavět co chce.',
+        text: 'Zeď ponechat, protože stavba stojí těsně mimo cizí hranice a na volném území má každý právo stavět cokoliv dle své libosti.',
         isCorrect: false
       },
       {
-        text: 'Považovat to za záměrný griefing a obtěžování komunity. Hráče vyzvat k okamžitému zbourání, případně zeď smazat administrátorsky a hráče potrestat.',
+        text: 'Považovat to za záměrný pasivní griefing a obtěžování. Hráče vyzvat k okamžitému zbourání, případně zeď smazat a trestat.',
         isCorrect: true
       },
       {
-        text: 'Doporučit sousedovi, ať si postaví ještě vyšší zeď.',
+        text: 'Nařídit poškozenému sousedovi, aby si dokoupil claimové bloky a zeď si sám rozebral, protože moderátoři stavby neodstraňují.',
         isCorrect: false
       }
     ],
@@ -3937,15 +3937,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Nováček na Survival světě **zapomněl zamknout truhlu** před svým domem. Jiný hráč šel kolem a **vzal si z ní všechno dřevo a železo**. Nováček brečí v chatu. **Jak to řešíš?**',
     options: [
       {
-        text: 'Napsat nováčkovi: „Tvoje smůla, nemáš bejt hloupej,“ a zloděje pochválit za všímavost.',
+        text: 'Odmítnout řešení incidentu, jelikož nezamčená truhla mimo vytvořený claim je z pohledu survival mechanik považována za volnou.',
         isCorrect: false
       },
       {
-        text: 'Na Survivalu je úmyslné vykrádání cizího majetku zakázáno. Pomocí logů kontejneru zjistit viníka, věci nováčkovi navrátit a viníka potrestat (např. varování nebo tempban 14 dní za grief dle presetů SMPAC).',
+        text: 'Na Survivalu je krádež zakázána i mimo claim. Dle logů dohledat viníka, suroviny nováčkovi vrátit a zloděje potrestat tempbanem.',
         isCorrect: true
       },
       {
-        text: 'Nováčkovi dát plný inventář netheritu z Creative módu.',
+        text: 'Nováčkovi poradit, jak si claim založit, a zloději pouze nařídit vrátit polovinu vzatých věcí pod dohledem moderátora ve hře.',
         isCorrect: false
       }
     ],
@@ -3959,15 +3959,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč stojí v generátoru kamene, nepřetržitě kope rychlostí 40 kliků za sekundu, ale neodpovídá na zprávy. Po teleportaci zjistíš, že má na myši položené těžítko nebo puštěné macro.',
     options: [
       {
-        text: 'Je to povolená vychytávka, pokud u počítače zrovna pije čaj.',
+        text: 'Ponechat hráče bez trestu, pokud fyzicky sedí poblíž počítače a reaguje na zvukové efekty při příchodu jiného hráče k němu.',
         isCorrect: false
       },
       {
-        text: 'Jakákoliv automatizace těžby či boje bez fyzické přítomnosti hráče (autoclicker, závaží, hardware makra) je zakázána. Následuje trest za nepovolenou automatizaci.',
+        text: 'Jakákoliv automatizace těžby bez aktivní přítomnosti (makro, závaží, autoclicker) je zakázána a trestá se dle sazebníku SMPAC.',
         isCorrect: true
       },
       {
-        text: 'Pouze mu vyměnit krumpáč za dřevěný.',
+        text: 'Hráče pouze teleportovat na spawn a resetovat mu pozici, aby se přerušilo těžení, a ban udělit až při třetím opakování incidentu.',
         isCorrect: false
       }
     ],
@@ -3981,15 +3981,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč na viditelném kopci postavil z černého betonu nacistický hákový kříž a do chatu se tomu směje. Co musí moderátor udělat jako první?',
     options: [
       {
+        text: 'Hráče pouze písemně vyzvat, aby stavbu do 24 hodin sám přestavěl na neutrální motiv, a moderátorsky nezasahovat do bloků.',
+        isCorrect: false
+      },
+      {
         text: 'Objekt okamžitě beze stopy odstranit, hráče trvale zabanovat za propagaci nenávisti a v chatu incident zbytečně nerozebírat.',
         isCorrect: true
       },
       {
-        text: 'Počkat do večera, až na serveru bude majitel, ať se na to podívá.',
-        isCorrect: false
-      },
-      {
-        text: 'Požádat hráče, ať to přebarví na růžovo.',
+        text: 'Stavbu provizorně zakrýt hlínou a vyčkat na příchod hlavního administrátora, který jako jediný smí udělit permanentní blokaci.',
         isCorrect: false
       }
     ],
@@ -4003,15 +4003,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč pomocí perel a stromů prorazil strop Netheru a staví na střeše Netheru obří farmu na goldy, ačkoliv je v /rules jasně stanoven zákaz pobytu na bedrocku. Jak zasáhneš?',
     options: [
       {
-        text: 'Nechat ho tam, protože stavět na střeše Netheru je v Minecraftu běžný zvyk.',
+        text: 'Stavbu na střeše tolerovat, pokud nezpůsobuje propad TPS serveru a hráč má aktivovaný sponzorský balíček s vyššími výhodami.',
         isCorrect: false
       },
       {
-        text: 'Hráče teleportovat zpět pod bedrock, ilegální farmu smazat, suroviny zabavit a hráče potrestat za obcházení limitů světa a zneužití chyby.',
+        text: 'Hráče teleportovat pod bedrock, nelegální farmu smazat, suroviny zabavit a hráče potrestat za obcházení limitů světa a exploit.',
         isCorrect: true
       },
       {
-        text: 'Zastavět mu díru bedrockem a nechat ho tam umřít hladem.',
+        text: 'Ponechat hráči přístup na střechu Netheru, ale zakázat mu tam umísťovat spawner klece a jakékoliv automatické sběrné truhly.',
         isCorrect: false
       }
     ],
@@ -4025,7 +4025,7 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč nabízí: „Končím s Minecraftem, prodám svůj origo účet s rankem SMP+ a full netheritem za 300 Kč PaySafeCard, kdo chce napište.“. Co na to pravidla?',
     options: [
       {
-        text: 'Je to v pořádku, každý může se svým účtem nakládat podle sebe.',
+        text: 'Zprávu tolerovat za předpokladu, že prodej probíhá výhradně formou herní měny (/pay) a nezasahuje do reálných bankovních plateb.',
         isCorrect: false
       },
       {
@@ -4033,7 +4033,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: true
       },
       {
-        text: 'Účet odkoupit pro sebe jako moderátor.',
+        text: 'Hráče pouze na 1 hodinu ztlumit za nevhodný inzerát v chatu a doporučit mu přesunout nabídku do komunitního bazaru na fóru.',
         isCorrect: false
       }
     ],
@@ -4047,15 +4047,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Plně vygearovaný hráč stojí na přesné hranici bezpečného spawnu a opakovaně zabíjí nováčky v koženém brnění hned při jejich prvním vykročení ze spawnu, aniž by jim dal šanci se nadechnout.',
     options: [
       {
-        text: 'Zabíjení mimo spawn je povoleno, nováčci se mají naučit utíkat rychleji.',
+        text: 'Ponechat útočníka bez trestu, protože mimo spawn hranici je PvP plně povoleno a nováčci mají povinnost se před útoky bránit sami.',
         isCorrect: false
       },
       {
-        text: 'Soustavná toxická šikana a spawn camping ničící herní zážitek nováčků porušuje zásady komunity. Hráče napomenout, vykázat z oblasti a při opakování zabanovat.',
+        text: 'Soustavná toxická šikana a spawn camping ničící herní zážitek nováčků porušuje zásady komunity. Hráče napomenout, vykázat a trestat.',
         isCorrect: true
       },
       {
-        text: 'Vypnout PvP na celém serveru.',
+        text: 'Aktivovat pro daného hráče dočasnou zónu míru a na 24 hodin mu zakázat vstup do veškerých oblastí s nově generovanými hráči.',
         isCorrect: false
       }
     ],
@@ -4069,15 +4069,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Podvodník dal do aukce dřevěnou motyku přejmenovanou v kovadlině na „NETHERITE GOD SWORD +999“ za $80,000, aby napálil nepozorného hráče na rychlý nákup. Je to povolené?',
     options: [
       {
-        text: 'Ano, hráči mají číst lore itemu a kontrolovat si ikonu.',
+        text: 'Předmět v aukci ponechat, protože každý nakupující má povinnost zkontrolovat typ itemu i jeho lore před potvrzením transakce.',
         isCorrect: false
       },
       {
-        text: 'Ne. Záměrné klamání a uvádění hráčů v omyl za účelem neoprávněného obohacení je scamming. Předmět z aukce smazat a hráče potrestat.',
+        text: 'Záměrné klamání a uvádění hráčů v omyl za účelem neoprávněného obohacení je scamming. Předmět z aukce smazat a hráče potrestat.',
         isCorrect: true
       },
       {
-        text: 'Motyku koupit z administrátorského účtu.',
+        text: 'Předmět z aukce pouze stáhnout zpět do inventáře prodejce a poslat mu zprávu s doporučením nastavit reálnější prodejní cenu.',
         isCorrect: false
       }
     ],
@@ -4091,15 +4091,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč na Survivalu postavil důmyslnou past (propadlo do lávy / redstone nástrahu s písty), do které spadl jiný hráč, zemřel a přišel o věci. Poražený hráč podává rozhořčený ticket: „Byla to zákeřná past, vraťte mi věci a zabanujte ho!“. Jak má moderátor reagovat?',
     options: [
       {
-        text: 'Hráči vysvětlit, že pasti jsou na Survivalu plně povoleny jako legitimní herní mechanika. Stavitel pasti nic neporušil, ban se neuděluje a ztracené věci se nenahrazují.',
-        isCorrect: true
-      },
-      {
-        text: 'Stavitele pasti okamžitě zabanovat za zákeřnost, past smazat a hráči vrátit věci z creative módu.',
+        text: 'Stavitele pasti okamžitě zabanovat za zákeřné chování, celou nástrahu zbourat a poškozenému hráči vrátit věci z administrace.',
         isCorrect: false
       },
       {
-        text: 'Vyhlásit na celém serveru zákaz redstonu a hráče se stížností jmenovat moderátorem.',
+        text: 'Hráči vysvětlit, že pasti jsou na Survivalu plně povoleny jako legitimní herní mechanika. Stavitel nic neporušil a věci se nevrací.',
+        isCorrect: true
+      },
+      {
+        text: 'Nařídit staviteli pasti, aby do okolí 20 bloků umístil varovné cedulky s upozorněním na nebezpečí pádu do lávy pod trestem banu.',
         isCorrect: false
       }
     ],
@@ -4113,15 +4113,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč postavil pístový duplikátor na kolejnice a koberce a v ticketu se hájí: „To není zakázaný dupe, to je oficiální mechanika vanilla Minecraftu, dělají to všichni na YouTube!“. Jak zní pravidlo?',
     options: [
       {
-        text: 'Pokud to funguje ve vanille bez módů, je to zcela legální.',
+        text: 'Duplikaci písty tolerovat, protože jde o známou mechaniku vanilla Minecraftu, kterou vývojáři Mojangu záměrně neodstranili.',
         isCorrect: false
       },
       {
-        text: 'Jakékoliv duplikování předmětů pomocí pístových glitchů nebo herních chyb je na serveru striktně zakázáno bez ohledu na to, zda jde o chybu vanilly.',
+        text: 'Jakékoliv duplikování předmětů pomocí pístových glitchů nebo herních chyb je na serveru striktně zakázáno bez ohledu na vanillu.',
         isCorrect: true
       },
       {
-        text: 'Duplikovat se smí jen koberce, kolejnice ne.',
+        text: 'Povolit duplikaci pouze v omezeném množství pro osobní stavbu železnice, ale zakázat prodej takto získaných kolejí v /shopu.',
         isCorrect: false
       }
     ],
@@ -4135,7 +4135,7 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Skupina hráčů věnovala desítky hodin stavbě veřejné ledové dráhy v Netheru pro rychlý přesun celé komunity. Troll přišel a vykopal z ní 100 bloků modrého ledu. Jak zareaguješ?',
     options: [
       {
-        text: 'Říct stavitelům, ať si postaví novou.',
+        text: 'Incident neřešit, protože stavba nebyla chráněna oficiálním claimem a na volném území nelze garantovat nedotknutelnost bloků.',
         isCorrect: false
       },
       {
@@ -4143,7 +4143,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: true
       },
       {
-        text: 'Zabanovat stavitele za to, že si stavbu neochránili claimem.',
+        text: 'Pouze hráče varovat v chatu a požádat poškozený tým stavitelů, aby si na celou trasu dálnice dokoupil chybějící claimové bloky.',
         isCorrect: false
       }
     ],
@@ -4161,15 +4161,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'V administraci se objevilo několik alertů na pohyb a boj (**Speed, Reach, Killaura**). **Znamená každý flag okamžitý trest** a jak se liší od hloubkové analýzy **SMPAC-DA**?',
     options: [
       {
-        text: 'Ano, anticheat je neomylný. Při každém vyvolaném flagu má moderátor hráče okamžitě zabanovat.',
+        text: 'Ano, pokud anticheat nahlásí porušení v boji, moderátor má hráče bez odkladu zabanovat, aby se zamezilo dalším škodám na serveru.',
         isCorrect: false
       },
       {
-        text: 'Rozhodně ne! Běžné flagy pohybu a boje mají spolehlivost jen ~30 % (lagy, ping) a vyžadují týdny prověřování. Pouze hloubková analýza SMPAC-DA dosahuje ~90 % přesnosti.',
+        text: 'Běžné flagy pohybu a boje mají spolehlivost jen ~30 % kvůli pingu. Teprve hloubková analýza SMPAC-DA dosahuje ~90 % a vyžaduje prověření.',
         isCorrect: true
       },
       {
-        text: 'Anticheat i systém SMPAC-DA zcela ignorovat a cheaty řešit pouze při osobním nahlášení od kamaráda.',
+        text: 'Jakýkoliv alert z anticheatu zcela ignorovat a trestat pouze tehdy, pokud hráč sám dobrovolně pošle přiznání nebo videozáznam své hry.',
         isCorrect: false
       }
     ],
@@ -4183,15 +4183,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč byl usvědčen z cheatování (**Fly, X-Ray nebo Baritone**). **Uděluje server ihned trvalý permanentní ban** a jak funguje systém trestů v pluginu SMPAC?',
     options: [
       {
-        text: 'Permanentní bany se téměř nedávají. SMPAC využívá přesně odstupňované tempbany (Fly/Hacky 60d, Dupe 30d, X-Ray/Freecam 20d, Baritone 16d, Minimapa po varování 7d) a 5minutový delayed ban.',
+        text: 'Permanentní bany se téměř nedávají. SMPAC využívá přesné odstupňované tempbany (60d, 30d, 20d, 16d, 7d) a pětiminutové zpoždění trestu.',
         isCorrect: true
       },
       {
-        text: 'Ano, server na jakýkoliv cheat uděluje okamžitý trvalý permanentní ban bez výjimky.',
+        text: 'Server uplatňuje nulovou toleranci a na jakýkoliv prokázaný cheat uděluje okamžitý trvalý permanentní ban na jméno i síťovou adresu.',
         isCorrect: false
       },
       {
-        text: 'Cheateři se na serveru netrestají vůbec, moderátor jim pouze odebere věci.',
+        text: 'Trestá se pouze dočasným odebráním itemů z inventáře a varováním v chatu, k zablokování účtu se přistupuje až po třetím stejném prohřešku.',
         isCorrect: false
       }
     ],
@@ -4205,15 +4205,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč v ticketu tvrdí, že nikdy necheatoval, a jako důkaz posílá snímek složky **.minecraft/mods** (jen Sodium) a **prázdného koše**. Záznam ze systému SMPAC-DA však **potvrzuje cheat klienta**. Co uděláš?',
     options: [
       {
-        text: 'Omluvit se hráči a unbanovat ho, protože jeho složka módů i koš jsou prokazatelně čisté.',
+        text: 'Snímky uznat jako spolehlivý důkaz neviny a trest zrušit, protože prázdný koš a složka módů bez nepovolených souborů vylučují podvod.',
         isCorrect: false
       },
       {
-        text: 'Snímky jako důkaz odmítnout. Složku lze po odpojení ihned promazat, koš vysypat nebo cheat spustit externě z paměti. Výstup SMPAC-DA má absolutní přednost.',
+        text: 'Snímky jako důkaz odmítnout. Soubory lze kdykoliv smazat či spustit externě z paměti, autoritativní výstup SMPAC-DA na serveru má přednost.',
         isCorrect: true
       },
       {
-        text: 'Nainstalovat si do počítače vzdálenou plochu a jít mu soukromě prohledávat registry a disk.',
+        text: 'Hráče vyzvat k okamžitému sdílení obrazovky přes AnyDesk a provést hloubkovou manuální kontrolu systémových registrů a mezipaměti disku.',
         isCorrect: false
       }
     ],
@@ -4231,11 +4231,11 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: true
       },
       {
-        text: 'Věřit mu, že má dobrá herní sluchátka a lávu skutečně slyšel.',
+        text: 'Ponechat hráče bez trestu s tím, že při dobrých sluchátkách a správném směrování zvuku lávy lze ložiska v Netheru spolehlivě lokalizovat.',
         isCorrect: false
       },
       {
-        text: 'Dát mu varování do chatu a sebrat mu na hodinu krumpáč.',
+        text: 'Udělit pouze symbolické varování do chatu a nařídit hráči odevzdat vytěžené suroviny, aby nemusel být udělen záznam do historie trestů.',
         isCorrect: false
       }
     ],
@@ -4249,15 +4249,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Ve 4-členném klanu jeden hráč **používá killaura a fly** a masakruje protivníky. **Zbylí tři stojí za ním a plní truhly věcmi z obětí**. Jak potrestáš tento tým?',
     options: [
       {
-        text: 'Potrestat pouze cheatera. Ostatní tři přece jen stáli opodál a nikoho nezabili.',
+        text: 'Zabanovat pouze aktivního cheatera na 60 dní. Ostatní hráči sami žádné cheaty nespustili, takže jim nelze udělit žádný systémový trest.',
         isCorrect: false
       },
       {
-        text: 'Cheaterovi udělit tempban 60 dní za killaura/fly a ostatním členům trest za spoluvinu (60 dní dle cheatera). Uloupený loot zkonfiskovat.',
+        text: 'Cheaterovi udělit tempban 60 dní a ostatním členům stejný trest za vědomý profit z podvádění (boosting). Neoprávněný loot zkonfiskovat.',
         isCorrect: true
       },
       {
-        text: 'Nechat je být, protože Minecraft je hra o klanové spolupráci.',
+        text: 'Všem zúčastněným pouze smazat inventáře a zrušit klanovou základnu, přičemž herní účty ponechat bez dočasného banu jako první varování.',
         isCorrect: false
       }
     ],
@@ -4271,7 +4271,7 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč **stojí AFK na spawnu**, ale v chatu navádí kamaráda a **přesně ví, kde za zdí stojí nepřátelé**. Brání se: *„Točím cinematic video pro YouTube přes Replay Mod!“*. Nemá Media rank. **Postup?**',
     options: [
       {
-        text: 'Pokud tvrdí, že točí na YouTube, povolit mu to a nechat ho být.',
+        text: 'Ověřit existenci jeho YouTube kanálu a pokud skutečně publikuje herní tvorbu, udělit mu okamžitou výjimku pro volnou kameru v aréně.',
         isCorrect: false
       },
       {
@@ -4279,7 +4279,7 @@ const MODTEST_SCENARIOS_POOL = [
         isCorrect: true
       },
       {
-        text: 'Dát mu okamžitě bez ověření rank Media, aby mohl dotočit video.',
+        text: 'Udělit okamžitý permanentní ban bez možnosti odvolání, protože jakákoliv manipulace s pohledem kamery se považuje za nejtěžší hack.',
         isCorrect: false
       }
     ],
@@ -4293,15 +4293,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Tvůj dlouholetý kamarád postavil obří automat na štěrk s **400 písty a shazovačem itemů**, kvůli kterému **kleslo TPS serveru z 20 na 12**. Píše ti: *„Nech to běžet do rána, dodělávám farmu, nebuď svině!“*. **Tvoje rozhodnutí?**',
     options: [
       {
-        text: 'Stroj nechat běžet a hráčům v chatu říct, že laguje samotný server hosting.',
+        text: 'Vyhovět kamarádovi a stroj nechat běžet přes noc s tím, že hráčům v chatu sdělíš, že propad TPS je způsobený údržbou databáze hostingu.',
         isCorrect: false
       },
       {
-        text: 'Okamžitě stroj deaktivovat. Pravidlo o zákazů lag-mašin platí pro všechny bez výjimek a protekce. Kamarádovi vysvětlit šetrnou alternativu.',
+        text: 'Okamžitě stroj zastavit. Pravidlo o zákazu lag-mašin platí pro všechny bez výjimek a protekce. Kamarádovi vysvětlit šetrnou alternativu.',
         isCorrect: true
       },
       {
-        text: 'Zvýšit kamarádovi prioritu tickování v nastavení chunků.',
+        text: 'Snížit v administraci dohledovou vzdálenost ostatním hráčům v okolí, aby se výkon serveru vyrovnal bez nutnosti bourat kamarádův stroj.',
         isCorrect: false
       }
     ],
@@ -4315,15 +4315,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč v aréně schytá **4 smrtelné zásahy krystaly během 800 milisekund**. Přestože nepřestává sprintovat a má plný hlavní inventář, do levé ruky se mu **okamžitě dosazují nové totemy bez otevření inventáře**.',
     options: [
       {
-        text: 'Hráč má neuvěřitelně rychlé prsty a trénuje to na klávesnici.',
+        text: 'Považovat situaci za vysoký herní skill a natrénovanou techniku rychlého přehazování klávesových zkratek přímo z horké lišty inventáře.',
         isCorrect: false
       },
       {
-        text: 'Jde o nepovolený cheat Auto-Totem (nebo Offhand swap macro), který automaticky doplňuje totemy z inventáře na packetové úrovni. Zaznamenat a udělit tempban 60 dní dle presetů SMPAC.',
+        text: 'Jde o nepovolený Auto-Totem exploit doplňující předměty na packetové úrovni bez otevření GUI. Zaznamenat a udělit tempban na 60 dní dle SMPAC.',
         isCorrect: true
       },
       {
-        text: 'Zakázat na celém serveru používání totemů nesmrtelnosti.',
+        text: 'Odebrat hráči všechny totemy z inventáře a zakázat mu vstup do PvP arény na 24 hodin bez záznamu o klientském cheatu v historii profilu.',
         isCorrect: false
       }
     ],
@@ -4337,15 +4337,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Při sledování PvP duelu zaznamenáš, že hráč zasahuje své protivníky mečem z **konstantní vzdálenosti přes 4.2 bloku**, přičemž oba hráči mají **stabilní ping 15 ms**. Co to znamená?',
     options: [
       {
-        text: 'Minecraft má v novějších verzích běžný dosah až 5 bloků.',
+        text: 'Situaci vyhodnotit jako běžný rozptyl hitboxu v novějších verzích hry, kde sprint a úhel pohledu mohou dosah přirozeně navýšit až k 5 blokům.',
         isCorrect: false
       },
       {
-        text: 'Základní dosah zásahu ve vanille je 3.0 bloku. Konstantní zásahy z 4+ bloků znamenají použití cheatů Reach nebo rozšířených Hitboxů. Následuje tempban 60 dní dle presetů SMPAC.',
+        text: 'Běžný dosah ve vanille nepřesahuje 3.0 bloku. Konstantní zásahy ze 4+ bloků znamenají Reach či zvětšené Hitboxy, což je tempban na 60 dní.',
         isCorrect: true
       },
       {
-        text: 'Hráč má delší ruku díky skinu postavy.',
+        text: 'Požádat zasaženého hráče o snímek obrazovky a pokud potvrdí vizuální kontakt, incident uzavřít jako drobnou desynchronizaci klientského zobrazení.',
         isCorrect: false
       }
     ],
@@ -4359,15 +4359,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Sleduješ hráče s elytrou, který **letí vodorovně v jedné výšce rychlostí přes 80 bloků/s**, nestoupá ani neklesá a **nepoužil ani jednu rachejtli**. Jak situaci posoudíš?',
     options: [
       {
-        text: 'Chytil dobrý vítr a plachtí na termických proudech.',
+        text: 'Vyhodnotit to jako správné využití větru a herní fyziky klouzavého letu, kdy zkušený hráč dokáže udržet hybnost i bez použití ohňostrojů.',
         isCorrect: false
       },
       {
-        text: 'Používá ElytraFly / Timer exploit, který manipuluje s packetovým vektorem pohybu křídel. Jde o zakázaný movement cheat, následuje tempban 60 dní dle presetů SMPAC.',
+        text: 'Jde o ElytraFly či Timer exploit manipulující s vektorem pohybu na úrovni packetů. Zaznamenat důkazy a udělit tempban na 60 dní dle SMPAC.',
         isCorrect: true
       },
       {
-        text: 'Dát mu pokutu za překročení povolené rychlosti na mapě.',
+        text: 'Podezřelého hráče teleportovat na zem a uložit mu herní pokutu v herní měně za překročení povolené rychlosti pohybu v načtených chuncích.',
         isCorrect: false
       }
     ],
@@ -4381,15 +4381,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč skočí z vrcholu věže z **výšky 250 bloků na tvrdou skálu**. Nemá elytru, mace ani vodu, přistane přímo na břichu a **neztratí ani půl srdíčka**. Co to indikuje?',
     options: [
       {
-        text: 'Měl na sobě brnění s Feather Falling IV, které kompletně neguje pád z jakékoliv výšky.',
+        text: 'Hráč má kompletní sadu brnění s plným enchantem Feather Falling IV a Protection IV, což pádové poškození dokáže zcela vynulovat.',
         isCorrect: false
       },
       {
-        text: 'Jde o NoFall cheat – hráčský klient před dopadem odeslal na server falešný packet o stání na zemi, čímž vynuloval pádovou vzdálenost. Následuje tempban 60 dní dle presetů SMPAC.',
+        text: 'Jde o NoFall cheat posílající falešný packet o pozici na zemi před dopadem. Pořídit záznam a udělit tempban na 60 dní dle sazebníku SMPAC.',
         isCorrect: true
       },
       {
-        text: 'Skála byla měkká.',
+        text: 'Považovat to za náhodnou chybu serveru při výpočtu pádové křivky a hráče pouze upozornit, aby podobné nebezpečné skoky raději neopakoval.',
         isCorrect: false
       }
     ],
@@ -4403,15 +4403,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč v dole kope tunely **strojovou přesností už 14 hodin**. Nereaguje na zprávy v chatu, a když ho teleportuješ do uzavřené místnosti, **okamžitě začne autonomně hledat cestu ven** podle pathfindingu.',
     options: [
       {
-        text: 'Hráč je nesmírně vytrvalý těžař, který rád relaxuje u kopání.',
+        text: 'Ponechat hráče těžit s tím, že vytrvalé kopání dlouhých chodeb u sledování filmů je běžný a povolený herní styl vytrvalých komunitních hráčů.',
         isCorrect: false
       },
       {
-        text: 'Používá Baritone nebo podobného autonomního bota pro těžbu a pathfinding. Udělit tempban 16 dní dle presetů SMPAC (/punish baritone) a vytěžené suroviny zabavit.',
+        text: 'Používá Baritone či autonomního těžebního bota s pathfindingem. Udělit tempban na 16 dní dle presetů SMPAC a vytěžené suroviny zkonfiskovat.',
         isCorrect: true
       },
       {
-        text: 'Nalít před něj lávu a čekat, jestli shoří.',
+        text: 'Nastavit před hráče nebezpečné pasti s lávou a pokud do nich opakovaně spadne, potrestat ho pouze za nedostatečnou pozornost při hraní.',
         isCorrect: false
       }
     ],
@@ -4425,15 +4425,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč v PvP souboji **sprintuje maximální rychlostí dopředu, skáče a přitom má celou dobu plně natažený luk** a pálí šípy, aniž by ho nátah luku jakkoliv zpomalil.',
     options: [
       {
-        text: 'Má lektvar Swiftness II, který ruší zpomalení z luku.',
+        text: 'Hráč využívá aktivní efekt lektvaru Speed II v kombinaci se správným časováním skoků, což opticky eliminuje běžné zpomalení při nátahu.',
         isCorrect: false
       },
       {
-        text: 'Jedná se o NoSlowdown cheat, který ruší klientské zpomalení při používání předmětů (luk, jídlo, štít). Následuje tempban 60 dní dle presetů SMPAC.',
+        text: 'Jde o NoSlowdown cheat rušící serverem vynucené zpomalení při používání předmětů. Zaznamenat situaci a udělit tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
-        text: 'Je to nová mechanika combat updatu.',
+        text: 'Udělit hráči napomenutí do chatu s výzvou, aby luk nepoužíval v běhu, a při opakování mu pouze luk na 24 hodin odebrat z inventáře.',
         isCorrect: false
       }
     ],
@@ -4447,15 +4447,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč běží chodbou a **kamenné bloky před ním mizí rychlostí kulometu (35 bloků/s)**, přestože má obyčejný železný krumpáč bez Haste efektu.',
     options: [
       {
-        text: 'Hráč má jen vysoké FPS a dobrý monitor.',
+        text: 'Připsat jev vysoké obnovovací frekvenci monitoru a nízké latenci připojení hráče, které mohou těžbu kamene vizuálně výrazně zrychlit.',
         isCorrect: false
       },
       {
-        text: 'Jde o klientský exploit FastBreak / Nuker, který ignoruje dobu potřebnou k vytěžení bloku. Následuje tempban 60 dní dle presetů SMPAC.',
+        text: 'Jde o FastBreak či Nuker exploit ignorující serverový čas vytěžení bloku. Zaznamenat chování a udělit tempban na 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
-        text: 'Krumpáč byl zřejmě kouzelný.',
+        text: 'Ověřit pouze, zda hráč nevlastní speciální custom krumpáč z eventu, a pokud ne, udělit mu jednodenní zákaz vstupu do těžebního světa.',
         isCorrect: false
       }
     ],
@@ -4469,15 +4469,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč dostane **přímý zásah palicí Mace z výšky a následně šípem s Punch II**, ale jeho postava **se nepohne z místa ani o jediný centimetr**.',
     options: [
       {
-        text: 'Měl těžké netherite boty, které dávají stoprocentní imunitu vůči odhození.',
+        text: 'Odraz byl zcela absorbován netheritovým brněním s plnou odolností proti odhození, což je standardní obranná vlastnost této výbavy.',
         isCorrect: false
       },
       {
-        text: 'Hráč používá Velocity cheat (Anti-Knockback nastavený na 0 %), který ruší zpětný ráz od útoků. Zaznamenat situaci a udělit tempban 60 dní dle presetů SMPAC.',
+        text: 'Hráč využívá Velocity cheat potlačující zpětný ráz útoků na 0 %. Zaznamenat situaci a udělit tempban na 60 dní dle sazebníku SMPAC.',
         isCorrect: true
       },
       {
-        text: 'Protivník má špatný šíp.',
+        text: 'Přičíst nulový odraz špatné synchronizaci hitové animace na straně útočníka a celou situaci uzavřít bez vyvození disciplinárního trestu.',
         isCorrect: false
       }
     ],
@@ -4491,15 +4491,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Jak zkušený moderátor pozná rozdíl mezi hráčem s poctivým vysokým CPS (16 kliků za sekundu) a hráčem s cheat modulem TriggerBot?',
     options: [
       {
-        text: 'Lidský hráč kliká vždy přesně na milisekundu stejně, TriggerBot náhodně.',
+        text: 'Poctivý lidský hráč kliká s dokonalou matematickou přesností každých 50 ms, zatímco TriggerBot vykazuje chaotické a nepravidelné prodlevy.',
         isCorrect: false
       },
       {
-        text: 'TriggerBot udeří roboticky v přesně stejný tick, kdy křížek mine hitbox cíle, s nulovým zpožděním a nulovými údery do vzduchu, zatímco člověk má přirozený rozptyl a kliká i naprázdno.',
+        text: 'TriggerBot udeří roboticky v ticku protnutí hitboxu bez úderů do vzduchu, zatímco poctivý hráč má přirozený rozptyl a kliká i naprázdno.',
         isCorrect: true
       },
       {
-        text: 'Mezi nimi není žádný rozdíl, klikání je vždy stejné.',
+        text: 'Vysoké CPS nad 12 kliků je vždy nelegální bez ohledu na software, proto se v obou případech uděluje okamžitý trest za zneužití makra.',
         isCorrect: false
       }
     ],
@@ -4513,15 +4513,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Konzole serveru začne zaznamenávat masivní nápor poškozených síťových packetů od jednoho hráče (5 000 packetů/s) a TPS prudce klesá. Co je cílem hráče?',
     options: [
       {
-        text: 'Snaží se stáhnout skin ze serveru.',
+        text: 'Hráčský klient se pouze pokouší odeslat nestandardní texturu skinu s vysokým rozlišením, což způsobuje dočasné zahlcení síťové fronty.',
         isCorrect: false
       },
       {
-        text: 'Provádí crasher útok s cílem zahltit síťovou vrstvu a shodit instanci serveru. Okamžitě uplatnit IP ban a síťové odstřihnutí.',
+        text: 'Jde o crasher útok s cílem zahltit síťovou vrstvu a shodit instanci serveru. Provést okamžitý IP ban a aktivovat síťovou filtraci útoků.',
         isCorrect: true
       },
       {
-        text: 'Má slabý počítač, který se nestíhá synchronizovat.',
+        text: 'Počkat na automatické vyčištění bufferu a hráče pouze odpojit běžným příkazem /kick s textem o nestabilním internetovém připojení.',
         isCorrect: false
       }
     ],
@@ -4535,15 +4535,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč běží **pozpátku plným sprintem přes lávové jezero** a pod jeho nohama se **plynule tvoří most z bloků**, aniž by se hráč otočil, skrčil nebo pohnul hlavou dolů.',
     options: [
       {
-        text: 'Je to zkušený bridge stavitel s rychlými reflexy.',
+        text: 'Hráč ovládá pokročilou vanillovou techniku godbridge s přesným rytmickým klikáním, kterou lze po dlouhém tréninku spolehlivě zvládnout.',
         isCorrect: false
       },
       {
-        text: 'Jde o nepovolený modul Scaffold / Auto-Bridge, který automaticky pokládá bloky pod nohy hráče v neplatných úhlech. Následuje tempban 60 dní dle presetů SMPAC.',
+        text: 'Jde o nepovolený Scaffold modul pokládající bloky pod nohy hráče v neplatných úhlech bez míření. Udělit tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
-        text: 'Používá speciální lektvar stavění.',
+        text: 'Ponechat hráče dokončit most a pouze mu zkontrolovat ping, zda nedošlo k opožděnému vykreslení pohybů hlavy vlivem packetové ztráty.',
         isCorrect: false
       }
     ],
@@ -4557,15 +4557,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč v boji rozdává **100 % kritických zásahů**, přestože **stojí nohama pevně na zemi a ani jednou nevyskočil**. Jak to funguje?',
     options: [
       {
-        text: 'Má na meči skrytý enchant Critical Boost.',
+        text: 'Hráč využívá speciální bojovou mechaniku zbraně, která při plném nabití ukazatele útoku garantuje kritický zásah i bez pohybu postavy.',
         isCorrect: false
       },
       {
-        text: 'Používá Criticals exploit, který těsně před úderem odešle falešný packet o mini-skoku (0.06 bloku), aby oklamal server. Následuje tempban 60 dní dle presetů SMPAC.',
+        text: 'Používá Criticals exploit odesílající falešný packet o mini-skoku (0.06 bloku) před každým úderem. Udělit tempban 60 dní dle presetů SMPAC.',
         isCorrect: true
       },
       {
-        text: 'Hráč má prostě silné paže.',
+        text: 'Situaci připsat nerovnostem terénu pod nohama hráče a incident uzavřít bez trestu, pokud protivník neutrpěl okamžité usmrcení v duelu.',
         isCorrect: false
       }
     ],
@@ -4583,15 +4583,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Zabanovaný hráč v ticketu tvrdí, že **zjišťování VPN a ukládání IP adresy serverem porušuje GDPR**, a píše: *„Můj táta je právník a zítra podáváme trestní oznámení na Policii ČR na majitele serveru!“*. **Jak zareaguješ?**',
     options: [
       {
-        text: 'V panice hráče odbanovat a smazat záznamy z databáze banů.',
+        text: 'V obavách z právních postihů hráče neprodleně odbanovat a veškeré síťové záznamy o jeho připojení neprodleně odstranit z databáze banů.',
         isCorrect: false
       },
       {
-        text: 'Zachovat klid a profesionální odstup. Zpracování IP adresy pro ochranu infrastruktury a prevenci DDoS/obcházení trestů spadá pod oprávněný zájem dle GDPR. Ticket věcně uzavřít.',
+        text: 'Zachovat klid. Zpracování IP adresy k ochraně sítě a zamezení obcházení trestů je oprávněný zájem dle GDPR. Ticket věcně a klidně uzavřít.',
         isCorrect: true
       },
       {
-        text: 'Začít se s hráčem hádat a urážet jeho rodinu.',
+        text: 'Odpovědět hráči ironicky a pohrozit mu vlastním právním protiútokem za křivé obvinění s okamžitým zablokováním přístupu na Discord server.',
         isCorrect: false
       }
     ],
@@ -4605,15 +4605,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Nervózní hráč v ticketu odmítá dokončit registraci přes /register s tím, že mu **majitel serveru prý přečte heslo a ukradne mu Discord a e-mail**. **Jak mu profesionálně vysvětlíš bezpečnost?**',
     options: [
       {
-        text: 'Napsat mu: „Klid, majitel na tvůj účet nemá čas.“',
+        text: 'Ujistit ho stručnou odpovědí, že členové týmu jsou slušní lidé a do soukromých hesel hráčů se ze zásady nikdy z vlastní vůle nedívají.',
         isCorrect: false
       },
       {
-        text: 'Vysvětlit, že hesla jsou v databázi kryptograficky hashována se solí (BCrypt) jednosměrným algoritmem – nikdo na serveru, ani majitel, je v otevřené podobě nevidí ani nemůže dešifrovat.',
+        text: 'Vysvětlit, že hesla jsou v databázi kryptograficky hashována se solí (BCrypt) – nikdo v týmu je v čitelné podobě nevidí ani nemůže zjistit.',
         isCorrect: true
       },
       {
-        text: 'Říct mu, ať si jako heslo nastaví 123456.',
+        text: 'Doporučit hráči zvolit zcela primitivní heslo bez vazby na jeho osobní účty a v případě pochybností registraci na serveru raději nedokončit.',
         isCorrect: false
       }
     ],
@@ -4627,15 +4627,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Zabanovaný troll se připojuje pod **urážlivými nicky** a **spamuje herní chat přes rotující proxy IP adresy**. **Jaká je nejefektivnější a nejklidnější reakce?**',
     options: [
       {
-        text: 'Začít na něj v chatu křičet velkými písmeny a vyhrožovat mu fyzickým násilím.',
+        text: 'Vstoupit do veřejné diskuze s trollem přímo v chatu a důrazně mu vysvětlit, jaké trestní následky pro něj může mít porušování pravidel.',
         isCorrect: false
       },
       {
-        text: 'Hráče okamžitě ztlumit (/mute), udělit IP ban (/ban-ip) na proxy rozsah, nahlásit bot útok vedení a v chatu trollovi nevěnovat žádnou pozornost.',
+        text: 'Trolly ihned ztlumit (/mute), nasadit síťový ban na proxy rozsah, incident nahlásit vedení a v herním chatu trollovi nevěnovat pozornost.',
         isCorrect: true
       },
       {
-        text: 'Odpojit se ze serveru a jít spát.',
+        text: 'Vyčkávat bez zásahu na odpojení útočníka a následně promazat zprávy z chatu, aby moderátoři neztráceli čas zadáváním příkazů v konzoli.',
         isCorrect: false
       }
     ],
@@ -4649,15 +4649,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč tě v noci označí v urgentním ticketu: *„ADMIN POMOC!! Spadnul jsem do díry, došly mi pochodně a bojím se pavouků, okamžitě mě teleportujte na spawn!“*. **Co uděláš?**',
     options: [
       {
-        text: 'Okamžitě zapnout počítač a hráče teleportovat na spawn.',
+        text: 'Hráči okamžitě vyhovět a teleportovat ho na bezpečný spawn, protože prvořadým úkolem moderátora je zajistit hráči příjemný herní zážitek.',
         isCorrect: false
       },
       {
-        text: 'Upozornit hráče na zneužití urgentního označení. Vysvětlit, že moderátoři nezasahují do survival mechanik a nefungují jako bezplatné taxi. Odkázat ho na herní příkazy (/home, /lobby, /trapped) nebo vykopání.',
+        text: 'Upozornit na zneužití urgentní priority, vysvětlit, že moderátoři nezasahují do survivalu, a odkázat ho na herní příkazy či vykopání se.',
         isCorrect: true
       },
       {
-        text: 'Za trest ho v jeskyni rovnou zabít příkazem /kill.',
+        text: 'Hráče za zbytečné noční buzení okamžitě potrestat týdenním banem a ticket bez jakéhokoliv vysvětlení smazat ze systému uživatelské podpory.',
         isCorrect: false
       }
     ],
@@ -4671,15 +4671,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč posílá do /msg **pozvánky na cizí Minecraft server**. Když ho konfrontuješ, brání se: *„Pravidla zakazují reklamu v chatu! V /msg to není veřejné, takže jsem nic neporušil!“*. **Jak zní pravidlo?**',
     options: [
       {
-        text: 'Má pravdu, soukromé zprávy /msg jsou privátní a reklama se tam trestat nesmí.',
+        text: 'Uznat jeho argumentaci, protože zprávy v /msg mají soukromý charakter a serverový filtr reklamy je primárně určen pro veřejný globální chat.',
         isCorrect: false
       },
       {
-        text: 'Zákaz reklamy na cizí servery a Discordy platí bez výjimky v celém herním i komunikačním prostoru (chat, /msg, cedulky, knihy i Discord). Dle sazebníku SMPAC následuje ztlumení (/punish reklama na 12 hodin), při soustavném spamu přísnější trest.',
+        text: 'Zákaz reklamy platí pro všechny kanály sítě včetně /msg i knih. Dle presetů SMPAC udělit ztlumení na 12 hodin, při opakování přísnější trest.',
         isCorrect: true
       },
       {
-        text: 'Dát mu varování a doporučit mu psát to jen na cedulky.',
+        text: 'Udělit hráči okamžitý trvalý IP ban bez možnosti odvolání, protože jakékoliv zmínění jiného serveru je automaticky sabotáží komunity.',
         isCorrect: false
       }
     ],
@@ -4693,15 +4693,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Dva rivalské klany zahltí ticketový systém **desítkami hádek a vzájemných obvinění z radarů a autokliku**, aniž by kdokoliv doložil **nezestříhaný videozáznam**. **Jak zjednáš pořádek?**',
     options: [
       {
-        text: 'Zabanovat náhodně půlku obou klanů pro výstrahu.',
+        text: 'Udělit dočasné bany na 3 dny lídrům obou znepřátelených klanů pro výstrahu, aby pochopili, že spory se v ticketech řešit nesmí.',
         isCorrect: false
       },
       {
-        text: 'Okamžitě zastavit flame war v ticketu, stanovit věcná pravidla komunikace a vyzvat k doložení nezestříhaných videozáznamů s časovými značkami. Varovat před trestem za spam a křivá nařčení.',
+        text: 'Zastavit flamewar v ticketu, stanovit věcná pravidla komunikace a vyžádat si nezestříhané videozáznamy. Varovat před trestem za křivá nařčení.',
         isCorrect: true
       },
       {
-        text: 'Přidat se k hádce a podpořit ten klan, který má více sponzorských ranků.',
+        text: 'Podpořit v diskuzi klan, který na serveru hraje delší dobu a má lepší komunitní pověst, a druhé straně pohrozit zrušením klanového území.',
         isCorrect: false
       }
     ],
@@ -4715,15 +4715,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Zabanovaný hráč v ticketu píše: „Jestli mi okamžitě nedáte unban, ublížím si a bude to vaše vina! Máte 5 minut!“. Jak se v takto citlivé a extrémní situaci zachovat?',
     options: [
       {
-        text: 'Okamžitě hráče odbanovat ze strachu, že svá slova myslí vážně.',
+        text: 'Hráči ze soucitu neprodleně unban udělit s podmínkou, že již nebude porušovat pravidla a vyhledá pomoc u svých rodičů či přátel.',
         isCorrect: false
       },
       {
-        text: 'Zachovat klid a nepodléhat citovému vydírání. Poskytnout oficiální kontakty na bezplatnou psychologickou pomoc a Linku bezpečí, ticket uzamknout a eskalovat incident vedení serveru.',
+        text: 'Zachovat klid a nepodléhat nátlaku. Předat oficiální kontakty na Linku bezpečí, ticket uzamknout a celou situaci eskalovat vedení serveru.',
         isCorrect: true
       },
       {
-        text: 'Vysmát se mu do chatu a napsat mu, ať to klidně udělá.',
+        text: 'Zprávu ignorovat jako běžný nesmyslný pokus o trolling, ticket ihned smazat a hráči zablokovat možnost zakládat další tickety na Discordu.',
         isCorrect: false
       }
     ],
@@ -4734,18 +4734,18 @@ const MODTEST_SCENARIOS_POOL = [
     isMandatory: false,
     tag: 'CITOVÉ VYDÍRÁNÍ O VIP',
     title: 'Výmluva na věrnost: „Hrál jsem tu od bety a koupil jsem si VIP!“',
-    description: 'Hráč usvědčený z cheatování argumentuje: „Jsem na serveru přes dva roky a koupil jsem si hodnost za tisíc korun! Jak si dovolujete mě zabanovat? Chci okamžitý unban za věrnost!“.',
+    description: 'Hráč usvědčený z cheatování argumentuje: „Jsem na serveru přes dva roky a koupil jsem si hodnost za tisíc korun! Jak si dovolujete mě zabanovat? Chci okamžitý unban za věrnost!“. Jak zareaguješ?',
     options: [
       {
-        text: 'Vzhledem k podpoře serveru mu ban prominout a dát mu ještě jeden rank zdarma.',
+        text: 'S ohledem na jeho finanční příspěvek a dlouholetou aktivitu zkrátit udělený trest na minimum a udělit mu poslední varování před trestem.',
         isCorrect: false
       },
       {
-        text: 'Délka hraní ani finanční podpora nikoho neopravňuje k porušování pravidel. Pravidla platí pro všechny stejně bez protekce. Žádost o unban zamítnout.',
+        text: 'Finanční podpora ani herní doba nikoho neopravňují k podvádění. Pravidla platí pro každého bez výjimek a žádost o unban se zamítá.',
         isCorrect: true
       },
       {
-        text: 'Vrátit mu peníze z vlastní peněženky.',
+        text: 'Nabídnout hráči možnost kompenzace formou smazání herního postupu výměnou za zrušení banu, pokud si zakoupí další sponzorský balíček.',
         isCorrect: false
       }
     ],
@@ -4759,15 +4759,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hraješ na serveru, hráč tě v poctivém PvP zabije a napíše do globálního chatu: „L moderátor je ez noob, nemá na mě!“. Tvoje reakce jako člena týmu?',
     options: [
       {
-        text: 'Okamžitě mu dát permanentní ban za neúctu k moderátorskému týmu.',
+        text: 'Udělit hráči okamžitý mute za neúctu a provokování moderátorského týmu, protože autorita staffu musí být v chatu vždy chráněna.',
         isCorrect: false
       },
       {
-        text: 'Zůstat nad věcí s chladnou hlavou. Pokud posměšek nepřekračuje meze běžného herního špičkování do vulgárních urážek, neřešit ho z pozice moci.',
+        text: 'Zachovat chladnou hlavu a situaci neřešit z pozice moci. Běžné herní špičkování bez vulgarit a urážek není důvodem k moderátorskému trestu.',
         isCorrect: true
       },
       {
-        text: 'Vrátit se v neviditelnosti a shodit na něj kovadlinu z výšky.',
+        text: 'Teleportovat se zpět v neviditelnosti a hráče v souboji usmrtit pomocí administrátorských příkazů, aby si nebudoval falešnou převahu.',
         isCorrect: false
       }
     ],
@@ -4781,15 +4781,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč v Netheru spadl do lávového jezera a shořela mu výbava. V ticketu hystericky vyžaduje vrácení s tím, že mu „na sekundu lagla klávesnice“. Co mu odpovíš?',
     options: [
       {
-        text: 'Všechny věci mu v Creative módu znovu vycraftit a omluvit se za klávesnici.',
+        text: 'Vystavit náhradní předměty v odpovídající kvalitě z administrátorského skladu, aby hráč neztratil motivaci pokračovat v hraní na serveru.',
         isCorrect: false
       },
       {
-        text: 'Klidně vysvětlit, že server nenese odpovědnost za hardware a herní chyby na straně hráče. Věci ztracené běžnou herní smrtí se nevracejí. Ticket uzavřít.',
+        text: 'Vysvětlit, že server neodpovídá za technické potíže na straně hráče a itemy ztracené běžnou herní smrtí se nevrací. Ticket věcně uzavřít.',
         isCorrect: true
       },
       {
-        text: 'Smazat mu z inventáře i zbytek věcí v truhlách.',
+        text: 'Požadovat od hráče doložení videa o selhání klávesnice a pokud jej nedodá do jedné hodiny, potrestat ho za podávání neoprávněné stížnosti.',
         isCorrect: false
       }
     ],
@@ -4803,15 +4803,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč opakovaně odesílá hlášení přes **/report** nebo zakládá Discord tickety: *„Čau modi, jak se máte? Nudím se, portněte se za mnou a dejte mi nějaký úkol!“*. **Co uděláš?**',
     options: [
       {
-        text: 'Okamžitě se k němu portnout a hrát si s ním schovku.',
+        text: 'Zprávy ignorovat a nechat tickety otevřené, protože přátelská komunikace s komunitou pomáhá budovat dobré vztahy mezi hráči a týmem.',
         isCorrect: false
       },
       {
-        text: 'Upozornit hráče, že systém /report a Discord tickety jsou vyhrazeny výhradně pro hlášení porušení pravidel a technických potíží. Při opakovaném spamu udělit varování či krátký mute.',
+        text: 'Upozornit hráče, že tyto kanály slouží výhradně pro hlášení chyb a prohřešků. Při opakování udělit varování či krátký mute dle pravidel.',
         isCorrect: true
       },
       {
-        text: 'Zabanovat ho na rok za spam konzole.',
+        text: 'Udělit okamžitý dlouhodobý tempban za zneužívání administrátorských systémů a zablokovat uživateli možnost vytvářet herní hlášení.',
         isCorrect: false
       }
     ],
@@ -4825,15 +4825,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Arogantní hráč v ticketu odmítá komunikovat a posmívá se tvému věku či hlasu: „S tebou se bavit nebudu, zavolej mi dospělého majitele!“. Jak zareaguješ?',
     options: [
       {
-        text: 'Začít se s ním hádat o svém věku a posílat mu fotku občanského průkazu.',
+        text: 'Důrazně se ohradit, sdělit svůj skutečný věk a pohrozit hráči okamžitým přísným trestem za drzost vůči staršímu zástupci vedení.',
         isCorrect: false
       },
       {
-        text: 'Nenechat se vyprovokovat. Uvést, že jako moderátor jednáš v plném pověření vedení serveru. Vyzvat ho k věcnému řešení problému, v případě pokračování urážek ticket uzavřít.',
+        text: 'Nenechat se vyprovokovat. Uvést, že jednáš v plném pověření vedení, vyzvat k věcnému řešení a při pokračujících urážkách ticket uzavřít.',
         isCorrect: true
       },
       {
-        text: 'Hráče okamžitě vulgárně urazit zpět.',
+        text: 'Ticket bez dalšího slova přeposlat přímo majiteli serveru, aby spor s arogantním hráčem vyřešil osobně na nejvyšší úrovni autority.',
         isCorrect: false
       }
     ],
@@ -4847,15 +4847,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč v globálním chatu spamuje: „Kámoš z týmu mi psal, že server dnes o půlnoci končí a maže se celá mapa! Všechny věci zahoďte a pojďte jinam!“. Polovina chatu panikaří.',
     options: [
       {
-        text: 'Čekat, jestli na to zareaguje někdo z ostatních hráčů.',
+        text: 'Nereagovat v chatu a vyčkat, zda se situace sama uklidní po přirozeném opadnutí paniky mezi online hráči na aktuálním herním serveru.',
         isCorrect: false
       },
       {
-        text: 'Okamžitě v chatu uvést informaci na pravou míru oficiálním oznámením. Hráče ztlumit (mute) nebo zabanovat za šíření nepravdivých poplašných zpráv a rozvracení komunity.',
+        text: 'Okamžitě uvést informace na pravou míru oficiálním oznámením a hráče ztlumit či zabanovat za šíření poplašných zpráv a rozvrat komunity.',
         isCorrect: true
       },
       {
-        text: 'Napsat do chatu: „Možná má pravdu, uvidíme o půlnoci.“',
+        text: 'Smazat pouze inkriminované zprávy z chatu a hráči zaslat soukromou zprávu s dotazem, od kterého člena týmu danou informaci obdržel.',
         isCorrect: false
       }
     ],
@@ -4869,15 +4869,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Podvodník si nastavil stejný nick a avatar jako majitel serveru a v soukromých zprávách píše hráčům, ať mu pošlou své cennosti k „povinné kontrole duplikovaných itemů“.',
     options: [
       {
-        text: 'Požádat ho, ať si změní profilový obrázek.',
+        text: 'Zaslat podvodníkovi soukromou zprávu s výzvou ke změně profilového jména a vyčkat 24 hodin na jeho reakci před podniknutím kroků.',
         isCorrect: false
       },
       {
-        text: 'Okamžitý permanentní IP a Discord ban za vydávání se za člena vedení a pokus o okradení komunity + varovat hráče veřejným oznámením.',
+        text: 'Okamžitě udělit trvalý síťový i Discord ban za vydávání se za vedení s cílem okrást hráče a zveřejnit varovné bezpečnostní oznámení.',
         isCorrect: true
       },
       {
-        text: 'Počkat, jestli mu někdo nějaké věci pošle.',
+        text: 'Ponechat účet aktivní pro sběr dalších důkazů a monitorovat, kteří hráči mu své herní itemy skutečně dobrovolně předají ke kontrole.',
         isCorrect: false
       }
     ],
@@ -4891,15 +4891,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Hráč v ticketu tvrdí, že mu včera v 15:30 při pádu serveru zmizel shulker plný netheritu. Záznamy v monitoringu však jasně ukazují, že server včera běžel nepřetržitě s nulovým výpadkem.',
     options: [
       {
-        text: 'Pro jistotu mu věci dát, aby nebyl smutný.',
+        text: 'Vzhledem k nejistotě vyhovět žádosti a hráči vydat náhradní suroviny v polovičním množství, aby byl zachován kompromis a dobré vztahy.',
         isCorrect: false
       },
       {
-        text: 'Předložit důkaz z logu, že k žádnému pádu nedošlo. Žádost zamítnout a hráče důrazně varovat před pokusy o podvod na moderátorském týmu.',
+        text: 'Doložit záznam z monitoringu prokazující plynulý běh serveru, žádost zamítnout a hráče důrazně varovat před pokusem o podvod na týmu.',
         isCorrect: true
       },
       {
-        text: 'Zabanovat ho za to, že hraje Minecraft.',
+        text: 'Udělit hráči okamžitý trvalý ban za pokus o podvod na vedení projektu bez možnosti dalšího vysvětlení či přezkoumání herní historie.',
         isCorrect: false
       }
     ],
@@ -4913,15 +4913,15 @@ const MODTEST_SCENARIOS_POOL = [
     description: 'Zabanovaný hráč pozve do ticketu pět svých kamarádů z klanu, kteří začnou hromadně spamovat: „Dejte mu unban, nic neudělal, jste neschopní modi!“. Jak obnovíš pořádek?',
     options: [
       {
-        text: 'Pod tlakem přesily hráče raději odbanovat, aby byl klid.',
+        text: 'Ustoupit nátlaku početní převahy a hráči trest dočasně zkrátit, aby se předešlo dalšímu šíření negativních emocí v komunitě serveru.',
         isCorrect: false
       },
       {
-        text: 'Neautorizované osoby z ticketu okamžitě odebrat nebo ticket uzamknout pro ostatní. Věcně řešit odvolání pouze s dotyčným hráčem na základě faktů a důkazů.',
+        text: 'Neoprávněné osoby z ticketu neprodleně odebrat a odvolání řešit výhradně s dotyčným hráčem na základě faktických důkazů a záznamů z logu.',
         isCorrect: true
       },
       {
-        text: 'Začít se s celou pětičlennou skupinou v ticketu hádat.',
+        text: 'Pustit se do otevřené hádky se všemi členy klanu a pohrozit jim hromadným smazáním klanového účtu při neukončení nepřátelského spamu.',
         isCorrect: false
       }
     ],

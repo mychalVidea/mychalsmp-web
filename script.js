@@ -63,6 +63,12 @@ function handleUrlRouting() {
     executeTabSwitch('join', false);
   } else if (route === 'rules' || route === 'pravidla') {
     executeTabSwitch('rules', false);
+  } else if (route === 'banned' || route === 'bany' || route === 'zabanovani') {
+    executeTabSwitch('rules', false);
+    setTimeout(() => {
+      const btn = document.getElementById('btn-toggle-banned-board');
+      if (btn) filterRules('banned', btn);
+    }, 120);
   } else if (route === 'modtest' || route === 'moderator' || route === 'mod' || route === 'zkouska') {
     executeTabSwitch('modtest', false);
   } else if (route === 'napady' || route === 'napad' || route === 'ideas') {
@@ -3326,6 +3332,28 @@ function filterRules(category, btnElement) {
     btnElement.setAttribute('aria-selected', 'true');
   }
 
+  const bannedBoard = document.getElementById('banned-players-board');
+  const rulesGrid = document.getElementById('rules-card-grid');
+  const rulesQuiz = document.getElementById('rules-quiz');
+
+  if (category === 'banned') {
+    if (rulesGrid) rulesGrid.style.display = 'none';
+    if (rulesQuiz) rulesQuiz.style.display = 'none';
+    if (bannedBoard) {
+      bannedBoard.style.display = 'block';
+      loadBannedPlayers();
+      setTimeout(() => {
+        bannedBoard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    }
+    return;
+  }
+
+  // Běžná kategorie pravidel: skryjeme dřevěnou nástěnku a obnovíme mřížku pravidel
+  if (bannedBoard) bannedBoard.style.display = 'none';
+  if (rulesGrid) rulesGrid.style.display = 'grid';
+  if (rulesQuiz) rulesQuiz.style.display = 'block';
+
   const cards = document.querySelectorAll('#rules-card-grid .rule-card');
   cards.forEach(card => {
     const cardCat = card.getAttribute('data-category');
@@ -3335,6 +3363,159 @@ function filterRules(category, btnElement) {
       card.classList.add('rule-card-hidden');
     }
   });
+}
+
+function closeBannedBoard() {
+  const allBtn = document.querySelector('.rules-filter-bar button:first-child');
+  filterRules('all', allBtn);
+}
+
+function toggleBannedBoard(btnElement) {
+  const bannedBoard = document.getElementById('banned-players-board');
+  if (bannedBoard && bannedBoard.style.display !== 'none') {
+    closeBannedBoard();
+  } else {
+    filterRules('banned', btnElement || document.getElementById('btn-toggle-banned-board'));
+  }
+}
+
+// ---- 🪵 DŘEVĚNÁ NÁSTĚNKA ZABANOVANÝCH HRÁČŮ (PAPÍROVÉ CEDULKY) ----
+let bannedPlayersCache = null;
+let currentBannedSearchQuery = '';
+
+async function loadBannedPlayers(forceRefresh = false) {
+  const loadingEl = document.getElementById('banned-loading-state');
+  const errorEl = document.getElementById('banned-error-state');
+  const gridEl = document.getElementById('banned-notes-grid');
+  const countBadge = document.getElementById('banned-count-badge');
+
+  if (bannedPlayersCache && !forceRefresh) {
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (gridEl) gridEl.style.display = 'grid';
+    renderBannedPlayers(bannedPlayersCache);
+    return;
+  }
+
+  if (loadingEl) loadingEl.style.display = 'flex';
+  if (errorEl) errorEl.style.display = 'none';
+  if (gridEl) gridEl.style.display = 'none';
+  if (countBadge) countBadge.textContent = 'Načítám cedulky...';
+
+  try {
+    const res = await apiFetch('/api/banned-players');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if (!data.success || !Array.isArray(data.players)) throw new Error('Neplatný formát dat');
+
+    bannedPlayersCache = data.players;
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (gridEl) gridEl.style.display = 'grid';
+    renderBannedPlayers(bannedPlayersCache);
+  } catch (err) {
+    console.warn('[BANNED BOARD] Chyba při načítání:', err);
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (errorEl) errorEl.style.display = 'flex';
+    if (countBadge) countBadge.textContent = 'Chyba spojení';
+  }
+}
+
+function handleBannedSearch(query) {
+  currentBannedSearchQuery = (query || '').toLowerCase().trim();
+  if (bannedPlayersCache) {
+    renderBannedPlayers(bannedPlayersCache);
+  }
+}
+
+function renderBannedPlayers(players) {
+  const gridEl = document.getElementById('banned-notes-grid');
+  const countBadge = document.getElementById('banned-count-badge');
+  if (!gridEl) return;
+
+  const query = currentBannedSearchQuery;
+  const filtered = players.filter(p => {
+    if (!query) return true;
+    return (p.name && p.name.toLowerCase().includes(query)) ||
+           (p.reason && p.reason.toLowerCase().includes(query)) ||
+           (p.source && p.source.toLowerCase().includes(query));
+  });
+
+  if (countBadge) {
+    countBadge.textContent = `Zobrazeno ${filtered.length} z ${players.length} hráčů`;
+  }
+
+  if (filtered.length === 0) {
+    gridEl.innerHTML = `
+      <div class="banned-board-empty">
+        <p>Žádná vyvěšená cedulka neodpovídá hledání "${escapeHtml(query)}".</p>
+      </div>
+    `;
+    return;
+  }
+
+  gridEl.innerHTML = filtered.map((p, idx) => {
+    // Generování lehkého organického náklonu pro realistickou nástěnku (-2.4deg až +2.4deg)
+    const rot = (((idx * 37) % 7) - 3) * 0.8;
+    const safeName = escapeHtml(p.name);
+    const safeMasked = escapeHtml(p.maskedName);
+    const safeReason = escapeHtml(p.reason);
+    const safeSource = escapeHtml(p.source || 'Server');
+    let expiresText = 'Trvalý ban';
+    if (p.expires && p.expires !== 'forever') {
+      expiresText = escapeHtml(p.expires.split(' ')[0] || p.expires);
+    }
+
+    return `
+      <div class="banned-paper-note" 
+           style="--note-rot: ${rot}deg;" 
+           tabindex="0" 
+           role="button" 
+           aria-label="Zabanovaný hráč ${safeMasked}, klikni nebo najeď pro detail"
+           onclick="togglePaperNoteActive(this)"
+           onkeydown="if(event.key==='Enter'||event.key===' '){togglePaperNoteActive(this); event.preventDefault();}">
+        <!-- Mosazný špendlík -->
+        <div class="banned-paper-pin"></div>
+        
+        <div class="banned-paper-inner">
+          <div class="banned-paper-avatar-wrap">
+            <img class="banned-paper-avatar" 
+                 src="https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/48" 
+                 alt="${safeMasked}" 
+                 loading="lazy" 
+                 onerror="this.onerror=null; this.src='https://mc-heads.net/avatar/MHF_Steve/48';" />
+          </div>
+
+          <div class="banned-paper-name-wrap">
+            <div class="banned-paper-name-masked">${safeMasked}</div>
+            <div class="banned-paper-name-full">${safeName}</div>
+          </div>
+
+          <div class="banned-paper-stamp">ZABANOVÁN</div>
+
+          <div class="banned-paper-reveal">
+            <div class="banned-paper-reveal-title">Důvod banu:</div>
+            <div class="banned-paper-reveal-reason">${safeReason}</div>
+            <div class="banned-paper-reveal-meta">
+              <span class="banned-paper-source" title="Systém nebo moderátor">${safeSource}</span>
+              <span class="banned-paper-expires">${expiresText}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function togglePaperNoteActive(noteEl) {
+  // Podpora pro dotyková zařízení (mobily / tablety)
+  const wasActive = noteEl.classList.contains('active');
+  document.querySelectorAll('.banned-paper-note.active').forEach(n => {
+    if (n !== noteEl) n.classList.remove('active');
+  });
+  if (wasActive) {
+    noteEl.classList.remove('active');
+  } else {
+    noteEl.classList.add('active');
+  }
 }
 
 // ---- INTERACTIVE SITUATIONAL SERVER QUIZ (10 RANDOMIZED REAL-WORLD CASES) ----

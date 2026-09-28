@@ -17,7 +17,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20260924_v1" />
+  <link rel="stylesheet" href="style.css?v=20260928_v2" />
 </head>
 
 <body>
@@ -1085,6 +1085,13 @@
                 <span>CO JE PŘÍSNĚ ZAKÁZÁNO</span>
               </div>
               <h3 class="rules-compare-title">Nulová tolerance pro podvádění</h3>
+              <button type="button" class="rules-banner-banned-btn" onclick="filterRules('banned', document.getElementById('btn-toggle-banned-board'))">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <line x1="8" y1="12" x2="16" y2="12"/>
+                </svg>
+                <span>Zobrazit zabanované hráče</span>
+              </button>
             </div>
 
             <ul class="rules-compare-items">
@@ -1202,6 +1209,85 @@
           </svg>
           <span>Ekonomika & Účty</span>
         </button>
+        <!-- TLAČÍTKO: ZABANOVANÍ HRÁČI -->
+        <button class="rules-filter-btn rules-filter-btn--banned" id="btn-toggle-banned-board" onclick="filterRules('banned', this)" role="tab" aria-selected="false">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <line x1="8" y1="12" x2="16" y2="12" />
+          </svg>
+          <span>Zabanovaní hráči</span>
+        </button>
+      </div>
+
+      <!-- 🪵 DŘEVĚNÁ NÁSTĚNKA S PAPÍROVÝMI CEDULKAMI (TABULE ZABANOVANÝCH HRÁČŮ) -->
+      <div id="banned-players-board" class="banned-board-wrapper" style="display: none;">
+        <div class="banned-board-frame">
+          <!-- Závěsné řetězy dekorace -->
+          <div class="banned-board-chains" aria-hidden="true">
+            <div class="iron-chain iron-chain--left">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="iron-chain iron-chain--right">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+
+          <!-- Hlavička dřevěné nástěnky -->
+          <div class="banned-board-header">
+            <div class="banned-board-title-plate">
+              <div class="banned-board-stamp">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2.5">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <line x1="8" y1="12" x2="16" y2="12"/>
+                </svg>
+                <span>VYVĚŠENÉ TRESTY</span>
+              </div>
+              <h3 class="banned-board-title">Tabule zabanovaných hráčů</h3>
+            </div>
+
+            <!-- Ovládací prvky: Hledání, Počet & Zavřít -->
+            <div class="banned-board-controls">
+              <div class="banned-board-search-wrap">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input type="text" id="banned-search-input" placeholder="Hledat nick nebo důvod..." oninput="handleBannedSearch(this.value)" autocomplete="off" />
+              </div>
+
+              <div class="banned-board-actions">
+                <span id="banned-count-badge" class="banned-count-badge">Načítám cedulky...</span>
+                <button type="button" class="banned-board-close-btn" onclick="closeBannedBoard()" title="Zavřít nástěnku a vrátit se k pravidlům">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                  <span>Zpět na pravidla</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dřevěný povrch s papírovými cedulkami -->
+          <div class="banned-board-surface">
+            <!-- Loading -->
+            <div id="banned-loading-state" class="banned-board-status">
+              <div class="banned-spinner"></div>
+              <span>Připínám papírové cedulky na nástěnku...</span>
+            </div>
+
+            <!-- Error -->
+            <div id="banned-error-state" class="banned-board-status banned-board-status--error" style="display: none;">
+              <p>Nástěnku se nepodařilo načíst ze serveru. Zkus to za chvíli.</p>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="loadBannedPlayers(true)">Zkusit znovu</button>
+            </div>
+
+            <!-- Notes Grid -->
+            <div id="banned-notes-grid" class="banned-notes-grid" style="display: none;">
+              <!-- Dynamicky generováno pomocí JS -->
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- DETAILED RULES GRID -->
@@ -3607,7 +3693,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20260927_v2"></script>
+  <script src="script.js?v=20260928_v1"></script>
 </body>
 
 </html>

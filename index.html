@@ -17,7 +17,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20260928_v2" />
+  <link rel="stylesheet" href="style.css?v=20260928_v9" />
 </head>
 
 <body>
@@ -296,9 +296,8 @@
             <span class="info-eyebrow">O serveru</span>
             <h2 class="info-heading"><img src="imgs/icons/minecraft-world-icon-14.webp" alt="Minecraft Grass Block"
                 class="inline-game-icon" /> Co je <span class="accent-red">MYCHAL SMP</span>?</h2>
-            <p class="info-body">MYCHAL SMP je komunitní Minecraft server, který nabízí dva unikátní herní světy:
-              <strong>nový akční SMP svět (/smp)</strong> bez claimů s permanentním PvP a <strong>klasický stavitelský
-                Survival (/survival)</strong> s claimy (GriefPrevention) a bezpečným stavěním!
+            <p class="info-body">MYCHAL SMP je komunitní Minecraft server, který nabízí
+              akční <strong>SMP svět</strong> bez claimů s permanentním PvP a bohatou ekonomikou. Původní mapa serveru je uchována v oficiálním archivu ke stažení.
             </p>
             <p class="info-body">Hráči spolu soupeří, obchodují na tržnici přes <strong>/shop</strong>, plní zakázky
               <strong>/orders</strong> a budují vlastní komunitní projekty. Server běží na <strong>Java
@@ -317,7 +316,7 @@
                   <line x1="7" y1="17" x2="4" y2="20" />
                   <line x1="3" y1="19" x2="5" y2="21" />
                 </svg>
-                <span>Nové SMP (/smp)</span>
+                <span>SMP Svět</span>
               </span>
               <span class="info-chip">
                 <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
@@ -325,7 +324,7 @@
                   <polygon points="12 2 2 19 22 19 12 2" />
                   <line x1="12" y1="19" x2="12" y2="22" />
                 </svg>
-                <span>Klasika (/survival)</span>
+                <span>Archiv mapy</span>
               </span>
               <span class="info-chip">
                 <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f97316"
@@ -388,52 +387,35 @@
     <div class="gamemodes-section">
       <div class="container">
         <div class="section-title-box text-center">
-          <span class="info-eyebrow">DVA UNIKÁTNÍ SVĚTY</span>
-          <h2 class="section-heading">Vyber si svůj <span class="accent-red">herní svět</span></h2>
-          <p class="section-subheading">Ať už hledáš nekompromisní akční souboje na SMP nebo klidné stavění s
-            claimy na Survivalu, na MYCHAL SMP si přijdeš na své.</p>
+          <span class="info-eyebrow">HERNÍ SVĚTY & PROJEKTY</span>
+          <h2 class="section-heading">Herní světy & <span class="accent-blue">Projekty</span></h2>
+          <p class="section-subheading">Připoj se do akčního SMP světa na <strong>mychalsmp.xyz</strong>, stáhni si kompletní archiv původní mapy, nebo sleduj odpočet k odhalení nového projektu.</p>
         </div>
 
         <div class="gamemodes-grid">
           <!-- Card 1: SMP Gamemode -->
           <div class="gamemode-card gamemode-card--smp">
             <!-- Visual Hero Header with Real Server Screenshot -->
-            <div class="gm-card-media" onclick="openLightbox('imgs/2026-07-03_00.57.44.webp')"
+            <div class="gm-card-media" onclick="openLightbox('imgs/smp-card.jpg')"
               title="Kliknutím zvětšíš screenshot">
-              <img src="imgs/2026-07-03_00.57.44.webp" alt="Nové SMP – Akční svět" class="gm-card-img" />
+              <img src="imgs/smp-card.jpg" alt="SMP – Hlavní herní svět" class="gm-card-img" />
               <div class="gm-card-overlay"></div>
               <div class="gm-card-badge gm-badge--smp"><i class="fa-solid fa-fire"></i> AKCE • PERMA PVP</div>
-              <div class="gm-card-cmd-chip" onclick="event.stopPropagation(); copyCommand('/smp', this)"
-                title="Kliknutím zkopíruješ příkaz">
-                <code>/smp</code>
-                <span class="btn-copy-icon-wrap">
-                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                  </svg>
-                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
-                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </span>
-              </div>
             </div>
 
             <div class="gm-card-body">
               <div class="gm-card-head">
                 <div class="gm-card-icon-box">
-                  <img src="imgs/icons/minecraft-world-icon-14.webp" alt="SMP World" class="inline-game-icon">
+                  <img src="imgs/icons/minecraft-world-icon-14.webp" alt="SMP World">
                 </div>
                 <div>
-                  <h3 class="gm-card-title">Nové <span class="mc-font smp-text-blue">SMP</span></h3>
-                  <span class="gm-card-sub">Příkaz pro vstup: <code>/smp</code></span>
+                  <h3 class="gm-card-title"><span class="mc-font smp-text-blue">SMP</span></h3>
+                  <span class="gm-card-sub"><i class="fa-solid fa-crosshairs"></i> Hlavní herní svět serveru</span>
                 </div>
               </div>
 
               <p class="gm-card-desc">
-                Zbrusu nový svět s vlastním seedem, novým Netherem i Endem pro všechny, kteří chtějí čistý survival bez
-                zbytečných omezení a s permanentním PvP!
+                Akční survival s vlastním seedem, Netherem i Endem pro všechny, kteří hledají ryzí hru bez omezení a s permanentním PvP!
               </p>
 
               <!-- Sleek 2x2 Feature Grid -->
@@ -442,71 +424,63 @@
                   <div class="gm-feat-icon text-red"><i class="fa-solid fa-skull"></i></div>
                   <div class="gm-feat-info">
                     <strong>Trvalé PvP</strong>
-                    <span>Souboje jsou permanentně zapnuté, akce na každém kroku.</span>
+                    <span>Souboje jsou trvale zapnuté, akce na každém kroku.</span>
                   </div>
                 </div>
                 <div class="gm-feat-tile">
                   <div class="gm-feat-icon text-orange"><i class="fa-solid fa-fire"></i></div>
                   <div class="gm-feat-info">
                     <strong>Bez claimů</strong>
-                    <span>Čistý survival, žádné zakazování vstupu do oblastí.</span>
+                    <span>Čistý survival bez zakazování oblastí a bariér.</span>
                   </div>
                 </div>
                 <div class="gm-feat-tile">
-                  <div class="gm-feat-icon text-blue"><i class="fa-solid fa-box-archive"></i></div>
+                  <div class="gm-feat-icon text-blue"><i class="fa-solid fa-shield-halved"></i></div>
                   <div class="gm-feat-info">
-                    <strong>Oddělený inventář</strong>
-                    <span>Věci na SMP jsou oddělené od Survivalu a bezpečně uložené.</span>
+                    <strong>Hard obtížnost</strong>
+                    <span>Nekompromisní vanilla obtížnost pro opravdovou výzvu.</span>
                   </div>
                 </div>
                 <div class="gm-feat-tile">
                   <div class="gm-feat-icon text-cyan"><i class="fa-solid fa-compass"></i></div>
                   <div class="gm-feat-info">
                     <strong>Čerstvý seed</strong>
-                    <span>Zcela nový svět plný neprobádaných surovin k vytěžení.</span>
+                    <span>Bohatý svět plný surovin a neprobádaných lokací.</span>
                   </div>
                 </div>
               </div>
 
               <div class="gm-card-actions">
-                <button class="btn-gm-action btn-gm--smp" onclick="copyCommand('/smp', this)">
+                <button class="btn-gm-action btn-gm--smp" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP serveru">
                   <span class="btn-copy-icon-wrap">
                     <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                     </svg>
                     <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
                       stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </span>
-                  <span class="btn-gm-label">Zkopírovat <code>/smp</code> pro vstup</span>
+                  <span class="btn-gm-label">Připojit se: <code>mychalsmp.xyz</code></span>
                 </button>
               </div>
             </div>
           </div>
 
-          <!-- Card 2: Classic Survival -->
-          <div class="gamemode-card gamemode-card--survival">
-            <!-- Visual Hero Header with Real Server Screenshot -->
-            <div class="gm-card-media" onclick="openLightbox('imgs/2026-07-03_00.56.31.webp')"
-              title="Kliknutím zvětšíš screenshot">
-              <img src="imgs/2026-07-03_00.56.31.webp" alt="Klasický Survival – Stavění a claimy" class="gm-card-img" />
+          <!-- Card 2: Stray Teaser -->
+          <div class="gamemode-card gamemode-card--stray">
+            <!-- Visual Hero Header with Minecraft Teaser Screenshot -->
+            <div class="gm-card-media" onclick="openLightbox('imgs/stray-teaser.jpg')"
+              title="Kliknutím zvětšíš teaser">
+              <img src="imgs/stray-teaser.jpg" alt="Projekt Stray – Klasifikováno" class="gm-card-img" />
               <div class="gm-card-overlay"></div>
-              <div class="gm-card-badge gm-badge--survival"><i class="fa-solid fa-tree"></i> STAVĚNÍ • CLAIMY</div>
-              <div class="gm-card-cmd-chip" onclick="event.stopPropagation(); copyCommand('/survival', this)"
-                title="Kliknutím zkopíruješ příkaz">
-                <code>/survival</code>
+              <div class="gm-card-badge gm-badge--stray"><i class="fa-solid fa-lock"></i> KÓDOVÉ JMÉNO</div>
+              <div class="gm-card-cmd-chip" title="Projekt ve vývoji">
+                <code>KLASIFIKOVÁNO</code>
                 <span class="btn-copy-icon-wrap">
-                  <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                  </svg>
-                  <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
-                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
+                  <i class="fa-solid fa-user-secret" style="font-size: 0.95rem; color: #38bdf8;"></i>
                 </span>
               </div>
             </div>
@@ -514,66 +488,143 @@
             <div class="gm-card-body">
               <div class="gm-card-head">
                 <div class="gm-card-icon-box">
-                  <img src="imgs/icons/6559_villager.webp" alt="Survival Villager" class="inline-game-icon">
+                  <img src="imgs/icons/stray.webp" alt="Stray">
                 </div>
                 <div>
-                  <h3 class="gm-card-title">Klasický <span class="mc-font text-green">Survival</span></h3>
-                  <span class="gm-card-sub">Příkaz pro vstup: <code>/survival</code></span>
+                  <h3 class="gm-card-title"><span class="mc-font text-cyan">Stray</span></h3>
+                  <span class="gm-card-sub"><i class="fa-solid fa-shield-halved"></i> Klasifikovaný projekt sítě MYCHAL SMP</span>
                 </div>
               </div>
 
               <p class="gm-card-desc">
-                Původní osvědčený svět s claimy a férovými duely pro bezpečné stavění monumentálních projektů,
-                komunitní obchodování a klidnou hru.
+                Zatím neoznámený projekt sítě MYCHAL SMP. Signál zachycen, veškeré informace podléhají utajení až do oficiálního odhalení.
               </p>
+
+              <!-- Live Countdown Strip -->
+              <div class="gm-countdown-strip">
+                <span class="gm-countdown-label"><i class="fa-solid fa-stopwatch"></i> Odhalení 6. 10.</span>
+                <span class="gm-countdown-val" id="stray-countdown-val">Načítání...</span>
+              </div>
 
               <!-- Sleek 2x2 Feature Grid -->
               <div class="gm-feature-grid">
                 <div class="gm-feat-tile">
-                  <div class="gm-feat-icon text-green"><i class="fa-solid fa-shield-halved"></i></div>
+                  <div class="gm-feat-icon text-cyan"><i class="fa-solid fa-calendar-day"></i></div>
                   <div class="gm-feat-info">
-                    <strong>Ochrana claimů</strong>
-                    <span>Chraň své stavby a truhly pomocí GriefPrevention.</span>
+                    <strong>Odhalení</strong>
+                    <span>6. října 2026</span>
                   </div>
                 </div>
                 <div class="gm-feat-tile">
-                  <div class="gm-feat-icon text-cyan"><i class="fa-solid fa-swords"></i></div>
+                  <div class="gm-feat-icon text-yellow"><i class="fa-solid fa-clock"></i></div>
                   <div class="gm-feat-info">
-                    <strong>Férové duely</strong>
-                    <span>Vyzývej ostatní na arénové duely přes <code>/duel</code> a <code>/duelrtp</code>.</span>
+                    <strong>Datum vydání</strong>
+                    <span>Zatím neznámé</span>
                   </div>
                 </div>
                 <div class="gm-feat-tile">
-                  <div class="gm-feat-icon text-yellow"><i class="fa-solid fa-store"></i></div>
+                  <div class="gm-feat-icon text-blue"><i class="fa-solid fa-fingerprint"></i></div>
                   <div class="gm-feat-info">
-                    <strong>Tržnice a zakázky</strong>
-                    <span>Obchoduj s ostatními hráči přes <code>/shop</code> a <code>/orders</code>.</span>
+                    <strong>Kódové jméno</strong>
+                    <span>Stray</span>
                   </div>
                 </div>
                 <div class="gm-feat-tile">
-                  <div class="gm-feat-icon text-gold"><i class="fa-solid fa-monument"></i></div>
+                  <div class="gm-feat-icon text-red"><i class="fa-solid fa-lock"></i></div>
                   <div class="gm-feat-info">
-                    <strong>Stavitelské projekty</strong>
-                    <span>Tradiční svět s dlouhodobostí a přátelskou komunitou.</span>
+                    <strong>Stav projektu</strong>
+                    <span>Utajeno / Ve vývoji</span>
                   </div>
                 </div>
               </div>
 
               <div class="gm-card-actions">
-                <button class="btn-gm-action btn-gm--survival" onclick="copyCommand('/survival', this)">
+                <button type="button" class="btn-gm-action btn-gm--stray" onclick="showToast('🔒 Tento projekt je přísně utajen. Sleduj oficiální odhalení 6. 10.!')">
                   <span class="btn-copy-icon-wrap">
-                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                      <polyline points="10 17 15 12 10 7" />
-                      <line x1="15" y1="12" x2="3" y2="12" />
-                    </svg>
-                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
-                      stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
+                    <i class="fa-solid fa-lock" style="font-size: 0.95rem;"></i>
                   </span>
-                  <span class="btn-gm-label">Zkopírovat <code>/survival</code> pro vstup</span>
+                  <span class="btn-gm-label">Odhalení: 6. 10. 2026</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Survival Archive -->
+          <div class="gamemode-card gamemode-card--survival">
+            <!-- Visual Hero Header with Real Server Screenshot -->
+            <div class="gm-card-media" onclick="openLightbox('imgs/survival-card.jpg')"
+              title="Kliknutím zvětšíš screenshot">
+              <img src="imgs/survival-card.jpg" alt="Původní Survival – Archiv světa" class="gm-card-img" />
+              <div class="gm-card-overlay"></div>
+              <div class="gm-card-badge gm-badge--survival"><i class="fa-solid fa-box-archive"></i> ARCHIV • KE STAŽENÍ</div>
+              <div class="gm-card-cmd-chip" onclick="event.stopPropagation(); openArchiveModal()"
+                title="Zobrazit návod ke spuštění">
+                <code>LINEAR V2</code>
+                <span class="btn-copy-icon-wrap">
+                  <i class="fa-solid fa-circle-question" style="font-size: 0.95rem; color: #21DE00;"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="gm-card-body">
+              <div class="gm-card-head">
+                <div class="gm-card-icon-box">
+                  <img src="imgs/icons/6559_villager.webp" alt="Survival Villager">
+                </div>
+                <div>
+                  <h3 class="gm-card-title"><span class="mc-font text-green">Survival</span></h3>
+                  <span class="gm-card-sub"><i class="fa-solid fa-hard-drive"></i> Původní mapa (Singleplayer & Server)</span>
+                </div>
+              </div>
+
+              <p class="gm-card-desc">
+                Oficiální archiv původního světa se stavbami, farmami, Netherem i Endem ke stažení pro Singleplayer nebo vlastní server.
+              </p>
+
+              <!-- Sleek 2x2 Feature Grid -->
+              <div class="gm-feature-grid">
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-green"><i class="fa-solid fa-globe"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Kompletní svět</strong>
+                    <span>Overworld, Nether i End propojené v jedné mapě.</span>
+                  </div>
+                </div>
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-cyan"><i class="fa-solid fa-gamepad"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Singleplayer</strong>
+                    <span>Hraj offline v Minecraftu s modem LinearReader.</span>
+                  </div>
+                </div>
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-yellow"><i class="fa-solid fa-server"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>LeafMC 26.2</strong>
+                    <span>Optimalizovaný formát LINEAR_V2 pro server.</span>
+                  </div>
+                </div>
+                <div class="gm-feat-tile">
+                  <div class="gm-feat-icon text-gold"><i class="fa-solid fa-database"></i></div>
+                  <div class="gm-feat-info">
+                    <strong>Záloha dat</strong>
+                    <span>Inventáře, Ender chestky a domovy v SQLite DB.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gm-card-actions gm-card-actions--archive">
+                <a href="https://mega.nz/file/hdMnGLzb#7HUkUJN84q9rp_zf81-CtcmrgcysJZTKmQqDbPmeuSw" class="btn-gm-action btn-gm--survival" id="btn-download-survival-archive" target="_blank" rel="noopener" download="MYCHAL_SMP_Survival_World.zip" style="text-decoration:none;" onclick="handleArchiveDownload(event)">
+                  <span class="btn-copy-icon-wrap">
+                    <i class="fa-solid fa-download" style="font-size: 0.95rem;"></i>
+                  </span>
+                  <span class="btn-gm-label">Stáhnout (15 GB)</span>
+                </a>
+                <button type="button" class="btn-gm-action btn-gm--archive-info" onclick="openArchiveModal()">
+                  <span class="btn-copy-icon-wrap">
+                    <i class="fa-solid fa-circle-info" style="font-size: 0.95rem; color: #0a67e5;"></i>
+                  </span>
+                  <span class="btn-gm-label">Návod ke spuštění</span>
                 </button>
               </div>
             </div>
@@ -1361,8 +1412,8 @@
             <span class="rule-penalty-badge rule-penalty-badge--allowed">SMP: POVOLENO</span>
             <span class="rule-category-chip">Světy & Ničení</span>
           </div>
-          <h3 class="rule-title">Nové SMP (/smp): Boj a griefing je legální</h3>
-          <p class="rule-summary">Na novém SMP světě jsou přepady, pasti a ničení základen plnohodnotnou herní
+          <h3 class="rule-title">SMP Svět: Boj a griefing je legální</h3>
+          <p class="rule-summary">Na SMP světě jsou přepady, pasti a ničení základen plnohodnotnou herní
             mechanikou.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
@@ -3524,6 +3575,74 @@
     </div>
   </section>
 
+  <!-- ARCHIVE GUIDE MODAL -->
+  <div class="archive-modal-backdrop" id="archive-modal" onclick="closeArchiveModalOutside(event)">
+    <div class="archive-modal-dialog">
+      <div class="archive-modal-header">
+        <div class="archive-modal-title-wrap">
+          <i class="fa-solid fa-box-archive text-green" style="font-size: 1.4rem;"></i>
+          <div>
+            <h3 class="archive-modal-title">Návod: Jak spustit archiv Survivalu</h3>
+            <span class="archive-modal-sub">Formát regionů LINEAR_V2 (Zstandard)</span>
+          </div>
+        </div>
+        <button class="archive-modal-close" onclick="closeArchiveModal()" aria-label="Zavřít">✕</button>
+      </div>
+      <div class="archive-modal-body">
+        <p class="archive-modal-intro">
+          Svět byl archivován z vysoce optimalizovaného jádra <strong>LeafMC 26.2</strong> ve formátu <code>.linear</code>, který šetří přes 50 % místa a zrychluje načítání chunků.
+        </p>
+
+        <!-- Method 1: Singleplayer -->
+        <div class="archive-guide-card">
+          <div class="archive-guide-head">
+            <span class="archive-guide-badge"><i class="fa-solid fa-user"></i> MOŽNOST A</span>
+            <h4>Spuštění v Singleplayeru (Jednotlivá hra)</h4>
+          </div>
+          <ol class="archive-steps-list">
+            <li>Hraj Minecraft přes <strong>Fabric</strong> nebo <strong>NeoForge</strong> (doporučena verze <strong>26.2</strong> / 1.21.1+).</li>
+            <li>Stáhni si mód pro podporu Linear formátu:
+              <a href="https://modrinth.com/mod/linearreader" target="_blank" rel="noopener" class="archive-link-btn">
+                <i class="fa-solid fa-download"></i> Stáhnout LinearReader na Modrinthu
+              </a>
+            </li>
+            <li>Vlož stažený mód do složky <code>.minecraft/mods/</code>.</li>
+            <li>Rozbal stažený archiv a složku <code>MYCHAL_SMP_Survival_World</code> vlož do <code>%appdata%\.minecraft\saves\</code>.</li>
+            <li>Spusť Minecraft – svět najdeš v Singleplayeru pod názvem <strong>MYCHAL SMP Survival Archiv</strong>.</li>
+          </ol>
+        </div>
+
+        <!-- Method 2: Own Server -->
+        <div class="archive-guide-card">
+          <div class="archive-guide-head">
+            <span class="archive-guide-badge archive-guide-badge--leaf"><i class="fa-solid fa-server"></i> MOŽNOST B</span>
+            <h4>Spuštění na vlastním serveru (LeafMC)</h4>
+          </div>
+          <ol class="archive-steps-list">
+            <li>Stáhni si dedikované jádro <strong>LeafMC 26.2</strong>:
+              <a href="https://www.leafmc.one/en/download/26.2" target="_blank" rel="noopener" class="archive-link-btn archive-link-btn--leaf">
+                <i class="fa-solid fa-external-link"></i> Stáhnout LeafMC 26.2
+              </a>
+            </li>
+            <li>V souboru <code>config/leaf-global.yml</code> nastav:
+              <pre class="archive-code-snippet"><code>region-format:
+  format-name: LINEAR_V2
+  compress-level: 6
+  linear-use-virtual-thread: true</code></pre>
+            </li>
+            <li>Vlož složku světa na svůj server a spusť ho.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="archive-modal-footer">
+        <a href="https://mega.nz/file/hdMnGLzb#7HUkUJN84q9rp_zf81-CtcmrgcysJZTKmQqDbPmeuSw" class="btn-primary btn-modal-download-archive" target="_blank" rel="noopener" download="MYCHAL_SMP_Survival_World.zip" onclick="handleArchiveDownload(event)" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-download"></i> Stáhnout archiv (15 GB)
+        </a>
+        <button class="btn-secondary" onclick="closeArchiveModal()" style="margin-left: 10px;">Zavřít</button>
+      </div>
+    </div>
+  </div>
+
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
     <button class="lightbox-close" onclick="closeLightbox()" aria-label="Zavřít">✕</button>
@@ -3693,7 +3812,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20260928_v1"></script>
+  <script src="script.js?v=20260928_v9"></script>
 </body>
 
 </html>

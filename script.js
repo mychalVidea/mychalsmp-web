@@ -5507,3 +5507,114 @@ window.handleModTestAnswer = handleModTestAnswer;
 window.submitModeratorApplication = submitModeratorApplication;
 window.copyModTestResult = copyModTestResult;
 window.restartModTest = restartModTest;
+
+// ========================================================
+// 📦 SURVIVAL ARCHIVE DOWNLOAD CONFIGURATION
+// Sem vlož svůj odkaz ke stažení (Cloudflare R2, MEGA, Disk Google atd.):
+// Příklad: "https://download.mychalsmp.xyz/MYCHAL_SMP_Survival_World.zip"
+// ========================================================
+const SURVIVAL_ARCHIVE_DOWNLOAD_URL = "https://mega.nz/file/hdMnGLzb#7HUkUJN84q9rp_zf81-CtcmrgcysJZTKmQqDbPmeuSw";
+
+function openArchiveModal() {
+  const modal = document.getElementById('archive-modal');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeArchiveModal() {
+  const modal = document.getElementById('archive-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+function closeArchiveModalOutside(event) {
+  if (event.target && event.target.id === 'archive-modal') {
+    closeArchiveModal();
+  }
+}
+
+function handleArchiveDownload(event) {
+  const link = event.currentTarget;
+  const currentHref = link.getAttribute('href');
+  const targetUrl = (typeof SURVIVAL_ARCHIVE_DOWNLOAD_URL === 'string' && SURVIVAL_ARCHIVE_DOWNLOAD_URL !== "SEM_VLOZ_ODKAZ_KE_STAZENI")
+    ? SURVIVAL_ARCHIVE_DOWNLOAD_URL
+    : currentHref;
+
+  const isPlaceholder = !targetUrl || 
+                        targetUrl === '#' || 
+                        targetUrl === '#tab-home' || 
+                        targetUrl.includes('SEM_VLOZ_ODKAZ_KE_STAZENI');
+
+  if (isPlaceholder) {
+    event.preventDefault();
+    if (typeof showToast === 'function') {
+      showToast('⏳ Nahrávání archivu na cloud právě probíhá. Níže najdeš návod k instalaci!');
+    }
+    openArchiveModal();
+  } else {
+    // Skutečný odkaz je nastaven – nastavíme href a prohlížeč soubor rovnou začne stahovat
+    link.href = targetUrl;
+  }
+}
+
+// Při načtení stránky provázat URL pokud je vyplněná v konfiguraci
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof SURVIVAL_ARCHIVE_DOWNLOAD_URL === 'string' && SURVIVAL_ARCHIVE_DOWNLOAD_URL !== "SEM_VLOZ_ODKAZ_KE_STAZENI") {
+    document.querySelectorAll('#btn-download-survival-archive, .btn-modal-download-archive').forEach(btn => {
+      btn.href = SURVIVAL_ARCHIVE_DOWNLOAD_URL;
+    });
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const archiveModal = document.getElementById('archive-modal');
+    if (archiveModal && archiveModal.classList.contains('active')) {
+      closeArchiveModal();
+    }
+  }
+});
+
+window.SURVIVAL_ARCHIVE_DOWNLOAD_URL = SURVIVAL_ARCHIVE_DOWNLOAD_URL;
+window.openArchiveModal = openArchiveModal;
+window.closeArchiveModal = closeArchiveModal;
+window.closeArchiveModalOutside = closeArchiveModalOutside;
+window.handleArchiveDownload = handleArchiveDownload;
+
+// ─── STRAY TEASER COUNTDOWN (ODHALENÍ 6. 10. 2026) ───────────────────
+(function () {
+  // Oct 6, 2026 18:00:00 CEST (16:00:00 UTC)
+  const REVEAL_DATE = new Date('2026-10-06T16:00:00Z');
+  const timerEl = document.getElementById('stray-countdown-val');
+  if (!timerEl) return;
+
+  function pad(n) { return n < 10 ? '0' + n : n; }
+
+  function updateStrayCountdown() {
+    const now = new Date();
+    const diff = REVEAL_DATE - now;
+
+    if (diff <= 0) {
+      timerEl.textContent = 'ODHALENO';
+      return;
+    }
+
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    timerEl.textContent = `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
+  }
+
+  updateStrayCountdown();
+  setInterval(updateStrayCountdown, 1000);
+})();
+
+
+

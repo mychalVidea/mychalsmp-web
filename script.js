@@ -728,17 +728,29 @@ async function checkoutSMP() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ nickname })
-    }, 10000);
+    }, 15000);
+
+    const data = await response.json().catch(() => null);
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+      const errMsg = data?.message || `Chyba při komunikaci s pokladnou (${response.status}).`;
+      if (typeof showToast === 'function') {
+        showToast('❌ ' + errMsg);
+      } else {
+        alert(errMsg);
+      }
+      return;
     }
 
-    const data = await response.json();
-    if (data.success && data.url) {
-      window.open(data.url, '_blank');
+    if (data && data.success && data.url) {
+      // 1. Zkusíme otevřít platební bránu v novém okně
+      const newWin = window.open(data.url, '_blank');
+      // 2. Pokud prohlížeč zablokoval popup (časté na mobilech nebo po async fetchi v Safari / Chrome), přesměrujeme přímo
+      if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
+        window.location.href = data.url;
+      }
     } else {
-      const errMsg = data.message || 'Nepodařilo se vytvořit platební odkaz.';
+      const errMsg = data?.message || 'Nepodařilo se vytvořit platební odkaz.';
       if (typeof showToast === 'function') {
         showToast('❌ ' + errMsg);
       } else {
@@ -747,7 +759,9 @@ async function checkoutSMP() {
     }
   } catch (err) {
     console.error('[CHECKOUT ERR]', err);
-    const fallbackMsg = 'Herní pokladna je momentálně nedostupná. Zkus to prosím za chvíli.';
+    const fallbackMsg = (err && err.message && !err.message.startsWith('HTTP'))
+      ? err.message
+      : 'Herní pokladna je momentálně nedostupná. Zkus to prosím za chvíli.';
     if (typeof showToast === 'function') {
       showToast('❌ ' + fallbackMsg);
     } else {

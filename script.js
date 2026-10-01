@@ -104,6 +104,7 @@ function executeTabSwitch(name, updateUrl = true) {
     // Force browser reflow to register opacity/transform transition start state
     section.offsetHeight;
     section.classList.add('animate-in');
+    initVectorSpotlight();
   }
 
   // Activate matching buttons on desktop, top mobile, and bottom mobile navigation
@@ -222,11 +223,37 @@ function fallbackCopyTextToClipboard(text) {
   });
 }
 
-// ---- TACTILE BUTTON FEEDBACK HELPER ----
+// ---- TACTILE BUTTON FEEDBACK HELPER (APPLE-GRADE SPRING MOTION) ----
 function triggerButtonFeedback(btnElement, copiedText = 'Zkopírováno!') {
   if (!btnElement) return;
 
   btnElement.classList.add('copied', 'is-copied');
+
+  // Apple-grade physical tactile spring bounce on the element
+  if (typeof btnElement.animate === 'function') {
+    btnElement.animate([
+      { transform: 'scale(1)' },
+      { transform: 'scale(0.965)' },
+      { transform: 'scale(1.025)' },
+      { transform: 'scale(1)' }
+    ], {
+      duration: 380,
+      easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+    });
+  }
+
+  // Dynamic vector checkmark spring bounce
+  const iconWrap = btnElement.querySelector('.btn-copy-icon-wrap');
+  if (iconWrap && typeof iconWrap.animate === 'function') {
+    iconWrap.animate([
+      { transform: 'scale(0.7) rotate(-15deg)' },
+      { transform: 'scale(1.15) rotate(0deg)' },
+      { transform: 'scale(1) rotate(0deg)' }
+    ], {
+      duration: 400,
+      easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+    });
+  }
 
   // If button has structured label
   const label = btnElement.querySelector('.btn-copy-label') || btnElement.querySelector('.btn-gm-label');
@@ -819,9 +846,65 @@ async function checkoutSMP() {
   }
 }
 
+// ---- APPLE-GRADE INTERACTIVE VECTOR SPOTLIGHT ----
+function initVectorSpotlight() {
+  const cards = document.querySelectorAll(
+    '.gamemode-card, .command-card, .hero-ip-bar, .join-quick-ip-card, .join-step-row, .smp-card, .smp-showcase-card, .stat-card, .gm-feat-tile, .media-crit-chip, .media-perk-item, .rule-card, .bug-interactive-card, .trust-badge-item, .join-auth-mini-card, .modtest-card'
+  );
+
+  cards.forEach(card => {
+    if (card._spotlightInit) return;
+    card._spotlightInit = true;
+
+    let ticking = false;
+    card.addEventListener('mousemove', (e) => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.removeProperty('--mouse-x');
+      card.style.removeProperty('--mouse-y');
+    });
+  });
+}
+
+// ---- APPLE-GRADE TACTILE MICRO-INTERACTIONS LISTENER ----
+function initMicroInteractions() {
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest(
+      'button, .btn, .nav-link, .rules-filter-btn, .bug-cat-chip, .smp-mode-btn, .gm-card-cmd-chip, .bottom-nav-item, .join-pill, .rules-banner-banned-btn'
+    );
+    if (!target || target.disabled || target.classList.contains('copied') || target.classList.contains('is-copied')) return;
+
+    if (typeof target.animate === 'function') {
+      target.animate([
+        { transform: 'scale(1)' },
+        { transform: 'scale(0.965)' },
+        { transform: 'scale(1.02)' },
+        { transform: 'scale(1)' }
+      ], {
+        duration: 320,
+        easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+      });
+    }
+  }, { passive: true });
+}
+
 // Load stats on page load
 document.addEventListener('DOMContentLoaded', () => {
   loadStats();
+  initVectorSpotlight();
+  initMicroInteractions();
 
   // Trigger transition for default active tab
   const activeTab = document.querySelector('.tab-section.active');

@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20260928_v9" />
+  <link rel="stylesheet" href="style.css?v=20261001_v10" />
 </head>
 
 <body>
@@ -1952,6 +1952,19 @@
                   autocomplete="off" />
               </div>
 
+              <!-- Cracked / No Java Edition toggle -->
+              <div class="smp-cracked-toggle" id="smp-cracked-toggle">
+                <label class="smp-consent-label" for="smp-cracked-check">
+                  <input type="checkbox" id="smp-cracked-check" class="smp-consent-checkbox"
+                    onchange="handleCrackedToggle(this.checked)" />
+                  <span class="smp-consent-text">Nemám koupený Minecraft (Warez / offline launcher)</span>
+                </label>
+                <p class="smp-cracked-hint" id="smp-cracked-hint" style="display:none;">
+                  <i class="fa-solid fa-circle-info" style="color:#0a67e5;"></i>
+                  Budeš přesměrován na náš oficiální obchod Tebex, kde zadáš nick ručně bez ověřování Mojang účtu.
+                </p>
+              </div>
+
               <!-- Mandatory Consent Checkbox -->
               <div class="smp-consent-wrapper" id="smp-consent-wrapper">
                 <label class="smp-consent-label" for="smp-consent-terms">
@@ -3813,7 +3826,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261001_chk2"></script>
+  <script src="script.js?v=20261001_chk4"></script>
 </body>
 
 </html>

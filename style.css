@@ -11431,6 +11431,28 @@ body {
   color: #ffffff;
 }
 
+.smp-cracked-toggle {
+  margin: 12px 0 4px 0;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.smp-cracked-toggle:hover {
+  border-color: rgba(10, 103, 229, 0.4);
+  background: rgba(10, 103, 229, 0.04);
+}
+
+.smp-cracked-hint {
+  margin: 8px 0 0 28px;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.45;
+}
+
 /* ========================================================
    2026 HERO SECTION & ATMOSPHERE ENHANCEMENTS
    ======================================================== */

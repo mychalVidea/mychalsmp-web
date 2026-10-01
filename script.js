@@ -674,7 +674,56 @@ function setPreviewNickColor(color, swatchEl) {
 }
 
 // ---- TEBEX CHECKOUT CONFIG ----
+const TEBEX_STORE_PACKAGE_URL = 'https://mychalsmp.tebex.store/package/7559669';
+
+function handleCrackedToggle(isCracked) {
+  const hint = document.getElementById('smp-cracked-hint');
+  const btn = document.querySelector('.btn-purchase');
+  const btnTitle = btn ? btn.querySelector('.btn-purchase-title') : null;
+  const btnSub = btn ? btn.querySelector('.btn-purchase-sub') : null;
+
+  if (hint) {
+    hint.style.display = isCracked ? 'block' : 'none';
+  }
+
+  if (btnTitle && btnSub) {
+    if (isCracked) {
+      btnTitle.innerHTML = '<i class="fa-solid fa-arrow-up-right-from-square"></i> PŘEJÍT DO OBCHODU';
+      btnSub.textContent = 'Oficiální Tebex store • Vhodné i pro Warez';
+    } else {
+      btnTitle.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> AKTIVOVAT SMP+';
+      btnSub.textContent = 'Pouze 1.99 € / měsíc • Okamžitá aktivace';
+    }
+  }
+}
+
 async function checkoutSMP() {
+  const isCracked = document.getElementById('smp-cracked-check')?.checked;
+
+  // Check mandatory terms and immediate delivery consent
+  const consentCb = document.getElementById('smp-consent-terms');
+  if (consentCb && !consentCb.checked) {
+    showToast('⚠️ Pro nákup musíš potvrdit souhlas s Podmínkami služby a okamžitým plněním!');
+    const consentWrapper = document.getElementById('smp-consent-wrapper');
+    if (consentWrapper) {
+      consentWrapper.classList.remove('shake-input');
+      void consentWrapper.offsetWidth;
+      consentWrapper.classList.add('shake-input');
+    }
+    consentCb.focus();
+    return;
+  }
+
+  // If player indicated they have warez / cracked launcher without official Mojang account
+  if (isCracked) {
+    showToast('↗️ Přesměrovávám do obchodu Tebex...');
+    const newWin = window.open(TEBEX_STORE_PACKAGE_URL, '_blank');
+    if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
+      window.location.href = TEBEX_STORE_PACKAGE_URL;
+    }
+    return;
+  }
+
   const nickInput = document.getElementById('mc-username');
   const nickname = nickInput ? nickInput.value.trim() : '';
 
@@ -697,21 +746,6 @@ async function checkoutSMP() {
       void nickInput.offsetWidth;
       nickInput.classList.add('shake-input');
     }
-    return;
-  }
-
-  // Check mandatory terms and immediate delivery consent
-  const consentCb = document.getElementById('smp-consent-terms');
-  if (consentCb && !consentCb.checked) {
-    showToast('⚠️ Pro nákup musíš potvrdit souhlas s Podmínkami služby a okamžitým plněním!');
-    const consentWrapper = document.getElementById('smp-consent-wrapper');
-    if (consentWrapper) {
-      consentWrapper.classList.remove('shake-input');
-      void consentWrapper.offsetWidth;
-      consentWrapper.classList.add('shake-input');
-    }
-    consentCb.focus();
-    return;
   }
 
   const btn = document.querySelector('.btn-purchase');
@@ -738,6 +772,16 @@ async function checkoutSMP() {
         showToast('❌ ' + errMsg);
       } else {
         alert(errMsg);
+      }
+
+      // If user wasn't found (cracked account or typo), shake the cracked toggle to draw attention
+      if (errMsg.includes('nebyl na Tebexu nalezen') || errMsg.toLowerCase().includes('username') || data?.isInvalidUser) {
+        const crackedToggle = document.getElementById('smp-cracked-toggle');
+        if (crackedToggle) {
+          crackedToggle.classList.remove('shake-input');
+          void crackedToggle.offsetWidth;
+          crackedToggle.classList.add('shake-input');
+        }
       }
       return;
     }
@@ -3272,7 +3316,7 @@ function smoothScrollToLegal(targetId, event) {
   window.scrollTo({ top: y, behavior: 'smooth' });
 }
 
-let updateLegalProgressGlobal = function() {};
+let updateLegalProgressGlobal = function () { };
 
 // Sledování průběhu čtení a aktivní kapitoly v TOC (Clamped Sticky Rail)
 (function initLegalReader() {
@@ -3450,8 +3494,8 @@ function renderBannedPlayers(players) {
   const filtered = players.filter(p => {
     if (!query) return true;
     return (p.name && p.name.toLowerCase().includes(query)) ||
-           (p.reason && p.reason.toLowerCase().includes(query)) ||
-           (p.source && p.source.toLowerCase().includes(query));
+      (p.reason && p.reason.toLowerCase().includes(query)) ||
+      (p.source && p.source.toLowerCase().includes(query));
   });
 
   if (countBadge) {
@@ -4445,10 +4489,10 @@ function handleArchiveDownload(event) {
     ? SURVIVAL_ARCHIVE_DOWNLOAD_URL
     : currentHref;
 
-  const isPlaceholder = !targetUrl || 
-                        targetUrl === '#' || 
-                        targetUrl === '#tab-home' || 
-                        targetUrl.includes('SEM_VLOZ_ODKAZ_KE_STAZENI');
+  const isPlaceholder = !targetUrl ||
+    targetUrl === '#' ||
+    targetUrl === '#tab-home' ||
+    targetUrl.includes('SEM_VLOZ_ODKAZ_KE_STAZENI');
 
   if (isPlaceholder) {
     event.preventDefault();

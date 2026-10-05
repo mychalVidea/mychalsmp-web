@@ -519,6 +519,7 @@ async function loadStats() {
   try {
     const apiEndpoints = [
       '/api/public-stats',
+      '/economy_stats.json',
       'https://api.6767111.xyz/api/public-stats'
     ];
     let data = null;
@@ -561,15 +562,32 @@ let statsAnimated = false;
 function updateStat(id, newVal) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.setAttribute('data-target', newVal);
+  const numVal = parseInt(newVal, 10) || 0;
+  el.setAttribute('data-target', numVal);
   if (statsAnimated) {
-    animateCounter(el, newVal);
+    animateCounter(el, numVal);
+  } else {
+    if (el.id === 'stat-money') {
+      el.textContent = '$' + formatCompactNumber(numVal);
+    } else {
+      const suffix = el.id === 'stat-deaths' ? '' : '+';
+      el.textContent = numVal + suffix;
+    }
   }
 }
 
 function animateCounter(el, targetValue) {
+  if (!el) return;
+  const numTarget = parseInt(targetValue, 10) || 0;
+
+  // Cancel any previous running animation on this element
+  if (el._statAnimFrameId) {
+    cancelAnimationFrame(el._statAnimFrameId);
+    el._statAnimFrameId = null;
+  }
+
   const duration = 1500; // 1.5 seconds
-  const start = 0;
+  const start = el._currentAnimValue !== undefined ? el._currentAnimValue : 0;
   const startTime = performance.now();
 
   function update(currentTime) {
@@ -578,7 +596,8 @@ function animateCounter(el, targetValue) {
 
     // Ease out quadratic
     const easeProgress = progress * (2 - progress);
-    const currentValue = Math.floor(start + easeProgress * (targetValue - start));
+    const currentValue = Math.floor(start + easeProgress * (numTarget - start));
+    el._currentAnimValue = currentValue;
 
     if (el.id === 'stat-money') {
       el.textContent = '$' + formatCompactNumber(currentValue);
@@ -588,17 +607,19 @@ function animateCounter(el, targetValue) {
     }
 
     if (progress < 1) {
-      requestAnimationFrame(update);
+      el._statAnimFrameId = requestAnimationFrame(update);
     } else {
+      el._currentAnimValue = numTarget;
+      el._statAnimFrameId = null;
       if (el.id === 'stat-money') {
-        el.textContent = '$' + formatCompactNumber(targetValue);
+        el.textContent = '$' + formatCompactNumber(numTarget);
       } else {
         const suffix = el.id === 'stat-deaths' ? '' : '+';
-        el.textContent = targetValue + suffix;
+        el.textContent = numTarget + suffix;
       }
     }
   }
-  requestAnimationFrame(update);
+  el._statAnimFrameId = requestAnimationFrame(update);
 }
 
 let skinDebounceTimer = null;

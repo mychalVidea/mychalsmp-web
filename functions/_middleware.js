@@ -35,6 +35,19 @@ export async function onRequest(context) {
     }
   }
 
-  // 3. Pro aplikační SPA cesty (např. /modtest, /rules, /media) obsloužit index.html
+  // 3. Transparentní reverzní proxy pro /api cesty přímo na backend bot serveru
+  if (pathname.startsWith('/api/')) {
+    const backendUrl = new URL(url.pathname + url.search, 'https://api.6767111.xyz');
+    try {
+      return await fetch(new Request(backendUrl, context.request));
+    } catch (e) {
+      return new Response(JSON.stringify({ error: 'Backend unreachable' }), {
+        status: 502,
+        headers: { 'Content-Type': 'application/json; charset=utf-8' }
+      });
+    }
+  }
+
+  // 4. Pro aplikační SPA cesty (např. /modtest, /rules, /media) obsloužit index.html
   return context.next();
 }

@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261002_v4" />
+  <link rel="stylesheet" href="style.css?v=20261002_v6" />
 </head>
 
 <body>
@@ -286,7 +286,7 @@
           <div class="stat-divider"></div>
           <div class="stat-card">
             <i class="fa-solid fa-coins stat-card-icon" style="color: #21DE00; font-size: 2rem;"></i>
-            <span class="stat-num" id="stat-money" data-target="0" style="color: #21DE00;">$0</span>
+            <span class="stat-num" id="stat-money" data-target="644000000" style="color: #21DE00;">$644M</span>
             <span class="stat-label">Peněz</span>
           </div>
         </div>
@@ -540,10 +540,7 @@
         <!-- Tech Highlights Bar -->
         <div class="tech-specs-bar">
           <div class="tech-spec-item">
-            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-            </svg>
+            <img src="imgs/icons/leaf.svg" alt="LeafMC" class="tech-spec-icon-img" />
             <span>Brutální výkon & 20 TPS (LeafMC)</span>
           </div>
           <div class="tech-spec-item">
@@ -571,7 +568,12 @@
           <!-- 1. Beacon -->
           <div class="tech-plugin-card">
             <div class="tech-plugin-header">
-              <span class="tech-plugin-name">Beacon</span>
+              <div class="tech-plugin-title-group">
+                <span class="tech-plugin-name">Beacon</span>
+                <div class="tech-plugin-avatar-peek">
+                  <img src="imgs/icons/beacon.jpg" alt="Beacon" class="tech-plugin-avatar-img" />
+                </div>
+              </div>
               <span class="tech-plugin-tag">Centrální jádro</span>
             </div>
             <p class="tech-plugin-desc">
@@ -583,7 +585,12 @@
           <!-- 2. Warden -->
           <div class="tech-plugin-card">
             <div class="tech-plugin-header">
-              <span class="tech-plugin-name">Warden</span>
+              <div class="tech-plugin-title-group">
+                <span class="tech-plugin-name">Warden</span>
+                <div class="tech-plugin-avatar-peek">
+                  <img src="imgs/icons/warden.jpg?v=2" alt="Warden" class="tech-plugin-avatar-img" />
+                </div>
+              </div>
               <span class="tech-plugin-tag">Anticheat & Bezpečnost</span>
             </div>
             <p class="tech-plugin-desc">
@@ -595,7 +602,12 @@
           <!-- 3. Iron Golem -->
           <div class="tech-plugin-card">
             <div class="tech-plugin-header">
-              <span class="tech-plugin-name">Iron Golem</span>
+              <div class="tech-plugin-title-group">
+                <span class="tech-plugin-name">Iron Golem</span>
+                <div class="tech-plugin-avatar-peek">
+                  <img src="imgs/icons/iron_golem.jpg" alt="Iron Golem" class="tech-plugin-avatar-img" />
+                </div>
+              </div>
               <span class="tech-plugin-tag">Autentizace</span>
             </div>
             <p class="tech-plugin-desc">
@@ -607,7 +619,12 @@
           <!-- 4. Enderman -->
           <div class="tech-plugin-card">
             <div class="tech-plugin-header">
-              <span class="tech-plugin-name">Enderman</span>
+              <div class="tech-plugin-title-group">
+                <span class="tech-plugin-name">Enderman</span>
+                <div class="tech-plugin-avatar-peek">
+                  <img src="imgs/icons/enderman.jpg" alt="Enderman" class="tech-plugin-avatar-img" />
+                </div>
+              </div>
               <span class="tech-plugin-tag">Správa území</span>
             </div>
             <p class="tech-plugin-desc">
@@ -619,7 +636,12 @@
           <!-- 5. Wither -->
           <div class="tech-plugin-card">
             <div class="tech-plugin-header">
-              <span class="tech-plugin-name">Wither</span>
+              <div class="tech-plugin-title-group">
+                <span class="tech-plugin-name">Wither</span>
+                <div class="tech-plugin-avatar-peek">
+                  <img src="imgs/icons/wither.jpg" alt="Wither" class="tech-plugin-avatar-img" />
+                </div>
+              </div>
               <span class="tech-plugin-tag">Bojový systém</span>
             </div>
             <p class="tech-plugin-desc">
@@ -631,7 +653,12 @@
           <!-- 6. Evoker -->
           <div class="tech-plugin-card">
             <div class="tech-plugin-header">
-              <span class="tech-plugin-name">Evoker</span>
+              <div class="tech-plugin-title-group">
+                <span class="tech-plugin-name">Evoker</span>
+                <div class="tech-plugin-avatar-peek">
+                  <img src="imgs/icons/evoker.jpg?v=2" alt="Evoker" class="tech-plugin-avatar-img" />
+                </div>
+              </div>
               <span class="tech-plugin-tag">Vlastní magie</span>
             </div>
             <p class="tech-plugin-desc">
@@ -643,7 +670,12 @@
           <!-- 7. Stray -->
           <div class="tech-plugin-card">
             <div class="tech-plugin-header">
-              <span class="tech-plugin-name">Stray</span>
+              <div class="tech-plugin-title-group">
+                <span class="tech-plugin-name">Stray</span>
+                <div class="tech-plugin-avatar-peek">
+                  <img src="imgs/icons/stray.webp" alt="Stray" class="tech-plugin-avatar-img" />
+                </div>
+              </div>
               <span class="tech-plugin-tag">Mrazivé přežití</span>
             </div>
             <p class="tech-plugin-desc">
@@ -3788,7 +3820,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261002_v4"></script>
+  <script src="script.js?v=20261005_v7"></script>
 </body>
 
 </html>

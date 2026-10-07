@@ -283,13 +283,14 @@ function triggerButtonFeedback(btnElement, copiedText = 'Zkopírováno!') {
 // ---- LAUNCHER OS SWITCHER & TERMINAL COPY ----
 function detectUserOS() {
   const ua = (navigator.userAgentData?.platform || navigator.platform || navigator.userAgent || '').toLowerCase();
-  if (ua.includes('win')) return 'windows';
-  if (ua.includes('mac')) return 'macos';
   if (ua.includes('linux')) return 'linux';
   return 'windows';
 }
 
 function switchLauncherOS(os, btn) {
+  if (os !== 'linux' && os !== 'windows') {
+    os = 'windows';
+  }
   document.querySelectorAll('.os-nav-tab').forEach(t => t.classList.remove('active'));
   if (btn) {
     btn.classList.add('active');

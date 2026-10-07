@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261008_v1" />
+  <link rel="stylesheet" href="style.css?v=20261008_v2" />
 </head>
 
 <body>
@@ -3611,23 +3611,54 @@
         <div class="launcher-hub-card">
           <!-- OS Nav Tabs -->
           <div class="os-selector-nav">
-            <button class="os-nav-tab active" data-os="linux" onclick="switchLauncherOS('linux', this)">
-              <i class="fa-brands fa-linux"></i>
-              <span>Linux</span>
-              <span class="os-pill-badge">Doporučeno</span>
-            </button>
-            <button class="os-nav-tab" data-os="windows" onclick="switchLauncherOS('windows', this)">
+            <button class="os-nav-tab active" data-os="windows" onclick="switchLauncherOS('windows', this)">
               <i class="fa-brands fa-windows"></i>
               <span>Windows</span>
+              <span class="os-pill-badge">Doporučeno</span>
             </button>
-            <button class="os-nav-tab" data-os="macos" onclick="switchLauncherOS('macos', this)">
-              <i class="fa-brands fa-apple"></i>
-              <span>macOS</span>
+            <button class="os-nav-tab" data-os="linux" onclick="switchLauncherOS('linux', this)">
+              <i class="fa-brands fa-linux"></i>
+              <span>Linux</span>
             </button>
           </div>
 
+          <!-- Windows Panel (Default) -->
+          <div id="os-panel-windows" class="os-panel active">
+            <div class="os-panel-header">
+              <div class="os-panel-info">
+                <span class="os-target-title">Microsoft Windows 10 & 11 (64-bit)</span>
+                <span class="os-target-desc">Oficiální klient pro hráče sítě MYCHAL SMP s integrovanou Javou 21 a optimalizací FPS.</span>
+              </div>
+              <div class="os-actions-row">
+                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases/latest/download/mychalsmp-launcher-windows-11-x64.zip" class="btn-launcher-download" download>
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  <span>Stáhnout pro Windows (.zip / .exe)</span>
+                </a>
+                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases" target="_blank" rel="noopener" class="btn-launcher-secondary">
+                  <i class="fa-brands fa-github"></i>
+                  <span>GitHub Releases</span>
+                </a>
+              </div>
+            </div>
+            <div class="os-terminal-box">
+              <div class="os-terminal-header">
+                <div class="os-terminal-dots">
+                  <span class="term-dot blue"></span>
+                  <span class="term-dot blue"></span>
+                </div>
+                <span class="os-terminal-title">Rychlé spuštění na Windows</span>
+                <span class="os-terminal-tag">WINDOWS</span>
+              </div>
+              <p class="os-terminal-hint">Stáhni balíček z GitHubu, rozbal a spusť aplikaci. Zadej svůj herní nick a připoj se přímo do hry na <code>mychalsmp.xyz</code>.</p>
+            </div>
+          </div>
+
           <!-- Linux Panel -->
-          <div id="os-panel-linux" class="os-panel active">
+          <div id="os-panel-linux" class="os-panel">
             <div class="os-panel-header">
               <div class="os-panel-info">
                 <span class="os-target-title">Linux (CachyOS, Arch, Ubuntu, Debian, Fedora)</span>
@@ -3661,8 +3692,8 @@
                 <span class="os-terminal-tag">BASH</span>
               </div>
               <div class="os-terminal-code-row">
-                <code id="cmd-linux-install" class="term-code-text">curl -sSL https://mychalsmp.xyz/install.sh | bash</code>
-                <button class="btn-term-copy" onclick="copyTermCommand('curl -sSL https://mychalsmp.xyz/install.sh | bash', this)" title="Zkopírovat příkaz">
+                <code id="cmd-linux-install" class="term-code-text">curl -sSL https://raw.githubusercontent.com/mychalVidea/mychalsmp-launcher/main/install.sh | bash</code>
+                <button class="btn-term-copy" onclick="copyTermCommand('curl -sSL https://raw.githubusercontent.com/mychalVidea/mychalsmp-launcher/main/install.sh | bash', this)" title="Zkopírovat příkaz">
                   <span class="btn-copy-icon-wrap">
                     <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
@@ -3675,108 +3706,7 @@
                   <span>Kopírovat</span>
                 </button>
               </div>
-              <p class="os-terminal-hint">Skript automaticky stáhne klienta, vytvoří zástupce v menu aplikací (.desktop) s ikonou a přidá spustitelný soubor do cesty.</p>
-            </div>
-          </div>
-
-          <!-- Windows Panel -->
-          <div id="os-panel-windows" class="os-panel">
-            <div class="os-panel-header">
-              <div class="os-panel-info">
-                <span class="os-target-title">Microsoft Windows 10 & 11 (64-bit)</span>
-                <span class="os-target-desc">Optimalizovaný instalační balíček i portable verze pro Windows 64-bit.</span>
-              </div>
-              <div class="os-actions-row">
-                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases/latest/download/mychalsmp-launcher-windows-11-x64.zip" class="btn-launcher-download" download>
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  <span>Stáhnout pro Windows (.zip / .exe)</span>
-                </a>
-                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases" target="_blank" rel="noopener" class="btn-launcher-secondary">
-                  <i class="fa-brands fa-github"></i>
-                  <span>Všechna vydání</span>
-                </a>
-              </div>
-            </div>
-            <div class="os-terminal-box">
-              <div class="os-terminal-header">
-                <div class="os-terminal-dots">
-                  <span class="term-dot blue"></span>
-                  <span class="term-dot blue"></span>
-                </div>
-                <span class="os-terminal-title">PowerShell Quick Launch</span>
-                <span class="os-terminal-tag">POWERSHELL</span>
-              </div>
-              <div class="os-terminal-code-row">
-                <code id="cmd-win-install" class="term-code-text">irm https://mychalsmp.xyz/install.ps1 | iex</code>
-                <button class="btn-term-copy" onclick="copyTermCommand('irm https://mychalsmp.xyz/install.ps1 | iex', this)" title="Zkopírovat příkaz">
-                  <span class="btn-copy-icon-wrap">
-                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                    </svg>
-                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </span>
-                  <span>Kopírovat</span>
-                </button>
-              </div>
-              <p class="os-terminal-hint">Po stažení stačí spustit instalační soubor nebo přenosný balíček ze složky Stažené soubory.</p>
-            </div>
-          </div>
-
-          <!-- macOS Panel -->
-          <div id="os-panel-macos" class="os-panel">
-            <div class="os-panel-header">
-              <div class="os-panel-info">
-                <span class="os-target-title">Apple macOS (Apple Silicon M1-M4 & Intel)</span>
-                <span class="os-target-desc">Podpora macOS 12+ s nativním během pro ARM64 i x86_64 architekturu.</span>
-              </div>
-              <div class="os-actions-row">
-                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases" target="_blank" rel="noopener" class="btn-launcher-download">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  <span>Stáhnout pro macOS (.dmg / .zip)</span>
-                </a>
-                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases" target="_blank" rel="noopener" class="btn-launcher-secondary">
-                  <i class="fa-brands fa-github"></i>
-                  <span>GitHub Releases</span>
-                </a>
-              </div>
-            </div>
-            <div class="os-terminal-box">
-              <div class="os-terminal-header">
-                <div class="os-terminal-dots">
-                  <span class="term-dot red"></span>
-                  <span class="term-dot yellow"></span>
-                  <span class="term-dot green"></span>
-                </div>
-                <span class="os-terminal-title">Instalace přes ZSH / Terminal</span>
-                <span class="os-terminal-tag">ZSH / BASH</span>
-              </div>
-              <div class="os-terminal-code-row">
-                <code id="cmd-mac-install" class="term-code-text">curl -sSL https://mychalsmp.xyz/install-mac.sh | bash</code>
-                <button class="btn-term-copy" onclick="copyTermCommand('curl -sSL https://mychalsmp.xyz/install-mac.sh | bash', this)" title="Zkopírovat příkaz">
-                  <span class="btn-copy-icon-wrap">
-                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                    </svg>
-                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </span>
-                  <span>Kopírovat</span>
-                </button>
-              </div>
-              <p class="os-terminal-hint">Po stažení stačí přetáhnout aplikaci do složky Aplikace (/Applications).</p>
+              <p class="os-terminal-hint">Skript automaticky stáhne klienta z GitHub Releases, vytvoří zástupce v menu aplikací (.desktop) s ikonou a přidá spustitelný soubor do cesty.</p>
             </div>
           </div>
         </div>
@@ -4090,7 +4020,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261008_v1"></script>
+  <script src="script.js?v=20261008_v2"></script>
 </body>
 
 </html>

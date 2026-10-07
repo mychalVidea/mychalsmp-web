@@ -2,7 +2,21 @@ export async function onRequest(context) {
   const url = new URL(context.request.url);
   const pathname = url.pathname.toLowerCase();
 
-  // 1. Ochrana citlivých cest a sondování - pro neexistující/systémové soubory vracíme vždy 404 (místo SPA 200 fallbacku)
+  // 1. Výjimka pro oficiální instalátor launcheru
+  if (pathname === '/install.sh') {
+    const assetRes = await context.env.ASSETS.fetch(context.request);
+    if (assetRes.status === 200) {
+      return new Response(assetRes.body, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Cache-Control': 'public, max-age=300'
+        }
+      });
+    }
+  }
+
+  // 2. Ochrana citlivých cest a sondování - pro neexistující/systémové soubory vracíme vždy 404 (místo SPA 200 fallbacku)
   if (
     pathname.startsWith('/.') ||
     pathname.includes('/.') ||

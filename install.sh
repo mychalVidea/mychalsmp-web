@@ -21,15 +21,15 @@ mkdir -p "$ICON_DIR"
 
 TEMP_TAR="/tmp/$TAR_FILE"
 
-# Pokus o stažení z webu mychalsmp.xyz, lokální sítě nebo GitHubu
-if curl -sSfL "https://github.com/mychalVidea/mychalsmp-launcher/releases/latest/download/$TAR_FILE" -o "$TEMP_TAR" 2>/dev/null; then
-    echo "✓ Balíček stažen z GitHub Releases"
-elif curl -sSfL "https://mychalsmp.xyz/$TAR_FILE" -o "$TEMP_TAR" 2>/dev/null; then
-    echo "✓ Balíček stažen z oficiálního webu mychalsmp.xyz"
-elif curl -sSfL "http://192.168.1.141:8080/$TAR_FILE" -o "$TEMP_TAR" 2>/dev/null; then
-    echo "✓ Balíček stažen z lokálního distribučního serveru"
+# Stažení instalačního balíčku výhradně z oficiálního GitHub Releases
+GITHUB_RELEASE_URL="https://github.com/mychalVidea/mychalsmp-launcher/releases/latest/download/$TAR_FILE"
+
+echo "📥 Stahuji balíček z GitHub Releases..."
+if curl -fL "$GITHUB_RELEASE_URL" -o "$TEMP_TAR"; then
+    echo "✓ Balíček byl úspěšně stažen z GitHub Releases"
 else
-    echo "❌ Chyba: Nepodařilo se stáhnout $TAR_FILE."
+    echo "❌ Chyba: Nepodařilo se stáhnout $TAR_FILE z GitHub Releases ($GITHUB_RELEASE_URL)."
+    echo "Zkontroluj prosím internetové připojení nebo dostupnost vydání na GitHubu."
     exit 1
 fi
 

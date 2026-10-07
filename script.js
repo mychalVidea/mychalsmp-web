@@ -306,9 +306,37 @@ function switchLauncherOS(os, btn) {
   }
 }
 
+// ---- DYNAMIC GITHUB RELEASES LINK RESOLVER ----
+async function resolveLatestLauncherDownloads() {
+  const winBtn = document.getElementById('btn-win-download');
+  const linBtn = document.getElementById('btn-linux-download');
+  try {
+    const res = await fetch('https://api.github.com/repos/mychalVidea/mychalsmp-launcher/releases/latest');
+    if (!res.ok) return;
+    const data = await res.json();
+    const assets = data.assets || [];
+
+    // Setup exe pro Windows
+    const winAsset = assets.find(a => /setup.*\.exe$/i.test(a.name)) ||
+                     assets.find(a => /\.exe$/i.test(a.name));
+    if (winAsset && winBtn) {
+      winBtn.href = winAsset.browser_download_url;
+    }
+
+    // Tar.gz pro Linux
+    const linAsset = assets.find(a => /\.tar\.gz$/i.test(a.name));
+    if (linAsset && linBtn) {
+      linBtn.href = linAsset.browser_download_url;
+    }
+  } catch (err) {
+    // Tichý fallback - tlačítka již mají výchozí fallback odkazy v HTML
+  }
+}
+
 if (typeof window !== 'undefined') {
   window.addEventListener('DOMContentLoaded', () => {
     switchLauncherOS(detectUserOS());
+    resolveLatestLauncherDownloads();
   });
 }
 

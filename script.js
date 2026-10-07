@@ -74,6 +74,8 @@ function handleUrlRouting() {
     executeTabSwitch('modtest', false);
   } else if (route === 'napady' || route === 'napad' || route === 'ideas') {
     executeTabSwitch('napady', false);
+  } else if (route === 'launcher' || route === 'download' || route === 'klient' || route === 'client') {
+    executeTabSwitch('launcher', false);
   } else if (route === 'privacy' || route === 'gdpr' || route === 'soukromi' || route === 'data') {
     executeTabSwitch('privacy', false);
   } else if (route === 'terms' || route === 'tos' || route === 'podminky') {
@@ -158,6 +160,7 @@ function executeTabSwitch(name, updateUrl = true) {
     else if (name === 'bugs') urlPath = '/bug';
     else if (name === 'napady') urlPath = '/napady';
     else if (name === 'modtest') urlPath = '/modtest';
+    else if (name === 'launcher') urlPath = '/launcher';
     else if (name === 'home') urlPath = '/';
 
     if (window.location.pathname !== urlPath) {
@@ -275,6 +278,45 @@ function triggerButtonFeedback(btnElement, copiedText = 'Zkopírováno!') {
     }
     btnElement._resetTimer = null;
   }, 2000);
+}
+
+// ---- LAUNCHER OS SWITCHER & TERMINAL COPY ----
+function detectUserOS() {
+  const ua = (navigator.userAgentData?.platform || navigator.platform || navigator.userAgent || '').toLowerCase();
+  if (ua.includes('win')) return 'windows';
+  if (ua.includes('mac')) return 'macos';
+  if (ua.includes('linux')) return 'linux';
+  return 'windows';
+}
+
+function switchLauncherOS(os, btn) {
+  document.querySelectorAll('.os-nav-tab').forEach(t => t.classList.remove('active'));
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    const matchingBtn = document.querySelector(`.os-nav-tab[data-os="${os}"]`);
+    if (matchingBtn) matchingBtn.classList.add('active');
+  }
+
+  document.querySelectorAll('.os-panel').forEach(p => p.classList.remove('active'));
+  const targetPanel = document.getElementById(`os-panel-${os}`);
+  if (targetPanel) {
+    targetPanel.classList.add('active');
+  }
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('DOMContentLoaded', () => {
+    switchLauncherOS(detectUserOS());
+  });
+}
+
+function copyTermCommand(commandText, btn) {
+  copyTextToClipboard(commandText).then(() => {
+    triggerButtonFeedback(btn, 'Zkopírováno!');
+  }).catch(() => {
+    triggerButtonFeedback(btn, 'Zkopírováno!');
+  });
 }
 
 // ---- COPY IP ----
@@ -4634,21 +4676,21 @@ window.closeArchiveModal = closeArchiveModal;
 window.closeArchiveModalOutside = closeArchiveModalOutside;
 window.handleArchiveDownload = handleArchiveDownload;
 
-// ─── STRAY TEASER COUNTDOWN (ODHALENÍ 6. 10. 2026) ───────────────────
+// ─── PERMAFROST LAUNCH COUNTDOWN (10. 10. 2026 V 20:00) ──────────────
 (function () {
-  // Oct 6, 2026 18:00:00 CEST (16:00:00 UTC)
-  const REVEAL_DATE = new Date('2026-10-06T16:00:00Z');
+  // Oct 10, 2026 20:00:00 CEST (18:00:00 UTC)
+  const LAUNCH_DATE = new Date('2026-10-10T20:00:00+02:00');
   const timerEl = document.getElementById('stray-countdown-val');
   if (!timerEl) return;
 
   function pad(n) { return n < 10 ? '0' + n : n; }
 
-  function updateStrayCountdown() {
+  function updatePermafrostCountdown() {
     const now = new Date();
-    const diff = REVEAL_DATE - now;
+    const diff = LAUNCH_DATE - now;
 
     if (diff <= 0) {
-      timerEl.textContent = 'ODHALENO';
+      timerEl.textContent = 'SPUŠTĚNO';
       return;
     }
 
@@ -4661,8 +4703,8 @@ window.handleArchiveDownload = handleArchiveDownload;
     timerEl.textContent = `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
   }
 
-  updateStrayCountdown();
-  setInterval(updateStrayCountdown, 1000);
+  updatePermafrostCountdown();
+  setInterval(updatePermafrostCountdown, 1000);
 })();
 
 

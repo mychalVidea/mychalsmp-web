@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261002_v6" />
+  <link rel="stylesheet" href="style.css?v=20261008_v1" />
 </head>
 
 <body>
@@ -39,6 +39,15 @@
               d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
           </svg>
           <span>Domů</span>
+        </button>
+        <button id="tab-btn-launcher" class="nav-link" onclick="showTab('launcher')">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          <span>Launcher</span>
         </button>
         <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">
           <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -123,6 +132,15 @@
             d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
         </svg>
         <span>Domů</span>
+      </button>
+      <button class="nav-link" id="top-nav-launcher" onclick="showTab('launcher');toggleMenu()">
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        <span>Launcher</span>
       </button>
       <button class="nav-link" id="top-nav-join" onclick="showTab('join');toggleMenu()">
         <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -239,6 +257,15 @@
               <polygon points="10 8 16 12 10 16 10 8" />
             </svg>
             <span>Jak se připojit</span>
+          </button>
+          <button class="btn-hero-launcher" onclick="showTab('launcher')">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span>Stáhnout Launcher</span>
           </button>
           <button class="btn-hero-smp" onclick="showTab('smp-plus')">
             <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="currentColor">
@@ -374,63 +401,63 @@
             </div>
           </div>
 
-          <!-- Card 2: Stray Teaser -->
+          <!-- Card 2: Permafrost -->
           <div class="gamemode-card gamemode-card--stray">
             <div class="gm-card-media" onclick="openLightbox('imgs/stray-teaser.jpg')" title="Kliknutím zvětšíš teaser">
-              <img src="imgs/stray-teaser.jpg" alt="Projekt Stray – Kódové jméno" class="gm-card-img" />
+              <img src="imgs/stray-teaser.jpg" alt="Permafrost – Herní svět" class="gm-card-img" />
               <div class="gm-card-overlay"></div>
-              <div class="gm-card-badge gm-badge--stray">ODHALENÍ 6. 10. 2026</div>
+              <div class="gm-card-badge gm-badge--stray">START 10. 10. 2026 V 20:00</div>
             </div>
 
             <div class="gm-card-body">
               <div class="gm-card-head">
                 <div>
-                  <h3 class="gm-card-title"><span class="mc-font text-cyan">Stray</span></h3>
-                  <span class="gm-card-sub">Připravovaný permafrost svět</span>
+                  <h3 class="gm-card-title"><span class="mc-font text-cyan">Permafrost</span></h3>
+                  <span class="gm-card-sub">Mrazivé přežití v sibiřské tundře</span>
                 </div>
               </div>
 
               <p class="gm-card-desc">
-                Nový svět sítě MYCHAL SMP. Mrazivá tundra, věčná zima a noční entity. Kompletní odhalení proběhne 6.
-                října.
+                Nekompromisní survival v sevření věčného ledu a sibiřské tundry. Bojuj s extrémním chladem, prozkoumávej
+                opuštěné výzkumné laboratoře a přežij nebezpečné noční bestie adaptované na mráz.
               </p>
 
               <!-- Live Countdown Strip -->
               <div class="gm-countdown-strip">
-                <span class="gm-countdown-label">Zbývá do odhalení:</span>
+                <span class="gm-countdown-label">Zbývá do spuštění:</span>
                 <span class="gm-countdown-val" id="stray-countdown-val">Načítání...</span>
               </div>
 
               <div class="gm-feature-grid">
                 <div class="gm-feat-tile">
                   <div class="gm-feat-info">
-                    <strong>Odhalení</strong>
-                    <span>6. října 2026</span>
+                    <strong>Spuštění světa</strong>
+                    <span>10. října 2026 v 20:00</span>
                   </div>
                 </div>
                 <div class="gm-feat-tile">
                   <div class="gm-feat-info">
-                    <strong>Datum vydání</strong>
-                    <span>Zatím neznámé</span>
+                    <strong>Sibiřská tundra</strong>
+                    <span>Věčný mráz a termodynamika chladu</span>
                   </div>
                 </div>
                 <div class="gm-feat-tile">
                   <div class="gm-feat-info">
-                    <strong>Kódové jméno</strong>
-                    <span>Stray</span>
+                    <strong>Výzkumné laboratoře</strong>
+                    <span>Opuštěné komplexy a technologie</span>
                   </div>
                 </div>
                 <div class="gm-feat-tile">
                   <div class="gm-feat-info">
-                    <strong>Premiéra</strong>
-                    <span>Úterý 6. října 2026.</span>
+                    <strong>Noční bestie</strong>
+                    <span>Smrtící mrazivé entity v temnotě</span>
                   </div>
                 </div>
               </div>
 
               <div class="gm-card-actions">
                 <button type="button" class="btn-gm-action btn-gm--stray"
-                  onclick="showToast('Odpočet běží. Sleduj oficiální odhalení 6. října!')">
+                  onclick="showToast('Odpočet běží! Spuštění světa Permafrost proběhne 10. 10. 2026 ve 20:00.')">
                   <span class="btn-copy-icon-wrap">
                     <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                       stroke-linecap="round" stroke-linejoin="round">
@@ -438,7 +465,7 @@
                       <polyline points="12 6 12 12 16 14" />
                     </svg>
                   </span>
-                  <span class="btn-gm-label">Odhalení: 6. 10. 2026</span>
+                  <span class="btn-gm-label">Spuštění: 10. 10. 2026 v 20:00</span>
                 </button>
               </div>
             </div>
@@ -3572,6 +3599,236 @@
     </div>
   </section>
 
+  <!-- LAUNCHER SECTION -->
+  <section id="tab-launcher" class="tab-section launcher-section-ambient">
+    <div class="join-hero-header text-center">
+      <div class="container">
+        <span class="info-eyebrow">OFICIÁLNÍ KLIENT MYCHAL SMP</span>
+        <h1 class="join-main-title">Stáhnout <span class="accent-blue">MYCHAL SMP Launcher</span></h1>
+        <p class="join-main-sub">Ultrarychlý Minecraft launcher s integrovanou správou profilů, cloudovou i offline synchronizací skinů a plášťů a bleskovým připojením na mychalsmp.xyz.</p>
+
+        <!-- OS Selector Card -->
+        <div class="launcher-hub-card">
+          <!-- OS Nav Tabs -->
+          <div class="os-selector-nav">
+            <button class="os-nav-tab active" data-os="linux" onclick="switchLauncherOS('linux', this)">
+              <i class="fa-brands fa-linux"></i>
+              <span>Linux</span>
+              <span class="os-pill-badge">Doporučeno</span>
+            </button>
+            <button class="os-nav-tab" data-os="windows" onclick="switchLauncherOS('windows', this)">
+              <i class="fa-brands fa-windows"></i>
+              <span>Windows</span>
+            </button>
+            <button class="os-nav-tab" data-os="macos" onclick="switchLauncherOS('macos', this)">
+              <i class="fa-brands fa-apple"></i>
+              <span>macOS</span>
+            </button>
+          </div>
+
+          <!-- Linux Panel -->
+          <div id="os-panel-linux" class="os-panel active">
+            <div class="os-panel-header">
+              <div class="os-panel-info">
+                <span class="os-target-title">Linux (CachyOS, Arch, Ubuntu, Debian, Fedora)</span>
+                <span class="os-target-desc">Plná podpora x86_64 a Wayland / X11 s hardwarovou grafickou akcelerací.</span>
+              </div>
+              <div class="os-actions-row">
+                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases/latest/download/mychalsmp-launcher-1.0.0.tar.gz" download class="btn-launcher-download">
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  <span>Stáhnout balíček (.tar.gz)</span>
+                </a>
+                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases" target="_blank" rel="noopener" class="btn-launcher-secondary">
+                  <i class="fa-brands fa-github"></i>
+                  <span>GitHub Releases</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Terminal 1-click install box -->
+            <div class="os-terminal-box">
+              <div class="os-terminal-header">
+                <div class="os-terminal-dots">
+                  <span class="term-dot red"></span>
+                  <span class="term-dot yellow"></span>
+                  <span class="term-dot green"></span>
+                </div>
+                <span class="os-terminal-title">Rychlá instalace do terminálu (1 příkaz)</span>
+                <span class="os-terminal-tag">BASH</span>
+              </div>
+              <div class="os-terminal-code-row">
+                <code id="cmd-linux-install" class="term-code-text">curl -sSL https://mychalsmp.xyz/install.sh | bash</code>
+                <button class="btn-term-copy" onclick="copyTermCommand('curl -sSL https://mychalsmp.xyz/install.sh | bash', this)" title="Zkopírovat příkaz">
+                  <span class="btn-copy-icon-wrap">
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <p class="os-terminal-hint">Skript automaticky stáhne klienta, vytvoří zástupce v menu aplikací (.desktop) s ikonou a přidá spustitelný soubor do cesty.</p>
+            </div>
+          </div>
+
+          <!-- Windows Panel -->
+          <div id="os-panel-windows" class="os-panel">
+            <div class="os-panel-header">
+              <div class="os-panel-info">
+                <span class="os-target-title">Microsoft Windows 10 & 11 (64-bit)</span>
+                <span class="os-target-desc">Optimalizovaný instalační balíček i portable verze pro Windows 64-bit.</span>
+              </div>
+              <div class="os-actions-row">
+                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases/latest/download/mychalsmp-launcher-windows-11-x64.zip" class="btn-launcher-download" download>
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  <span>Stáhnout pro Windows (.zip / .exe)</span>
+                </a>
+                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases" target="_blank" rel="noopener" class="btn-launcher-secondary">
+                  <i class="fa-brands fa-github"></i>
+                  <span>Všechna vydání</span>
+                </a>
+              </div>
+            </div>
+            <div class="os-terminal-box">
+              <div class="os-terminal-header">
+                <div class="os-terminal-dots">
+                  <span class="term-dot blue"></span>
+                  <span class="term-dot blue"></span>
+                </div>
+                <span class="os-terminal-title">PowerShell Quick Launch</span>
+                <span class="os-terminal-tag">POWERSHELL</span>
+              </div>
+              <div class="os-terminal-code-row">
+                <code id="cmd-win-install" class="term-code-text">irm https://mychalsmp.xyz/install.ps1 | iex</code>
+                <button class="btn-term-copy" onclick="copyTermCommand('irm https://mychalsmp.xyz/install.ps1 | iex', this)" title="Zkopírovat příkaz">
+                  <span class="btn-copy-icon-wrap">
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <p class="os-terminal-hint">Po stažení stačí spustit instalační soubor nebo přenosný balíček ze složky Stažené soubory.</p>
+            </div>
+          </div>
+
+          <!-- macOS Panel -->
+          <div id="os-panel-macos" class="os-panel">
+            <div class="os-panel-header">
+              <div class="os-panel-info">
+                <span class="os-target-title">Apple macOS (Apple Silicon M1-M4 & Intel)</span>
+                <span class="os-target-desc">Podpora macOS 12+ s nativním během pro ARM64 i x86_64 architekturu.</span>
+              </div>
+              <div class="os-actions-row">
+                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases" target="_blank" rel="noopener" class="btn-launcher-download">
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  <span>Stáhnout pro macOS (.dmg / .zip)</span>
+                </a>
+                <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases" target="_blank" rel="noopener" class="btn-launcher-secondary">
+                  <i class="fa-brands fa-github"></i>
+                  <span>GitHub Releases</span>
+                </a>
+              </div>
+            </div>
+            <div class="os-terminal-box">
+              <div class="os-terminal-header">
+                <div class="os-terminal-dots">
+                  <span class="term-dot red"></span>
+                  <span class="term-dot yellow"></span>
+                  <span class="term-dot green"></span>
+                </div>
+                <span class="os-terminal-title">Instalace přes ZSH / Terminal</span>
+                <span class="os-terminal-tag">ZSH / BASH</span>
+              </div>
+              <div class="os-terminal-code-row">
+                <code id="cmd-mac-install" class="term-code-text">curl -sSL https://mychalsmp.xyz/install-mac.sh | bash</code>
+                <button class="btn-term-copy" onclick="copyTermCommand('curl -sSL https://mychalsmp.xyz/install-mac.sh | bash', this)" title="Zkopírovat příkaz">
+                  <span class="btn-copy-icon-wrap">
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <p class="os-terminal-hint">Po stažení stačí přetáhnout aplikaci do složky Aplikace (/Applications).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="launcher-features-grid">
+          <div class="launcher-feature-card">
+            <div class="feature-icon-badge">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#0a67e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+            <h3 class="feature-card-title">Správa Skinů & Plášťů</h3>
+            <p class="feature-card-desc">Pro originální Microsoft účty přímý upload na Mojang servery a výběr oficiálních plášťů. Pro offline hráče trvalý lokální skin nezávislý na nicku.</p>
+          </div>
+
+          <div class="launcher-feature-card">
+            <div class="feature-icon-badge">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+              </svg>
+            </div>
+            <h3 class="feature-card-title">Inteligentní Upgrade</h3>
+            <p class="feature-card-desc">Hraješ na 26.2 a chceš na 26.3? 1 kliknutím přenes textury, shadery a nastavení. Launcher se pokusí automaticky dohledat novější verze tvých módů.</p>
+          </div>
+
+          <div class="launcher-feature-card">
+            <div class="feature-icon-badge">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+              </svg>
+            </div>
+            <h3 class="feature-card-title">Maximální Výkon</h3>
+            <p class="feature-card-desc">Žádný bloatware, bleskový start a čisté rozhraní bez zbytečného šumu. Přednastavené profily 26.2 a 26.3 s přímým napojením na mychalsmp.xyz.</p>
+          </div>
+
+          <div class="launcher-feature-card">
+            <div class="feature-icon-badge">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <h3 class="feature-card-title">Bezpečnost & Open-Source</h3>
+            <p class="feature-card-desc">Bezpečné oficiální Microsoft OAuth přihlašování přes Mojang API. Kód klienta je plně otevřený a transparentní pro komunitu na GitHubu.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ARCHIVE GUIDE MODAL -->
   <div class="archive-modal-backdrop" id="archive-modal" onclick="closeArchiveModalOutside(event)">
     <div class="archive-modal-dialog">
@@ -3710,6 +3967,15 @@
           </svg>
           <span>Media</span>
         </button>
+        <button onclick="showTab('launcher')" class="footer-link-btn">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          <span>Launcher</span>
+        </button>
         <button onclick="showTab('privacy')" class="footer-link-btn"><i class="fa-solid fa-shield-halved"></i> Ochrana
           údajů</button>
         <button onclick="showTab('terms')" class="footer-link-btn"><i class="fa-solid fa-scale-balanced"></i> Obchodní
@@ -3725,6 +3991,10 @@
     <button class="bottom-nav-item active" id="btn-nav-home" onclick="showTab('home')">
       <i class="fa-solid fa-house"></i>
       <span>Domů</span>
+    </button>
+    <button class="bottom-nav-item" id="btn-nav-launcher" onclick="showTab('launcher')">
+      <i class="fa-solid fa-download"></i>
+      <span>Launcher</span>
     </button>
     <button class="bottom-nav-item" id="btn-nav-join" onclick="showTab('join')">
       <i class="fa-solid fa-link"></i>
@@ -3820,7 +4090,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261005_v7"></script>
+  <script src="script.js?v=20261008_v1"></script>
 </body>
 
 </html>

@@ -328,6 +328,12 @@ async function resolveLatestLauncherDownloads() {
     if (linAsset && linBtn) {
       linBtn.href = linAsset.browser_download_url;
     }
+
+    // Automatická aktualizace zobrazené verze v badge
+    const verTag = document.getElementById('launcher-version-tag');
+    if (verTag && data.tag_name) {
+      verTag.textContent = `Verze ${data.tag_name}`;
+    }
   } catch (err) {
     // Tichý fallback - tlačítka již mají výchozí fallback odkazy v HTML
   }

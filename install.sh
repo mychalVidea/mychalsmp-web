@@ -80,7 +80,7 @@ fi
 cat <<EOF > "$DESKTOP_DIR/mychalsmp-launcher.desktop"
 [Desktop Entry]
 Name=SMPLauncher
-Comment=Oficiální Minecraft launcher sítě MYCHAL SMP
+Comment=Oficiální Minecraft launcher pro MYCHAL SMP
 Exec=$INSTALL_DIR/mychalsmp-launcher %U
 Icon=mychalsmp-launcher
 Terminal=false

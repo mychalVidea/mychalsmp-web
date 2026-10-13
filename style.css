@@ -38,7 +38,10 @@
   --radius: 14px;
   --radius-lg: 20px;
   --nav-h: 68px;
-  --trans: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --trans: 0.22s cubic-bezier(0.05, 1, 1, 0.55);
+  --ease-network: cubic-bezier(0.05, 1, 1, 0.55);
+  --gradient-smp: linear-gradient(90deg, #0a67e5 0%, #21DE00 100%);
+  --gradient-launcher: linear-gradient(90deg, #0a67e5 0%, #21DE00 100%);
   --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.35);
   --shadow-lg: 0 18px 45px rgba(0, 0, 0, 0.45);
@@ -105,7 +108,7 @@ body {
   vertical-align: middle;
   stroke: currentColor;
   flex-shrink: 0;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.2s ease;
+  transition: transform 0.2s var(--ease-network), stroke 0.2s ease;
 }
 
 /* ---- NAVIGATION SVG VECTOR ANIMATIONS (APPLE-GRADE MOTION) ---- */
@@ -120,7 +123,7 @@ body {
   stroke-width: 2;
   shape-rendering: geometricPrecision;
   transform-origin: center center;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: transform 0.25s var(--ease-network),
               color 0.2s ease,
               stroke 0.2s ease,
               filter 0.25s ease;
@@ -4936,10 +4939,10 @@ body {
 .rules-quiz-progress-bar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #0a67e5, #21DE00);
+  background: var(--gradient-smp);
   border-radius: 999px;
-  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 0 10px rgba(33, 222, 0, 0.5);
+  transition: width 0.4s var(--ease-network);
+  box-shadow: 0 0 10px rgba(33, 222, 0, 0.4);
 }
 
 .rules-quiz-meta-info {
@@ -7154,10 +7157,10 @@ select:focus {
   width: 100%;
   height: 0%;
   /* Dynamic fill based on scroll */
-  background: linear-gradient(to bottom, #38bdf8 0%, #818cf8 50%, #22c55e 100%);
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.6), 0 0 32px rgba(129, 140, 248, 0.4);
+  background: linear-gradient(to bottom, #0a67e5 0%, #38bdf8 50%, #21DE00 100%);
+  box-shadow: 0 0 16px rgba(10, 103, 229, 0.6), 0 0 32px rgba(33, 222, 0, 0.4);
   border-radius: 3px;
-  transition: height 0.05s linear;
+  transition: height 0.05s var(--ease-network);
 }
 
 /* Traveling Light Head Core */
@@ -11407,8 +11410,8 @@ body {
 .legal-progress-bar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #0a67e5, #38bdf8);
-  transition: width 0.12s linear;
+  background: var(--gradient-smp);
+  transition: width 0.15s var(--ease-network);
 }
 
 /* TABLE OF CONTENTS (TOC) */
@@ -14174,35 +14177,149 @@ body {
    MYCHAL SMP – Launcher Hub & OS Selector
    ============================================= */
 
+/* Launcher Hero Button (Styled with iconic progress bar gradient & kinetic bezier) */
 .btn-hero-launcher {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: rgba(10, 103, 229, 0.16);
-  color: #38bdf8;
+  background: linear-gradient(90deg, #0a67e5 0%, #21DE00 100%);
+  color: #ffffff;
   font-family: var(--font);
   font-weight: 700;
   font-size: 0.98rem;
-  border: 1px solid rgba(10, 103, 229, 0.35);
-  cursor: pointer;
   padding: 12px 26px;
   border-radius: var(--radius);
   text-decoration: none;
-  box-shadow: 0 4px 18px rgba(10, 103, 229, 0.2);
-  transition: transform var(--trans), box-shadow var(--trans), background var(--trans), border-color var(--trans), color var(--trans);
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 18px rgba(10, 103, 229, 0.35), 0 2px 10px rgba(33, 222, 0, 0.22);
+  transition: transform 0.25s var(--ease-network), box-shadow 0.25s var(--ease-network), filter 0.25s var(--ease-network);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* Optical forward motion shimmer (Illusion of velocity from launcher progress bar) */
+.btn-hero-launcher::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -130%;
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.38) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-22deg);
+  transition: left 0.75s var(--ease-network);
+  pointer-events: none;
 }
 
 .btn-hero-launcher:hover {
   transform: translateY(-2px);
-  background: #0a67e5;
+  filter: brightness(1.08);
+  box-shadow: 0 8px 28px rgba(10, 103, 229, 0.45), 0 4px 18px rgba(33, 222, 0, 0.38);
   color: #ffffff;
-  border-color: #0a67e5;
-  box-shadow: 0 8px 24px rgba(10, 103, 229, 0.45);
+}
+
+.btn-hero-launcher:hover::after {
+  left: 140%;
 }
 
 .btn-hero-launcher:active {
   transform: translateY(0) scale(0.98);
+  transition-duration: 0.1s;
+}
+
+/* Launcher Accent Gradient Title */
+.accent-gradient-text {
+  background: linear-gradient(90deg, #38bdf8 0%, #21DE00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+/* Launcher Header Metadata Pills */
+.launcher-meta-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  margin-bottom: 8px;
+}
+
+.launcher-release-pill,
+.launcher-target-pill,
+.launcher-auto-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--trans), background var(--trans);
+}
+
+.launcher-release-pill:hover,
+.launcher-target-pill:hover,
+.launcher-auto-pill:hover {
+  border-color: var(--border-hover);
+  background: var(--surface2);
+}
+
+.launcher-release-pill .pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px rgba(33, 222, 0, 0.6);
+  animation: pulseGreenDot 2s ease-in-out infinite;
+}
+
+.launcher-release-pill #launcher-version-tag {
+  color: var(--white);
+  font-weight: 700;
+  font-family: var(--mono);
+}
+
+.launcher-release-pill .pill-badge-opt {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(33, 222, 0, 0.16);
+  color: var(--green);
+  border: 1px solid rgba(33, 222, 0, 0.35);
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.launcher-target-pill i,
+.launcher-auto-pill i {
+  color: #38bdf8;
+  font-size: 0.85rem;
+}
+
+@keyframes pulseGreenDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
 }
 
 .launcher-section-ambient {
@@ -14224,11 +14341,36 @@ body {
 
 .os-selector-nav {
   display: flex;
-  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
   border-bottom: 1px solid var(--border);
   padding-bottom: 20px;
   margin-bottom: 24px;
   flex-wrap: wrap;
+}
+
+.os-nav-tabs-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.os-nav-side-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.os-net-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue-light);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
 }
 
 .os-nav-tab {
@@ -14329,26 +14471,57 @@ body {
 }
 
 .btn-launcher-download {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, #0a67e5 0%, #0852b8 100%);
+  background: linear-gradient(90deg, #0a67e5 0%, #21DE00 100%);
   color: #ffffff;
   font-family: var(--font);
   font-size: 0.95rem;
   font-weight: 700;
-  padding: 12px 22px;
+  padding: 12px 24px;
   border-radius: var(--radius-sm);
   text-decoration: none;
-  box-shadow: 0 4px 16px rgba(10, 103, 229, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: transform var(--trans), box-shadow var(--trans), filter var(--trans);
+  box-shadow: 0 4px 18px rgba(10, 103, 229, 0.35), 0 2px 10px rgba(33, 222, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: transform 0.25s var(--ease-network), box-shadow 0.25s var(--ease-network), filter 0.25s var(--ease-network);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.btn-launcher-download::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -130%;
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.38) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-22deg);
+  transition: left 0.75s var(--ease-network);
+  pointer-events: none;
 }
 
 .btn-launcher-download:hover {
   transform: translateY(-2px);
-  filter: brightness(1.1);
-  box-shadow: 0 6px 22px rgba(10, 103, 229, 0.45);
+  filter: brightness(1.08);
+  box-shadow: 0 8px 28px rgba(10, 103, 229, 0.45), 0 4px 18px rgba(33, 222, 0, 0.38);
+  color: #ffffff;
+}
+
+.btn-launcher-download:hover::after {
+  left: 140%;
+}
+
+.btn-launcher-download:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.1s;
 }
 
 .btn-launcher-secondary {
@@ -14495,6 +14668,8 @@ body {
   padding: 1px 5px;
   border-radius: 4px;
 }
+
+
 
 .launcher-features-grid {
   display: grid;

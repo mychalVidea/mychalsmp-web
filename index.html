@@ -2935,7 +2935,7 @@
         <aside class="legal-sidebar">
           <div class="legal-sidebar-sticky">
             <h1 class="legal-sidebar-title">Zásady ochrany osobních údajů</h1>
-            <p class="legal-sidebar-meta">Platnost od: <strong>9. září 2026</strong> · Doba čtení: <strong>~3
+            <p class="legal-sidebar-meta">Platnost od: <strong>14. října 2026</strong> · Doba čtení: <strong>~4
                 min</strong></p>
 
             <div class="legal-nav-switch">
@@ -2968,6 +2968,9 @@
                 <li><a href="#privacy-sec-5" class="legal-toc-link"
                     onclick="smoothScrollToLegal('privacy-sec-5', event)"><span class="toc-num">05</span> Ochrana
                     mladších hráčů</a></li>
+                <li><a href="#privacy-sec-6" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('privacy-sec-6', event)"><span class="toc-num">06</span> SMPClient
+                    launcher</a></li>
               </ul>
             </nav>
 
@@ -2979,8 +2982,8 @@
                   Pixel.</li>
                 <li><i class="fa-solid fa-check"></i> <strong>Hashovaná hesla:</strong> Hesla nelze z databáze přečíst
                   (Argon2 / SHA-256).</li>
-                <li><i class="fa-solid fa-check"></i> <strong>Sociální sítě a API:</strong> Transparentní kontrola
-                  kanálů u Media ranku.</li>
+                <li><i class="fa-solid fa-check"></i> <strong>SMPClient launcher:</strong> Lokální data na disku hráče;
+                  žádné telemetrické odesílání.</li>
                 <li><i class="fa-solid fa-check"></i> <strong>Platby chrání Tebex:</strong> K platebním kartám nemáme
                   přístup.</li>
               </ul>
@@ -3156,6 +3159,19 @@
                 lokální úložiště prohlížeče (LocalStorage) pro bezpečné uchování přihlašovacího tokenu (`auth_token`)
                 při správě předplatného SMP+. Toto uložení nevyžaduje souhlas dle § 89 odst. 3 zákona č. 127/2005 Sb.
               </li>
+              <li>
+                <strong>SMPClient launcher – lokální data a GitHub Releases:</strong>
+                SMPClient je open-source desktopová aplikace (Electron) distribuovaná výhradně prostřednictvím platformy
+                GitHub Releases (GitHub, Inc., USA). Launcher zpracovává a ukládá data <strong>výhradně lokálně na
+                  disku hráče</strong> – zejména herní profily, konfiguraci RAM a grafiky, stažené soubory hry a módů a
+                nastavení uživatele. <strong>Launcher neodesílá žádná telemetrická data ani identifikující informace
+                  o hráči provozovateli serveru.</strong> Jediným přenosem dat z launcheru je standardní Minecraft
+                autentizační handshake vůči Mojang Studios (pro originální účty) a přímé stahování herních souborů
+                z infrastruktury Mojang. Ke kontrole dostupnosti nových verzí launcheru dotazuje GitHub Releases API
+                (veřejná anonymní žádost bez přenosu osobních údajů). Pro Microsoft/Xbox přihlášení využívá launcher
+                standardní Microsoft OAuth 2.0 tok; přihlašovací tokeny jsou uchovávány lokálně v šifrovaném
+                systémovém úložišti operačního systému hráče.
+              </li>
             </ul>
           </article>
 
@@ -3170,7 +3186,7 @@
             <div class="legal-callout">
               <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
               Data mažeme, jakmile pomine důvod pro jejich držení. Předáváme je pouze nezbytným infrastrukturním
-              partnerům (Cloudflare, Tebex, Mojang, Google, OneSignal).
+              partnerům (Cloudflare, Tebex, Mojang, Google, OneSignal, GitHub).
             </div>
 
             <p class="legal-text">Osobní údaje uchováváme pouze po nezbytně nutnou dobu:</p>
@@ -3203,6 +3219,11 @@
                 notifikací (EU-U.S. Data Privacy Framework).</li>
               <li><strong>ip-api.com a ipwho.is:</strong> Dotazování bezpečnostních GeoIP a AntiVPN rozhraní pro
                 detekci nebezpečných proxy sítí, hostingových datacenter a blokování VPN z důvodu obrany před útoky.
+              </li>
+              <li><strong>GitHub, Inc. (USA):</strong> Distribuce a hostování veřejných release balíčků
+                SMPClient launcheru prostřednictvím platformy GitHub Releases. Stahování probíhá přes veřejné HTTPS
+                spojení; GitHub nezpracovává osobní údaje hráčů sdělené launcherem. Certifikováno v rámci EU-U.S.
+                Data Privacy Framework.
               </li>
               <li><strong>Oracle Corporation (Oracle Cloud Infrastructure – EU, Frankfurt):</strong> Poskytovatel
                 cloudové síťové infrastruktury pro provoz tranzitní reverse proxy brány. Přenos probíhá v datacentru v
@@ -3270,9 +3291,44 @@
               smějí nezletilé osoby provádět výhradně se souhlasem rodičů.</p>
           </article>
 
+          <!-- Article 6 -->
+          <article id="privacy-sec-6" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">06 · SMPCLIENT LAUNCHER</span>
+              <span class="legal-marker-ref">Principy Data Minimization &amp; Bezpečnost</span>
+            </div>
+            <h2 class="legal-article-title">Ochrana soukromí v desktopovém klientu SMPClient</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              Náš launcher vás nesleduje. Veškerá data (nastavení, módy, přihlášení) zůstávají pouze ve vašem počítači.
+              Žádná telemetrie, žádný sběr dat.
+            </div>
+
+            <p class="legal-text">Desktopová klientská aplikace <strong>SMPClient</strong> (dostupná pro Windows a
+              Linux) je
+              navržena s maximálním důrazem na soukromí uživatele (Privacy by Design dle čl. 25 GDPR):</p>
+            <ul class="legal-list">
+              <li><strong>Absence telemetrie a trackingu:</strong> Launcher neobsahuje žádné analytické skripty, Google
+                Analytics, Sentry ani žádné vlastní sledovací majáky. Provozovatel serveru nemá přístup k žádným údajům
+                o
+                vašem hardwaru, procesech v operačním systému ani chování v aplikaci.</li>
+              <li><strong>Autentizace a tokeny:</strong> Při přihlašování originálním účtem Microsoft/Mojang komunikuje
+                launcher přímo se servery společnosti Microsoft (OAuth 2.0). Vaše heslo se launcheru nikdy nepředává.
+                Přístupový token je uložen výhradně na vašem lokálním disku v šifrovaném systémovém úložišti.</li>
+              <li><strong>Herní módy a optimalizace:</strong> Launcher stahuje oficiální balíčky módů a konfigurací
+                zabezpečeným HTTPS přenosem. Launcher nekontroluje ani nečte žádné soubory mimo své vyhrazené datové
+                složky (<code>~/.mychalsmp</code>).</li>
+              <li><strong>Transparentnost a auditovatelnost:</strong> Zdrojový kód launcheru je plně otevřený pod
+                licencí
+                MIT na platformě GitHub. Každý uživatel má možnost nezávisle ověřit, jaké síťové požadavky aplikace
+                provádí.</li>
+            </ul>
+          </article>
+
           <div class="legal-footer-note">
-            Poslední revize zásad: 9. září 2026 &nbsp;·&nbsp; Tyto zásady jsou platné pro herní server mychalsmp.xyz i
-            webové rozhraní.
+            Poslední revize zásad: 14. října 2026 &nbsp;·&nbsp; Tyto zásady jsou platné pro herní server mychalsmp.xyz,
+            desktopový launcher SMPClient i webové rozhraní.
           </div>
         </main>
       </div>
@@ -3287,7 +3343,7 @@
         <aside class="legal-sidebar">
           <div class="legal-sidebar-sticky">
             <h1 class="legal-sidebar-title">Podmínky služby a nákupu</h1>
-            <p class="legal-sidebar-meta">Platnost od: <strong>9. září 2026</strong> · Doba čtení: <strong>~4
+            <p class="legal-sidebar-meta">Platnost od: <strong>14. října 2026</strong> · Doba čtení: <strong>~5
                 min</strong></p>
 
             <div class="legal-nav-switch">
@@ -3326,6 +3382,9 @@
                 <li><a href="#terms-sec-7" class="legal-toc-link"
                     onclick="smoothScrollToLegal('terms-sec-7', event)"><span class="toc-num">07</span> Mimosoudní
                     řešení (ČOI ADR)</a></li>
+                <li><a href="#terms-sec-8" class="legal-toc-link"
+                    onclick="smoothScrollToLegal('terms-sec-8', event)"><span class="toc-num">08</span> SMPClient
+                    launcher (MIT)</a></li>
               </ul>
             </nav>
 
@@ -3339,8 +3398,9 @@
                   wipy.</li>
                 <li><i class="fa-solid fa-check"></i> <strong>Váš účet:</strong> Za heslo plně odpovídá hráč (výmluvy na
                   kamaráda neplatí).</li>
-                <li><i class="fa-solid fa-check"></i> <strong>Sociální sítě a AI:</strong> Pravidla reklamy a lidský
-                  přezkum trestů.</li>
+                <li><i class="fa-solid fa-check"></i> <strong>SMPClient launcher:</strong> Volně stažitelný, MIT
+                  licence,
+                  bez skrytých podmínek.</li>
               </ul>
             </div>
           </div>
@@ -3623,8 +3683,50 @@
             </ul>
           </article>
 
+          <!-- Article 8 -->
+          <article id="terms-sec-8" class="legal-article">
+            <div class="legal-article-marker">
+              <span class="legal-marker-tag">08 · SMPCLIENT LAUNCHER</span>
+              <span class="legal-marker-ref">MIT License &amp; Mojang Commercial Usage Guidelines</span>
+            </div>
+            <h2 class="legal-article-title">Podmínky užití launcheru SMPClient a distribuce</h2>
+
+            <div class="legal-callout">
+              <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
+              SMPClient je bezplatný open-source software pod licencí MIT. Můžete jej používat zdarma. Použití je na
+              vlastní
+              odpovědnost a launcher není oficiálním produktem společností Mojang ani Microsoft.
+            </div>
+
+            <p class="legal-text">Pro používání oficiálního desktopového klienta <strong>SMPClient</strong> platí
+              následující
+              ustanovení:</p>
+            <ul class="legal-list">
+              <li><strong>Licence a otevřený kód:</strong> Aplikace SMPClient je poskytována zdarma jako open-source
+                software
+                pod podmínkami licence MIT. Uživatelé jsou oprávněni software používat, prohlížet jeho zdrojový kód a
+                modifikovat jej v mezích této licence.</li>
+              <li><strong>Distribuce a bezpečné stažení:</strong> Oficiální verze launcheru jsou distribuovány výhradně
+                prostřednictvím platformy GitHub Releases a oficiálního webu <a href="https://mychalsmp.xyz"
+                  class="legal-link">mychalsmp.xyz</a>. Provozovatel nenese odpovědnost za modifikace či verze stažené z
+                neoficiálních a neověřených zdrojů třetích stran.</li>
+              <li><strong>Vztah k Mojang Studios a Microsoft:</strong> SMPClient je nezávislá klientská aplikace třetí
+                strany
+                a není schválena společností Mojang Studios ani Microsoft Corporation, ani s nimi není nijak spojena.
+                K hraní plné verze hry Minecraft je vyžadován platný herní účet zakoupený u společnosti Mojang /
+                Microsoft.</li>
+              <li><strong>Vyloučení záruk:</strong> Software je poskytován „tak, jak je“ (AS IS), bez jakýchkoliv
+                výslovných nebo předpokládaných záruk. Provozovatel neodpovídá za případné nekompatibility s konkrétním
+                hardwarem či konfigurací operačního systému uživatele, ačkoliv vyvíjí maximální úsilí pro stabilitu a
+                plynulý běh.</li>
+              <li><strong>Doporučená herní verze:</strong> Klient je primárně optimalizován a přednastaven pro verzi
+                Java Edition <strong>26.2</strong> s integrovanými moduly pro zvýšení výkonu, správu paměti a ochranu
+                integrity hry.</li>
+            </ul>
+          </article>
+
           <div class="legal-footer-note">
-            Poslední revize podmínek: 9. září 2026 &nbsp;·&nbsp; Tyto podmínky nabývají platnosti a účinnosti dnem
+            Poslední revize podmínek: 14. října 2026 &nbsp;·&nbsp; Tyto podmínky nabývají platnosti a účinnosti dnem
             jejich zveřejnění na webu mychalsmp.xyz.
           </div>
         </main>

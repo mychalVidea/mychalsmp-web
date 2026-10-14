@@ -12237,8 +12237,37 @@ body {
   color: #21DE00;
 }
 
-.gm-badge--stray i {
+.gm-badge--stray {
+  background: rgba(10, 22, 38, 0.88);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.16), 0 4px 12px rgba(0, 0, 0, 0.35);
+  color: #7dd3fc;
+}
+
+.gm-badge--stray i,
+.gm-badge--stray svg {
   color: #38bdf8;
+}
+
+.badge-live-pulse-cyan {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+  display: inline-block;
+  animation: pulseCyanDot 1.8s ease-in-out infinite;
+}
+
+@keyframes pulseCyanDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
 }
 
 .gm-card-cmd-chip {
@@ -12493,6 +12522,18 @@ body {
   background: #16a34a;
   color: #ffffff;
   box-shadow: 0 4px 18px rgba(22, 163, 74, 0.35);
+}
+
+.btn-gm--stray {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+}
+
+.btn-gm--stray:hover {
+  background: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(2, 132, 199, 0.4);
 }
 
 /* ========================================================

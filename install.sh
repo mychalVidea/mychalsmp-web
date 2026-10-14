@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# MYCHAL SMP Launcher - Univerzální 1-click instalátor pro Linux
+# MYCHAL SMPClient - Univerzální 1-click instalátor pro Linux
 # Oficiální web: https://mychalsmp.xyz
 # ==============================================================================
 
@@ -11,7 +11,7 @@ BIN_DIR="$HOME/.local/bin"
 DESKTOP_DIR="$HOME/.local/share/applications"
 ICON_DIR="$HOME/.local/share/icons/hicolor/512x512/apps"
 
-echo "⚡ [MYCHAL SMP] Zahajuji instalaci launcheru..."
+echo "⚡ [MYCHAL SMP] Zahajuji instalaci SMPClient..."
 
 mkdir -p "$INSTALL_DIR"
 mkdir -p "$BIN_DIR"
@@ -79,8 +79,8 @@ fi
 # Vytvoření zástupce v menu aplikací (.desktop)
 cat <<EOF > "$DESKTOP_DIR/mychalsmp-launcher.desktop"
 [Desktop Entry]
-Name=SMPLauncher
-Comment=Oficiální Minecraft launcher pro MYCHAL SMP
+Name=SMPClient
+Comment=Oficiální Minecraft klient pro MYCHAL SMP
 Exec=$INSTALL_DIR/mychalsmp-launcher %U
 Icon=mychalsmp-launcher
 Terminal=false
@@ -96,6 +96,6 @@ command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database "$
 command -v gtk-update-icon-cache >/dev/null 2>&1 && gtk-update-icon-cache -f "$HOME/.local/share/icons/hicolor" || true
 
 echo ""
-echo "✅ [HOTOVO] SMPLauncher byl úspěšně nainstalován!"
+echo "✅ [HOTOVO] SMPClient byl úspěšně nainstalován!"
 echo "👉 Můžeš jej spustit z aplikačního menu systému nebo příkazem:"
 echo "   ~/.local/bin/mychalsmp-launcher"

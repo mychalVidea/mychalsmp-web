@@ -74,7 +74,7 @@ function handleUrlRouting() {
     executeTabSwitch('modtest', false);
   } else if (route === 'napady' || route === 'napad' || route === 'ideas') {
     executeTabSwitch('napady', false);
-  } else if (route === 'launcher' || route === 'download' || route === 'klient' || route === 'client') {
+  } else if (route === 'launcher' || route === 'download' || route === 'klient' || route === 'client' || route === 'smpclient') {
     executeTabSwitch('launcher', false);
   } else if (route === 'privacy' || route === 'gdpr' || route === 'soukromi' || route === 'data') {
     executeTabSwitch('privacy', false);
@@ -4725,7 +4725,8 @@ window.handleArchiveDownload = handleArchiveDownload;
     const diff = LAUNCH_DATE - now;
 
     if (diff <= 0) {
-      timerEl.textContent = 'SPUŠTĚNO';
+      timerEl.innerHTML = '<span class="badge-live-pulse-cyan"></span> OTEVŘENO · SPUŠTĚNO';
+      timerEl.style.color = '#4ade80';
       return;
     }
 

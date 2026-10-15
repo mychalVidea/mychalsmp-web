@@ -14382,7 +14382,8 @@ body {
 
 .launcher-release-pill,
 .launcher-target-pill,
-.launcher-auto-pill {
+.launcher-auto-pill,
+.launcher-downloads-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -14399,7 +14400,8 @@ body {
 
 .launcher-release-pill:hover,
 .launcher-target-pill:hover,
-.launcher-auto-pill:hover {
+.launcher-auto-pill:hover,
+.launcher-downloads-pill:hover {
   border-color: var(--border-hover);
   background: var(--surface2);
 }
@@ -14413,7 +14415,8 @@ body {
   animation: pulseGreenDot 2s ease-in-out infinite;
 }
 
-.launcher-release-pill #launcher-version-tag {
+.launcher-release-pill #launcher-version-tag,
+.launcher-downloads-pill #launcher-downloads-count {
   color: var(--white);
   font-weight: 700;
   font-family: var(--mono);

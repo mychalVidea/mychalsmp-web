@@ -306,10 +306,60 @@ function switchLauncherOS(os, btn) {
   }
 }
 
-// ---- DYNAMIC GITHUB RELEASES LINK RESOLVER ----
+// ---- DYNAMIC LAUNCHER RELEASES & DOWNLOADS TRACKER ----
+async function trackLauncherDownload(os = 'unknown') {
+  try {
+    const res = await apiFetch('/api/launcher/track-download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ os })
+    }, 4000);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && typeof data.downloads === 'number') {
+        updateLauncherDownloadsUI(data.downloads);
+      }
+    }
+  } catch (_err) {
+    // Non-blocking telemetry
+  }
+}
+
+function updateLauncherDownloadsUI(count) {
+  const el = document.getElementById('launcher-downloads-count');
+  if (!el) return;
+  const num = Number(count) || 0;
+  let text = `${num} stažení`;
+  if (num === 1) text = '1 stažení';
+  else if (num >= 2 && num <= 4) text = `${num} stažení`;
+  el.textContent = text;
+}
+
 async function resolveLatestLauncherDownloads() {
   const winBtn = document.getElementById('btn-win-download');
   const linBtn = document.getElementById('btn-linux-download');
+  const verTag = document.getElementById('launcher-version-tag');
+
+  // 1. Zkusíme načíst data z našeho backendového endpointu (cache + spolehlivost)
+  try {
+    const apiRes = await apiFetch('/api/launcher/info', {}, 5000);
+    if (apiRes.ok) {
+      const info = await apiRes.json();
+      if (info && info.success) {
+        if (info.winUrl && winBtn) winBtn.href = info.winUrl;
+        if (info.linuxUrl && linBtn) linBtn.href = info.linuxUrl;
+        if (info.version && verTag) verTag.textContent = `Verze ${info.version}`;
+        if (typeof info.downloads === 'number') {
+          updateLauncherDownloadsUI(info.downloads);
+        }
+        return; // Hotovo, úspěšně načteno
+      }
+    }
+  } catch (_e) {
+    // Fallback na přímý GitHub API
+  }
+
+  // 2. Fallback na přímé GitHub API
   try {
     const res = await fetch('https://api.github.com/repos/mychalVidea/mychalsmp-launcher/releases/latest');
     if (!res.ok) return;
@@ -330,11 +380,16 @@ async function resolveLatestLauncherDownloads() {
     }
 
     // Automatická aktualizace zobrazené verze v badge
-    const verTag = document.getElementById('launcher-version-tag');
     if (verTag && data.tag_name) {
       verTag.textContent = `Verze ${data.tag_name}`;
     }
-  } catch (err) {
+
+    let totalDl = 0;
+    for (const a of assets) {
+      totalDl += (a.download_count || 0);
+    }
+    updateLauncherDownloadsUI(totalDl);
+  } catch (_err) {
     // Tichý fallback - tlačítka již mají výchozí fallback odkazy v HTML
   }
 }

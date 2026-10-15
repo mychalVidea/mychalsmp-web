@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261015_crypto1" />
+  <link rel="stylesheet" href="style.css?v=20261015_downloads1" />
 </head>
 
 <body>
@@ -3808,7 +3808,7 @@
         <div class="launcher-meta-badge-row">
           <div class="launcher-release-pill">
             <span class="pill-dot"></span>
-            <span id="launcher-version-tag">Verze 1.3.15</span>
+            <span id="launcher-version-tag">Verze 1.4.19</span>
             <span class="pill-badge-opt">Doporučeno</span>
           </div>
           <div class="launcher-target-pill">
@@ -3818,6 +3818,10 @@
           <div class="launcher-auto-pill">
             <i class="fa-solid fa-arrows-rotate"></i>
             <span>Auto-Update systém</span>
+          </div>
+          <div class="launcher-downloads-pill" id="launcher-downloads-pill">
+            <i class="fa-solid fa-download"></i>
+            <span id="launcher-downloads-count">6 stažení</span>
           </div>
         </div>
 
@@ -3845,8 +3849,8 @@
               </div>
               <div class="os-actions-row">
                 <a id="btn-win-download"
-                  href="https://github.com/mychalVidea/mychalsmp-launcher/releases/download/v1.3.15/MYCHAL-SMP-Launcher-Setup-1.3.15.exe"
-                  class="btn-launcher-download" download>
+                  href="https://github.com/mychalVidea/mychalsmp-launcher/releases/download/v1.4.19/mychalsmp-launcher-setup.exe"
+                  class="btn-launcher-download" download onclick="trackLauncherDownload('windows')">
                   <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -3885,8 +3889,8 @@
               </div>
               <div class="os-actions-row">
                 <a id="btn-linux-download"
-                  href="https://github.com/mychalVidea/mychalsmp-launcher/releases/download/v1.3.15/mychalsmp-launcher-1.3.15.tar.gz"
-                  download class="btn-launcher-download">
+                  href="https://github.com/mychalVidea/mychalsmp-launcher/releases/download/v1.4.19/mychalsmp-launcher-1.4.19.tar.gz"
+                  download class="btn-launcher-download" onclick="trackLauncherDownload('linux')">
                   <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -4288,7 +4292,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261015_crypto1"></script>
+  <script src="script.js?v=20261015_downloads1"></script>
 </body>
 
 </html>

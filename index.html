@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261014_matte4" />
+  <link rel="stylesheet" href="style.css?v=20261015_crypto1" />
 </head>
 
 <body>
@@ -2981,7 +2981,7 @@
                 <li><i class="fa-solid fa-check"></i> <strong>0 % trackerů:</strong> Žádný Google Analytics ani Meta
                   Pixel.</li>
                 <li><i class="fa-solid fa-check"></i> <strong>Hashovaná hesla:</strong> Hesla nelze z databáze přečíst
-                  (Argon2 / SHA-256).</li>
+                  (Argon2id standard).</li>
                 <li><i class="fa-solid fa-check"></i> <strong>SMPClient launcher:</strong> Lokální data na disku hráče;
                   žádné telemetrické odesílání.</li>
                 <li><i class="fa-solid fa-check"></i> <strong>Platby chrání Tebex:</strong> K platebním kartám nemáme
@@ -3082,12 +3082,19 @@
               <li>
                 <strong>IP adresy, síťové logy a vlastní ochrana AntiVPN (Oprávněný zájem dle čl. 6 odst. 1 písm. f)
                   GDPR):</strong>
-                Při připojení na herní server zaznamenáváme vaši IP adresu a technická metadata. K ochraně
-                herního světa před boty, útoky DDoS a obcházením banů využíváme náš vlastní bezpečnostní systém (AntiVPN
-                modul), který ověřuje IP adresu vůči bezpečnostním rozhraním (ip-api.com a ipwho.is) pro detekci známých
-                proxy sítí, hostingových datacenter a VPN tunelů, a uplatňuje GeoIP filtraci povolených regionů.
-                Výsledky jsou z důvodu optimalizace cachovány na 24 hodin. Použití anonymních VPN je na serveru
-                z bezpečnostních důvodů blokováno (včetně automatického preventivního IP banu).
+                Při připojení na herní server zaznamenáváme vaši IP adresu a technická metadata síťového spojení.<br>
+                • <strong>Účel zpracování:</strong> Zajištění síťové stability, obrana proti útokům (DDoS, brute-force
+                útoky na hesla, botnety), ochrana herního světa před automatizovanými škodlivými boty a vymáhání herních
+                pravidel (zamezení obcházení trestů a banů skrze anonymní proxy).<br>
+                • <strong>Bezpečnostní prověřování:</strong> Využíváme vlastní bezpečnostní systém (AntiVPN modul),
+                který ověřuje IP adresu vůči GeoIP rozhraním (ip-api.com a ipwho.is) výhradně formou anonymního dotazu
+                na AS číslo a typ sítě (detekce hostingů, datacenter, proxy a VPN tunelů). Použití anonymních VPN je z
+                bezpečnostních důvodů blokováno (včetně automatického preventivního zamezení vstupu).<br>
+                • <strong>Doba uchování:</strong> Výsledky AntiVPN ověření jsou z důvodu ochrany soukromí a minimalizace
+                dat cachovány maximálně <strong>24 hodin</strong> a poté automaticky smazány. Běžné síťové logy spojení
+                jsou uchovávány po dobu nezbytnou pro bezpečnostní audit a vyšetřování incidentů (maximálně <strong>30
+                  dní</strong>), poté jsou rotovány a skartovány. Pouze v případě aktivního banu je příslušná adresa
+                evidována v blacklistu po dobu trvání sankce.
               </li>
               <li>
                 <strong>Herní identita – Přezdívka a UUID (Plnění smlouvy dle čl. 6 odst. 1 písm. b) GDPR):</strong>
@@ -3095,10 +3102,16 @@
                 postavených domovů, chráněných území (claimů GriefPrevention) a statistik odehraného času.
               </li>
               <li>
-                <strong>Hesla k hernímu účtu (Bezpečnostní kryptografický hash):</strong>
-                Vaše heslo nikdy neukládáme v čitelné podobě. Hesla v autentizačním systému (mychalAuth) jsou
-                nevratně kryptograficky hashována a solena pomocí moderního algoritmu Argon2id (respektive SHA-256).
-                Skutečné heslo nezná nikdo z týmu a nelze jej zpětně zrekonstruovat.
+                <strong>Hesla k hernímu účtu (Kryptografický standard Argon2id):</strong>
+                Vaše heslo nikdy neukládáme v čitelné podobě (plaintext). Autentizační jádro serveru (MychalAuth)
+                využívá moderní standard <strong>Argon2id</strong> s vysokou paměťovou a výpočetní náročností
+                (3 iterace, 64 MB alokované paměti, 2 paralelní vlákna), který poskytuje špičkovou ochranu proti
+                slovníkovým, duhovým (rainbow tables) i hardwarovým GPU/ASIC brute-force útokům. Pro účely zpětné
+                kompatibility starších účtů je podporován bezpečně solený formát AuthMe SHA-256 ($SHA$salt$hash s
+                8bajtovou
+                náhodnou kryptografickou solí), přičemž při každém úspěšném přihlášení či změně hesla systém provádí
+                automatický a transparentní rehash na plný standard Argon2id. Skutečné heslo nezná nikdo z týmu
+                a z uloženého hashe jej nelze zpětně zrekonstruovat.
               </li>
               <li>
                 <strong>Ověřování tvůrců a sociálních sítí – Media Rank:</strong>
@@ -3124,13 +3137,23 @@
                 prohlížeče.
               </li>
               <li>
-                <strong>Automatizovaná AI moderace (Google Gemini AI / Groq – soulad s EU AI Act):</strong>
+                <strong>Automatizovaná AI moderace a hlasové hovory (Google Gemini AI / Groq – soulad s EU AI
+                  Act):</strong>
                 V souladu s Nařízením Evropského parlamentu a Rady (EU) 2024/1689 (EU AI Act) transparentně informujeme,
                 že k zajištění bezpečného a slušného prostředí využíváme asistenční AI technologie. Tyto modely
-                automatizovaně analyzují textovou komunikaci a přepisy hlasových hovorů výhradně za účelem včasného
-                záchytu závažné toxicity, rasismu či kyberšikany, a asistují při zpracování komunitních návrhů. AI
-                slouží jako podpůrný nástroj; jakýkoliv trest může hráč nechat lidsky přezkoumat administrátorským
-                týmem.
+                automatizovaně analyzují textovou komunikaci za účelem včasného záchytu závažné toxicity, rasismu či
+                kyberšikany, a asistují při zpracování komunitních návrhů.<br>
+                • <strong>Moderace hlasových hovorů (Discord):</strong> Moderace a asistenční přepisy hlasových hovorů
+                probíhají
+                <strong>výhradně a pouze tehdy, pokud administrátor nebo kterýkoliv uživatel výslovně pozve bota do
+                  hlasového
+                  hovoru</strong> (např. spuštěním hovoru přes příkaz či tlačítko bota). Bot <strong>nikdy nevstupuje do
+                  hlasových
+                  místností samovolně</strong>, neprovádí žádný pasivní ani skrytý odposlech běžných konverzací hráčů a
+                pokud není v hovoru
+                přítomen, žádná hlasová data nejsou zaznamenávána, přepisována ani analyzována. Veškerá AI rozhodnutí
+                podléhají lidskému
+                přezkumu administrátorským týmem.
               </li>
               <li>
                 <strong>Propojení účtů Discord a Minecraft (/dlink):</strong>
@@ -3301,8 +3324,8 @@
 
             <div class="legal-callout">
               <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
-              Náš launcher vás nesleduje. Veškerá data (nastavení, módy, přihlášení) zůstávají pouze ve vašem počítači.
-              Žádná telemetrie, žádný sběr dat.
+              Náš launcher vás nesleduje a nekrade tokeny. Veškerá data (nastavení, módy, přihlášení) jsou kryptována
+              přímo na vašem počítači a nikdy neopouští vaše zařízení. Žádné webhooky, žádná telemetrie.
             </div>
 
             <p class="legal-text">Desktopová klientská aplikace <strong>SMPClient</strong> (dostupná pro Windows a
@@ -3310,24 +3333,31 @@
               navržena s maximálním důrazem na soukromí uživatele (Privacy by Design dle čl. 25 GDPR):</p>
             <ul class="legal-list">
               <li><strong>Absence telemetrie a trackingu:</strong> Launcher neobsahuje žádné analytické skripty, Google
-                Analytics, Sentry ani žádné vlastní sledovací majáky. Provozovatel serveru nemá přístup k žádným údajům
-                o
-                vašem hardwaru, procesech v operačním systému ani chování v aplikaci.</li>
-              <li><strong>Autentizace a tokeny:</strong> Při přihlašování originálním účtem Microsoft/Mojang komunikuje
-                launcher přímo se servery společnosti Microsoft (OAuth 2.0). Vaše heslo se launcheru nikdy nepředává.
-                Přístupový token je uložen výhradně na vašem lokálním disku v šifrovaném systémovém úložišti.</li>
+                Analytics, Sentry ani žádné vlastní sledovací majáky či Discord webhooky. Provozovatel serveru nemá
+                přístup k žádným údajům
+                o vašem hardwaru, procesech v operačním systému ani chování v aplikaci.</li>
+              <li><strong>Autentizace a kryptografické zabezpečení tokenů:</strong> Při přihlašování originálním účtem
+                Microsoft/Mojang komunikuje
+                launcher přímo se servery společnosti Microsoft (OAuth 2.0 PKCE v izolovaném Electron okně). Vaše heslo
+                ani 2FA kód se launcheru nikdy nepředávají.
+                Přístupový i obnovovací token jsou na vašem disku uloženy výhradně v šifrovaném formátu: na Windows
+                prostřednictvím systémového <strong>DPAPI</strong> a na Linuxu (Ubuntu, Arch Linux, CachyOS, Fedora
+                atd.) v hardwarově a uživatelsky svázaném trezoru <strong>AES-256-GCM</strong> (PBKDF2 100&nbsp;000
+                iterací z <code>/etc/machine-id</code>). Tokeny se nepředávají do UI rozhraní a nelze je rozšifrovat na
+                jiném počítači.</li>
               <li><strong>Herní módy a optimalizace:</strong> Launcher stahuje oficiální balíčky módů a konfigurací
-                zabezpečeným HTTPS přenosem. Launcher nekontroluje ani nečte žádné soubory mimo své vyhrazené datové
+                zabezpečeným HTTPS přenosem z oficiálních distribučních sítí (Modrinth / GitHub). Launcher nekontroluje
+                ani nečte žádné soubory mimo své vyhrazené datové
                 složky (<code>~/.mychalsmp</code>).</li>
               <li><strong>Transparentnost a auditovatelnost:</strong> Zdrojový kód launcheru je plně otevřený pod
-                licencí
-                MIT na platformě GitHub. Každý uživatel má možnost nezávisle ověřit, jaké síťové požadavky aplikace
-                provádí.</li>
+                licencí MIT na platformě GitHub. Každý uživatel má možnost nezávisle ověřit, jaké síťové požadavky
+                aplikace
+                provádí (např. pomocí Wireshark či Fiddler).</li>
             </ul>
           </article>
 
           <div class="legal-footer-note">
-            Poslední revize zásad: 14. října 2026 &nbsp;·&nbsp; Tyto zásady jsou platné pro herní server mychalsmp.xyz,
+            Poslední revize zásad: 15. října 2026 &nbsp;·&nbsp; Tyto zásady jsou platné pro herní server mychalsmp.xyz,
             desktopový launcher SMPClient i webové rozhraní.
           </div>
         </main>
@@ -3472,10 +3502,21 @@
                 reálné peníze mimo oficiální herní obchod.</li>
               <li><strong>Transparentní moderace obsahu a asistence AI (Digital Services Act a EU AI Act):</strong>
                 K zajištění bezpečného prostředí využíváme automatizované skripty a asistenční modely umělé inteligence
-                (Google Gemini AI) pro detekci kyberšikany, extremismu a toxicity. Provozovatel si vyhrazuje právo
-                omezit nebo odebrat přístup (udělit ban či ztišení) hráči, který pravidla porušuje. Hráč je o důvodu
-                trestu informován a má garantované právo na lidské posouzení a odvolání (žádost o unban) prostřednictvím
-                webového formuláře v sekci „Nahlášení bugu / Žádost o unban“ nebo ticket systému na Discordu.</li>
+                (Google Gemini AI) pro detekci kyberšikany, extremismu a toxicity.<br>
+                • <strong>Pravidla pro hlasovou komunikaci (Discord hovory):</strong> Moderace hlasových hovorů probíhá
+                <strong>výhradně tehdy, pokud administrátor nebo kterýkoliv uživatel výslovně pozve bota do
+                  hovoru</strong>
+                (např. vyvoláním hlasové asistence). Bot se nikdy nepřipojuje do hlasových kanálů bez vyžádání a
+                neprovádí
+                žádné skryté ani pasivní monitorování soukromých hovorů hráčů. Jakmile bot v hovoru není přítomen, žádná
+                hlasová data se nezpracovávají.<br>
+                • <strong>Záruky a odvolání:</strong> Provozovatel si vyhrazuje právo omezit nebo odebrat přístup
+                (udělit ban
+                či ztišení) hráči, který pravidla porušuje. Hráč je o důvodu trestu informován a má garantované právo na
+                lidské posouzení a odvolání (žádost o unban) prostřednictvím webového formuláře v sekci „Nahlášení bugu
+                / Žádost
+                o unban“ nebo ticket systému na Discordu.
+              </li>
             </ul>
           </article>
 
@@ -3694,8 +3735,7 @@
             <div class="legal-callout">
               <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
               SMPClient je bezplatný open-source software pod licencí MIT. Můžete jej používat zdarma. Použití je na
-              vlastní
-              odpovědnost a launcher není oficiálním produktem společností Mojang ani Microsoft.
+              vlastní odpovědnost a launcher není oficiálním produktem společností Mojang ani Microsoft.
             </div>
 
             <p class="legal-text">Pro používání oficiálního desktopového klienta <strong>SMPClient</strong> platí
@@ -3703,16 +3743,37 @@
               ustanovení:</p>
             <ul class="legal-list">
               <li><strong>Licence a otevřený kód:</strong> Aplikace SMPClient je poskytována zdarma jako open-source
-                software
-                pod podmínkami licence MIT. Uživatelé jsou oprávněni software používat, prohlížet jeho zdrojový kód a
+                software pod podmínkami licence MIT. Uživatelé jsou oprávněni software používat, prohlížet jeho zdrojový
+                kód a
                 modifikovat jej v mezích této licence.</li>
               <li><strong>Distribuce a bezpečné stažení:</strong> Oficiální verze launcheru jsou distribuovány výhradně
                 prostřednictvím platformy GitHub Releases a oficiálního webu <a href="https://mychalsmp.xyz"
                   class="legal-link">mychalsmp.xyz</a>. Provozovatel nenese odpovědnost za modifikace či verze stažené z
                 neoficiálních a neověřených zdrojů třetích stran.</li>
+              <li><strong>Bezpečnost Microsoft OAuth 2.0 & Garance nulového úniku tokenů (Zero-Stealer
+                  Guarantee):</strong>
+                Při přihlášení originálním Microsoft účtem probíhá veškerá autentizace v přísně izolovaném okně
+                Electronu
+                (<code>contextIsolation: true</code>, <code>nodeIntegration: false</code>) přímo na zabezpečené doméně
+                společnosti Microsoft (<code>login.live.com</code>). Uživatelská hesla ani vícefázové ověření (2FA)
+                launcher
+                nikdy nezpracovává, neukládá ani k nim nemá přístup. Získaný herní token a obnovovací klíče jsou na
+                lokálním
+                disku chráněny kryptografickým trezorem:
+                <br>• <strong>Windows:</strong> Nativní šifrování systémovým rozhraním <strong>DPAPI
+                  (CryptProtectData)</strong> vázané na lokální uživatelský účet (stejný standard, jaký používá Google
+                Chrome pro hesla).
+                <br>• <strong>Linux (Ubuntu, Arch Linux, CachyOS, Fedora, Debian...):</strong> Nativní hardwarově vázané
+                šifrování <strong>AES-256-GCM</strong> s klíčem odvozeným přes <strong>PBKDF2 (100&nbsp;000 iterací
+                  SHA-256)</strong> z unikátního systémového identifikátoru <code>/etc/machine-id</code> a uživatelského
+                UID.
+                <br>Data z disku nelze zneužít na jiném zařízení. Launcher neobsahuje žádné Discord webhooky, telemetrii
+                ani sledovací skripty a data nikam neodesílá. Každý uživatel si toto může nezávisle ověřit analýzou
+                odchozích paketů (Wireshark) či inspekcí otevřeného kódu.
+              </li>
               <li><strong>Vztah k Mojang Studios a Microsoft:</strong> SMPClient je nezávislá klientská aplikace třetí
-                strany
-                a není schválena společností Mojang Studios ani Microsoft Corporation, ani s nimi není nijak spojena.
+                strany a není schválena společností Mojang Studios ani Microsoft Corporation, ani s nimi není nijak
+                spojena.
                 K hraní plné verze hry Minecraft je vyžadován platný herní účet zakoupený u společnosti Mojang /
                 Microsoft.</li>
               <li><strong>Vyloučení záruk:</strong> Software je poskytován „tak, jak je“ (AS IS), bez jakýchkoliv
@@ -3726,7 +3787,7 @@
           </article>
 
           <div class="legal-footer-note">
-            Poslední revize podmínek: 14. října 2026 &nbsp;·&nbsp; Tyto podmínky nabývají platnosti a účinnosti dnem
+            Poslední revize podmínek: 15. října 2026 &nbsp;·&nbsp; Tyto podmínky nabývají platnosti a účinnosti dnem
             jejich zveřejnění na webu mychalsmp.xyz.
           </div>
         </main>
@@ -4227,7 +4288,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261014_v2"></script>
+  <script src="script.js?v=20261015_crypto1"></script>
 </body>
 
 </html>

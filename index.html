@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261015_brandgradient2" />
+  <link rel="stylesheet" href="style.css?v=20261019_winpsinstaller1" />
 </head>
 
 <body>
@@ -3845,7 +3845,7 @@
               </div>
               <div class="os-actions-row">
                 <a id="btn-win-download"
-                  href="https://github.com/mychalVidea/mychalsmp-launcher/releases/download/v1.4.19/mychalsmp-launcher-setup.exe"
+                  href="https://github.com/mychalVidea/mychalsmp-launcher/releases/latest/download/mychalsmp-launcher-setup.exe"
                   class="btn-launcher-download" download onclick="trackLauncherDownload('windows')">
                   <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -3862,17 +3862,80 @@
                 </a>
               </div>
             </div>
+            <!-- Terminal 1-click install box for PowerShell -->
             <div class="os-terminal-box">
               <div class="os-terminal-header">
                 <div class="os-terminal-dots">
                   <span class="term-dot blue"></span>
+                  <span class="term-dot yellow"></span>
                   <span class="term-dot green"></span>
                 </div>
-                <span class="os-terminal-title">Rychlé spuštění na Windows</span>
-                <span class="os-terminal-tag">WINDOWS</span>
+                <span class="os-terminal-title">Rychlá instalace přes PowerShell (1 příkaz)</span>
+                <span class="os-terminal-tag">POWERSHELL</span>
               </div>
-              <p class="os-terminal-hint">Stáhni instalační program z GitHubu, spusť instalátor a přihlas se svým
-                nickem. SMPClient tě automaticky připojí přímo na server <code>mychalsmp.xyz</code>.</p>
+              <div class="os-terminal-code-row">
+                <code id="cmd-win-install" class="term-code-text">irm https://join.mychalsmp.xyz/install.ps1 | iex</code>
+                <button class="btn-term-copy"
+                  onclick="copyTermCommand('irm https://join.mychalsmp.xyz/install.ps1 | iex', this)"
+                  title="Zkopírovat příkaz">
+                  <span class="btn-copy-icon-wrap">
+                    <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00"
+                      stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <p class="os-terminal-hint">
+                Stáhne a automaticky odblokuje SMPClient bez varování prohlížeče. Stačí otevřít <strong>PowerShell</strong> (nabídka Start ➔ PowerShell) a vložit příkaz.
+              </p>
+            </div>
+
+            <!-- Windows & Browser Warning Bypass Guide -->
+            <div class="os-warning-guide">
+              <div class="os-warning-header">
+                <div class="os-warning-icon-wrap">
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                </div>
+                <div class="os-warning-titles">
+                  <span class="os-warning-title">Zobrazuje se ti varování při stahování .exe souboru?</span>
+                  <span class="os-warning-subtitle">Proč prohlížeč hlásí „soubor se běžně nestahuje“ a jak pokračovat</span>
+                </div>
+              </div>
+              <div class="os-warning-explainer">
+                <strong>Proč toto varování vzniká:</strong> Každá nově vydaná verze open-source softwaru nemá placený komerční certifikát Microsoftu ($400+/rok). Prohlížeče Google Chrome, Microsoft Edge a Windows SmartScreen proto automaticky zobrazují preventivní varování, dokud si soubor nestáhne velké množství uživatelů. <strong>Kód launcheru je 100% čistý, bezpečný a veřejně ověřitelný na GitHubu.</strong>
+              </div>
+              <div class="os-steps-grid">
+                <div class="os-step-card">
+                  <div class="os-step-badge-row">
+                    <span class="os-step-num">KROK 1</span>
+                    <span class="os-step-name">Prohlížeč (Chrome / Edge)</span>
+                  </div>
+                  <p class="os-step-desc">
+                    V bublině stahování vpravo nahoře klikni na <strong>Zobrazit více</strong> (nebo ikonu tří teček <kbd>···</kbd>) ➔ vyber <kbd>Ponechat</kbd> ➔ a potvrď <kbd>Ponechat i přesto</kbd>.
+                  </p>
+                </div>
+                <div class="os-step-card">
+                  <div class="os-step-badge-row">
+                    <span class="os-step-num">KROK 2</span>
+                    <span class="os-step-name">Windows SmartScreen</span>
+                  </div>
+                  <p class="os-step-desc">
+                    Pokud se při spuštění zobrazí modré okno <em>„Systém Windows ochránil váš počítač“</em>, klikni na nenápadný odkaz <strong>Další informace</strong> a poté klikni na tlačítko <kbd>Přesto spustit</kbd>.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -3885,7 +3948,7 @@
               </div>
               <div class="os-actions-row">
                 <a id="btn-linux-download"
-                  href="https://github.com/mychalVidea/mychalsmp-launcher/releases/download/v1.4.19/mychalsmp-launcher-1.4.19.tar.gz"
+                  href="https://github.com/mychalVidea/mychalsmp-launcher/releases/latest/download/mychalsmp-launcher.tar.gz"
                   download class="btn-launcher-download" onclick="trackLauncherDownload('linux')">
                   <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -3916,9 +3979,9 @@
               </div>
               <div class="os-terminal-code-row">
                 <code id="cmd-linux-install"
-                  class="term-code-text">curl -sSL https://raw.githubusercontent.com/mychalVidea/mychalsmp-launcher/main/install.sh | bash</code>
+                  class="term-code-text">curl -sSL https://join.mychalsmp.xyz/install.sh | bash</code>
                 <button class="btn-term-copy"
-                  onclick="copyTermCommand('curl -sSL https://raw.githubusercontent.com/mychalVidea/mychalsmp-launcher/main/install.sh | bash', this)"
+                  onclick="copyTermCommand('curl -sSL https://join.mychalsmp.xyz/install.sh | bash', this)"
                   title="Zkopírovat příkaz">
                   <span class="btn-copy-icon-wrap">
                     <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"

@@ -2,8 +2,8 @@ export async function onRequest(context) {
   const url = new URL(context.request.url);
   const pathname = url.pathname.toLowerCase();
 
-  // 1. Výjimka pro oficiální instalátor launcheru
-  if (pathname === '/install.sh') {
+  // 1. Výjimka pro oficiální instalátory launcheru (Linux bash & Windows PowerShell)
+  if (pathname === '/install.sh' || pathname === '/install.ps1') {
     const assetRes = await context.env.ASSETS.fetch(context.request);
     if (assetRes.status === 200) {
       return new Response(assetRes.body, {
@@ -28,6 +28,7 @@ export async function onRequest(context) {
     pathname.endsWith('.ini') ||
     pathname.endsWith('.log') ||
     pathname.endsWith('.sh') ||
+    pathname.endsWith('.ps1') ||
     pathname.endsWith('.yml') ||
     pathname.endsWith('.yaml') ||
     pathname === '/config.js'

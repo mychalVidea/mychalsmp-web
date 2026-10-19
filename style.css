@@ -14801,7 +14801,146 @@ body {
   border-radius: 4px;
 }
 
+/* ==============================================================================
+   WINDOWS DOWNLOAD WARNING & BYPASS TUTORIAL GUIDE
+   ============================================================================== */
+.os-warning-guide {
+  margin-top: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+}
 
+.os-warning-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.os-warning-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(10, 103, 229, 0.12);
+  border: 1px solid rgba(10, 103, 229, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.os-warning-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.os-warning-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.os-warning-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.os-warning-explainer {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.55;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.os-warning-explainer strong {
+  color: var(--text);
+}
+
+.os-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .os-steps-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.os-step-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color var(--trans), background var(--trans);
+}
+
+.os-step-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.os-step-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.os-step-num {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(10, 103, 229, 0.2);
+  color: #38bdf8;
+  border: 1px solid rgba(10, 103, 229, 0.35);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.os-step-name {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.os-step-desc {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.os-step-desc strong {
+  color: var(--text);
+}
+
+.os-step-desc kbd {
+  font-family: var(--font);
+  font-size: 0.76rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
 
 .launcher-features-grid {
   display: grid;

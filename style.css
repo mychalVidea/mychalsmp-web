@@ -14469,9 +14469,9 @@ body {
 
 .os-selector-nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   border-bottom: 1px solid var(--border);
   padding-bottom: 20px;
   margin-bottom: 24px;
@@ -14517,8 +14517,14 @@ body {
   transition: all var(--trans);
 }
 
-.os-nav-tab i {
+.os-nav-tab i,
+.os-nav-tab .ui-icon-svg {
   font-size: 1.15rem;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .os-nav-tab:hover {

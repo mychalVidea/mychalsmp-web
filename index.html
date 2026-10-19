@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261019_winpsinstaller1" />
+  <link rel="stylesheet" href="style.css?v=20261019_win11tabs2" />
 </head>
 
 <body>
@@ -3808,8 +3808,7 @@
         <div class="launcher-meta-badge-row">
           <div class="launcher-release-pill">
             <span class="pill-dot"></span>
-            <span id="launcher-version-tag">Verze 1.4.19</span>
-            <span class="pill-badge-opt">Doporučeno</span>
+            <span id="launcher-version-tag">Verze 1.5.7</span>
           </div>
           <div class="launcher-auto-pill">
             <i class="fa-solid fa-arrows-rotate"></i>
@@ -3826,9 +3825,13 @@
           <!-- OS Nav Tabs -->
           <div class="os-selector-nav">
             <button class="os-nav-tab active" data-os="windows" onclick="switchLauncherOS('windows', this)">
-              <i class="fa-brands fa-windows"></i>
+              <svg class="ui-icon-svg ui-icon-win11" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="2.5" y="2.5" width="8.5" height="8.5" rx="0.75" />
+                <rect x="13" y="2.5" width="8.5" height="8.5" rx="0.75" />
+                <rect x="2.5" y="13" width="8.5" height="8.5" rx="0.75" />
+                <rect x="13" y="13" width="8.5" height="8.5" rx="0.75" />
+              </svg>
               <span>Windows</span>
-              <span class="os-pill-badge">Doporučeno</span>
             </button>
             <button class="os-nav-tab" data-os="linux" onclick="switchLauncherOS('linux', this)">
               <i class="fa-brands fa-linux"></i>
@@ -3874,7 +3877,8 @@
                 <span class="os-terminal-tag">POWERSHELL</span>
               </div>
               <div class="os-terminal-code-row">
-                <code id="cmd-win-install" class="term-code-text">irm https://join.mychalsmp.xyz/install.ps1 | iex</code>
+                <code id="cmd-win-install"
+                  class="term-code-text">irm https://join.mychalsmp.xyz/install.ps1 | iex</code>
                 <button class="btn-term-copy"
                   onclick="copyTermCommand('irm https://join.mychalsmp.xyz/install.ps1 | iex', this)"
                   title="Zkopírovat příkaz">
@@ -3893,7 +3897,8 @@
                 </button>
               </div>
               <p class="os-terminal-hint">
-                Stáhne a automaticky odblokuje SMPClient bez varování prohlížeče. Stačí otevřít <strong>PowerShell</strong> (nabídka Start ➔ PowerShell) a vložit příkaz.
+                Stáhne a automaticky odblokuje SMPClient bez varování prohlížeče. Stačí otevřít
+                <strong>PowerShell</strong> (nabídka Start ➔ PowerShell) a vložit příkaz.
               </p>
             </div>
 
@@ -3910,11 +3915,15 @@
                 </div>
                 <div class="os-warning-titles">
                   <span class="os-warning-title">Zobrazuje se ti varování při stahování .exe souboru?</span>
-                  <span class="os-warning-subtitle">Proč prohlížeč hlásí „soubor se běžně nestahuje“ a jak pokračovat</span>
+                  <span class="os-warning-subtitle">Proč prohlížeč hlásí „soubor se běžně nestahuje“ a jak
+                    pokračovat</span>
                 </div>
               </div>
               <div class="os-warning-explainer">
-                <strong>Proč toto varování vzniká:</strong> Každá nově vydaná verze open-source softwaru nemá placený komerční certifikát Microsoftu ($400+/rok). Prohlížeče Google Chrome, Microsoft Edge a Windows SmartScreen proto automaticky zobrazují preventivní varování, dokud si soubor nestáhne velké množství uživatelů. <strong>Kód launcheru je 100% čistý, bezpečný a veřejně ověřitelný na GitHubu.</strong>
+                <strong>Proč toto varování vzniká:</strong> Každá nově vydaná verze open-source softwaru nemá placený
+                komerční certifikát Microsoftu ($400+/rok). Prohlížeče Google Chrome, Microsoft Edge a Windows
+                SmartScreen proto automaticky zobrazují preventivní varování, dokud si soubor nestáhne velké množství
+                uživatelů. <strong>Kód launcheru je 100% čistý, bezpečný a veřejně ověřitelný na GitHubu.</strong>
               </div>
               <div class="os-steps-grid">
                 <div class="os-step-card">
@@ -3923,7 +3932,8 @@
                     <span class="os-step-name">Prohlížeč (Chrome / Edge)</span>
                   </div>
                   <p class="os-step-desc">
-                    V bublině stahování vpravo nahoře klikni na <strong>Zobrazit více</strong> (nebo ikonu tří teček <kbd>···</kbd>) ➔ vyber <kbd>Ponechat</kbd> ➔ a potvrď <kbd>Ponechat i přesto</kbd>.
+                    V bublině stahování vpravo nahoře klikni na <strong>Zobrazit více</strong> (nebo ikonu tří teček
+                    <kbd>···</kbd>) ➔ vyber <kbd>Ponechat</kbd> ➔ a potvrď <kbd>Ponechat i přesto</kbd>.
                   </p>
                 </div>
                 <div class="os-step-card">
@@ -3932,7 +3942,9 @@
                     <span class="os-step-name">Windows SmartScreen</span>
                   </div>
                   <p class="os-step-desc">
-                    Pokud se při spuštění zobrazí modré okno <em>„Systém Windows ochránil váš počítač“</em>, klikni na nenápadný odkaz <strong>Další informace</strong> a poté klikni na tlačítko <kbd>Přesto spustit</kbd>.
+                    Pokud se při spuštění zobrazí modré okno <em>„Systém Windows ochránil váš počítač“</em>, klikni na
+                    nenápadný odkaz <strong>Další informace</strong> a poté klikni na tlačítko <kbd>Přesto
+                      spustit</kbd>.
                   </p>
                 </div>
               </div>

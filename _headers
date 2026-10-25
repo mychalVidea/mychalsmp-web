@@ -1,41 +1,16 @@
 /install.ps1
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=300
-  X-Content-Type-Options: nosniff
 
 /install.sh
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=300
-  X-Content-Type-Options: nosniff
-
-/
-  Cache-Control: no-cache, no-store, must-revalidate, private
-  Pragma: no-cache
-  Expires: 0
-
-/index.html
-  Cache-Control: no-cache, no-store, must-revalidate, private
-  Pragma: no-cache
-  Expires: 0
 
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), screen-wake-lock=(), accelerometer=(), gyroscope=(), magnetometer=(), display-capture=(), midi=(), browsing-topics=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: blob: https://mc-heads.net https://cdn.discordapp.com; connect-src 'self' https://api.6767111.xyz https://api.github.com wss:; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self' https://api.6767111.xyz; frame-ancestors 'self'; upgrade-insecure-requests;
-  Cross-Origin-Opener-Policy: same-origin-allow-popups
-  Cross-Origin-Resource-Policy: same-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https: wss:; img-src 'self' https: data: blob:; font-src 'self' https: data:; media-src 'self' https: blob:; frame-ancestors 'self';
 
-/*.css
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/font/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/imgs/*
-  Cache-Control: public, max-age=31536000, immutable

@@ -868,11 +868,11 @@ function handleCrackedToggle(isCracked) {
 
   if (btnTitle && btnSub) {
     if (isCracked) {
-      btnTitle.innerHTML = '<i class="fa-solid fa-arrow-up-right-from-square"></i> PŘEJÍT DO OBCHODU';
-      btnSub.textContent = 'Oficiální Tebex store • Vhodné i pro Warez';
+      btnTitle.innerHTML = '<svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;margin-right:6px;"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg> Přejít do obchodu';
+      btnSub.textContent = 'Oficiální Tebex store · Vhodné i pro Warez';
     } else {
-      btnTitle.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> AKTIVOVAT SMP+';
-      btnSub.textContent = 'Pouze 1.99 € / měsíc • Okamžitá aktivace';
+      btnTitle.innerHTML = '<svg class="ui-icon-svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="width:16px;height:16px;margin-right:6px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Aktivovat SMP+';
+      btnSub.textContent = '1.99 € / měsíc · Okamžitá aktivace';
     }
   }
 }

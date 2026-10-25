@@ -51,7 +51,12 @@ try {
         $asset = $release.assets | Where-Object { $_.name -like "*setup*.exe" -or $_.name -like "*.exe" } | Select-Object -First 1
         if ($asset -and $asset.browser_download_url) {
             $downloadUrl = $asset.browser_download_url
-            Write-Host "✔ Nalezena verze: $($release.tag_name)" -ForegroundColor Green
+            $expectedSize = [int64]$asset.size
+            if ($expectedSize -gt 0) {
+                Write-Host "✔ Nalezena verze: $($release.tag_name) ($([math]::Round($expectedSize / 1MB, 1)) MB)" -ForegroundColor Green
+            } else {
+                Write-Host "✔ Nalezena verze: $($release.tag_name)" -ForegroundColor Green
+            }
         }
     }
 } catch {
@@ -62,28 +67,79 @@ if (-not $downloadUrl) {
     $downloadUrl = $fallbackUrl
 }
 
-# 3. Stažení instalačního balíčku
-Write-Host "📥 Stahuji instalační program..." -ForegroundColor Cyan
-Write-Host "   URL: $downloadUrl" -ForegroundColor DarkGray
+# 3. Stažení instalačního balíčku s ověřením integrity a velikosti
+$maxAttempts = 3
+$downloadSuccess = $false
 
-try {
-    $downloadClient = New-Object System.Net.WebClient
-    $downloadClient.Headers.Add("User-Agent", "MYCHALSMP-Installer-PowerShell")
-    $downloadClient.DownloadFile($downloadUrl, $tempExe)
-    Write-Host "✔ Instalační balíček byl úspěšně stažen." -ForegroundColor Green
-} catch {
-    # Fallback na Invoke-WebRequest pokud WebClient selže
-    try {
-        $oldProgress = $ProgressPreference
-        $ProgressPreference = 'SilentlyContinue'
-        Invoke-WebRequest -Uri $downloadUrl -OutFile $tempExe -UseBasicParsing
-        $ProgressPreference = $oldProgress
-        Write-Host "✔ Instalační balíček byl úspěšně stažen (přes WebRequest)." -ForegroundColor Green
-    } catch {
-        Write-Host "❌ Chyba: Nepodařilo se stáhnout balíček: $_" -ForegroundColor Red
-        Write-Host "Zkus prosím stáhnout instalátor ručně z webu: https://mychalsmp.xyz" -ForegroundColor Yellow
-        return
+for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+    if (Test-Path $tempExe) {
+        Remove-Item -Path $tempExe -Force -ErrorAction SilentlyContinue
     }
+
+    Write-Host "📥 Stahuji instalační program (pokus $attempt z $maxAttempts)..." -ForegroundColor Cyan
+    Write-Host "   URL: $downloadUrl" -ForegroundColor DarkGray
+
+    # Metoda A: Start-BitsTransfer (pokud je dostupný v systému, je nejstabilnější a odolný vůči výpadkům sítě)
+    $bitsDone = $false
+    if (Get-Command Start-BitsTransfer -ErrorAction SilentlyContinue) {
+        try {
+            Start-BitsTransfer -Source $downloadUrl -Destination $tempExe -DisplayName "MYCHALSMP-Setup-Download" -Priority High -ErrorAction Stop
+            $bitsDone = $true
+        } catch {
+            # BITS nemusí být povolen (např. v některých prostředích), fallback na WebClient
+        }
+    }
+
+    # Metoda B: WebClient
+    if (-not $bitsDone) {
+        try {
+            $downloadClient = New-Object System.Net.WebClient
+            $downloadClient.Headers.Add("User-Agent", "MYCHALSMP-Installer-PowerShell")
+            $downloadClient.DownloadFile($downloadUrl, $tempExe)
+        } catch {
+            # Metoda C: Invoke-WebRequest fallback
+            try {
+                $oldProgress = $ProgressPreference
+                $ProgressPreference = 'SilentlyContinue'
+                Invoke-WebRequest -Uri $downloadUrl -OutFile $tempExe -UseBasicParsing -TimeoutSec 120
+                $ProgressPreference = $oldProgress
+            } catch {
+                Write-Host "⚠️ Chyba stahování při pokusu $attempt : $_" -ForegroundColor Yellow
+            }
+        }
+    }
+
+    # Ověření celistvosti souboru (prevence NSIS Error: Installer integrity check has failed)
+    if (Test-Path $tempExe) {
+        $actualSize = (Get-Item $tempExe).Length
+        if ($expectedSize -gt 0) {
+            if ($actualSize -eq $expectedSize) {
+                Write-Host "✔ Instalační balíček byl kompletně stažen a ověřen ($([math]::Round($actualSize / 1MB, 1)) MB)." -ForegroundColor Green
+                $downloadSuccess = $true
+                break
+            } else {
+                Write-Host "⚠️ Varování: Stažený soubor je nekompletní ($([math]::Round($actualSize / 1MB, 1)) MB z očekávaných $([math]::Round($expectedSize / 1MB, 1)) MB)!" -ForegroundColor Yellow
+            }
+        } elseif ($actualSize -gt 50MB) {
+            # Pokud API neposkytlo velikost, platný setup má vždy > 50 MB
+            Write-Host "✔ Instalační balíček byl stažen a ověřen ($([math]::Round($actualSize / 1MB, 1)) MB)." -ForegroundColor Green
+            $downloadSuccess = $true
+            break
+        } else {
+            Write-Host "⚠️ Varování: Stažený soubor je poškozený nebo příliš malý ($([math]::Round($actualSize / 1MB, 1)) MB)." -ForegroundColor Yellow
+        }
+    }
+
+    if ($attempt -lt $maxAttempts) {
+        Write-Host "⏳ Čekám 2 sekundy před dalším pokusem..." -ForegroundColor Gray
+        Start-Sleep -Seconds 2
+    }
+}
+
+if (-not $downloadSuccess) {
+    Write-Host "❌ Chyba: Ani po $maxAttempts pokusech se nepodařilo stáhnout kompletní instalátor." -ForegroundColor Red
+    Write-Host "Zkontroluj prosím internetové připojení nebo stáhni přenosnou verzi z webu: https://mychalsmp.xyz" -ForegroundColor Yellow
+    return
 }
 
 # 4. Odblokování souboru (Odstranění Windows Mark-of-the-Web / SmartScreen bloku)

@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261030_apple_craft2" />
+  <link rel="stylesheet" href="style.css?v=20261030_v26_8" />
 </head>
 
 <body>
@@ -1788,322 +1788,495 @@
 
   <!-- SMP+ SUBSCRIPTION -->
   <section id="tab-smp-plus" class="tab-section">
-    <!-- Page hero with Split Layout -->
-    <div class="smp-hero">
-      <div class="smp-hero-bg">
-        <div class="smp-hero-overlay"></div>
+    <div class="container smp-pricing-container">
+
+      <!-- HERO HEADER -->
+      <div class="smp-pricing-header text-center">
+        <span class="smp-eyebrow">OFICIÁLNÍ PŘEDPLATNÉ</span>
+        <h1 class="smp-pricing-title">
+          Vyber si své členství <span class="smp-brand-title">SMP<span class="smp-brand-plus">+</span></span>
+        </h1>
+        <p class="smp-pricing-subtitle">
+          Získej maximální herní komfort, větší dohled a volnost bez pay-to-win. Kdykoliv zrušitelné na jedno kliknutí.
+        </p>
       </div>
-      <div class="container smp-hero-container">
-        <!-- LEFT COLUMN: Narrative & 4 Spacious Value Pillars -->
-        <div class="smp-hero-left">
-          <h1 class="smp-hero-title">
-            Hraj naplno s výhodami <span class="smp-brand-title">SMP<span class="smp-brand-plus">+</span></span>
-          </h1>
-          <p class="smp-hero-subtitle">
-            Členství pro maximální komfort a styl. Žádné výhody v PvP, žádný pay-to-win.
-          </p>
 
-          <!-- Curated 4-Pillar Value Grid -->
-          <div class="smp-showcase-grid">
-            <!-- Feature 1: Ender Chest -->
-            <div class="smp-showcase-card">
-              <div class="smp-sc-head">
-                <div class="smp-sc-icon-box">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="4" width="18" height="16" rx="2" />
-                    <path d="M3 10h18" />
-                    <circle cx="12" cy="14" r="2" />
-                  </svg>
-                </div>
-                <span class="smp-sc-spec">54 slotů · +100% místa</span>
+      <!-- 3 PRICING CARDS SIDE-BY-SIDE -->
+      <div class="smp-pricing-grid">
+
+        <!-- CARD 1: SMP+ -->
+        <div class="smp-pricing-card" id="smp-card-smp_plus" onclick="selectSmpTierAndScroll('smp_plus')">
+          <div class="smp-pcard-head">
+            <div class="smp-pcard-badge-row">
+              <span class="smp-tier-badge smp-tier-badge--plus">SMP+</span>
+            </div>
+            <h3 class="smp-pcard-title">SMP+</h3>
+            <p class="smp-pcard-desc">Vstupní VIP balíček pro pohodlné stavění a základní herní komfort.</p>
+            <div class="smp-pcard-price-row">
+              <span class="smp-pcard-price">1.99</span>
+              <span class="smp-pcard-currency">€</span>
+              <span class="smp-pcard-period">/ měsíc</span>
+            </div>
+            <button type="button" class="btn-tier-select" id="btn-select-smp_plus" onclick="event.stopPropagation(); selectSmpTierAndScroll('smp_plus')">
+              Zvolit SMP+
+            </button>
+          </div>
+          <div class="smp-pcard-divider"></div>
+          <div class="smp-pcard-perks">
+            <div class="smp-perk-header">Vlastnosti balíčku:</div>
+            <ul class="smp-perk-list">
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>14 domovů</strong> (/sethome – 2 plné řady)</span>
+              </li>
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>14 chunků dohled</strong> (render distance)</span>
+              </li>
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Modrý symbol +</strong> před nickem ve hře</span>
+              </li>
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Všechny základní VIP výhody v ceně</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 2: SMP++ -->
+        <div class="smp-pricing-card" id="smp-card-smp_pp" onclick="selectSmpTierAndScroll('smp_pp')">
+          <div class="smp-pcard-head">
+            <div class="smp-pcard-badge-row">
+              <span class="smp-tier-badge smp-tier-badge--plusplus">SMP++</span>
+            </div>
+            <h3 class="smp-pcard-title">SMP++</h3>
+            <p class="smp-pcard-desc">Zvýšená kapacita domovů a širší render distance pro zkušené stavitele.</p>
+            <div class="smp-pcard-price-row">
+              <span class="smp-pcard-price">3.79</span>
+              <span class="smp-pcard-currency">€</span>
+              <span class="smp-pcard-period">/ měsíc</span>
+            </div>
+            <button type="button" class="btn-tier-select" id="btn-select-smp_pp" onclick="event.stopPropagation(); selectSmpTierAndScroll('smp_pp')">
+              Zvolit SMP++
+            </button>
+          </div>
+          <div class="smp-pcard-divider"></div>
+          <div class="smp-pcard-perks">
+            <div class="smp-perk-header">Vlastnosti balíčku:</div>
+            <ul class="smp-perk-list">
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>25 domovů</strong> (/sethome v GUI)</span>
+              </li>
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>15 chunků dohled</strong> (render distance)</span>
+              </li>
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Modrý symbol ++</strong> před nickem ve hře</span>
+              </li>
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Všechny základní VIP výhody v ceně</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CARD 3: SMP+++ (Default Active) -->
+        <div class="smp-pricing-card smp-pricing-card--hero active-tier" id="smp-card-smp_ppp" onclick="selectSmpTierAndScroll('smp_ppp')">
+          <div class="smp-pcard-head">
+            <div class="smp-pcard-badge-row">
+              <span class="smp-tier-badge smp-tier-badge--plusplusplus">SMP+++</span>
+            </div>
+            <h3 class="smp-pcard-title">SMP+++</h3>
+            <p class="smp-pcard-desc">Kompletní balík s plnými 4 řadami domovů a maximálním dohledem na serveru.</p>
+            <div class="smp-pcard-price-row">
+              <span class="smp-pcard-price">3.99</span>
+              <span class="smp-pcard-currency">€</span>
+              <span class="smp-pcard-period">/ měsíc</span>
+            </div>
+            <button type="button" class="btn-tier-select active" id="btn-select-smp_ppp" onclick="event.stopPropagation(); selectSmpTierAndScroll('smp_ppp')">
+              Vybráno (SMP+++)
+            </button>
+          </div>
+          <div class="smp-pcard-divider"></div>
+          <div class="smp-pcard-perks">
+            <div class="smp-perk-header">Vlastnosti balíčku:</div>
+            <ul class="smp-perk-list">
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Okamžitý /rtp</strong> (bez čekání a warmupu)</span>
+              </li>
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>28 domovů</strong> (/sethome – plné 4 řady)</span>
+              </li>
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>16 chunků dohled</strong> (14 v The End – maximum)</span>
+              </li>
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Modrý symbol +++</strong> před nickem ve hře</span>
+              </li>
+              <li>
+                <svg class="ui-icon-svg perk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Všechny základní VIP výhody v ceně</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TINY VAT NOTICE -->
+      <div class="smp-pricing-vat-notice">
+        * Ceny jsou uvedeny bez DPH (daň se připočte v pokladně podle země bydliště). Kdykoliv zrušitelné na 1 kliknutí bez závazků.
+      </div>
+
+      <!-- ACTIVE CHECKOUT & LIVE RANK PREVIEW -->
+      <div class="smp-checkout-section">
+        <div class="smp-checkout-card">
+          <div class="smp-checkout-header">
+            <div class="smp-checkout-tier-badge">
+              <span class="smp-checkout-tier-label">Aktivace členství:</span>
+              <span class="smp-checkout-tier-name" id="checkout-active-tier-name">SMP+++</span>
+              <span class="smp-checkout-tier-dot">·</span>
+              <span class="smp-checkout-tier-price" id="checkout-active-tier-price">3.99 € / měsíc</span>
+            </div>
+            <div class="smp-price-sub">Kdykoliv zrušitelné na 1 kliknutí · Bez závazků</div>
+          </div>
+
+          <div class="smp-divider"></div>
+
+          <!-- Authentic Live Rank Preview (Chat, Tablist, Nametag) -->
+          <div class="smp-preview-box">
+            <div class="smp-preview-head-row">
+              <div class="smp-preview-label">
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <span>Živý náhled ranku:</span>
               </div>
-              <h4>2x větší Ender Truhla (54 slotů)</h4>
-              <p>Plných 6 řádků kapacity. Při vypršení se věci nikdy neztratí – zůstanou bezpečně uloženy v trezoru.</p>
+              <div class="smp-preview-modes" role="tablist">
+                <button type="button" class="smp-mode-btn active" id="smp-mode-chat-btn"
+                  onclick="switchSmpPreviewMode('chat')">Chat</button>
+                <button type="button" class="smp-mode-btn" id="smp-mode-tab-btn"
+                  onclick="switchSmpPreviewMode('tab')">Tablist</button>
+                <button type="button" class="smp-mode-btn" id="smp-mode-tag-btn"
+                  onclick="switchSmpPreviewMode('tag')">Nad hlavou</button>
+              </div>
             </div>
 
-            <!-- Feature 2: Instant Warps -->
-            <div class="smp-showcase-card">
-              <div class="smp-sc-head">
-                <div class="smp-sc-icon-box">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                  </svg>
-                </div>
-                <span class="smp-sc-spec">Zero delay · /back</span>
-              </div>
-              <h4>Rychlé teleporty & /back</h4>
-              <p>Návrat na místo smrti přes <code>/back</code> bez čekání. Zkrácený 3s odpočet na <code>/home</code>,
-                <code>/rtp</code> a <code>/tpa</code>.
-              </p>
+            <!-- Chat View -->
+            <div class="smp-chat-preview" id="smp-view-chat">
+              <img id="smp-preview-head" src="https://mc-heads.net/avatar/MHF_Question/28" class="mc-avatar-head"
+                alt="Skin Head">
+              <span class="mc-chat-flag" title="Česká republika">🇨🇿</span>
+              <span class="smp-preview-plus tier-plusplusplus">+++</span><span class="smp-preview-name"
+                id="smp-preview-name">Hrac</span><span class="smp-chat-colon">:</span>
+              <span class="smp-chat-text">Ahoj jak se mas!</span>
             </div>
 
-            <!-- Feature 3: Custom Nickname Color -->
-            <div class="smp-showcase-card">
-              <div class="smp-sc-head">
-                <div class="smp-sc-icon-box">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <circle cx="12" cy="12" r="4" />
-                  </svg>
-                </div>
-                <span class="smp-sc-spec">24 barev · Prestiž</span>
+            <!-- Tablist View -->
+            <div class="smp-tablist-preview" id="smp-view-tab" style="display: none;">
+              <div class="smp-tab-player-item">
+                <img id="smp-preview-head-tab" src="https://mc-heads.net/avatar/MHF_Question/24"
+                  class="mc-avatar-head-sm" alt="Skin Head">
+                <span class="mc-chat-flag">🇨🇿</span>
+                <span class="smp-preview-plus tier-plusplusplus">+++</span><span class="smp-preview-name"
+                  id="smp-preview-name-tab">Hrac</span>
+                <span class="smp-tab-ping"><svg class="ui-icon-svg" style="width:12px;height:12px;color:#21DE00;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V4"/></svg> 15ms</span>
               </div>
-              <h4>24 prémiových barev jména (/cc)</h4>
-              <p>Změna barvy jména v chatu i tablistu a modrý symbol <code>+</code> před tvým nickem.</p>
             </div>
 
-            <!-- Feature 4: Sethome & Bed Colors -->
-            <div class="smp-showcase-card">
-              <div class="smp-sc-head">
-                <div class="smp-sc-icon-box">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    <polyline points="9 22 9 12 15 12 15 22" />
-                  </svg>
+            <!-- Nametag View -->
+            <div class="smp-nametag-preview" id="smp-view-tag" style="display: none;">
+              <div class="smp-nametag-box">
+                <div class="smp-nametag-tag">
+                  <span class="smp-preview-plus tier-plusplusplus">+++</span><span class="smp-preview-name"
+                    id="smp-preview-name-tag">Hrac</span>
                 </div>
-                <span class="smp-sc-spec">14 domovů · 16 barev</span>
+                <img id="smp-preview-head-tag" src="https://mc-heads.net/avatar/MHF_Question/42"
+                  class="mc-avatar-nametag" alt="Skin Head">
               </div>
-              <h4>Až 14 domovů a barvy v /homes</h4>
-              <p>Dvojnásobek uložených lokací (<code>/sethome</code>) pro tvé základny a farmy včetně výběru barvy
-                postele.</p>
+            </div>
+
+            <!-- Interactive /cc Color Picker in Preview Box -->
+            <div class="smp-preview-cc-bar">
+              <span class="smp-preview-cc-title">
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+                  <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+                  <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+                  <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+                  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 9.5 10c.8 0 1.5-.7 1.5-1.5 0-.4-.1-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-5.5-4.5-10-10-10z"/>
+                </svg>
+                Vyzkoušej barvu jména (/cc):
+              </span>
+              <div class="smp-preview-cc-swatches">
+                <span class="smp-swatch active" style="--swatch:#ffffff;"
+                  onclick="setPreviewNickColor('#ffffff', this)" title="Bílá (Výchozí)"></span>
+                <span class="smp-swatch" style="--swatch:#55ffff;" onclick="setPreviewNickColor('#55ffff', this)"
+                  title="Cyan"></span>
+                <span class="smp-swatch" style="--swatch:#ffaa00;" onclick="setPreviewNickColor('#ffaa00', this)"
+                  title="Gold"></span>
+                <span class="smp-swatch" style="--swatch:#55ff55;" onclick="setPreviewNickColor('#55ff55', this)"
+                  title="Lime"></span>
+                <span class="smp-swatch" style="--swatch:#ff55ff;" onclick="setPreviewNickColor('#ff55ff', this)"
+                  title="Purple"></span>
+                <span class="smp-swatch" style="--swatch:#ffff55;" onclick="setPreviewNickColor('#ffff55', this)"
+                  title="Yellow"></span>
+                <span class="smp-swatch" style="--swatch:#ff5555;" onclick="setPreviewNickColor('#ff5555', this)"
+                  title="Red"></span>
+                <span class="smp-swatch" style="--swatch:#38bdf8;" onclick="setPreviewNickColor('#38bdf8', this)"
+                  title="Sky Blue"></span>
+                <span class="smp-swatch" style="--swatch:#2ecc71;" onclick="setPreviewNickColor('#2ecc71', this)"
+                  title="Green"></span>
+              </div>
             </div>
           </div>
 
-          <!-- Fairness Guarantee Banner -->
-          <div class="smp-fairness-banner">
-            <div class="smp-fairness-icon">
+          <!-- Nickname Input Form -->
+          <div class="nickname-form">
+            <label for="mc-username" class="nickname-label">Tvůj Minecraft nick:</label>
+            <div class="nickname-input-wrapper">
+              <img id="nickname-input-head" src="https://mc-heads.net/avatar/Steve/24" class="nickname-input-head"
+                alt="Head">
+              <input type="text" id="mc-username" class="nickname-input nickname-input--with-head"
+                placeholder="Zadej svůj herní nick..." required oninput="updatePreviewName(this.value)"
+                autocomplete="off" />
+            </div>
+
+            <!-- Cracked / No Java Edition toggle -->
+            <div class="smp-cracked-toggle" id="smp-cracked-toggle">
+              <label class="smp-consent-label" for="smp-cracked-check">
+                <input type="checkbox" id="smp-cracked-check" class="smp-consent-checkbox"
+                  onchange="handleCrackedToggle(this.checked)" />
+                <span class="smp-consent-text">Nemám koupený Minecraft (Warez / offline launcher)</span>
+              </label>
+              <p class="smp-cracked-hint" id="smp-cracked-hint" style="display:none;">
+                <svg class="ui-icon-svg" style="width:14px;height:14px;color:#0a67e5;vertical-align:-2px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Budeš přesměrován na náš oficiální obchod Tebex, kde zadáš nick ručně bez ověřování Mojang účtu.
+              </p>
+            </div>
+
+            <!-- Mandatory Consent Checkbox -->
+            <div class="smp-consent-wrapper" id="smp-consent-wrapper">
+              <label class="smp-consent-label" for="smp-consent-terms">
+                <input type="checkbox" id="smp-consent-terms" class="smp-consent-checkbox" required />
+                <span class="smp-consent-text">
+                  Souhlasím s <a href="#terms" onclick="showTab('terms')">Podmínkami služby</a> a <a href="#privacy"
+                    onclick="showTab('privacy')">Zásadami ochrany údajů</a> a výslovně žádám o okamžité zahájení
+                  dodání digitálního obsahu dle § 1837 písm. l) OZ (se zánikem práva na 14denní odstoupení od
+                  smlouvy).
+                </span>
+              </label>
+            </div>
+
+            <!-- High-Contrast Prominent Pay Button -->
+            <button class="btn-purchase" onclick="checkoutSMP()">
+              <div class="btn-purchase-inner btn-purchase-title">
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                <span id="btn-purchase-label">Aktivovat SMP+++</span>
+              </div>
+              <div class="btn-purchase-sub" id="btn-purchase-sub">Pouze 3.99 € / měsíc · Všechny výhody</div>
+            </button>
+
+            <div class="smp-trust-badges">
+              <div class="trust-badge-item">
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>Tebex (MoR)</span>
+              </div>
+              <span class="trust-badge-dot">·</span>
+              <div class="trust-badge-item">
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <span>Aktivace do 5 minut</span>
+              </div>
+            </div>
+
+            <p class="smp-legal-notice">
+              Aktivace výhod probíhá automaticky do 5 minut. Prodejcem je společnost Tebex Limited (Merchant of
+              Record). Nákupem udělujete výslovný souhlas se započetím okamžitého plnění digitálního obsahu dle § 1837
+              písm. l) OZ.
+            </p>
+          </div>
+        </div>
+
+        <!-- SMP+ Management & Cancellation Card -->
+        <div id="smp-manage-card" class="smp-manage-card" style="margin-top: 24px;">
+          <div class="smp-manage-header">
+            <div class="smp-manage-title"><i class="fa-solid fa-user-gear"></i> Správa a zrušení SMP+</div>
+          </div>
+          <div class="smp-manage-body" id="smp-manage-content">
+            <div class="smp-manage-loading">
+              <span class="btn-spinner"></span>
+              <span>Ověřuji stav předplatného...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal for Cancel Confirmation -->
+        <div id="smp-cancel-modal" class="smp-modal-overlay" style="display: none;">
+          <div class="smp-modal-box">
+            <div class="smp-modal-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h3>Opravdu chceš zrušit SMP+?</h3>
+            <p id="smp-cancel-modal-desc">Zrušením předplatného okamžitě ztratíš všechny výhody SMP+ ve hře i na
+              Discordu.</p>
+            <div class="smp-modal-actions">
+              <button type="button" class="btn-modal-back" onclick="closeCancelModal()">Ponechat členství</button>
+              <button type="button" class="btn-modal-danger" id="btn-confirm-cancel-smpplus"
+                onclick="executeCancelSmpPlus()">
+                <span id="cancel-btn-spinner" class="btn-spinner" style="display: none;"></span>
+                <span>Ano, zrušit SMP+</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ZÁKLADNÍ VÝHODY SPOLEČNÉ PRO VŠECHNY ČLENY -->
+      <div class="smp-common-benefits-section">
+        <div class="smp-section-header text-center">
+          <span class="smp-eyebrow">ZÁKLADNÍ VÝHODY ČLENSTVÍ</span>
+          <h2 class="smp-details-title">Co získáš v každém <span>VIP balíčku</span></h2>
+          <p class="smp-details-sub">Tyto praktické funkce a výhody jsou plně aktivní ve všech třech úrovních (SMP+, SMP++ i SMP+++).</p>
+        </div>
+
+        <div class="smp-common-grid">
+          <!-- 1. Okamžitý teleport na domov -->
+          <div class="smp-common-card">
+            <div class="smp-common-icon-wrap">
               <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                <path d="m9 12 2 2 4-4" />
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
               </svg>
             </div>
-            <div class="smp-fairness-text">
-              <strong>100% Kosmetické a komfortní výhody</strong>
-              <span>Server stavíme na poctivé hře pro každého. Žádný pay-to-win, žádná neférová síla v PvP boji.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT COLUMN: High-Visibility Checkout Card -->
-        <div class="smp-hero-right">
-          <div class="smp-checkout-card">
-            <div class="smp-checkout-header">
-              <div class="smp-price-row">
-                <span class="smp-price-num">1.99</span>
-                <span class="smp-price-currency">€</span>
-                <span class="smp-price-period">/ měsíc</span>
-              </div>
-              <div class="smp-price-sub">Kdykoliv zrušitelné na 1 kliknutí · Bez závazků</div>
-            </div>
-
-            <div class="smp-divider"></div>
-
-            <!-- Authentic Live Rank Preview (Chat, Tablist, Nametag) -->
-            <div class="smp-preview-box">
-              <div class="smp-preview-head-row">
-                <div class="smp-preview-label">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                  <span>Živý náhled ranku:</span>
-                </div>
-                <div class="smp-preview-modes" role="tablist">
-                  <button type="button" class="smp-mode-btn active" id="smp-mode-chat-btn"
-                    onclick="switchSmpPreviewMode('chat')">Chat</button>
-                  <button type="button" class="smp-mode-btn" id="smp-mode-tab-btn"
-                    onclick="switchSmpPreviewMode('tab')">Tablist</button>
-                  <button type="button" class="smp-mode-btn" id="smp-mode-tag-btn"
-                    onclick="switchSmpPreviewMode('tag')">Nad hlavou</button>
-                </div>
-              </div>
-
-              <!-- Chat View -->
-              <div class="smp-chat-preview" id="smp-view-chat">
-                <img id="smp-preview-head" src="https://mc-heads.net/avatar/MHF_Question/28" class="mc-avatar-head"
-                  alt="Skin Head">
-                <span class="mc-chat-flag" title="Česká republika">🇨🇿</span>
-                <span class="smp-preview-plus">+</span><span class="smp-preview-name"
-                  id="smp-preview-name">Hrac</span><span class="smp-chat-colon">:</span>
-                <span class="smp-chat-text">Ahoj jak se mas!</span>
-              </div>
-
-              <!-- Tablist View -->
-              <div class="smp-tablist-preview" id="smp-view-tab" style="display: none;">
-                <div class="smp-tab-player-item">
-                  <img id="smp-preview-head-tab" src="https://mc-heads.net/avatar/MHF_Question/24"
-                    class="mc-avatar-head-sm" alt="Skin Head">
-                  <span class="mc-chat-flag">🇨🇿</span>
-                  <span class="smp-preview-plus">+</span><span class="smp-preview-name"
-                    id="smp-preview-name-tab">Hrac</span>
-                  <span class="smp-tab-ping"><svg class="ui-icon-svg" style="width:12px;height:12px;color:#21DE00;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V4"/></svg> 15ms</span>
-                </div>
-              </div>
-
-              <!-- Nametag View -->
-              <div class="smp-nametag-preview" id="smp-view-tag" style="display: none;">
-                <div class="smp-nametag-box">
-                  <div class="smp-nametag-tag">
-                    <span class="smp-preview-plus">+</span><span class="smp-preview-name"
-                      id="smp-preview-name-tag">Hrac</span>
-                  </div>
-                  <img id="smp-preview-head-tag" src="https://mc-heads.net/avatar/MHF_Question/42"
-                    class="mc-avatar-nametag" alt="Skin Head">
-                </div>
-              </div>
-
-              <!-- Interactive /cc Color Picker in Preview Box -->
-              <div class="smp-preview-cc-bar">
-                <span class="smp-preview-cc-title">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
-                    <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
-                    <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
-                    <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
-                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 9.5 10c.8 0 1.5-.7 1.5-1.5 0-.4-.1-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-5.5-4.5-10-10-10z"/>
-                  </svg>
-                  Vyzkoušej barvu jména (/cc):
-                </span>
-                <div class="smp-preview-cc-swatches">
-                  <span class="smp-swatch active" style="--swatch:#ffffff;"
-                    onclick="setPreviewNickColor('#ffffff', this)" title="Bílá (Výchozí)"></span>
-                  <span class="smp-swatch" style="--swatch:#55ffff;" onclick="setPreviewNickColor('#55ffff', this)"
-                    title="Cyan"></span>
-                  <span class="smp-swatch" style="--swatch:#ffaa00;" onclick="setPreviewNickColor('#ffaa00', this)"
-                    title="Gold"></span>
-                  <span class="smp-swatch" style="--swatch:#55ff55;" onclick="setPreviewNickColor('#55ff55', this)"
-                    title="Lime"></span>
-                  <span class="smp-swatch" style="--swatch:#ff55ff;" onclick="setPreviewNickColor('#ff55ff', this)"
-                    title="Purple"></span>
-                  <span class="smp-swatch" style="--swatch:#ffff55;" onclick="setPreviewNickColor('#ffff55', this)"
-                    title="Yellow"></span>
-                  <span class="smp-swatch" style="--swatch:#ff5555;" onclick="setPreviewNickColor('#ff5555', this)"
-                    title="Red"></span>
-                  <span class="smp-swatch" style="--swatch:#38bdf8;" onclick="setPreviewNickColor('#38bdf8', this)"
-                    title="Sky Blue"></span>
-                  <span class="smp-swatch" style="--swatch:#2ecc71;" onclick="setPreviewNickColor('#2ecc71', this)"
-                    title="Green"></span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Nickname Input Form -->
-            <div class="nickname-form">
-              <label for="mc-username" class="nickname-label">Tvůj Minecraft nick:</label>
-              <div class="nickname-input-wrapper">
-                <img id="nickname-input-head" src="https://mc-heads.net/avatar/Steve/24" class="nickname-input-head"
-                  alt="Head">
-                <input type="text" id="mc-username" class="nickname-input nickname-input--with-head"
-                  placeholder="Zadej svůj herní nick..." required oninput="updatePreviewName(this.value)"
-                  autocomplete="off" />
-              </div>
-
-              <!-- Cracked / No Java Edition toggle -->
-              <div class="smp-cracked-toggle" id="smp-cracked-toggle">
-                <label class="smp-consent-label" for="smp-cracked-check">
-                  <input type="checkbox" id="smp-cracked-check" class="smp-consent-checkbox"
-                    onchange="handleCrackedToggle(this.checked)" />
-                  <span class="smp-consent-text">Nemám koupený Minecraft (Warez / offline launcher)</span>
-                </label>
-                <p class="smp-cracked-hint" id="smp-cracked-hint" style="display:none;">
-                  <svg class="ui-icon-svg" style="width:14px;height:14px;color:#0a67e5;vertical-align:-2px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                  Budeš přesměrován na náš oficiální obchod Tebex, kde zadáš nick ručně bez ověřování Mojang účtu.
-                </p>
-              </div>
-
-              <!-- Mandatory Consent Checkbox -->
-              <div class="smp-consent-wrapper" id="smp-consent-wrapper">
-                <label class="smp-consent-label" for="smp-consent-terms">
-                  <input type="checkbox" id="smp-consent-terms" class="smp-consent-checkbox" required />
-                  <span class="smp-consent-text">
-                    Souhlasím s <a href="#terms" onclick="showTab('terms')">Podmínkami služby</a> a <a href="#privacy"
-                      onclick="showTab('privacy')">Zásadami ochrany údajů</a> a výslovně žádám o okamžité zahájení
-                    dodání digitálního obsahu dle § 1837 písm. l) OZ (se zánikem práva na 14denní odstoupení od
-                    smlouvy).
-                  </span>
-                </label>
-              </div>
-
-              <!-- High-Contrast Prominent Pay Button -->
-              <button class="btn-purchase" onclick="checkoutSMP()">
-                <div class="btn-purchase-inner btn-purchase-title">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                  </svg>
-                  <span>Aktivovat SMP+</span>
-                </div>
-                <div class="btn-purchase-sub">1.99 € / měsíc · Okamžitá aktivace</div>
-              </button>
-
-              <div class="smp-trust-badges">
-                <div class="trust-badge-item">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  </svg>
-                  <span>Tebex (MoR)</span>
-                </div>
-                <span class="trust-badge-dot">·</span>
-                <div class="trust-badge-item">
-                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <polyline points="12 6 12 12 16 14"/>
-                  </svg>
-                  <span>Aktivace do 5 minut</span>
-                </div>
-              </div>
-
-              <p class="smp-legal-notice">
-                Aktivace výhod probíhá automaticky do 5 minut. Prodejcem je společnost Tebex Limited (Merchant of
-                Record). Nákupem udělujete výslovný souhlas se započetím okamžitého plnění digitálního obsahu dle § 1837
-                písm. l) OZ.
-              </p>
-            </div>
+            <h4>Okamžitý teleport na domov (/home)</h4>
+            <p>Žádný 5sekundový odpočet ani čekání bez pohybu. Na svůj uložený domov se přeneseš ihned během 0 sekund.</p>
           </div>
 
-          <!-- SMP+ Management & Cancellation Card -->
-          <div id="smp-manage-card" class="smp-manage-card">
-            <div class="smp-manage-header">
-              <div class="smp-manage-title"><i class="fa-solid fa-user-gear"></i> Správa a zrušení SMP+</div>
+          <!-- 2. 2x větší Ender Truhla -->
+          <div class="smp-common-card">
+            <div class="smp-common-icon-wrap">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                <path d="M3 10h18"></path>
+                <circle cx="12" cy="14" r="2"></circle>
+              </svg>
             </div>
-            <div class="smp-manage-body" id="smp-manage-content">
-              <div class="smp-manage-loading">
-                <span class="btn-spinner"></span>
-                <span>Ověřuji stav předplatného...</span>
-              </div>
-            </div>
+            <h4>2x větší Ender Truhla (54 slotů)</h4>
+            <p>Plných 6 řádků kapacity (dvojtruhla). Při případném vypršení členství se věci přesunou do tvého osobního trezoru (/trezor), takže o nic nepřijdeš.</p>
           </div>
 
-          <!-- Modal for Cancel Confirmation -->
-          <div id="smp-cancel-modal" class="smp-modal-overlay" style="display: none;">
-            <div class="smp-modal-box">
-              <div class="smp-modal-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-              <h3>Opravdu chceš zrušit SMP+?</h3>
-              <p id="smp-cancel-modal-desc">Zrušením předplatného okamžitě ztratíš všechny výhody SMP+ ve hře i na
-                Discordu.</p>
-              <div class="smp-modal-actions">
-                <button type="button" class="btn-modal-back" onclick="closeCancelModal()">Ponechat členství</button>
-                <button type="button" class="btn-modal-danger" id="btn-confirm-cancel-smpplus"
-                  onclick="executeCancelSmpPlus()">
-                  <span id="cancel-btn-spinner" class="btn-spinner" style="display: none;"></span>
-                  <span>Ano, zrušit SMP+</span>
-                </button>
-              </div>
+          <!-- 3. Tržnice 15 slotů -->
+          <div class="smp-common-card">
+            <div class="smp-common-icon-wrap">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                <path d="M3 6h18"></path>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
             </div>
+            <h4>15 prodejních nabídek (/shop)</h4>
+            <p>Můžeš prodávat až 15 předmětů současně na serverovém trhu (hráči bez ranku mají limit 10 nabídek).</p>
+          </div>
+
+          <!-- 4. Poptávkové zakázky 4 sloty -->
+          <div class="smp-common-card">
+            <div class="smp-common-icon-wrap">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                <path d="M9 14l2 2 4-4"></path>
+              </svg>
+            </div>
+            <h4>4 poptávkové zakázky (/orders)</h4>
+            <p>Možnost vypsat až 4 nákupní objednávky naráz (běžný limit je 2) včetně automatického doplňování surovin přímo z tvé Ender truhly.</p>
+          </div>
+
+          <!-- 5. 24 barev jména (/cc) -->
+          <div class="smp-common-card">
+            <div class="smp-common-icon-wrap">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="4"></circle>
+              </svg>
+            </div>
+            <h4>24 prémiových barev jména (/cc)</h4>
+            <p>Výběr z 24 barevných odstínů pro tvůj nick v chatu, v tablistu i na jmenovce přímo nad hlavou postavy.</p>
+          </div>
+
+          <!-- 6. Všech 16 barev postelí -->
+          <div class="smp-common-card">
+            <div class="smp-common-icon-wrap">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 4v16"></path>
+                <path d="M2 8h18a2 2 0 0 1 2 2v10"></path>
+                <path d="M2 17h20"></path>
+                <path d="M6 8v9"></path>
+              </svg>
+            </div>
+            <h4>Všech 16 barev postelí v /homes</h4>
+            <p>Plné přizpůsobení ikonek jednotlivých základen v menu domovů – možnost přiřadit libovolnou ze 16 barev postele.</p>
+          </div>
+
+          <!-- 7. Větší kapacita týmu -->
+          <div class="smp-common-card">
+            <div class="smp-common-icon-wrap">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h4>Až 18 členů v týmu (/team)</h4>
+            <p>Rozšířená kapacita týmu až na 18 hráčů (pro hráče bez ranku 8–12) a okamžitý teleport na týmovou základnu (/team home).</p>
+          </div>
+
+          <!-- 8. Hromadný prodej ze spawnerů -->
+          <div class="smp-common-card">
+            <div class="smp-common-icon-wrap">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
+            <h4>Hromadný prodej ze spawnerů</h4>
+            <p>Pomocí Shift + kliknutí v menu spawneru okamžitě prodáš veškerý prodejný nahromaděný loot naráz bez zdlouhavého klikání.</p>
+          </div>
+
+          <!-- 9. Volný pohyb při odpočtu -->
+          <div class="smp-common-card">
+            <div class="smp-common-icon-wrap">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m19 12-7-7-7 7"></path>
+                <path d="M12 19V5"></path>
+              </svg>
+            </div>
+            <h4>Volný pohyb při odpočtu teleportu</h4>
+            <p>Při čekání na veřejné warpy nebo /tpa se odpočet nezruší chůzí ani skákáním, pokud se v blízkosti nepohybuje cizí hráč.</p>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- DETAILED COMPARISON & VALUE BREAKDOWN -->
-    <div class="container smp-details-container">
+      <!-- DETAILED COMPARISON & VALUE BREAKDOWN -->
       <div class="smp-section-header text-center">
         <span class="smp-eyebrow">PŘEHLEDNÉ SROVNÁNÍ</span>
-        <h2 class="smp-details-title">Klasický hráč vs. <span>SMP+ Člen</span></h2>
-        <p class="smp-details-sub">Podívej se, jak přesně ti SMP+ zpříjemní každodenní hraní na serveru.</p>
+        <h2 class="smp-details-title">Klasický hráč vs. <span>VIP Balíčky</span></h2>
+        <p class="smp-details-sub">Podívej se na přesná čísla a specifikace jednotlivých úrovní na serveru.</p>
       </div>
 
       <!-- Comparison Table Component -->
@@ -2112,101 +2285,134 @@
           <thead>
             <tr>
               <th class="col-feature">Herní funkce</th>
-              <th class="col-free">Hráč bez ranku</th>
-              <th class="col-plus">SMP+ Člen <svg class="ui-icon-svg"
-                  style="width:16px;height:16px;vertical-align:-2px;color:#f59e0b;" viewBox="0 0 24 24"
-                  fill="currentColor">
-                  <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z" />
-                </svg></th>
+              <th class="col-free">Bez ranku</th>
+              <th class="col-tier col-smp_plus">SMP+ <span class="text-sub">1.99 €</span></th>
+              <th class="col-tier col-smp_pp">SMP++ <span class="text-sub">3.79 €</span></th>
+              <th class="col-tier col-smp_ppp col-hero-tier active-tier-col">
+                SMP+++ <span class="text-sub" style="color:#fbbf24;">3.99 €</span>
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-house-chimney"></i> Počet uložených domovů (/sethome)</div>
+                <div class="feat-desc">Kapacita základen a těžebních míst v /homes</div>
+              </td>
+              <td class="col-free">7 domovů <span class="text-sub">(1 řada)</span></td>
+              <td class="col-tier col-smp_plus"><strong>14 domovů</strong> <span class="text-sub">(2 řady)</span></td>
+              <td class="col-tier col-smp_pp"><strong>25 domovů</strong></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>28 domovů</strong> <span class="tag-highlight">Plné 4 řady!</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-eye"></i> Dohled a render distance (LOD)</div>
+                <div class="feat-desc">Dynamický dohled serveru a generování terénu</div>
+              </td>
+              <td class="col-free">12 chunků</td>
+              <td class="col-tier col-smp_plus"><strong>14 chunků</strong></td>
+              <td class="col-tier col-smp_pp"><strong>15 chunků</strong></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>16 chunků</strong> <span class="tag-highlight">14 v The End</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-bolt"></i> Teleport na domov (/home)</div>
+                <div class="feat-desc">Doba čekání před teleportem na základnu</div>
+              </td>
+              <td class="col-free">5 sekund čekání</td>
+              <td class="col-tier col-smp_plus"><strong>Okamžitý (0s)</strong></td>
+              <td class="col-tier col-smp_pp"><strong>Okamžitý (0s)</strong></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>Okamžitý (0s)</strong> <span class="tag-highlight">Bez čekání</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-compass"></i> Náhodný teleport (/rtp)</div>
+                <div class="feat-desc">Doba čekání a warmup před náhodným přesunem do divočiny</div>
+              </td>
+              <td class="col-free">5 sekund čekání</td>
+              <td class="col-tier col-smp_plus">3 sekundy čekání</td>
+              <td class="col-tier col-smp_pp">3 sekundy čekání</td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>Okamžitý (0s)</strong> <span class="tag-highlight">Instantní RTP</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
                 <div class="feat-name"><i class="fa-solid fa-box-archive"></i> Kapacita Ender Truhly</div>
-                <div class="feat-desc">Kapacita osobního inventáře s ochranou věcí</div>
+                <div class="feat-desc">Kapacita osobního inventáře s trvalou ochranou</div>
               </td>
               <td class="col-free">27 slotů <span class="text-sub">(3 řady)</span></td>
-              <td class="col-plus"><strong>54 slotů</strong> <span class="tag-highlight">Plná dvojtruhla + Trezor v
-                  /ah</span></td>
-            </tr>
-            <tr>
-              <td class="col-feature">
-                <div class="feat-name"><i class="fa-solid fa-hourglass-half"></i> Čekání na teleport (/home, /rtp, /tpa)
-                </div>
-                <div class="feat-desc">Doba čekání bez pohybu do provedení teleportu</div>
-              </td>
-              <td class="col-free">5 sekund</td>
-              <td class="col-plus"><strong>Pouhé 3 sekundy</strong> <span class="tag-highlight">Bleskový warp</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-feature">
-                <div class="feat-name"><i class="fa-solid fa-skull-crossbones"></i> Záchranný návrat po smrti (/back)
-                </div>
-                <div class="feat-desc">Teleportace zpět na místo, kde jsi naposledy zemřel</div>
-              </td>
-              <td class="col-free">S odpočtem <span class="text-sub">(delay 5s)</span></td>
-              <td class="col-plus"><strong>Okamžitý /back</strong> <span class="tag-highlight">Instantní bez
-                  čekání</span></td>
-            </tr>
-            <tr>
-              <td class="col-feature">
-                <div class="feat-name"><i class="fa-solid fa-house-chimney"></i> Počet uložených domovů (/sethome)</div>
-                <div class="feat-desc">Sloty pro základny, farmy a doly</div>
-              </td>
-              <td class="col-free">7 domovů</td>
-              <td class="col-plus"><strong>14 domovů</strong> <span class="tag-highlight">2x více místa</span></td>
-            </tr>
-            <tr>
-              <td class="col-feature">
-                <div class="feat-name"><i class="fa-solid fa-palette"></i> Výběr barvy nicku (/cc)</div>
-                <div class="feat-desc">Barevné odlišení tvého jména ve hře i chatu</div>
-              </td>
-              <td class="col-free">Pouze bílá</td>
-              <td class="col-plus"><strong>24 prémiových barev</strong> <span class="tag-highlight">Včetně chatu i
-                  tablistu</span></td>
-            </tr>
-            <tr>
-              <td class="col-feature">
-                <div class="feat-name"><i class="fa-solid fa-person-running"></i> Pohyb během odpočtu teleportu</div>
-                <div class="feat-desc">Volnost pohybu při čekání na přesun</div>
-              </td>
-              <td class="col-free">Pohyb zruší teleport</td>
-              <td class="col-plus"><strong>Volný pohyb</strong> <span class="text-sub">(pokud nikdo není blízko)</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-feature">
-                <div class="feat-name"><i class="fa-solid fa-bed"></i> Barvy domovů a postelí v /homes</div>
-                <div class="feat-desc">Přizpůsobení ikonek v herním menu</div>
-              </td>
-              <td class="col-free">Pouze červená postel</td>
-              <td class="col-plus"><strong>Všech 16 barev postelí</strong></td>
-            </tr>
-            <tr>
-              <td class="col-feature">
-                <div class="feat-name"><i class="fa-solid fa-shop"></i> Nabídky na Tržnici (/shop)</div>
-                <div class="feat-desc">Kolik předmětů můžeš prodávat současně</div>
-              </td>
-              <td class="col-free">5 nabídek naráz</td>
-              <td class="col-plus"><strong>15 nabídek naráz</strong> <span class="tag-highlight">3x více</span></td>
+              <td class="col-tier col-smp_plus"><strong>54 slotů</strong> <span class="text-sub">(Dvojtruhla)</span></td>
+              <td class="col-tier col-smp_pp"><strong>54 slotů</strong> <span class="text-sub">(Dvojtruhla)</span></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>54 slotů</strong> <span class="tag-highlight">+ Trezor v /ah</span></td>
             </tr>
             <tr>
               <td class="col-feature">
                 <div class="feat-name"><i class="fa-solid fa-clipboard-list"></i> Poptávkové zakázky (/orders)</div>
-                <div class="feat-desc">Kolik zakázek na nákup můžeš vypsat</div>
+                <div class="feat-desc">Kolik nákupních objednávek můžeš současně vypsat</div>
               </td>
-              <td class="col-free">1 zakázka</td>
-              <td class="col-plus"><strong>Až 4 zakázky současně</strong></td>
+              <td class="col-free">2 zakázky</td>
+              <td class="col-tier col-smp_plus"><strong>4 zakázky</strong></td>
+              <td class="col-tier col-smp_pp"><strong>4 zakázky</strong></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>4 zakázky</strong> <span class="tag-highlight">+ čerpání z truhly</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-shop"></i> Nabídky na Tržnici (/shop)</div>
+                <div class="feat-desc">Kolik předmětů můžeš prodávat současně na marketu</div>
+              </td>
+              <td class="col-free">10 nabídek</td>
+              <td class="col-tier col-smp_plus"><strong>15 nabídek</strong></td>
+              <td class="col-tier col-smp_pp"><strong>15 nabídek</strong></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>15 nabídek</strong> <span class="tag-highlight">Plná kapacita</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-palette"></i> Výběr barvy nicku (/cc) & symbol</div>
+                <div class="feat-desc">Barevné odlišení jména v chatu, tablistu a prefix</div>
+              </td>
+              <td class="col-free">Pouze bílá</td>
+              <td class="col-tier col-smp_plus"><strong>24 barev</strong> <span class="text-sub">(symbol +)</span></td>
+              <td class="col-tier col-smp_pp"><strong>24 barev</strong> <span class="text-sub">(symbol ++)</span></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>24 barev</strong> <span class="tag-highlight">Symbol +++</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-bed"></i> Barvy domovů a postelí v /homes</div>
+                <div class="feat-desc">Přizpůsobení ikonek v herním menu domovů</div>
+              </td>
+              <td class="col-free">Pouze červená postel</td>
+              <td class="col-tier col-smp_plus"><strong>Všech 16 barev</strong></td>
+              <td class="col-tier col-smp_pp"><strong>Všech 16 barev</strong></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>Všech 16 barev</strong></td>
             </tr>
             <tr>
               <td class="col-feature">
                 <div class="feat-name"><i class="fa-solid fa-users"></i> Kapacita v týmu (/team)</div>
                 <div class="feat-desc">Maximální počet členů ve tvém týmu</div>
               </td>
-              <td class="col-free">8 členů</td>
-              <td class="col-plus"><strong>16 členů</strong> <span class="tag-highlight">2x větší tým</span></td>
+              <td class="col-free">8–12 členů</td>
+              <td class="col-tier col-smp_plus"><strong>Až 18 členů</strong></td>
+              <td class="col-tier col-smp_pp"><strong>Až 18 členů</strong></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>Až 18 členů</strong> <span class="tag-highlight">Okamžitý /team home</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-coins"></i> Hromadný prodej ze spawnerů</div>
+                <div class="feat-desc">Rychlý prodej monster lootu ze spawnerů</div>
+              </td>
+              <td class="col-free">Po jednom</td>
+              <td class="col-tier col-smp_plus"><strong>Shift + Klik</strong></td>
+              <td class="col-tier col-smp_pp"><strong>Shift + Klik</strong></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>Shift + Klik</strong> <span class="tag-highlight">Vše naráz</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">
+                <div class="feat-name"><i class="fa-solid fa-person-running"></i> Pohyb při odpočtu teleportu</div>
+                <div class="feat-desc">Volnost pohybu při čekání na přesun (/tpa, warp)</div>
+              </td>
+              <td class="col-free">Pohyb zruší teleport</td>
+              <td class="col-tier col-smp_plus"><strong>Volný pohyb</strong></td>
+              <td class="col-tier col-smp_pp"><strong>Volný pohyb</strong></td>
+              <td class="col-tier col-smp_ppp col-hero-tier active-tier-col"><strong>Volný pohyb</strong></td>
             </tr>
           </tbody>
         </table>
@@ -2217,8 +2423,7 @@
         <div class="smp-section-header text-center">
           <span class="smp-eyebrow">PŘEHLEDNÝ FORMÁT HODNOSTÍ</span>
           <h3 class="smp-details-title">Jak vypadají hodnosti a prefixy <span>ve hře</span></h3>
-          <p class="smp-details-sub">Na serveru nepoužíváme zastaralé hranaté závorky. Ranks mají čisté, moderní symboly
-            a národní vlajku hráče.</p>
+          <p class="smp-details-sub">Na serveru nepoužíváme zastaralé hranaté závorky. Ranks mají čisté, moderní symboly a národní vlajku hráče.</p>
         </div>
 
         <div class="ranks-grid">
@@ -2236,19 +2441,45 @@
           </div>
 
           <!-- Rank: SMP+ -->
-          <div class="rank-card rank-card--smp">
+          <div class="rank-card rank-card--smp" style="cursor: pointer;" onclick="showTab('smp-plus'); selectSmpTierAndScroll('smp_plus');">
             <div class="rank-card-header">
               <span class="rank-card-name"><i class="fa-solid fa-bolt text-blue"></i> SMP+ Člen</span>
               <span class="rank-card-tag rank-tag--smp">1.99 € / měsíc</span>
             </div>
             <div class="rank-card-preview">
-              <span class="mc-chat-flag">🇨🇿</span> <span class="smp-preview-plus">+</span><span
+              <span class="mc-chat-flag">🇨🇿</span> <span class="smp-preview-plus tier-plus">+</span><span
                 class="rank-p-name text-cyan">Hrac</span><span class="smp-chat-colon">:</span> <span
                 class="smp-chat-text">Ahoj, mám aktivní SMP+!</span>
             </div>
-            <div class="rank-card-foot">Modrý symbol <code>+</code> přímo před nickem a volba z 24 barev
-              <code>/cc</code>.
+            <div class="rank-card-foot">Modrý symbol <code>+</code> přímo před nickem, 14 domovů, 14 chunků dohled a 24 barev <code>/cc</code>.</div>
+          </div>
+
+          <!-- Rank: SMP++ -->
+          <div class="rank-card rank-card--smppp" style="cursor: pointer;" onclick="showTab('smp-plus'); selectSmpTierAndScroll('smp_pp');">
+            <div class="rank-card-header">
+              <span class="rank-card-name"><svg class="ui-icon-svg" style="width:16px;height:16px;color:#0a67e5;" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> SMP++ Člen</span>
+              <span class="rank-card-tag rank-tag--smppp">3.79 € / měsíc</span>
             </div>
+            <div class="rank-card-preview">
+              <span class="mc-chat-flag">🇨🇿</span> <span class="smp-preview-plus tier-plus">++</span><span
+                class="rank-p-name text-cyan">Hrac</span><span class="smp-chat-colon">:</span> <span
+                class="smp-chat-text">Ahoj, mám aktivní SMP++!</span>
+            </div>
+            <div class="rank-card-foot">Modrý symbol <code>++</code> před nickem, 25 domovů, dohled 15 chunků a okamžitý <code>/home</code>.</div>
+          </div>
+
+          <!-- Rank: SMP+++ -->
+          <div class="rank-card rank-card--smpppp" style="cursor: pointer;" onclick="showTab('smp-plus'); selectSmpTierAndScroll('smp_ppp');">
+            <div class="rank-card-header">
+              <span class="rank-card-name"><svg class="ui-icon-svg" style="width:16px;height:16px;color:#0a67e5;" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> SMP+++ Člen</span>
+              <span class="rank-card-tag rank-tag--smpppp">3.99 € / měsíc</span>
+            </div>
+            <div class="rank-card-preview">
+              <span class="mc-chat-flag">🇨🇿</span> <span class="smp-preview-plus tier-plus">+++</span><span
+                class="rank-p-name text-gold">Hrac</span><span class="smp-chat-colon">:</span> <span
+                class="smp-chat-text">Mám kompletní balík SMP+++!</span>
+            </div>
+            <div class="rank-card-foot">Modrý symbol <code>+++</code>, okamžitý <code>/rtp</code> bez čekání, plných 28 domovů a 16 chunků dohled.</div>
           </div>
 
           <!-- Rank: Media -->
@@ -2290,8 +2521,7 @@
                 class="rank-p-name">Moderator</span><span class="smp-chat-colon">:</span> <span
                 class="smp-chat-text">Hrajte prosím podle pravidel!</span>
             </div>
-            <div class="rank-card-foot">Štít <code>🛡</code> (Mod) nebo ozubené kolo <code>⚙</code> (Admin) v barvě
-              role.</div>
+            <div class="rank-card-foot">Štít <code>🛡</code> (Mod) nebo ozubené kolo <code>⚙</code> (Admin) v barvě role.</div>
           </div>
 
           <!-- Rank: Majitel -->
@@ -2329,7 +2559,7 @@
         <div class="smp-guar-card">
           <div class="smp-guar-icon"><i class="fa-solid fa-heart"></i></div>
           <h3>Podpora komunitního světa</h3>
-          <p>Předplatné 1.99 € jde přímo na financování herního serveru, stabilní hardware, ochranu proti DDoS útokům a
+          <p>Předplatné od 1.99 € jde přímo na financování herního serveru, stabilní hardware, ochranu proti DDoS útokům a
             kontinuální vývoj unikátních pluginů pro všechny hráče.</p>
         </div>
       </div>
@@ -4396,7 +4626,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261030_apple_craft2"></script>
+  <script src="script.js?v=20261030_v26_8"></script>
 </body>
 
 </html>

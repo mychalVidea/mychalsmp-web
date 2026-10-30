@@ -51,8 +51,19 @@ function handleUrlRouting() {
   const path = window.location.pathname.toLowerCase().replace(/\/$/, '');
   const hash = window.location.hash.toLowerCase().replace(/^#/, '');
   const route = hash || path.split('/').pop();
+  const urlParams = new URLSearchParams(window.location.search);
+  const tierParam = (urlParams.get('tier') || '').toLowerCase();
 
-  if (route === 'smpplus' || route === 'smp-plus' || route === 'vip' || route === 'smp+') {
+  if (route === 'smp_ppp' || route === 'smpppp' || route === 'smp+++' || tierParam === 'smp_ppp' || tierParam === 'smpppp' || tierParam === 'smp+++') {
+    selectSmpTier('smp_ppp');
+    executeTabSwitch('smp-plus', false);
+  } else if (route === 'smp_pp' || route === 'smppp' || route === 'smp++' || tierParam === 'smp_pp' || tierParam === 'smppp' || tierParam === 'smp++') {
+    selectSmpTier('smp_pp');
+    executeTabSwitch('smp-plus', false);
+  } else if (route === 'smp_plus' || route === 'smpplus' || route === 'smp-plus' || route === 'vip' || route === 'smp+' || tierParam === 'smp_plus' || tierParam === 'smp+') {
+    if (route === 'smp_plus' || route === 'smp+' || tierParam === 'smp_plus' || tierParam === 'smp+') {
+      selectSmpTier('smp_plus');
+    }
     executeTabSwitch('smp-plus', false);
   } else if (route === 'stats' || route === 'statistiky' || route === 'stat') {
     executeTabSwitch('stats', false);
@@ -138,6 +149,7 @@ function executeTabSwitch(name, updateUrl = true) {
     initStatsModule();
   } else if (name === 'smp-plus') {
     checkSmpPlusStatus();
+    selectSmpTier(currentSmpTier);
   } else if (name === 'privacy' || name === 'terms') {
     if (typeof updateLegalProgressGlobal === 'function') {
       setTimeout(updateLegalProgressGlobal, 100);
@@ -874,31 +886,170 @@ function setPreviewNickColor(color, swatchEl) {
 }
 
 // ---- TEBEX CHECKOUT CONFIG ----
-const TEBEX_STORE_PACKAGE_URL = 'https://mychalsmp.tebex.store/package/7559669';
+const TEBEX_TIER_CONFIG = {
+  smp_plus: {
+    id: '7559669',
+    slug: 'smppl',
+    name: 'SMP+',
+    price: '1.99',
+    prefix: '+',
+    tierClass: 'tier-plus',
+    btnLabel: 'Aktivovat SMP+',
+    btnSub: '1.99 € / měsíc · Okamžitá aktivace'
+  },
+  smp_pp: {
+    id: '7777972',
+    slug: 'smpplpl',
+    name: 'SMP++',
+    price: '3.79',
+    prefix: '++',
+    tierClass: 'tier-plusplus',
+    btnLabel: 'Aktivovat SMP++',
+    btnSub: '3.79 € / měsíc · Okamžitá aktivace'
+  },
+  smp_ppp: {
+    id: '7777973',
+    slug: 'smpplplpl',
+    name: 'SMP+++',
+    price: '3.99',
+    prefix: '+++',
+    tierClass: 'tier-plusplusplus',
+    btnLabel: 'Aktivovat SMP+++',
+    btnSub: '3.99 € / měsíc · Okamžitá aktivace'
+  }
+};
+
+let currentSmpTier = 'smp_ppp';
+
+function getTebexStoreUrl(tierKey) {
+  const tier = TEBEX_TIER_CONFIG[tierKey || currentSmpTier] || TEBEX_TIER_CONFIG.smp_ppp;
+  return `https://mychalsmp.tebex.store/package/${tier.slug || tier.id}`;
+}
+
+function updateTierSliderPosition() {
+  const selector = document.getElementById('smp-tier-selector');
+  const activeBtn = document.getElementById(`smp-tier-btn-${currentSmpTier}`);
+  const indicator = document.getElementById('smp-tier-indicator');
+  if (!selector || !activeBtn || !indicator) return;
+
+  const selectorRect = selector.getBoundingClientRect();
+  const btnRect = activeBtn.getBoundingClientRect();
+  const leftOffset = btnRect.left - selectorRect.left;
+
+  indicator.style.width = `${btnRect.width}px`;
+  indicator.style.transform = `translateX(${leftOffset}px)`;
+}
+
+function selectSmpTier(tierKey) {
+  if (!TEBEX_TIER_CONFIG[tierKey]) return;
+  currentSmpTier = tierKey;
+  const cfg = TEBEX_TIER_CONFIG[tierKey];
+
+  // Update 3 pricing cards active state
+  document.querySelectorAll('.smp-pricing-card').forEach(card => {
+    const isThis = card.id === `smp-card-${tierKey}`;
+    card.classList.toggle('active-tier', isThis);
+  });
+
+  // Update selection buttons inside 3 pricing cards
+  ['smp_plus', 'smp_pp', 'smp_ppp'].forEach(key => {
+    const btn = document.getElementById(`btn-select-${key}`);
+    const tCfg = TEBEX_TIER_CONFIG[key];
+    if (btn && tCfg) {
+      const isSelected = key === tierKey;
+      btn.classList.toggle('active', isSelected);
+      btn.textContent = isSelected ? `Vybráno (${tCfg.name})` : `Zvolit ${tCfg.name}`;
+    }
+  });
+
+  // Update checkout header badge indicator
+  const activeNameEl = document.getElementById('checkout-active-tier-name');
+  const activePriceEl = document.getElementById('checkout-active-tier-price');
+  if (activeNameEl) activeNameEl.textContent = cfg.name;
+  if (activePriceEl) activePriceEl.textContent = `${cfg.price} € / měsíc`;
+
+  // Update tabs if legacy slider is present
+  document.querySelectorAll('.smp-tier-btn').forEach(btn => {
+    const isThis = btn.id === `smp-tier-btn-${tierKey}`;
+    btn.classList.toggle('active', isThis);
+    btn.setAttribute('aria-selected', isThis ? 'true' : 'false');
+  });
+  updateTierSliderPosition();
+
+  // Animate price display if legacy element exists
+  const priceNumEl = document.getElementById('smp-display-price');
+  if (priceNumEl) {
+    priceNumEl.style.transform = 'scale(0.92)';
+    setTimeout(() => {
+      priceNumEl.textContent = cfg.price;
+      priceNumEl.style.transform = 'scale(1)';
+    }, 120);
+  }
+
+  // Update in-game rank preview plus sign (in preview box only)
+  document.querySelectorAll('.smp-preview-box .smp-preview-plus').forEach(plusEl => {
+    plusEl.textContent = cfg.prefix;
+    plusEl.className = `smp-preview-plus ${cfg.tierClass}`;
+  });
+
+  // Update button texts
+  const isCracked = document.getElementById('smp-cracked-check')?.checked;
+  const btnLabel = document.getElementById('btn-purchase-label');
+  const btnSub = document.getElementById('btn-purchase-sub');
+
+  if (isCracked) {
+    if (btnLabel) btnLabel.textContent = `Přejít do obchodu (${cfg.name})`;
+    if (btnSub) btnSub.textContent = `Oficiální Tebex store · ${cfg.price} € / měsíc`;
+  } else {
+    if (btnLabel) btnLabel.textContent = cfg.btnLabel;
+    if (btnSub) btnSub.textContent = cfg.btnSub;
+  }
+
+  // Highlight column in comparison table
+  document.querySelectorAll('.smp-compare-table th.col-tier, .smp-compare-table td.col-tier').forEach(cell => {
+    const isCol = cell.classList.contains(`col-${tierKey}`);
+    cell.classList.toggle('active-tier-col', isCol);
+  });
+}
+
+function selectSmpTierAndScroll(tierKey) {
+  selectSmpTier(tierKey);
+  const checkoutSection = document.querySelector('.smp-checkout-section');
+  if (checkoutSection) {
+    checkoutSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  const nickInput = document.getElementById('mc-username');
+  if (nickInput) {
+    setTimeout(() => {
+      nickInput.focus();
+    }, 450);
+  }
+}
 
 function handleCrackedToggle(isCracked) {
   const hint = document.getElementById('smp-cracked-hint');
-  const btn = document.querySelector('.btn-purchase');
-  const btnTitle = btn ? btn.querySelector('.btn-purchase-title') : null;
-  const btnSub = btn ? btn.querySelector('.btn-purchase-sub') : null;
+  const cfg = TEBEX_TIER_CONFIG[currentSmpTier] || TEBEX_TIER_CONFIG.smp_ppp;
+  const btnLabel = document.getElementById('btn-purchase-label');
+  const btnSub = document.getElementById('btn-purchase-sub');
 
   if (hint) {
     hint.style.display = isCracked ? 'block' : 'none';
   }
 
-  if (btnTitle && btnSub) {
+  if (btnLabel && btnSub) {
     if (isCracked) {
-      btnTitle.innerHTML = '<svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;margin-right:6px;"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg> Přejít do obchodu';
-      btnSub.textContent = 'Oficiální Tebex store · Vhodné i pro Warez';
+      btnLabel.textContent = `Přejít do obchodu (${cfg.name})`;
+      btnSub.textContent = `Oficiální Tebex store · ${cfg.price} € / měsíc`;
     } else {
-      btnTitle.innerHTML = '<svg class="ui-icon-svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="width:16px;height:16px;margin-right:6px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Aktivovat SMP+';
-      btnSub.textContent = '1.99 € / měsíc · Okamžitá aktivace';
+      btnLabel.textContent = cfg.btnLabel;
+      btnSub.textContent = cfg.btnSub;
     }
   }
 }
 
 async function checkoutSMP() {
   const isCracked = document.getElementById('smp-cracked-check')?.checked;
+  const storeUrl = getTebexStoreUrl(currentSmpTier);
 
   // Check mandatory terms and immediate delivery consent
   const consentCb = document.getElementById('smp-consent-terms');
@@ -917,9 +1068,9 @@ async function checkoutSMP() {
   // If player indicated they have warez / cracked launcher without official Mojang account
   if (isCracked) {
     showToast('↗️ Přesměrovávám do obchodu Tebex...');
-    const newWin = window.open(TEBEX_STORE_PACKAGE_URL, '_blank');
+    const newWin = window.open(storeUrl, '_blank');
     if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
-      window.location.href = TEBEX_STORE_PACKAGE_URL;
+      window.location.href = storeUrl;
     }
     return;
   }
@@ -955,13 +1106,18 @@ async function checkoutSMP() {
     btn.disabled = true;
   }
 
+  const cfg = TEBEX_TIER_CONFIG[currentSmpTier] || TEBEX_TIER_CONFIG.smp_ppp;
   try {
     const response = await apiFetch('https://api.6767111.xyz/api/tebex/checkout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ nickname })
+      body: JSON.stringify({
+        nickname,
+        tier: currentSmpTier,
+        packageId: cfg.id
+      })
     }, 15000);
 
     const data = await response.json().catch(() => null);
@@ -1078,6 +1234,12 @@ document.addEventListener('DOMContentLoaded', () => {
   loadStats();
   initVectorSpotlight();
   initMicroInteractions();
+
+  // Init SMP Tier position & window resize listener
+  selectSmpTier(currentSmpTier);
+  window.addEventListener('resize', () => {
+    updateTierSliderPosition();
+  }, { passive: true });
 
   // Trigger transition for default active tab
   const activeTab = document.querySelector('.tab-section.active');
@@ -1304,6 +1466,14 @@ async function checkSmpPlusStatus() {
     }
 
     if (data.hasSmpPlus) {
+      const tierKey = (data.tier || 'smp_plus').toLowerCase();
+      let tierDisplayName = 'SMP+';
+      if (tierKey === 'smp_ppp' || tierKey === 'smpppp' || tierKey === 'smp+++') {
+        tierDisplayName = 'SMP+++';
+      } else if (tierKey === 'smp_pp' || tierKey === 'smppp' || tierKey === 'smp++') {
+        tierDisplayName = 'SMP++';
+      }
+
       let expiryText = 'Aktivní předplatné';
       if (data.expiresAt) {
         const d = new Date(data.expiresAt);
@@ -1320,11 +1490,11 @@ async function checkSmpPlusStatus() {
                 <span style="display: block; font-size: 0.8rem; color: #94a3b8;">${expiryText}</span>
               </div>
             </div>
-            <span class="smp-badge-active"><i class="fa-solid fa-crown"></i> SMP+</span>
+            <span class="smp-badge-active"><i class="fa-solid fa-crown" style="color: #0a67e5;"></i> ${escapeHtml(tierDisplayName)}</span>
           </div>
-          <p class="smp-manage-desc">Tvé předplatné je aktivní. Pokud si přeješ členství ukončit a odebrat výhody, můžeš ho níže zrušit.</p>
-          <button type="button" class="btn-cancel-smpplus" onclick="confirmCancelSmpPlus()">
-            <i class="fa-solid fa-ban"></i> Zrušit SMP+ členství
+          <p class="smp-manage-desc">Tvé předplatné <strong>${escapeHtml(tierDisplayName)}</strong> je aktivní. Pokud si přeješ členství ukončit a odebrat výhody, můžeš ho níže zrušit.</p>
+          <button type="button" class="btn-cancel-smpplus" onclick="confirmCancelSmpPlus('${escapeHtml(tierDisplayName)}')">
+            <i class="fa-solid fa-ban"></i> Zrušit ${escapeHtml(tierDisplayName)} členství
           </button>
         </div>
       `;
@@ -1360,11 +1530,11 @@ function copyDlinkCmd(btn) {
   triggerButtonFeedback(el, '/dlink');
 }
 
-function confirmCancelSmpPlus() {
+function confirmCancelSmpPlus(tierDisplayName = 'SMP+') {
   const modal = document.getElementById('smp-cancel-modal');
   const desc = document.getElementById('smp-cancel-modal-desc');
   if (desc && cachedSmpNick) {
-    desc.innerHTML = `Opravdu si přeješ zrušit SMP+ členství pro hráče <strong>${escapeHtml(cachedSmpNick)}</strong>?<br><br>Okamžitě přijdeš o všechny výhody SMP+ (větší Ender truhla, barva nicku, rychlejší teleporty, 14 domovů) ve hře i na Discordu.`;
+    desc.innerHTML = `Opravdu si přeješ zrušit ${escapeHtml(tierDisplayName)} členství pro hráče <strong>${escapeHtml(cachedSmpNick)}</strong>?<br><br>Okamžitě přijdeš o všechny výhody ${escapeHtml(tierDisplayName)} (větší Ender truhla, barva nicku, rychlejší teleporty, domovy) ve hře i na Discordu.`;
   }
   if (modal) modal.style.display = 'flex';
 }

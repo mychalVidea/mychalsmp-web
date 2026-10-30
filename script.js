@@ -2938,8 +2938,8 @@ const statsData = {
   money: {
     title: 'Celkem peněz v ekonomice',
     unit: '$',
-    color: '#22c55e',
-    glowColor: 'rgba(34, 197, 94, 0.45)',
+    color: '#21DE00',
+    glowColor: 'rgba(33, 222, 0, 0.45)',
     '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [0, 0, 0, 0, 0, 0], curVal: '$0 celkem' },
     '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '$0 v oběhu' },
     '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '$0 tento týden' },
@@ -2958,8 +2958,8 @@ const statsData = {
   deaths: {
     title: 'Počet úmrtí na serveru',
     unit: 'úmrtí',
-    color: '#ef4444',
-    glowColor: 'rgba(239, 68, 68, 0.45)',
+    color: '#f51515',
+    glowColor: 'rgba(245, 21, 21, 0.45)',
     '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [0, 0, 0, 0, 0, 0], curVal: '0 celkových úmrtí' },
     '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 úmrtí dnes' },
     '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 úmrtí tento týden' },
@@ -2993,41 +2993,62 @@ function switchChartMetric(metric) {
   const targetBtn = document.getElementById('metric-btn-' + metric);
   if (targetBtn) targetBtn.classList.add('active');
 
+  // Highlight active bottom detail card if present
+  document.querySelectorAll('.stat-detail-card').forEach(card => {
+    const fnAttr = card.getAttribute('onclick') || '';
+    if (fnAttr.includes(`'${metric}'`)) {
+      card.classList.add('active');
+    } else {
+      card.classList.remove('active');
+    }
+  });
+
   renderStatsChart();
 }
 
-function computeMonotoneCubicPath(points, svgH, padY) {
+function formatChartGridVal(val, unit) {
+  if (unit === '$') {
+    if (val >= 1e9) return '$' + (val / 1e9).toFixed(val % 1e9 === 0 ? 0 : 2) + 'B';
+    if (val >= 1e6) return '$' + (val / 1e6).toFixed(val % 1e6 === 0 ? 0 : 1) + 'M';
+    if (val >= 1e3) return '$' + (val / 1e3).toFixed(0) + 'k';
+    return '$' + Math.round(val);
+  }
+  if (unit === 'hodin') {
+    if (val >= 1e3) return (val / 1e3).toFixed(1) + 'k h';
+    return Math.round(val) + ' h';
+  }
+  if (val >= 1e6) return (val / 1e6).toFixed(1) + 'M';
+  if (val >= 1e3) return (val / 1e3).toFixed(1) + 'k';
+  return Math.round(val).toString();
+}
+
+function computeSmoothCubicPath(points) {
   if (!points || points.length === 0) return '';
-  if (points.length === 1) return `M ${points[0].x} ${points[0].y}`;
-  if (points.length === 2) return `M ${points[0].x} ${points[0].y} L ${points[1].x} ${points[1].y}`;
+  if (points.length === 1) return `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+  if (points.length === 2) return `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)} L ${points[1].x.toFixed(1)} ${points[1].y.toFixed(1)}`;
 
   const n = points.length;
-  const m = new Array(n - 1);
-  for (let i = 0; i < n - 1; i++) {
-    const dx = points[i + 1].x - points[i].x;
-    m[i] = dx !== 0 ? (points[i + 1].y - points[i].y) / dx : 0;
-  }
-
-  const d = new Array(n);
-  d[0] = m[0];
-  d[n - 1] = m[n - 2];
-  for (let i = 1; i < n - 1; i++) {
-    if (m[i - 1] * m[i] <= 0) {
-      d[i] = 0;
-    } else {
-      d[i] = (m[i - 1] + m[i]) / 2;
-    }
-  }
-
+  const tension = 0.3;
   let path = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
-  for (let i = 0; i < n - 1; i++) {
-    const dx = (points[i + 1].x - points[i].x) / 3;
-    const cp1x = points[i].x + dx;
-    const cp1y = points[i].y + d[i] * dx;
-    const cp2x = points[i + 1].x - dx;
-    const cp2y = points[i + 1].y - d[i + 1] * dx;
 
-    path += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${points[i + 1].x.toFixed(1)} ${points[i + 1].y.toFixed(1)}`;
+  for (let i = 0; i < n - 1; i++) {
+    const p0 = i > 0 ? points[i - 1] : points[i];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = i < n - 2 ? points[i + 2] : p2;
+
+    const cp1x = p1.x + (p2.x - p0.x) * tension;
+    let cp1y = p1.y + (p2.y - p0.y) * tension;
+    const cp2x = p2.x - (p3.x - p1.x) * tension;
+    let cp2y = p2.y - (p3.y - p1.y) * tension;
+
+    // Strict flatness constraint: if adjacent points share identical Y, keep horizontal
+    if (p1.y === p2.y) {
+      cp1y = p1.y;
+      cp2y = p2.y;
+    }
+
+    path += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
   }
   return path;
 }
@@ -3070,17 +3091,20 @@ function renderStatsChart() {
   const linePath = document.getElementById('chart-line-path');
   const gridGroup = document.getElementById('chart-grid-lines');
   const labelsContainer = document.getElementById('chart-x-labels');
-  const gradientStop0 = document.querySelectorAll('#chartGlowGradient stop')[0];
 
   if (linePath) linePath.setAttribute('stroke', metricObj.color);
-  if (gradientStop0) gradientStop0.setAttribute('stop-color', metricObj.color);
+
+  // Synchronize all gradient stops to active metric color
+  document.querySelectorAll('#chartGlowGradient stop').forEach(stop => {
+    stop.setAttribute('stop-color', metricObj.color);
+  });
 
   // Update active timeframe button background to match active metric color
   document.querySelectorAll('.timeframe-btn').forEach(btn => {
     if (btn.classList.contains('active')) {
       btn.style.backgroundColor = metricObj.color;
-      btn.style.color = '#0f172a';
-      btn.style.boxShadow = `0 2px 10px ${metricObj.glowColor || metricObj.color}`;
+      btn.style.color = '#0a0a0c';
+      btn.style.boxShadow = `0 2px 12px ${metricObj.glowColor || metricObj.color}`;
     } else {
       btn.style.backgroundColor = '';
       btn.style.color = '';
@@ -3100,85 +3124,103 @@ function renderStatsChart() {
     minVal = 0;
     maxVal = Math.max(10, Math.ceil(maxVal * 1.25));
   } else {
-    // For cumulative/financial totals: give a balanced, consistent margin (never 100% artificial swing)
+    // For cumulative/financial totals: give a balanced, consistent margin
     if (minVal === maxVal) {
-      const pad = Math.max(1, minVal * 0.1);
-      minVal = Math.max(0, minVal - pad);
-      maxVal = maxVal + pad;
+      const delta = minVal > 0 ? minVal * 0.2 : 10;
+      minVal = Math.max(0, minVal - delta);
+      maxVal = maxVal + delta;
     } else {
       const delta = maxVal - minVal;
-      const minPadding = maxVal * 0.05;
-      const pad = Math.max(delta * 0.2, minPadding);
-      minVal = Math.max(0, minVal - pad);
-      maxVal = maxVal + pad;
+      const padBottom = Math.max(delta * 0.2, maxVal * 0.08);
+      const padTop = Math.max(delta * 0.15, maxVal * 0.05);
+      minVal = Math.max(0, minVal - padBottom);
+      maxVal = maxVal + padTop;
     }
   }
 
   const range = Math.max(1, maxVal - minVal);
-  const padY = 30;
-  const padX = 20;
+  const padTop = 32;
+  const padBottom = 26;
   const svgW = 800;
   const svgH = 280;
-  const usableW = svgW - 2 * padX;
-  const usableH = svgH - 2 * padY;
+  const usableH = svgH - padTop - padBottom;
 
+  // Edge-to-edge X coordinates (from 0 to svgW) eliminates awkward blank margins
   const points = values.map((val, idx) => {
-    const x = padX + (idx / Math.max(1, count - 1)) * usableW;
-    const y = svgH - padY - ((val - minVal) / range) * usableH;
+    const x = (idx / Math.max(1, count - 1)) * svgW;
+    const y = svgH - padBottom - ((val - minVal) / range) * usableH;
     const peakInfo = seriesData.peaks ? seriesData.peaks[idx] : null;
     const fullDateLabel = seriesData.fullDateLabels ? seriesData.fullDateLabels[idx] : null;
     return { x, y, val, label: labels[idx], peakInfo, fullDateLabel };
   });
 
-  // Render Horizontal Grid Lines (4 lines)
+  // Render Horizontal Grid Lines with clean Y-axis reference markers
   if (gridGroup) {
     let gridHtml = '';
-    for (let i = 0; i <= 3; i++) {
-      const gY = padY + (i / 3) * usableH;
-      gridHtml += `<line x1="0" y1="${gY}" x2="${svgW}" y2="${gY}" stroke="rgba(255, 255, 255, 0.06)" stroke-dasharray="4 4" stroke-width="1" />`;
+    const gridLinesCount = 3;
+    for (let i = 0; i <= gridLinesCount; i++) {
+      const gY = padTop + (i / gridLinesCount) * usableH;
+      const gridVal = maxVal - (i / gridLinesCount) * range;
+      const formattedVal = formatChartGridVal(gridVal, metricObj.unit);
+      gridHtml += `<line x1="0" y1="${gY.toFixed(1)}" x2="${svgW}" y2="${gY.toFixed(1)}" stroke="rgba(255, 255, 255, 0.05)" stroke-dasharray="4 4" stroke-width="1" />`;
+      gridHtml += `<text x="6" y="${(gY - 5).toFixed(1)}" fill="rgba(255, 255, 255, 0.32)" font-size="10" font-family="'JetBrains Mono', monospace" font-weight="600">${formattedVal}</text>`;
     }
     gridGroup.innerHTML = gridHtml;
   }
 
-  // Render Accurate Monotone Cubic Spline (No overshoots, oscillations, or dipping)
-  const dLine = computeMonotoneCubicPath(points, svgH, padY);
-  const dArea = `${dLine} L ${points[points.length - 1].x} ${svgH - padY} L ${points[0].x} ${svgH - padY} Z`;
+  // Render smooth Catmull-Rom Bézier spline
+  const dLine = computeSmoothCubicPath(points);
+  // Area extends edge-to-edge and anchors cleanly at SVG bottom (y = svgH = 280)
+  const dArea = `${dLine} L ${svgW} ${svgH} L 0 ${svgH} Z`;
 
   if (linePath) linePath.setAttribute('d', dLine);
   if (areaPath) areaPath.setAttribute('d', dArea);
 
-  // Render Perfectly Round HTML Overlay Dots (Eliminates flat bean SVG deformation)
-  // Remove any existing dots
+  // For dense charts (> 7 points), suppress permanent HTML dot clutter; show sleek interactive crosshair
   container.querySelectorAll('.chart-point-dot').forEach(el => el.remove());
-  points.forEach((p, idx) => {
-    const dot = document.createElement('div');
-    dot.className = 'chart-point-dot';
-    dot.dataset.idx = idx;
-    dot.style.left = `${(p.x / svgW) * 100}%`;
-    dot.style.top = `${(p.y / svgH) * 100}%`;
-    dot.style.backgroundColor = metricObj.color;
-    dot.style.color = metricObj.color;
-    container.appendChild(dot);
-  });
+  if (count <= 7) {
+    points.forEach((p, idx) => {
+      const dot = document.createElement('div');
+      dot.className = 'chart-point-dot';
+      dot.dataset.idx = idx;
+      dot.style.left = `${(p.x / svgW) * 100}%`;
+      dot.style.top = `${(p.y / svgH) * 100}%`;
+      dot.style.backgroundColor = metricObj.color;
+      dot.style.color = metricObj.color;
+      container.appendChild(dot);
+    });
+  }
 
-  // Render Clean, Evenly Spaced X-Axis Labels (Max 6-7 labels)
+  // Render clean, evenly spaced X-Axis Labels (no awkward rounding like 19.10.)
   if (labelsContainer) {
-    const maxLabels = Math.min(7, count);
-    const displayLabels = [];
-    for (let i = 0; i < maxLabels; i++) {
-      const idx = Math.round((i / Math.max(1, maxLabels - 1)) * (count - 1));
-      displayLabels.push(labels[idx]);
+    let targetIndices = [];
+    if (count <= 7) {
+      targetIndices = points.map((_, i) => i);
+    } else if (currentStatsTimeframe === '1m') {
+      targetIndices = [0, 5, 10, 15, 20, 25, count - 1];
+    } else if (currentStatsTimeframe === '1d') {
+      targetIndices = [0, 4, 8, 12, 16, 20, count - 1];
+    } else if (currentStatsTimeframe === '1h') {
+      targetIndices = [0, 2, 4, 6, 8, 10, count - 1];
+    } else {
+      const step = (count - 1) / 6;
+      for (let i = 0; i <= 6; i++) {
+        targetIndices.push(Math.round(i * step));
+      }
     }
+    const displayLabels = targetIndices.map(idx => (points[idx] ? points[idx].label : ''));
     labelsContainer.innerHTML = displayLabels.map(l => `<span>${l}</span>`).join('');
   }
 
-  // Bind Mouse Hover & Click Interaction for Tooltip
+  // Bind Mouse & Touch interaction for Crosshair & Tooltip
   setupChartHoverInteraction(points, metricObj);
 }
 
 function setupChartHoverInteraction(points, metricObj) {
   const container = document.getElementById('svg-chart-container');
   const tooltip = document.getElementById('chart-tooltip');
+  const crosshair = document.getElementById('chart-crosshair');
+  const focusDot = document.getElementById('chart-focus-dot');
   const timeEl = document.getElementById('tooltip-time');
   const valEl = document.getElementById('tooltip-val');
   const peakEl = document.getElementById('tooltip-peak');
@@ -3195,10 +3237,31 @@ function setupChartHoverInteraction(points, metricObj) {
       const leftPercent = (pt.x / 800) * 100;
       const topPercent = (pt.y / 280) * 100;
 
+      if (crosshair) {
+        crosshair.setAttribute('x1', pt.x.toFixed(1));
+        crosshair.setAttribute('x2', pt.x.toFixed(1));
+        crosshair.style.opacity = '1';
+      }
+
+      if (focusDot) {
+        focusDot.style.left = `${leftPercent}%`;
+        focusDot.style.top = `${topPercent}%`;
+        focusDot.style.backgroundColor = metricObj.color;
+        focusDot.style.color = metricObj.color;
+        focusDot.classList.add('visible');
+      }
+
       tooltip.style.left = `${leftPercent}%`;
       tooltip.style.top = `${topPercent}%`;
+      if (leftPercent < 15) {
+        tooltip.style.transform = 'translate(0%, -125%)';
+      } else if (leftPercent > 85) {
+        tooltip.style.transform = 'translate(-100%, -125%)';
+      } else {
+        tooltip.style.transform = 'translate(-50%, -125%)';
+      }
 
-      // Highlight active dot
+      // Highlight active dot if low-density dots are rendered
       container.querySelectorAll('.chart-point-dot').forEach((d, idx) => {
         if (idx === pointIdx) d.classList.add('active');
         else d.classList.remove('active');
@@ -3228,6 +3291,8 @@ function setupChartHoverInteraction(points, metricObj) {
 
   const hideTooltip = () => {
     tooltip.classList.remove('visible');
+    if (crosshair) crosshair.style.opacity = '0';
+    if (focusDot) focusDot.classList.remove('visible');
     container.querySelectorAll('.chart-point-dot').forEach(d => d.classList.remove('active'));
   };
 

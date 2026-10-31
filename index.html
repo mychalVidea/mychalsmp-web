@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261030_v26_8" />
+  <link rel="stylesheet" href="style.css?v=20261031_v26_11" />
 </head>
 
 <body>
@@ -3260,22 +3260,20 @@
               majitel osobně, žádné neprověřené osoby ani řadový personál k nim přístup nemají.
             </div>
 
-            <p class="legal-text">Správcem osobních údajů v souladu s Nařízením Evropského parlamentu a Rady (EU)
-              2016/679 (obecné nařízení o ochraně osobních údajů neboli GDPR) a zákonem č. 110/2019 Sb., o zpracování
-              osobních údajů, je provozovatel herního serveru a webu MYCHALSMP (dále jen „správce“ či „server“):</p>
+            <p class="legal-text">Správcem osobních údajů souvisejících s provozem herního serveru, webu a vedením herních účtů v souladu s Nařízením Evropského parlamentu a Rady (EU) 2016/679 (GDPR) a zákonem č. 110/2019 Sb., o zpracování osobních údajů, je fyzická osoba provozující nezávislý komunitní projekt MYCHALSMP (dále jen „správce“ či „provozovatel serveru“):</p>
 
             <div class="legal-grid-details">
               <div class="legal-detail-row">
                 <span class="legal-detail-label">Projekt</span>
-                <span class="legal-detail-value">MYCHALSMP (mychalsmp.xyz)</span>
+                <span class="legal-detail-value">MYCHALSMP (mychalsmp.xyz, join.mychalsmp.xyz)</span>
               </div>
               <div class="legal-detail-row">
-                <span class="legal-detail-label">Správce a provozovatel</span>
-                <span class="legal-detail-value">mychalVidea (majitel projektu a výhradní správce dat)</span>
+                <span class="legal-detail-label">Správce herních dat</span>
+                <span class="legal-detail-value">Fyzická osoba provozující komunitu (online identita: mychalVidea, ČR)</span>
               </div>
               <div class="legal-detail-row legal-detail-row--full">
                 <span class="legal-detail-label">Fyzické umístění dat</span>
-                <span class="legal-detail-value">Lokální vyhrazené stanice majitele; přístup má výhradně majitel</span>
+                <span class="legal-detail-value">Lokální vyhrazené stanice majitele v České republice; výhradní osobní přístup</span>
               </div>
               <div class="legal-detail-row">
                 <span class="legal-detail-label">Oficiální kontakt a DSA</span>
@@ -3283,8 +3281,8 @@
                     class="legal-link">admin@mychalsmp.xyz</a> / Discord ticket</span>
               </div>
               <div class="legal-detail-row">
-                <span class="legal-detail-label">Správce plateb</span>
-                <span class="legal-detail-value">Tebex Limited (Merchant of Record), viz článek 3</span>
+                <span class="legal-detail-label">Prodejce a správce plateb</span>
+                <span class="legal-detail-value">Tebex Limited (Merchant of Record & samostatný správce platebních údajů), viz článek 3</span>
               </div>
             </div>
 
@@ -3333,21 +3331,47 @@
 
             <ul class="legal-list">
               <li>
-                <strong>IP adresy, síťové logy a vlastní ochrana AntiVPN (Oprávněný zájem dle čl. 6 odst. 1 písm. f)
-                  GDPR):</strong>
-                Při připojení na herní server zaznamenáváme vaši IP adresu a technická metadata síťového spojení.<br>
-                • <strong>Účel zpracování:</strong> Zajištění síťové stability, obrana proti útokům (DDoS, brute-force
-                útoky na hesla, botnety), ochrana herního světa před automatizovanými škodlivými boty a vymáhání herních
-                pravidel (zamezení obcházení trestů a banů skrze anonymní proxy).<br>
-                • <strong>Bezpečnostní prověřování:</strong> Využíváme vlastní bezpečnostní systém (AntiVPN modul),
-                který ověřuje IP adresu vůči GeoIP rozhraním (ip-api.com a ipwho.is) výhradně formou anonymního dotazu
-                na AS číslo a typ sítě (detekce hostingů, datacenter, proxy a VPN tunelů). Použití anonymních VPN je z
-                bezpečnostních důvodů blokováno (včetně automatického preventivního zamezení vstupu).<br>
-                • <strong>Doba uchování:</strong> Výsledky AntiVPN ověření jsou z důvodu ochrany soukromí a minimalizace
-                dat cachovány maximálně <strong>24 hodin</strong> a poté automaticky smazány. Běžné síťové logy spojení
-                jsou uchovávány po dobu nezbytnou pro bezpečnostní audit a vyšetřování incidentů (maximálně <strong>30
-                  dní</strong>), poté jsou rotovány a skartovány. Pouze v případě aktivního banu je příslušná adresa
-                evidována v blacklistu po dobu trvání sankce.
+                <strong>Zpracování IP adres, síťová bezpečnost a ochrana AntiVPN (čl. 6 odst. 1 písm. f) GDPR):</strong>
+                Při interakci s herním serverem, webem či aplikacemi zpracováváme vaši IP adresu (IPv4, IPv6) výhradně pro odůvodněné bezpečnostní účely, ochranu herních účtů a zajištění stability sítě v souladu se zásadou minimalizace údajů (čl. 5 odst. 1 písm. c) GDPR). IP adresy jsou rozděleny do specifických kategorií s přesně vymezeným účelem a retenční lhůtou:
+                <br><br>
+                • <strong>Registrační IP adresa účtu (MychalAuth / IronGolem):</strong>
+                Při prvotní registraci herního účtu na serveru zaznamenáváme IP adresu do tabulky <code>accounts.registered_ip</code>.
+                <br><em>Účel:</em> Prevence hromadného zakládání botovacích účtů (multi-accounting) a obrana proti nájezdům botnetů.
+                <br><em>Doba uchování a mazání:</em> Maximálně <strong>30 dní</strong> od okamžiku registrace. Po uplynutí 30 dní je hodnota automatickým retenčním procesem v databázi nevratně přepsána na <code>NULL</code> s přemazáním buněk nulami na disku (<code>PRAGMA secure_delete = ON</code>).
+                <br><br>
+                • <strong>Poslední přihlašovací IP adresa účtu (MychalAuth / IronGolem):</strong>
+                Při každém úspěšném ověřeném přihlášení do hry (zadáním hesla přes <code>/login</code>, automatickým obnovením aktivní session i ověřením originálního Mojang účtu) se do sloupce <code>accounts.last_ip</code> zapíše aktuální IP adresa hráče a aktualizuje se čas <code>last_login</code> a dedikované časové razítko <code>last_ip_updated_at</code>.
+                <br><em>Princip jediné známé IP:</em> Systém <strong>neuchovává historii přihlašovacích IP adres</strong>. Každé nové přihlášení předchozí záznam okamžitě a beze stopy přepíše.
+                <br><em>Aktivní hráči:</em> U aktivních hráčů zůstává uchována pouze jejich jediná poslední známá IP adresa po dobu trvání herní aktivity z důvodu nepřetržitého zabezpečení účtu (detekce neoprávněného vniknutí z cizího státu, obrana proti krádeži herních hesel a session hijacking) a podléhá pravidelnému přezkumu nezbytnosti.
+                <br><em>Neaktivní hráči (30denní lhůta zapomnění):</em> Retenční proces vyhodnocuje výhradně <code>last_ip_updated_at</code>. Pokud se hráč nepřihlásí po dobu delší než <strong>30 dní</strong>, jeho <code>last_ip</code> je automatickým procesem trvale nastavena na <code>NULL</code> (s přemazáním diskových stránek nulami přes <code>PRAGMA secure_delete = ON</code>). Herní účet, inventář, claimy a statistiky zůstávají nedotčeny. Pro starší účty existuje 30denní ochranná přechodná lhůta od nasazení migrace, která brání předčasnému smazání aktivních hráčů.
+                <br><br>
+                • <strong>Dočasné přihlašovací relace (Sessions):</strong>
+                V případě volitelného zapnutí funkce automatického přihlášení bez zadávání hesla (IP session) se do tabulky <code>sessions.ip_address</code> ukládá IP adresa s časem expirace.
+                <br><em>Výchozí stav v produkci:</em> Vypnuto (<code>enable-ip-sessions: false</code>, v produkční databázi je 0 aktivních relací). V případě aktivace je platnost relace maximálně <strong>24 hodin</strong> a expirované záznamy jsou každých <strong>15 minut</strong> automaticky a fyzicky mazány z databáze.
+                <br><br>
+                • <strong>Bezpečnostní tresty a sankce (Beacon / PunishmentManager):</strong>
+                <br>– <em>Běžné tresty (Mute, TempMute, Warn, Kick, klasický UUID Ban):</em> IP adresa se <strong>vůbec neukládá</strong>. Trest je vázán výhradně na herní UUID a přezdívku hráče.
+                <br>– <em>Dočasné IP bany (TEMP_IP_BAN):</em> IP adresa je uložena v tabulce trestů výhradně po dobu trvání aktivního trestu a následně maximálně <strong>30 dní po jeho vypršení</strong> (odvolací a reklamační lhůta pro případné unban žádosti a prověření chybného udělení). Po uplynutí této lhůty je IP adresa automaticky smazána na <code>NULL</code>.
+                <br>– <em>Permanentní IP bany (IP_BAN):</em> U trvalých blokací za mimořádně závažné incidenty (DDoS útoky, botnety, pokusy o destrukci sítě) <strong>neuchováváme surovou IP adresu v čitelném stavu</strong>. IP adresa je před uložením převedena do kanonické binární podoby (sjednocení zápisů IPv4 a IPv6) a <strong>kryptograficky pseudonymizována pomocí HMAC-SHA256</strong> s verzovaným tajným systémovým klíčem (<code>key_version</code>). Uložen je pouze pseudonymizovaný otisk (hash), ze kterého nelze původní IP adresu zrekonstruovat. Při udělení unbanu je záznam zneplatněn a otisk odstraněn z aktivního filtru.
+                <br><br>
+                • <strong>Kryptografické propojení účtu Discord a Minecraft (/dlink):</strong>
+                Při zadání příkazu <code>/dlink</code> ve hře se vygeneruje jednorázový 16bajtový kryptografický token s platností <strong>pouhých 10 minut</strong>. V tabulce <code>dlink_tokens</code> se dočasně eviduje token, UUID a IP adresa hráče pro ověření, že webový odkaz otevírá tentýž uživatel jako ve hře. Po dokončení propojení nebo po uplynutí 10 minut je záznam <strong>fyzicky a trvale odstraněn</strong> (čistící interval běží každých 5 minut).
+                <br><br>
+                • <strong>Evidence stažení launcheru (launcher_downloads):</strong>
+                Při stažení aplikace SMPClient z webu se do tabulky <code>launcher_downloads</code> ukládá IP adresa pro zamezení umělého navyšování počítadla stažení. Záznamy jsou automatickým retenčním procesem <strong>po 30 dnech fyzicky mazány</strong>. Celkový veřejný počet stažení je agregován v počitadle a zůstává zachován.
+                <br><br>
+                • <strong>Bezpečnostní prověřování AntiVPN a zjištění země (GeoIP):</strong>
+                Pro ochranu herního světa před boty a obcházením trestů (a pro zobrazení vlaječky státu v TAB listu) prověřujeme IP adresu v reálném čase <strong>výhradně přes šifrované HTTPS rozhraní <code>https://ipwho.is/</code></strong>. Nešifrovaný HTTP přenos je striktně vyloučen.
+                <br><em>Rozsah předávaných dat:</em> Do externího rozhraní se odesílá <strong>výhradně samotná technická IP adresa v parametru dotazu</strong>. Nikdy se nepředávají žádné doplňující identifikační údaje (žádný herní nick, heslo, UUID ani e-mail).
+                <br><em>Doba uchování výsledku:</em> Výsledek bezpečnostního testu (informace o AS čísle sítě a příznaky proxy/VPN/hosting) je uchováván <strong>výhradně v operační paměti RAM po dobu maximálně 24 hodin</strong>, po které automaticky vyprší. Do trvalých databází se neukládá. V konzolových zprávách serveru jsou IP adresy maskovány pro zamezení úniku do systémových výpisů.
+                <br><br>
+                • <strong>Serverové diagnostické logy a archivace:</strong>
+                Archivované systémové logy serveru (komprimované soubory <code>.log.gz</code>) a výpisy systémových pádů (<code>crash-reports/crash-*.txt</code>) jsou automaticky skartovány a <strong>mazány po uplynutí 30 dní</strong>. Aktivní soubor <code>latest.log</code> slouží pro aktuální běh serveru a není v průběhu provozu cyklicky mazán.
+                <br><br>
+                • <strong>Tranzitní infrastruktura, reverzní proxy a databázová hygiena:</strong>
+                <br>– <em>Oracle Cloud Infrastructure (Frankfurt, EU):</em> Tranzitní reverzní proxy tunel (FRP) směruje TCP pakety hry s využitím PROXY v2 protokolu pro doručení reálné IP adresy na lokální server. Na cloudovém uzlu se neukládají žádné herní databáze ani profily hráčů. Systémové systémové záznamy OS Linux (<code>systemd-journald</code>) podléhají standardní správě operačního systému: <strong>NEOVĚŘENO</strong> z pohledu externího auditu.
+                <br>– <em>Cloudflare Anycast:</em> Webový provoz využívá ochranu Cloudflare (Free tier). Na hranových uzlech Cloudflare se neukládají trvalé HTTP access logy. V případě detekce síťového útoku či překročení bezpečnostních limitů WAF uchovává Cloudflare bezpečnostní záznam incidentu (Security Events) po dobu <strong>24 až 72 hodin</strong>.
+                <br>– <em>Kryptografické mazání SQLite:</em> Veškeré databázové soubory s IP adresami mají aktivován režim <code>PRAGMA secure_delete = ON</code>, který zaručuje, že smazané záznamy a přepsaná data jsou na disku fyzicky přepsána nulami a nezůstávají ve volných stránkách databáze. Pravidelný <code>wal_checkpoint(TRUNCATE)</code> zajišťuje promítnutí změn do hlavních souborů bez zbytkových dat v transakčních žurnálech. Případné zálohy databází podléhají stejnému retenčnímu režimu 30 dnů a při obnově ze zálohy je okamžitě aktivován skartační proces.
               </li>
               <li>
                 <strong>Herní identita – Přezdívka a UUID (Plnění smlouvy dle čl. 6 odst. 1 písm. b) GDPR):</strong>
@@ -3390,31 +3414,19 @@
                 prohlížeče.
               </li>
               <li>
-                <strong>Automatizovaná AI moderace a hlasové hovory (Google Gemini AI / Groq – soulad s EU AI
-                  Act):</strong>
-                V souladu s Nařízením Evropského parlamentu a Rady (EU) 2024/1689 (EU AI Act) transparentně informujeme,
-                že k zajištění bezpečného a slušného prostředí využíváme asistenční AI technologie. Tyto modely
-                automatizovaně analyzují textovou komunikaci za účelem včasného záchytu závažné toxicity, rasismu či
-                kyberšikany, a asistují při zpracování komunitních návrhů.<br>
-                • <strong>Moderace hlasových hovorů (Discord):</strong> Moderace a asistenční přepisy hlasových hovorů
-                probíhají
-                <strong>výhradně a pouze tehdy, pokud administrátor nebo kterýkoliv uživatel výslovně pozve bota do
-                  hlasového
-                  hovoru</strong> (např. spuštěním hovoru přes příkaz či tlačítko bota). Bot <strong>nikdy nevstupuje do
-                  hlasových
-                  místností samovolně</strong>, neprovádí žádný pasivní ani skrytý odposlech běžných konverzací hráčů a
-                pokud není v hovoru
-                přítomen, žádná hlasová data nejsou zaznamenávána, přepisována ani analyzována. Veškerá AI rozhodnutí
-                podléhají lidskému
-                přezkumu administrátorským týmem.
+                <strong>Lokální ochrana chatu ve hře a asistenční AI na Discordu (Google Gemini & Groq – soulad s EU AI Act):</strong>
+                K ochraně hráčů a komunity přistupujeme s maximálním respektem k soukromí a technické transparentnosti:
+                <br>• <strong>Herní chat Minecraftu (100% lokální zpracování):</strong> Běžná textová komunikace v Minecraftu a nápisy na cedulkách jsou kontrolovány <strong>výhradně lokálně na našem serveru</strong> (vlastní bezpečnostní modul Warden s fonetickou, leetspeak a homoglyfní normalizací). <strong>Herní chat z Minecraftu se nikdy neposílá do žádných externích cloudových AI služeb ani třetím stranám.</strong>
+                <br>• <strong>Využití asistenční AI na Discordu:</strong> Pokročilé jazykové modely (Google Gemini API a Groq API) jsou integrovány výhradně v rámci Discord bota pro specifické vyžádané funkce: konverzace s botem přes příkaz <code>/chat</code>, asistenční shrnutí a formátování komunitních návrhů (<code>/navrh</code>) a uzavřených tiketů podpory.
+                <br>• <strong>Rozsah a ochrana dat u AI:</strong> Do rozhraní Google LLC a Groq, Inc. se odesílá výhradně samotný textový obsah konkrétního dotazu či návrhu. Do AI se nikdy nepředávají hesla, IP adresy, herní inventáře, platební údaje ani osobní identifikační údaje. Oba poskytovatelé zpracovávají data bezestavově (stateless API) a v souladu se smluvními podmínkami je neukládají ani nepoužívají k trénování svých veřejných modelů.
+                <br>• <strong>Hlasový asistent v Discord hovorech:</strong> Přepis řeči na text (Groq Whisper-large-v3) a generování hlasové odpovědi (Google Gemini) probíhá <strong>výhradně a pouze tehdy, pokud uživatel či administrátor výslovně pozve bota do hlasového kanálu</strong>. Bot nikdy nevstupuje do hlasových místností samovolně, neprovádí žádný pasivní odposlech a pokud v hovoru není přítomen, žádná hlasová data nejsou zachytávána ani zpracovávána. Veškerá případná moderátorská rozhodnutí podléhají lidskému přezkumu.
               </li>
               <li>
-                <strong>Propojení účtů Discord a Minecraft (/dlink):</strong>
-                Při generování párovacího tokenu ve hře evidujeme krátkodobý jednorázový token, Minecraft UUID, herní
-                nick a IP adresu hráče za účelem bezpečného propojení herní postavy s vaším Discord účtem.
+                <strong>Kryptografické propojení účtů Discord a Minecraft (/dlink):</strong>
+                Při zadání příkazu <code>/dlink</code> ve hře vygeneruje server bezpečný jednorázový 16bajtový kryptografický token s platností <strong>pouhých 10 minut</strong>. V databázi se po tuto dobu dočasně eviduje token, Minecraft UUID, nick a IP adresa hráče pro ověření relace. Jakmile je propojení přes Discord OAuth dokončeno (nebo uplyne 10 minut), <strong>token je z databáze trvale smazán</strong>. Dlouhodobě se eviduje pouze samotná vazba Discord ID ↔ Minecraft UUID a nick pro synchronizaci herních rolí.
               </li>
               <li>
-                <strong>E-maily a platby při nákupu SMP+ (Tebex Merchant of Record):</strong>
+                <strong>E-maily a platby při nákupu výhod SMP+, SMP++, SMP+++ (Tebex Merchant of Record):</strong>
                 Platby probíhají přes společnost Tebex Limited. Server MYCHALSMP nemá přístup k vašim platebním kartám
                 ani bankovním údajům. Správce eviduje pouze transakční ID a herní nick pro účely technického přiřazení
                 výhod ve hře.
@@ -3433,7 +3445,7 @@
                 <strong>Webové rozhraní a LocalStorage:</strong>
                 Web nepoužívá žádné sledovací ani reklamní cookies třetích stran. Využívá výhradně technicky nezbytné
                 lokální úložiště prohlížeče (LocalStorage) pro bezpečné uchování přihlašovacího tokenu (`auth_token`)
-                při správě předplatného SMP+. Toto uložení nevyžaduje souhlas dle § 89 odst. 3 zákona č. 127/2005 Sb.
+                při správě předplatného SMP+, SMP++ a SMP+++. Toto uložení nevyžaduje souhlas dle § 89 odst. 3 zákona č. 127/2005 Sb.
               </li>
               <li>
                 <strong>SMPClient launcher – lokální data a GitHub Releases:</strong>
@@ -3465,18 +3477,22 @@
               partnerům (Cloudflare, Tebex, Mojang, Google, OneSignal, GitHub).
             </div>
 
-            <p class="legal-text">Osobní údaje uchováváme pouze po nezbytně nutnou dobu:</p>
+            <p class="legal-text">Osobní údaje uchováváme pouze po nezbytně nutnou dobu s přísně vymezenými retenčními lhůtami:</p>
             <ul class="legal-list">
-              <li><strong>Síťové bezpečnostní logy a IP adresy:</strong> uchováváme maximálně 90 dní pro prevenci a
-                řešení incidentů.</li>
-              <li><strong>Herní účet a herní data:</strong> uchováváme po dobu aktivního hraní na serveru nebo do
-                vyřízení žádosti o výmaz účtu.</li>
-              <li><strong>Záznamy o udělených trestech (bany):</strong> uchováváme po dobu trvání trestu pro ochranu
-                integrity herní komunity.</li>
-              <li><strong>Údaje žádostí o Media rank:</strong> uchováváme po dobu trvání žádosti a následného držení
-                role; při odebrání jsou profily smazány či archivovány dle nastavení.</li>
-              <li><strong>Webové push tokeny:</strong> uchováváme do odhlášení odběru v prohlížeči nebo neaktivity delší
-                než 180 dní.</li>
+              <li><strong>Registrační IP adresy (accounts.registered_ip):</strong> uchováváme maximálně <strong>30 dní</strong> od registrace účtu; poté jsou automaticky přepsány na NULL s přemazáním buněk nulami na disku (secure_delete).</li>
+              <li><strong>Poslední přihlašovací IP (accounts.last_ip):</strong> u aktivních hráčů uchováváme výhradně jedinou poslední IP adresu (aktualizovanou při každém ověřeném přihlášení spolu s <code>last_ip_updated_at</code> bez ukládání historie); u neaktivních hráčů (> 30 dní od <code>last_ip_updated_at</code>) je automaticky přepsána na NULL (s 30denní ochrannou přechodnou lhůtou pro stávající účty).</li>
+              <li><strong>Přihlašovací relace (sessions.ip_address):</strong> uchováváme maximálně <strong>24 hodin</strong> (při zapnutí); expirované relace jsou fyzicky mazány z databáze každých <strong>15 minut</strong>.</li>
+              <li><strong>Dočasné IP bany (TEMP_IP_BAN):</strong> uchováváme po dobu trvání trestu a maximálně <strong>30 dní</strong> po jeho skončení pro účely odvolacího řízení; poté je IP smazána na NULL.</li>
+              <li><strong>Permanentní IP bany (IP_BAN):</strong> surovou IP adresu neuchováváme; evidujeme výhradně <strong>pseudonymizovaný HMAC-SHA256 otisk</strong> po dobu trvání bezpečnostní blokace s verzovaným klíčem. Při unbanu je záznam zneplatněn a otisk odstraněn. Běžné bany na UUID, mute, kick a varování IP adresu vůbec neukládají.</li>
+              <li><strong>Evidence stažení launcheru (launcher_downloads):</strong> uchováváme IP adresu maximálně <strong>30 dní</strong> k zamezení umělého navyšování počítadla; poté je IP automaticky smazána a agregovaný celkový počet stažení zůstává zachován.</li>
+              <li><strong>Archivované serverové logy a crash reporty:</strong> komprimované archivy <code>.log.gz</code> a výpisy pádů <code>crash-reports</code> jsou automaticky skartovány po <strong>30 dnech</strong>. Běžný <code>latest.log</code> slouží pro aktuální běh serveru s maskováním IP v bezpečnostních výpisech.</li>
+              <li><strong>Dlink ověřovací tokeny (dlink_tokens):</strong> uchováváme maximálně <strong>10 minut</strong>; po dokončení propojení či vypršení platnosti jsou token i IP fyzicky smazány (čistící interval každých 5 minut).</li>
+              <li><strong>AntiVPN prověření a GeoIP cache:</strong> prováděno výhradně přes šifrované HTTPS (<code>ipwho.is</code>); výsledek uchováváme maximálně <strong>24 hodin</strong> výhradně v dočasné paměti RAM; do databáze se neukládá.</li>
+              <li><strong>Bezpečnostní incidenty Cloudflare WAF:</strong> v případě zachycení útoku či botnetu uchovává Cloudflare metadata incidentu po dobu <strong>24 až 72 hodin</strong>.</li>
+              <li><strong>Herní účet a herní data:</strong> uchováváme po dobu aktivního hraní na serveru nebo do vyřízení žádosti o výmaz účtu.</li>
+              <li><strong>Záznamy o udělených trestech (bany na UUID):</strong> uchováváme po dobu trvání trestu pro ochranu integrity herní komunity bez ukládání IP.</li>
+              <li><strong>Údaje žádostí o Media rank:</strong> uchováváme po dobu trvání žádosti a následného držení role; při odebrání jsou profily smazány či archivovány dle nastavení.</li>
+              <li><strong>Webové push tokeny:</strong> uchováváme do odhlášení odběru v prohlížeči nebo neaktivity delší než 180 dní.</li>
               <li><strong>Hlášení bugů a unban tikety:</strong> archivujeme po dobu vyřízení, nejdéle 6 měsíců.</li>
             </ul>
 
@@ -3486,15 +3502,18 @@
                 v režimu rozhodnutí Evropské komise o odpovídající ochraně (EU-U.S. Data Privacy Framework) a doložek
                 SCC.</li>
               <li><strong>Tebex Limited (UK):</strong> Zajištění platebního styku, fakturace a DPH v souladu s
-                rozhodnutím Komise o odpovídající ochraně pro Spojené království.</li>
+                rozhodnutím Komise o odpovídající ochraně pro Spojené království (Merchant of Record).</li>
               <li><strong>Mojang Studios / Microsoft Corporation (USA):</strong> Ověřovací handshake pro hráče s
                 originálním Minecraft účtem (v režimu EU-U.S. Data Privacy Framework).</li>
-              <li><strong>Google LLC (USA):</strong> YouTube Data API v3 a Google Gemini API (analýza bezpečnosti a
-                asistence). Certifikováno v rámci EU-U.S. Data Privacy Framework.</li>
+              <li><strong>Google LLC (USA):</strong> YouTube Data API v3 a Google Gemini API (stateless analýza bezpečnosti a
+                textu). Certifikováno v rámci EU-U.S. Data Privacy Framework.</li>
+              <li><strong>Groq, Inc. (USA):</strong> Poskytovatel bleskové textové inference (Groq API) pro automatizovanou asistenci
+                a detekci toxicity bez ukládání dat k trénování modelů. Režim EU-U.S. Data Privacy Framework a standardní smluvní doložky SCC.</li>
+              <li><strong>Discord Inc. (USA):</strong> Provoz komunitního Discord serveru, synchronizace rolí přes Discord API a propojení
+                herního účtu (/dlink). Zpracování probíhá v rámci EU-U.S. Data Privacy Framework.</li>
               <li><strong>OneSignal Inc. (USA):</strong> Technická infrastruktura pro bezpečné doručování webových push
                 notifikací (EU-U.S. Data Privacy Framework).</li>
-              <li><strong>ip-api.com a ipwho.is:</strong> Dotazování bezpečnostních GeoIP a AntiVPN rozhraní pro
-                detekci nebezpečných proxy sítí, hostingových datacenter a blokování VPN z důvodu obrany před útoky.
+              <li><strong>ipwho.is:</strong> Technické bezpečnostní prověřování IP adresy přes šifrované HTTPS spojení (zjištění AS čísla, typu připojení, země pro TAB flag a detekce proxy/VPN) výhradně pro obranu před robotickými útoky bez předávání osobních identifikačních dat hráče.
               </li>
               <li><strong>GitHub, Inc. (USA):</strong> Distribuce a hostování veřejných release balíčků
                 SMPClient launcheru prostřednictvím platformy GitHub Releases. Stahování probíhá přes veřejné HTTPS
@@ -3503,8 +3522,7 @@
               </li>
               <li><strong>Oracle Corporation (Oracle Cloud Infrastructure – EU, Frankfurt):</strong> Poskytovatel
                 cloudové síťové infrastruktury pro provoz tranzitní reverse proxy brány. Přenos probíhá v datacentru v
-                rámci
-                Evropské unie v plném souladu s GDPR. Na serveru Oracle nedochází k trvalému ukládání herních databází.
+                rámci Evropské unie v souladu s GDPR. Na serveru Oracle nedochází k trvalému ukládání herních databází. Systémové systémové záznamy OS Linux (<code>systemd-journald</code>) podléhají standardní správě operačního systému: <strong>NEOVĚŘENO</strong> z pohledu externího auditu.
               </li>
             </ul>
           </article>
@@ -3563,7 +3581,7 @@
             <p class="legal-text">Server MYCHALSMP je otevřen i mladším hráčům. Ve smyslu § 7 zákona č. 110/2019 Sb. je
               věková hranice pro samostatný souhlas v ČR stanovena na 15 let. Hráče mladší 15 let žádáme, aby server
               navštěvovali s vědomím svých zákonných zástupců. V herním chatu striktně zakazujeme sdílení citlivých
-              osobních údajů (jména, adresy bydliště, telefonní čísla či sociální sítě). Případné nákupy doplňků SMP+
+              osobních údajů (jména, adresy bydliště, telefonní čísla či sociální sítě). Případné nákupy doplňků a výhod SMP+, SMP++ a SMP+++
               smějí nezletilé osoby provádět výhradně se souhlasem rodičů.</p>
           </article>
 
@@ -3610,7 +3628,7 @@
           </article>
 
           <div class="legal-footer-note">
-            Poslední revize zásad: 15. října 2026 &nbsp;·&nbsp; Tyto zásady jsou platné pro herní server mychalsmp.xyz,
+            Poslední revize zásad: 31. října 2026 &nbsp;·&nbsp; Tyto zásady jsou platné pro herní server mychalsmp.xyz,
             desktopový launcher SMPClient i webové rozhraní.
           </div>
         </main>
@@ -3651,7 +3669,7 @@
                     onclick="smoothScrollToLegal('terms-sec-2', event)"><span class="toc-num">02</span> Pravidla a
                     moderace (DSA)</a></li>
                 <li><a href="#terms-sec-3" class="legal-toc-link"
-                    onclick="smoothScrollToLegal('terms-sec-3', event)"><span class="toc-num">03</span> Nákupy SMP+
+                    onclick="smoothScrollToLegal('terms-sec-3', event)"><span class="toc-num">03</span> Nákupy výhod (SMP+, SMP++, SMP+++)
                     a Tebex MoR</a></li>
                 <li><a href="#terms-sec-4" class="legal-toc-link"
                     onclick="smoothScrollToLegal('terms-sec-4', event)"><span class="toc-num">04</span> Trvalost světa
@@ -3717,26 +3735,30 @@
               <span class="legal-marker-tag">02 · PRAVIDLA A MODERACE</span>
               <span class="legal-marker-ref">Digital Services Act a AI moderace</span>
             </div>
-            <h2 class="legal-article-title">2. Přístup na server, pravidla komunity a moderace obsahu</h2>
+            <h2 class="legal-article-title">2. Přístup na server, seznámení s pravidly a moderace obsahu</h2>
 
             <div class="legal-callout">
               <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
-              Hraní je zdarma. Kdo cheatuje, má cheaty zapnuté či nainstalované v aktuální relaci hry, nebo kazí hru
-              ostatním, dostane ban. Vlastní reklama a odkazy na sociální
-              sítě jsou zakázané, výjimku mají jen ověření tvůrci s Media rankem. Proti trestu se můžete odvolat přes
+              Hraní na serveru je 100% zdarma a nezakládá žádný skrytý finanční závazek. Připojením vstupujete do našeho světa
+              a souhlasíte s dodržováním pravidel fair-play. Kdo cheatuje, má nepovolené modifikace aktivní v klientu, nebo kazí hru
+              ostatním, dostane trest. Pravidla máte kdykoliv na očích ve hře přes <code>/rules</code>. Proti trestu se můžete odvolat přes
               webový formulář nebo Discord.
             </div>
 
-            <p class="legal-text">Přístup na herní server je bezplatný. Připojením na server hráč stvrzuje, že se
-              seznámil s herními pravidly a zavazuje se je bez výhrad dodržovat:</p>
+            <p class="legal-text"><strong>Jak a kdy dochází k seznámení s pravidly (Transparentní přístup bez skrytých podmínek):</strong></p>
+            <ul class="legal-list" style="margin-bottom: 20px;">
+              <li><strong>Bezplatný herní přístup a kodex komunity:</strong> Přístup na Minecraft server MYCHALSMP (IP: <code>mychalsmp.xyz</code>) je bezplatnou službou komunitního charakteru. Připojením na server hráč nevstupuje do žádné placené smlouvy, nýbrž do privátního herního světa podléhajícího hernímu řádu provozovatele. Informace o pravidlech nejsou nikde skryté – hráč je s nimi prokazatelně seznámen přímo ve hře:
+                <br>• <strong>Při přihlášení:</strong> Server zobrazuje v Action Baru i chatu zprávu s odkazem na pravidla komunity.
+                <br>• <strong>Příkaz <code>/rules</code> / <code>/pravidla</code>:</strong> Kdykoliv dostupný herní příkaz, který otevře interaktivní inventář s přehledem všech pravidel, knihou pravidel a přímým odkazem na web.
+                <br>• <strong>Nativní Server Links v menu pauzy (ESC):</strong> Přímo v oficiálním klientu Minecraftu je k dispozici tlačítko odkazující na pravidla serveru.
+                <br>Hráč, který na serveru setrvává a hraje, bere tato pravidla na vědomí a zavazuje se je respektovat. Pokud hráč s pravidly nesouhlasí, může hru kdykoliv bez jakýchkoliv sankcí opustit.
+              </li>
+              <li><strong>Absolutní oddělení herního přístupu od nákupů:</strong> Pouhým připojením na server ani hraním nevzniká žádná kupní smlouva ani finanční závazek. Veškeré nákupy výhod (balíčky <code>SMP+</code>, <code>SMP++</code> a <code>SMP+++</code>) jsou zcela dobrovolné a kupní smlouva vzniká výhradně v pokladním rozhraní aktivním potvrzením obchodních podmínek (opt-in checkbox).</li>
+            </ul>
+
+            <p class="legal-text"><strong>Závazná herní pravidla platná pro všechny hráče:</strong></p>
             <ul class="legal-list">
-              <li><strong>Zákaz podvádění a cheatů:</strong> Je přísně zakázáno jakékoliv používání, spouštění i pouhá
-                přítomnost nepovolených modifikací. Cheaty, hack klienti, X-Ray modifikace či textury, radary, minimapy
-                (s výjimkou schválených tvůrců), boti, autoclickery a neférová makra nesmějí být v aktuální relaci
-                Minecraftu zapnuté, nainstalované ve složce s mody ani načtené v paměti herního klienta (a to ani v
-                případě,
-                že jsou jednotlivé moduly momentálně neaktivní). Ochranné anticheat systémy monitorují chování hráčů i
-                integritu herního klienta v reálném čase.</li>
+              <li><strong>Zákaz podvádění a nefér výhod:</strong> Je přísně zakázáno jakékoliv aktivní i pasivní používání nepovolených herních modifikací a klientů (hack klienti, X-Ray modifikace či průhledové balíčky, entitní radary, neautorizované minimapy zobrazující jeskyně či hráče, automatizovaní boti, externí autoclickery a neférová makra). Zákaz se vztahuje i na situace, kdy jsou jednotlivé moduly v klientu dočasně vypnuty, avšak klient do herního síťového spojení odesílá nelegitimní či modifikované datové pakety. Bezpečnostní a anticheat systémy serveru (Warden / SMPAC) fungují na <strong>výhradně serverové úrovni (server-side analýza paketů a herní fyziky)</strong> – anticheat neinstaluje do počítače hráče žádný sledovací software ani neprovádí prohledávání lokálních souborů na disku hráče.</li>
               <li><strong>Zákaz nevyžádané reklamy a propagace sociálních sítí:</strong> Běžným hráčům je v herním
                 chatu, soukromých zprávách i na Discordu zakázána jakákoliv propagace vlastních či cizích sociálních
                 sítí, kanálů (YouTube, Twitch, Kick, TikTok) a jiných herních serverů. Výjimku tvoří výhradně schválení
@@ -3754,21 +3776,16 @@
               <li><strong>Zákaz IRL obchodování:</strong> Je zakázán jakýkoliv prodej herních předmětů, měny či účtů za
                 reálné peníze mimo oficiální herní obchod.</li>
               <li><strong>Transparentní moderace obsahu a asistence AI (Digital Services Act a EU AI Act):</strong>
-                K zajištění bezpečného prostředí využíváme automatizované skripty a asistenční modely umělé inteligence
-                (Google Gemini AI) pro detekci kyberšikany, extremismu a toxicity.<br>
-                • <strong>Pravidla pro hlasovou komunikaci (Discord hovory):</strong> Moderace hlasových hovorů probíhá
-                <strong>výhradně tehdy, pokud administrátor nebo kterýkoliv uživatel výslovně pozve bota do
-                  hovoru</strong>
-                (např. vyvoláním hlasové asistence). Bot se nikdy nepřipojuje do hlasových kanálů bez vyžádání a
-                neprovádí
-                žádné skryté ani pasivní monitorování soukromých hovorů hráčů. Jakmile bot v hovoru není přítomen, žádná
-                hlasová data se nezpracovávají.<br>
+                K zajištění bezpečného a férového prostředí využíváme kombinaci lokálních filtrů a moderních asistenčních nástrojů:
+                <br>• <strong>Minecraft server:</strong> Herní chat a nápisy na cedulkách jsou kontrolovány <strong>100% lokálně na serveru</strong> (bezpečnostní systém Warden). Žádná herní textová data z Minecraftu nejsou předávána externím cloudovým AI službám.
+                <br>• <strong>Discord komunita:</strong> Asistenční modely umělé inteligence (Google Gemini a Groq) jsou využívány výhradně v rámci Discord bota pro vyžádané funkce (interaktivní <code>/chat</code>, formátování návrhů <code>/navrh</code> a asistence při řešení tiketů).
+                <br>• <strong>Pravidla pro hlasovou komunikaci (Discord hovory):</strong> Hlasová asistence v Discord hovorech probíhá
+                <strong>výhradně tehdy, pokud administrátor nebo kterýkoliv uživatel výslovně pozve bota do hovoru</strong>
+                (vyvoláním hlasového příkazu). Bot se nikdy nepřipojuje do hlasových kanálů bez vyžádání a neprovádí žádné skryté ani pasivní monitorování soukromých hovorů hráčů. Jakmile bot v hovoru není přítomen, žádná hlasová data se nezpracovávají.<br>
+                <br>• <strong>Udělování trestů a zákaz obcházení sankcí (Ban Evasion):</strong> Je přísně zakázáno jakékoliv obcházení udělených trestů (vstup na server pod alternativním účtem, změna IP adresy přes proxy, VPN či mobilní hotspot za účelem pokračování v porušování pravidel). V případě závažných či opakovaných útoků na integritu serveru může provozovatel přistoupit k dočasné či trvalé blokaci IP adresy. Běžná ztišení (Mute), varování, kick a klasické bany na účet IP adresu vůbec neukládají. Dočasné IP bany jsou evidovány po dobu trestu a 30 dnů po jeho skončení (odvolací okno); u trvalých IP banů je surová IP adresa z bezpečnostních důvodů odstraněna a nahrazena kryptograficky pseudonymizovaným otiskem (HMAC-SHA256).<br>
                 • <strong>Záruky a odvolání:</strong> Provozovatel si vyhrazuje právo omezit nebo odebrat přístup
-                (udělit ban
-                či ztišení) hráči, který pravidla porušuje. Hráč je o důvodu trestu informován a má garantované právo na
-                lidské posouzení a odvolání (žádost o unban) prostřednictvím webového formuláře v sekci „Nahlášení bugu
-                / Žádost
-                o unban“ nebo ticket systému na Discordu.
+                (udělit ban či ztišení) hráči, který pravidla porušuje. Hráč je o důvodu trestu informován a má garantované právo na
+                lidské posouzení a odvolání (žádost o unban) prostřednictvím webového formuláře v sekci „Nahlášení bugu / Žádost o unban“ nebo ticket systému na Discordu.
               </li>
             </ul>
           </article>
@@ -3779,11 +3796,11 @@
               <span class="legal-marker-tag">03 · NÁKUPY A TEBEX</span>
               <span class="legal-marker-ref">Merchant of Record a § 1837 písm. l) OZ</span>
             </div>
-            <h2 class="legal-article-title">3. Nákupy výhod (SMP+) a postavení společnosti Tebex Limited</h2>
+            <h2 class="legal-article-title">3. Nákupy výhod (SMP+, SMP++, SMP+++) a postavení společnosti Tebex Limited</h2>
 
             <div class="legal-callout">
               <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
-              Nákupem SMP+ podporujete chod serveru. Prodejcem je společnost Tebex Limited (Merchant of Record).
+              Nákupem balíčků SMP+, SMP++ či SMP+++ podporujete provoz serveru. Prodejcem je společnost Tebex Limited (Merchant of Record).
               Aktivace probíhá obvykle do 5 minut (max. do 2 hodin). Pokud by k aktivaci nedošlo ani po nahlášení na
               podporu, máte nárok na plný refund.
             </div>
@@ -3813,9 +3830,9 @@
               </li>
               <li>
                 <strong>Okamžité plnění digitálního obsahu (§ 1837 písm. l) občanského zákoníku):</strong>
-                Odesláním objednávky a zaplacením kupující výslovně žádá a souhlasí s tím, aby mu byl digitální obsah
-                (aktivace výhod SMP+ na herním účtu) dodán <strong>ihned po zaplacení</strong> před uplynutím zákonné
-                14denní lhůty pro odstoupení od smlouvy. Kupující bere na vědomí, že udělením tohoto výslovného souhlasu
+                Aktivním zaškrtnutím souhlasu v pokladním rozhraní (checkbox v objednávkovém formuláři webu či pokladny Tebex) a odesláním objednávky kupující výslovně žádá a souhlasí s tím, aby mu byl digitální obsah
+                (aktivace výhod balíčků SMP+, SMP++ či SMP+++ na herním účtu) dodán <strong>ihned po zaplacení</strong> před uplynutím zákonné
+                14denní lhůty pro odstoupení od smlouvy. Kupující bere na vědomí a potvrzuje, že udělením tohoto předchozího výslovného souhlasu
                 se započetím plnění <strong>zaniká jeho právo na odstoupení od smlouvy ve 14denní lhůtě</strong> v
                 souladu s § 1837 písm. l) zákona č. 89/2012 Sb., občanský zákoník.
               </li>
@@ -3827,7 +3844,7 @@
               </li>
               <li>
                 <strong>Udělení trestu (Ban) a výhody:</strong>
-                Zakoupení výhod SMP+ neopravňuje hráče k porušování pravidel. Pokud hráč s aktivním SMP+ poruší pravidla
+                Zakoupení výhod SMP+, SMP++ či SMP+++ neopravňuje hráče k porušování pravidel. Pokud hráč s aktivním balíčkem poruší pravidla
                 a obdrží oprávněný trest (ban či ztišení), nevzniká nárok na vrácení peněz za již uplynulé období
                 poskytování služby.
               </li>
@@ -3964,9 +3981,7 @@
                   href="https://www.coi.cz" target="_blank" rel="noopener" class="legal-link">www.coi.cz</a> | E-mail:
                 adr@coi.cz
               </li>
-              <li>Spotřebitel může rovněž využít platformu pro řešení sporů online zřízenou Evropskou komisí na adrese
-                <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener"
-                  class="legal-link">ec.europa.eu/consumers/odr</a>.
+              <li>Pro řešení případných přeshraničních spotřebitelských sporů v rámci Evropské unie (např. v souvislosti s nákupem u britského/unijního prodejce Tebex Limited) může spotřebitel kontaktovat <strong>Evropské spotřebitelské centrum Česká republika</strong> (ESC ČR, Štěpánská 44, Praha 2, web: <a href="https://evropskyspotrebitel.cz" target="_blank" rel="noopener" class="legal-link">evropskyspotrebitel.cz</a>). Původní unijní platforma ODR byla rozhodnutím Evropské komise v červenci 2025 oficiálně ukončena.
               </li>
               <li><strong>Jednotné kontaktní místo podle Digital Services Act (DSA):</strong> Pro komunikaci s uživateli
                 i orgány veřejné moci ve smyslu čl. 11 a 12 Nařízení (EU) 2022/2065 slouží e-mail: <a
@@ -4040,7 +4055,7 @@
           </article>
 
           <div class="legal-footer-note">
-            Poslední revize podmínek: 15. října 2026 &nbsp;·&nbsp; Tyto podmínky nabývají platnosti a účinnosti dnem
+            Poslední revize podmínek: 31. října 2026 &nbsp;·&nbsp; Tyto podmínky nabývají platnosti a účinnosti dnem
             jejich zveřejnění na webu mychalsmp.xyz.
           </div>
         </main>
@@ -4626,7 +4641,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261030_v26_8"></script>
+  <script src="script.js?v=20261031_v26_11"></script>
 </body>
 
 </html>

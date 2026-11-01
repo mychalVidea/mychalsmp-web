@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261031_v26_11" />
+  <link rel="stylesheet" href="style.css?v=20261101_v26_12" />
 </head>
 
 <body>
@@ -3269,7 +3269,7 @@
               </div>
               <div class="legal-detail-row">
                 <span class="legal-detail-label">Správce herních dat</span>
-                <span class="legal-detail-value">Fyzická osoba provozující komunitu (online identita: mychalVidea, ČR)</span>
+                <span class="legal-detail-value">Michal Novotný (fyzická osoba nepodnikající, online identita: mychalVidea, Česká republika)</span>
               </div>
               <div class="legal-detail-row legal-detail-row--full">
                 <span class="legal-detail-label">Fyzické umístění dat</span>
@@ -3337,13 +3337,13 @@
                 • <strong>Registrační IP adresa účtu (MychalAuth / IronGolem):</strong>
                 Při prvotní registraci herního účtu na serveru zaznamenáváme IP adresu do tabulky <code>accounts.registered_ip</code>.
                 <br><em>Účel:</em> Prevence hromadného zakládání botovacích účtů (multi-accounting) a obrana proti nájezdům botnetů.
-                <br><em>Doba uchování a mazání:</em> Maximálně <strong>30 dní</strong> od okamžiku registrace. Po uplynutí 30 dní je hodnota automatickým retenčním procesem v databázi nevratně přepsána na <code>NULL</code> s přemazáním buněk nulami na disku (<code>PRAGMA secure_delete = ON</code>).
+                <br><em>Doba uchování a mazání:</em> Maximálně <strong>30 dní</strong> od okamžiku registrace. Po uplynutí 30 dní je hodnota automatickým retenčním procesem v databázi nevratně přepsána na <code>NULL</code> s přemazáním buněk v databázových stránkách nulami (<code>PRAGMA secure_delete = ON</code>).
                 <br><br>
                 • <strong>Poslední přihlašovací IP adresa účtu (MychalAuth / IronGolem):</strong>
                 Při každém úspěšném ověřeném přihlášení do hry (zadáním hesla přes <code>/login</code>, automatickým obnovením aktivní session i ověřením originálního Mojang účtu) se do sloupce <code>accounts.last_ip</code> zapíše aktuální IP adresa hráče a aktualizuje se čas <code>last_login</code> a dedikované časové razítko <code>last_ip_updated_at</code>.
                 <br><em>Princip jediné známé IP:</em> Systém <strong>neuchovává historii přihlašovacích IP adres</strong>. Každé nové přihlášení předchozí záznam okamžitě a beze stopy přepíše.
                 <br><em>Aktivní hráči:</em> U aktivních hráčů zůstává uchována pouze jejich jediná poslední známá IP adresa po dobu trvání herní aktivity z důvodu nepřetržitého zabezpečení účtu (detekce neoprávněného vniknutí z cizího státu, obrana proti krádeži herních hesel a session hijacking) a podléhá pravidelnému přezkumu nezbytnosti.
-                <br><em>Neaktivní hráči (30denní lhůta zapomnění):</em> Retenční proces vyhodnocuje výhradně <code>last_ip_updated_at</code>. Pokud se hráč nepřihlásí po dobu delší než <strong>30 dní</strong>, jeho <code>last_ip</code> je automatickým procesem trvale nastavena na <code>NULL</code> (s přemazáním diskových stránek nulami přes <code>PRAGMA secure_delete = ON</code>). Herní účet, inventář, claimy a statistiky zůstávají nedotčeny. Pro starší účty existuje 30denní ochranná přechodná lhůta od nasazení migrace, která brání předčasnému smazání aktivních hráčů.
+                <br><em>Neaktivní hráči (30denní lhůta zapomnění):</em> Retenční proces vyhodnocuje výhradně <code>last_ip_updated_at</code>. Pokud se hráč nepřihlásí po dobu delší než <strong>30 dní</strong>, jeho <code>last_ip</code> je automatickým procesem trvale nastavena na <code>NULL</code> (s přemazáním databázových stránek nulami přes <code>PRAGMA secure_delete = ON</code>). Herní účet, inventář, claimy a statistiky zůstávají nedotčeny. Pro starší účty existuje 30denní ochranná přechodná lhůta od nasazení migrace, která brání předčasnému smazání aktivních hráčů.
                 <br><br>
                 • <strong>Dočasné přihlašovací relace (Sessions):</strong>
                 V případě volitelného zapnutí funkce automatického přihlášení bez zadávání hesla (IP session) se do tabulky <code>sessions.ip_address</code> ukládá IP adresa s časem expirace.
@@ -3371,7 +3371,7 @@
                 • <strong>Tranzitní infrastruktura, reverzní proxy a databázová hygiena:</strong>
                 <br>– <em>Oracle Cloud Infrastructure (Frankfurt, EU):</em> Tranzitní reverzní proxy tunel (FRP) směruje TCP pakety hry s využitím PROXY v2 protokolu pro doručení reálné IP adresy na lokální server. Na cloudovém uzlu se neukládají žádné herní databáze ani profily hráčů. Systémové systémové záznamy OS Linux (<code>systemd-journald</code>) podléhají standardní správě operačního systému: <strong>NEOVĚŘENO</strong> z pohledu externího auditu.
                 <br>– <em>Cloudflare Anycast:</em> Webový provoz využívá ochranu Cloudflare (Free tier). Na hranových uzlech Cloudflare se neukládají trvalé HTTP access logy. V případě detekce síťového útoku či překročení bezpečnostních limitů WAF uchovává Cloudflare bezpečnostní záznam incidentu (Security Events) po dobu <strong>24 až 72 hodin</strong>.
-                <br>– <em>Kryptografické mazání SQLite:</em> Veškeré databázové soubory s IP adresami mají aktivován režim <code>PRAGMA secure_delete = ON</code>, který zaručuje, že smazané záznamy a přepsaná data jsou na disku fyzicky přepsána nulami a nezůstávají ve volných stránkách databáze. Pravidelný <code>wal_checkpoint(TRUNCATE)</code> zajišťuje promítnutí změn do hlavních souborů bez zbytkových dat v transakčních žurnálech. Případné zálohy databází podléhají stejnému retenčnímu režimu 30 dnů a při obnově ze zálohy je okamžitě aktivován skartační proces.
+                <br>– <em>Bezpečné mazání v SQLite a správa kopií:</em> Veškeré databázové soubory s IP adresami mají aktivován režim <code>PRAGMA secure_delete = ON</code>, který zajišťuje, že smazané záznamy a přepsaná data jsou v databázových stránkách SQLite přepsána nulami a nezůstávají ve volných stránkách databázového souboru. Pravidelný <code>wal_checkpoint(TRUNCATE)</code> zajišťuje promítnutí změn do hlavních souborů a zkrácení transakčních žurnálů. Případné zálohy a provozní kopie databází podléhají samostatnému retenčnímu a skartačnímu cyklu (30 dnů).
               </li>
               <li>
                 <strong>Herní identita – Přezdívka a UUID (Plnění smlouvy dle čl. 6 odst. 1 písm. b) GDPR):</strong>
@@ -3418,7 +3418,7 @@
                 K ochraně hráčů a komunity přistupujeme s maximálním respektem k soukromí a technické transparentnosti:
                 <br>• <strong>Herní chat Minecraftu (100% lokální zpracování):</strong> Běžná textová komunikace v Minecraftu a nápisy na cedulkách jsou kontrolovány <strong>výhradně lokálně na našem serveru</strong> (vlastní bezpečnostní modul Warden s fonetickou, leetspeak a homoglyfní normalizací). <strong>Herní chat z Minecraftu se nikdy neposílá do žádných externích cloudových AI služeb ani třetím stranám.</strong>
                 <br>• <strong>Využití asistenční AI na Discordu:</strong> Pokročilé jazykové modely (Google Gemini API a Groq API) jsou integrovány výhradně v rámci Discord bota pro specifické vyžádané funkce: konverzace s botem přes příkaz <code>/chat</code>, asistenční shrnutí a formátování komunitních návrhů (<code>/navrh</code>) a uzavřených tiketů podpory.
-                <br>• <strong>Rozsah a ochrana dat u AI:</strong> Do rozhraní Google LLC a Groq, Inc. se odesílá výhradně samotný textový obsah konkrétního dotazu či návrhu. Do AI se nikdy nepředávají hesla, IP adresy, herní inventáře, platební údaje ani osobní identifikační údaje. Oba poskytovatelé zpracovávají data bezestavově (stateless API) a v souladu se smluvními podmínkami je neukládají ani nepoužívají k trénování svých veřejných modelů.
+                <br>• <strong>Rozsah a ochrana dat u AI:</strong> Do rozhraní Google LLC a Groq, Inc. se odesílá výhradně samotný textový obsah konkrétního dotazu, návrhu či tiketu za účelem vygenerování odpovědi. Správce do AI nikdy nepředává systémová hesla, IP adresy, herní inventáře ani platební údaje; samotný text dotazu či tiketu však může obsahovat osobní údaje, které v něm uživatel sám dobrovolně uvede. Oba poskytovatelé zpracovávají data bezestavově (stateless API) a v souladu se smluvními podmínkami je neukládají ani nepoužívají k trénování svých veřejných modelů.
                 <br>• <strong>Hlasový asistent v Discord hovorech:</strong> Přepis řeči na text (Groq Whisper-large-v3) a generování hlasové odpovědi (Google Gemini) probíhá <strong>výhradně a pouze tehdy, pokud uživatel či administrátor výslovně pozve bota do hlasového kanálu</strong>. Bot nikdy nevstupuje do hlasových místností samovolně, neprovádí žádný pasivní odposlech a pokud v hovoru není přítomen, žádná hlasová data nejsou zachytávána ani zpracovávána. Veškerá případná moderátorská rozhodnutí podléhají lidskému přezkumu.
               </li>
               <li>
@@ -3479,7 +3479,7 @@
 
             <p class="legal-text">Osobní údaje uchováváme pouze po nezbytně nutnou dobu s přísně vymezenými retenčními lhůtami:</p>
             <ul class="legal-list">
-              <li><strong>Registrační IP adresy (accounts.registered_ip):</strong> uchováváme maximálně <strong>30 dní</strong> od registrace účtu; poté jsou automaticky přepsány na NULL s přemazáním buněk nulami na disku (secure_delete).</li>
+              <li><strong>Registrační IP adresy (accounts.registered_ip):</strong> uchováváme maximálně <strong>30 dní</strong> od registrace účtu; poté jsou automaticky přepsány na NULL s přemazáním buněk v databázových stránkách nulami (secure_delete).</li>
               <li><strong>Poslední přihlašovací IP (accounts.last_ip):</strong> u aktivních hráčů uchováváme výhradně jedinou poslední IP adresu (aktualizovanou při každém ověřeném přihlášení spolu s <code>last_ip_updated_at</code> bez ukládání historie); u neaktivních hráčů (> 30 dní od <code>last_ip_updated_at</code>) je automaticky přepsána na NULL (s 30denní ochrannou přechodnou lhůtou pro stávající účty).</li>
               <li><strong>Přihlašovací relace (sessions.ip_address):</strong> uchováváme maximálně <strong>24 hodin</strong> (při zapnutí); expirované relace jsou fyzicky mazány z databáze každých <strong>15 minut</strong>.</li>
               <li><strong>Dočasné IP bany (TEMP_IP_BAN):</strong> uchováváme po dobu trvání trestu a maximálně <strong>30 dní</strong> po jeho skončení pro účely odvolacího řízení; poté je IP smazána na NULL.</li>
@@ -3513,7 +3513,7 @@
                 herního účtu (/dlink). Zpracování probíhá v rámci EU-U.S. Data Privacy Framework.</li>
               <li><strong>OneSignal Inc. (USA):</strong> Technická infrastruktura pro bezpečné doručování webových push
                 notifikací (EU-U.S. Data Privacy Framework).</li>
-              <li><strong>ipwho.is:</strong> Technické bezpečnostní prověřování IP adresy přes šifrované HTTPS spojení (zjištění AS čísla, typu připojení, země pro TAB flag a detekce proxy/VPN) výhradně pro obranu před robotickými útoky bez předávání osobních identifikačních dat hráče.
+              <li><strong>ipwho.is (IPWHOIS.io):</strong> Poskytovatel technického bezpečnostního prověřování IP adres přes šifrované rozhraní HTTPS (API). Zpracování probíhá na základě oprávněného zájmu správce dle čl. 6 odst. 1 písm. f) GDPR za účelem detekce anonymizérů, proxy, VPN sítí a obrany proti robotickým útokům a obcházení banů. Předávána je výhradně technická IP adresa v parametru HTTPS dotazu bez jakýchkoliv identifikačních údajů hráče. Přenos je šifrován (TLS) a výsledek je na našem serveru držen pouze dočasně v operační paměti RAM po dobu 24 hodin.
               </li>
               <li><strong>GitHub, Inc. (USA):</strong> Distribuce a hostování veřejných release balíčků
                 SMPClient launcheru prostřednictvím platformy GitHub Releases. Stahování probíhá přes veřejné HTTPS
@@ -3581,8 +3581,7 @@
             <p class="legal-text">Server MYCHALSMP je otevřen i mladším hráčům. Ve smyslu § 7 zákona č. 110/2019 Sb. je
               věková hranice pro samostatný souhlas v ČR stanovena na 15 let. Hráče mladší 15 let žádáme, aby server
               navštěvovali s vědomím svých zákonných zástupců. V herním chatu striktně zakazujeme sdílení citlivých
-              osobních údajů (jména, adresy bydliště, telefonní čísla či sociální sítě). Případné nákupy doplňků a výhod SMP+, SMP++ a SMP+++
-              smějí nezletilé osoby provádět výhradně se souhlasem rodičů.</p>
+              osobních údajů (jména, adresy bydliště, telefonní čísla či sociální sítě). Dle podmínek prodejce Tebex Limited je minimální věk pro nákup herních výhod stanoven na 16 let; hráči mladší 16 let smějí nákup herních doplňků a výhod SMP+, SMP++ a SMP+++ realizovat výhradně prostřednictvím svých rodičů nebo zákonných zástupců, kteří nákup provedou svým jménem a na svůj účet.</p>
           </article>
 
           <!-- Article 6 -->
@@ -3595,8 +3594,7 @@
 
             <div class="legal-callout">
               <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
-              Náš launcher vás nesleduje a nekrade tokeny. Veškerá data (nastavení, módy, přihlášení) jsou kryptována
-              přímo na vašem počítači a nikdy neopouští vaše zařízení. Žádné webhooky, žádná telemetrie.
+              Náš launcher vás nesleduje a neposílá provozovateli žádnou telemetrii ani soubory z počítače. Veškerá citlivá data (nastavení, přihlašovací tokeny) jsou kryptována přímo na vašem zařízení. Nezbytná síťová komunikace probíhá výhradně se servery Microsoftu (autentizace) a GitHubu/Modrinthu (stahování čistých herních souborů a módů).
             </div>
 
             <p class="legal-text">Desktopová klientská aplikace <strong>SMPClient</strong> (dostupná pro Windows a
@@ -3815,6 +3813,10 @@
                 zajišťující doručení výhod ve hře.
               </li>
               <li>
+                <strong>Věková hranice kupujícího a nákup nezletilými:</strong>
+                V souladu s obchodními podmínkami společnosti Tebex Limited je nákup herních výhod povolen osobám starším 16 let. Hráči mladší 16 let smějí nákup digitálního obsahu realizovat výhradně prostřednictvím svých rodičů nebo zákonných zástupců, kteří nákup provedou svým jménem a na svůj účet.
+              </li>
+              <li>
                 <strong>Doba dodání a řešení zpoždění:</strong>
                 Standardní automatická aktivace zakoupených výhod probíhá zpravidla do 5 minut od dokončení platby. V
                 případě výpadku spojení či technické prodlevy proběhne dodání nejpozději do 2 hodin od nákupu.
@@ -3944,8 +3946,7 @@
               internetu, pádem do lávy nebo povoleným griefingem na SMP světě.
             </div>
 
-            <p class="legal-text">Server je poskytován ve stavu „jak stojí a leží“ („as is“). Provozovatel nenese právní
-              odpovědnost za:</p>
+            <p class="legal-text">Server je poskytován bezplatně ve stavu „jak stojí a leží“ („as is“). S výjimkou případů újmy způsobené úmyslně nebo z hrubé nedbalosti a dalších zákonem stanovených kogentních práv spotřebitele (§ 2898 zákona č. 89/2012 Sb., občanský zákoník), která nelze předem vyloučit ani omezit, provozovatel neodpovídá za:</p>
             <ul class="legal-list">
               <li>Dočasnou nedostupnost herních serverů způsobenou nutnou technickou údržbou, výpadky internetového uzlu
                 či DDoS útoky třetích stran.</li>
@@ -4641,7 +4642,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261031_v26_11"></script>
+  <script src="script.js?v=20261101_v26_12"></script>
 </body>
 
 </html>

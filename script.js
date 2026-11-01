@@ -683,7 +683,6 @@ async function loadStats() {
   try {
     const apiEndpoints = [
       '/api/public-stats',
-      '/economy_stats.json',
       'https://api.6767111.xyz/api/public-stats'
     ];
     let data = null;

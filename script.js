@@ -1439,16 +1439,31 @@ async function checkSmpPlusStatus() {
       container.innerHTML = `
         <div class="smp-manage-unlinked">
           <div style="display: flex; align-items: flex-start; gap: 12px;">
-            <span style="font-size: 1.5rem; line-height: 1;">⚠️</span>
+            <svg class="ui-icon-svg" style="width: 22px; height: 22px; color: #0a67e5; flex-shrink: 0; margin-top: 2px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
             <div>
-              <strong style="color: #f59e0b; display: block; margin-bottom: 4px;">Nemáš propojený Minecraft účet!</strong>
-              <p class="smp-manage-desc">Pro správu nebo zrušení SMP+ musíš mít účet spárovaný. Připoj se na server <strong>mychalsmp.xyz</strong> a napiš do chatu:</p>
+              <strong style="color: #ffffff; display: block; margin-bottom: 4px;">Nemáš propojený Minecraft účet!</strong>
+              <p class="smp-manage-desc">Pro získání role na Discordu a pro jakoukoliv správu či zrušení SMP+ musíš mít účet propojený. Zrušení předplatného probíhá výhradně přes ověřený Discord. Připoj se na server <strong>mychalsmp.xyz</strong> a napiš do chatu:</p>
             </div>
           </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: 8px;">
-            <code class="dlink-code-badge" onclick="copyDlinkCmd()" title="Kliknutím zkopíruješ">/dlink <i class="fa-regular fa-copy" style="font-size: 0.85em; opacity: 0.8;"></i></code>
-            <button type="button" onclick="checkSmpPlusStatus()" class="btn-secondary" style="padding: 8px 14px; font-size: 0.85rem;">
-              <i class="fa-solid fa-arrows-rotate"></i> Zkontrolovat
+          <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06);">
+            <code class="dlink-code-badge" onclick="copyDlinkCmd(this)" title="Kliknutím zkopíruješ" style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+              <span>/dlink</span>
+              <svg class="ui-icon-svg" style="width: 13px; height: 13px; color: #38bdf8;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </code>
+            <button type="button" onclick="checkSmpPlusStatus()" class="btn-secondary" style="padding: 8px 14px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px;">
+              <svg class="ui-icon-svg" style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+              <span>Zkontrolovat</span>
             </button>
           </div>
         </div>

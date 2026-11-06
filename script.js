@@ -304,11 +304,12 @@ function switchLauncherOS(os, btn) {
     os = 'windows';
   }
   document.querySelectorAll('.os-nav-tab').forEach(t => t.classList.remove('active'));
-  if (btn) {
-    btn.classList.add('active');
-  } else {
-    const matchingBtn = document.querySelector(`.os-nav-tab[data-os="${os}"]`);
-    if (matchingBtn) matchingBtn.classList.add('active');
+  const activeBtn = btn || document.querySelector(`.os-nav-tab[data-os="${os}"]`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  const pill = document.getElementById('os-nav-pill');
+  if (pill) {
+    pill.style.transform = os === 'linux' ? 'translateX(100%)' : 'translateX(0)';
   }
 
   document.querySelectorAll('.os-panel').forEach(p => p.classList.remove('active'));
@@ -838,18 +839,39 @@ function switchSmpPreviewMode(mode) {
   const chatBtn = document.getElementById('smp-mode-chat-btn');
   const tabBtn = document.getElementById('smp-mode-tab-btn');
   const tagBtn = document.getElementById('smp-mode-tag-btn');
+  const pill = document.getElementById('smp-mode-pill');
 
-  [chatView, tabView, tagView].forEach(v => { if (v) v.style.display = 'none'; });
+  [chatView, tabView, tagView].forEach(v => {
+    if (v) {
+      v.style.display = 'none';
+      v.classList.remove('smp-preview-pane-anim');
+    }
+  });
   [chatBtn, tabBtn, tagBtn].forEach(b => { if (b) b.classList.remove('active'); });
 
   if (mode === 'tab') {
-    if (tabView) tabView.style.display = 'block';
+    if (pill) pill.style.transform = 'translateX(100%)';
+    if (tabView) {
+      tabView.style.display = 'block';
+      void tabView.offsetWidth;
+      tabView.classList.add('smp-preview-pane-anim');
+    }
     if (tabBtn) tabBtn.classList.add('active');
   } else if (mode === 'tag') {
-    if (tagView) tagView.style.display = 'flex';
+    if (pill) pill.style.transform = 'translateX(200%)';
+    if (tagView) {
+      tagView.style.display = 'flex';
+      void tagView.offsetWidth;
+      tagView.classList.add('smp-preview-pane-anim');
+    }
     if (tagBtn) tagBtn.classList.add('active');
   } else {
-    if (chatView) chatView.style.display = 'flex';
+    if (pill) pill.style.transform = 'translateX(0)';
+    if (chatView) {
+      chatView.style.display = 'flex';
+      void chatView.offsetWidth;
+      chatView.classList.add('smp-preview-pane-anim');
+    }
     if (chatBtn) chatBtn.classList.add('active');
   }
 }
@@ -1818,10 +1840,12 @@ function toggleMediaPreviewRank(type) {
   const plusBtn = document.getElementById('media-prev-plus-btn');
   const badge = document.getElementById('media-preview-prefix-badge');
   const msg = document.getElementById('media-preview-chat-msg');
+  const pill = document.getElementById('media-toggle-pill');
 
   if (type === 'media_plus') {
     if (singleBtn) singleBtn.classList.remove('active');
     if (plusBtn) plusBtn.classList.add('active');
+    if (pill) pill.style.transform = 'translateX(100%)';
     if (badge) {
       badge.innerHTML = '<span class="media-prefix-cam">📹</span><span class="smp-preview-plus">+</span>';
     }
@@ -1829,6 +1853,7 @@ function toggleMediaPreviewRank(type) {
   } else {
     if (singleBtn) singleBtn.classList.add('active');
     if (plusBtn) plusBtn.classList.remove('active');
+    if (pill) pill.style.transform = 'translateX(0)';
     if (badge) {
       badge.innerHTML = '<span class="media-prefix-cam">📹 </span>';
     }
@@ -3159,6 +3184,10 @@ function initStatsModule() {
   if (!isStatsModuleInitialized) {
     isStatsModuleInitialized = true;
     window.addEventListener('resize', renderStatsChart);
+    const timeframePill = document.getElementById('timeframe-pill');
+    if (timeframePill) {
+      timeframePill.style.transform = 'translateX(100%)';
+    }
     setInterval(() => {
       if (currentActiveTab === 'stats') {
         if (!mycoWaySocket || mycoWaySocket.readyState !== WebSocket.OPEN) {
@@ -3243,6 +3272,15 @@ function switchTimeframe(timeframe) {
   document.querySelectorAll('.timeframe-btn').forEach(btn => btn.classList.remove('active'));
   const targetBtn = document.getElementById('timeframe-btn-' + timeframe);
   if (targetBtn) targetBtn.classList.add('active');
+
+  const pill = document.getElementById('timeframe-pill');
+  if (pill) {
+    const timeframes = ['1h', '1d', '1w', '1m'];
+    const idx = timeframes.indexOf(timeframe);
+    if (idx !== -1) {
+      pill.style.transform = `translateX(${idx * 100}%)`;
+    }
+  }
 
   const periodLabels = {
     '1h': 'Poslední hodina',

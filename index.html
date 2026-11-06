@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261103_v26_14" />
+  <link rel="stylesheet" href="style.css?v=20261106_v26_15" />
 </head>
 
 <body>
@@ -1976,6 +1976,7 @@
                 <span>Živý náhled ranku:</span>
               </div>
               <div class="smp-preview-modes" role="tablist">
+                <div class="smp-mode-indicator" id="smp-mode-pill"></div>
                 <button type="button" class="smp-mode-btn active" id="smp-mode-chat-btn"
                   onclick="switchSmpPreviewMode('chat')">Chat</button>
                 <button type="button" class="smp-mode-btn" id="smp-mode-tab-btn"
@@ -2807,6 +2808,7 @@
                     <i class="fa-solid fa-eye"></i> Živý náhled tvého Media prefixu ve hře:
                   </div>
                   <div class="media-preview-toggle-wrap">
+                    <div class="media-toggle-indicator" id="media-toggle-pill"></div>
                     <button type="button" class="media-preview-toggle-btn active" id="media-prev-single-btn"
                       onclick="toggleMediaPreviewRank('media')">Media</button>
                     <button type="button" class="media-preview-toggle-btn" id="media-prev-plus-btn"
@@ -3137,7 +3139,8 @@
           </div>
 
           <!-- Timeframe Selector (1h, 1d, 1w, 1m) -->
-          <div class="stats-timeframe-selector">
+          <div class="stats-timeframe-selector" id="stats-timeframe-selector">
+            <div class="timeframe-indicator" id="timeframe-pill"></div>
             <button class="timeframe-btn" onclick="switchTimeframe('1h')" id="timeframe-btn-1h">1H</button>
             <button class="timeframe-btn active" onclick="switchTimeframe('1d')" id="timeframe-btn-1d">1D</button>
             <button class="timeframe-btn" onclick="switchTimeframe('1w')" id="timeframe-btn-1w">1W</button>
@@ -3318,6 +3321,7 @@
                 min</strong></p>
 
             <div class="legal-nav-switch">
+              <div class="legal-nav-indicator" style="transform: translateX(0);"></div>
               <button class="legal-nav-btn active"><i class="fa-solid fa-shield-halved"></i> Ochrana údajů</button>
               <button class="legal-nav-btn" onclick="showTab('terms')"><i class="fa-solid fa-scale-balanced"></i>
                 Obchodní podmínky</button>
@@ -3772,6 +3776,7 @@
                 min</strong></p>
 
             <div class="legal-nav-switch">
+              <div class="legal-nav-indicator" style="transform: translateX(100%);"></div>
               <button class="legal-nav-btn" onclick="showTab('privacy')"><i class="fa-solid fa-shield-halved"></i>
                 Ochrana údajů</button>
               <button class="legal-nav-btn active"><i class="fa-solid fa-scale-balanced"></i> Obchodní podmínky</button>
@@ -4219,6 +4224,7 @@
         <div class="launcher-hub-card">
           <!-- OS Nav Tabs -->
           <div class="os-selector-nav">
+            <div class="os-nav-indicator" id="os-nav-pill"></div>
             <button class="os-nav-tab active" data-os="windows" onclick="switchLauncherOS('windows', this)">
               <svg class="ui-icon-svg ui-icon-win11" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="2.5" y="2.5" width="8.5" height="8.5" rx="0.75" />
@@ -4768,7 +4774,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261103_v26_14"></script>
+  <script src="script.js?v=20261106_v26_15"></script>
 </body>
 
 </html>

@@ -530,7 +530,7 @@ function showToast(message) {
 
   const raw = String(message || '');
   let toastType = 'info';
-  let iconSvg = '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>';
+  let iconSvg = '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="#0a67e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>';
 
   if (/^[❌🚫]|chyba|selhal|neplatn/iu.test(raw)) {
     toastType = 'error';
@@ -543,7 +543,7 @@ function showToast(message) {
     iconSvg = '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
   } else if (/^[⏳⌛]|počkej|odesílám|nahráv/iu.test(raw)) {
     toastType = 'progress';
-    iconSvg = '<svg class="ui-icon-svg ui-icon-svg--xs ui-icon-spin" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"></circle></svg>';
+    iconSvg = '<svg class="ui-icon-svg ui-icon-svg--xs ui-icon-spin" viewBox="0 0 24 24" fill="none" stroke="#0a67e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"></circle></svg>';
   }
 
   const cleanMessage = raw.replace(/^[✓⚠️ℹ️🚀🎮🧹📌❌⚡🟢🟡⚪⏳⌛⬇▶✅🚫🔒🎉🤖🗑️❓]+\s*/gu, '');
@@ -1502,7 +1502,7 @@ async function checkSmpPlusStatus() {
           <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06);">
             <code class="dlink-code-badge" onclick="copyDlinkCmd(this)" title="Kliknutím zkopíruješ" style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
               <span>/dlink</span>
-              <svg class="ui-icon-svg" style="width: 13px; height: 13px; color: #38bdf8;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="ui-icon-svg" style="width: 13px; height: 13px; color: #0a67e5;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
               </svg>
@@ -2199,7 +2199,7 @@ function handleBugImagesChange(input) {
       break;
     }
     if (file.size > 20 * 1024 * 1024) {
-      showToast(`⚠️ Obrázek "${file.name}" je příliš velký (max 20 MB).`);
+      showToast(`Obrázek "${file.name}" je příliš velký (max 20 MB).`);
       continue;
     }
     bugSelectedFiles.push(file);
@@ -2224,7 +2224,7 @@ document.addEventListener('paste', (e) => {
       const file = item.getAsFile();
       if (file) {
         if (bugSelectedFiles.length >= 3) {
-          showToast('⚠️ Můžeš přiložit maximálně 3 fotky!');
+          showToast('Můžeš přiložit maximálně 3 snímky.');
           break;
         }
         bugSelectedFiles.push(file);
@@ -2234,7 +2234,7 @@ document.addEventListener('paste', (e) => {
   }
 
   if (pastedAny) {
-    showToast('📷 Snímek vložen ze schránky!');
+    showToast('Snímek byl vložen ze schránky.');
     renderBugImagesPreview();
   }
 });
@@ -2255,12 +2255,12 @@ function selectBugCategory(cat) {
   const submitText = document.getElementById('btn-bug-text');
 
   if (cat === 'unban') {
-    if (descLabel) descLabel.innerHTML = '<span><i class="fa-solid fa-scale-balanced"></i> Proč žádáš o unban?</span>';
+    if (descLabel) descLabel.innerHTML = '<span><svg class="ui-icon-svg ui-icon-svg--inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> Proč žádáš o unban?</span>';
     if (descInput) descInput.placeholder = 'Vysvětli situaci, za co jsi dostal trest a proč bys měl dostat unban...';
-    if (submitText) submitText.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Odeslat žádost o unban';
+    if (submitText) submitText.innerHTML = '<svg class="ui-icon-svg ui-icon-svg--inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> <span>Odeslat žádost o unban</span>';
   } else {
-    if (descLabel) descLabel.innerHTML = '<span><i class="fa-solid fa-align-left"></i> Co se přesně stalo?</span>';
-    if (submitText) submitText.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Odeslat nahlášení';
+    if (descLabel) descLabel.innerHTML = '<span><svg class="ui-icon-svg ui-icon-svg--inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Co se přesně stalo?</span>';
+    if (submitText) submitText.innerHTML = '<svg class="ui-icon-svg ui-icon-svg--inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> <span>Odeslat nahlášení</span>';
 
     if (descInput) {
       if (cat === 'economy') {
@@ -2310,7 +2310,7 @@ function startBugCooldownTimer(seconds) {
   let remaining = seconds;
   submitBtn.disabled = true;
 
-  if (submitText) submitText.innerHTML = `⏳ Další odeslání za ${remaining}s`;
+  if (submitText) submitText.innerHTML = `Další odeslání za ${remaining}s`;
 
   bugCooldownInterval = setInterval(() => {
     remaining--;
@@ -2320,7 +2320,7 @@ function startBugCooldownTimer(seconds) {
       submitBtn.disabled = false;
       selectBugCategory(currentBugCategory);
     } else {
-      if (submitText) submitText.innerHTML = `⏳ Další odeslání za ${remaining}s`;
+      if (submitText) submitText.innerHTML = `Další odeslání za ${remaining}s`;
     }
   }, 1000);
 }
@@ -3170,8 +3170,8 @@ const statsData = {
   players: {
     title: 'Počet hráčů online',
     unit: 'hráčů',
-    color: '#38bdf8',
-    glowColor: 'rgba(56, 189, 248, 0.45)',
+    color: '#0a67e5',
+    glowColor: 'rgba(10, 103, 229, 0.45)',
     '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [0, 0, 0, 0, 0, 0], curVal: '0 hráčů online' },
     '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 hráčů online' },
     '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 hráčů' },
@@ -3643,19 +3643,38 @@ async function fetchLiveServerStats() {
 
       // Update overview cards
       const valPlayers = document.getElementById('val-players');
-      if (valPlayers) valPlayers.innerText = `${latest.online_players || 0} / 50`;
+      if (valPlayers) {
+        valPlayers.innerText = `${latest.online_players || 0} / 50`;
+        valPlayers.title = `${latest.online_players || 0} / 50 online hráčů`;
+      }
 
       const valPlaytime = document.getElementById('val-playtime');
-      if (valPlaytime) valPlaytime.innerText = `${(latest.playtime_hours || 0).toLocaleString('cs-CZ')} hod.`;
+      if (valPlaytime) {
+        const ptStr = `${(latest.playtime_hours || 0).toLocaleString('cs-CZ')} hod.`;
+        valPlaytime.innerText = ptStr;
+        valPlaytime.title = ptStr;
+      }
 
       const valMoney = document.getElementById('val-money');
-      if (valMoney) valMoney.innerText = `$${(latest.total_money || 0).toLocaleString('cs-CZ')}`;
+      if (valMoney) {
+        const monStr = `$${(latest.total_money || 0).toLocaleString('cs-CZ')}`;
+        valMoney.innerText = monStr;
+        valMoney.title = monStr;
+      }
 
       const valVisitors = document.getElementById('val-visitors');
-      if (valVisitors) valVisitors.innerText = `${(latest.unique_visitors || 0).toLocaleString('cs-CZ')} hráčů`;
+      if (valVisitors) {
+        const visStr = `${(latest.unique_visitors || 0).toLocaleString('cs-CZ')} hráčů`;
+        valVisitors.innerText = visStr;
+        valVisitors.title = visStr;
+      }
 
       const valDeaths = document.getElementById('val-deaths');
-      if (valDeaths) valDeaths.innerText = `${(latest.total_deaths || 0).toLocaleString('cs-CZ')}`;
+      if (valDeaths) {
+        const dthStr = `${(latest.total_deaths || 0).toLocaleString('cs-CZ')}`;
+        valDeaths.innerText = dthStr;
+        valDeaths.title = `${dthStr} úmrtí na serveru`;
+      }
 
       // Build time series for current timeframe
       const labels = [];
@@ -5060,80 +5079,9 @@ window.submitModeratorApplication = submitModeratorApplication;
 window.copyModTestResult = copyModTestResult;
 window.restartModTest = restartModTest;
 
-// ========================================================
-// 📦 SURVIVAL ARCHIVE DOWNLOAD CONFIGURATION
-// Sem vlož svůj odkaz ke stažení (Cloudflare R2, MEGA, Disk Google atd.):
-// Příklad: "https://download.mychalsmp.xyz/MYCHAL_SMP_Survival_World.zip"
-// ========================================================
-const SURVIVAL_ARCHIVE_DOWNLOAD_URL = "https://mega.nz/file/hdMnGLzb#7HUkUJN84q9rp_zf81-CtcmrgcysJZTKmQqDbPmeuSw";
-
-function openArchiveModal() {
-  const modal = document.getElementById('archive-modal');
-  if (modal) {
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-}
-
-function closeArchiveModal() {
-  const modal = document.getElementById('archive-modal');
-  if (modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-}
-
-function closeArchiveModalOutside(event) {
-  if (event.target && event.target.id === 'archive-modal') {
-    closeArchiveModal();
-  }
-}
-
-function handleArchiveDownload(event) {
-  const link = event.currentTarget;
-  const currentHref = link.getAttribute('href');
-  const targetUrl = (typeof SURVIVAL_ARCHIVE_DOWNLOAD_URL === 'string' && SURVIVAL_ARCHIVE_DOWNLOAD_URL !== "SEM_VLOZ_ODKAZ_KE_STAZENI")
-    ? SURVIVAL_ARCHIVE_DOWNLOAD_URL
-    : currentHref;
-
-  const isPlaceholder = !targetUrl ||
-    targetUrl === '#' ||
-    targetUrl === '#tab-home' ||
-    targetUrl.includes('SEM_VLOZ_ODKAZ_KE_STAZENI');
-
-  if (isPlaceholder) {
-    event.preventDefault();
-    if (typeof showToast === 'function') {
-      showToast('⏳ Nahrávání archivu na cloud právě probíhá. Níže najdeš návod k instalaci!');
-    }
-    openArchiveModal();
-  } else {
-    // Skutečný odkaz je nastaven – nastavíme href a prohlížeč soubor rovnou začne stahovat
-    link.href = targetUrl;
-  }
-}
-
-// Při načtení stránky provázat URL pokud je vyplněná v konfiguraci
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof SURVIVAL_ARCHIVE_DOWNLOAD_URL === 'string' && SURVIVAL_ARCHIVE_DOWNLOAD_URL !== "SEM_VLOZ_ODKAZ_KE_STAZENI") {
-    document.querySelectorAll('#btn-download-survival-archive, .btn-modal-download-archive').forEach(btn => {
-      btn.href = SURVIVAL_ARCHIVE_DOWNLOAD_URL;
-    });
-  }
-});
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    const archiveModal = document.getElementById('archive-modal');
-    if (archiveModal && archiveModal.classList.contains('active')) {
-      closeArchiveModal();
-    }
-  }
-});
-
-window.SURVIVAL_ARCHIVE_DOWNLOAD_URL = SURVIVAL_ARCHIVE_DOWNLOAD_URL;
-window.openArchiveModal = openArchiveModal;
-window.closeArchiveModal = closeArchiveModal;
+// Survival backup archive was retired per owner specifications (Closed · RIP).
+window.openArchiveModal = function() {};
+window.closeArchiveModal = function() {};
 window.closeArchiveModalOutside = closeArchiveModalOutside;
 window.handleArchiveDownload = handleArchiveDownload;
 

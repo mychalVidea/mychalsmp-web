@@ -164,6 +164,10 @@ function executeTabSwitch(name, updateUrl = true) {
     }
   }
 
+  setTimeout(() => {
+    if (typeof updateAllSegmentedPills === 'function') updateAllSegmentedPills();
+  }, 40);
+
   if (updateUrl && window.location.protocol !== 'file:') {
     let urlPath = '/' + name;
     if (name === 'smp-plus') urlPath = '/smpplus';
@@ -307,16 +311,26 @@ function switchLauncherOS(os, btn) {
   const activeBtn = btn || document.querySelector(`.os-nav-tab[data-os="${os}"]`);
   if (activeBtn) activeBtn.classList.add('active');
 
-  const pill = document.getElementById('os-nav-pill');
-  if (pill) {
-    pill.style.transform = os === 'linux' ? 'translateX(100%)' : 'translateX(0)';
-  }
+  updateLauncherOsPill(activeBtn);
 
   document.querySelectorAll('.os-panel').forEach(p => p.classList.remove('active'));
   const targetPanel = document.getElementById(`os-panel-${os}`);
   if (targetPanel) {
     targetPanel.classList.add('active');
   }
+}
+
+function updateLauncherOsPill(targetBtn) {
+  const container = document.querySelector('.os-selector-nav');
+  const pill = document.getElementById('os-nav-pill');
+  const btn = targetBtn || container?.querySelector('.os-nav-tab.active');
+  if (!container || !pill || !btn) return;
+  const cRect = container.getBoundingClientRect();
+  const bRect = btn.getBoundingClientRect();
+  if (bRect.width === 0) return;
+  const left = bRect.left - cRect.left;
+  pill.style.width = `${bRect.width}px`;
+  pill.style.transform = `translateX(${left}px)`;
 }
 
 // ---- DYNAMIC LAUNCHER RELEASES & DOWNLOADS TRACKER ----
@@ -849,31 +863,45 @@ function switchSmpPreviewMode(mode) {
   });
   [chatBtn, tabBtn, tagBtn].forEach(b => { if (b) b.classList.remove('active'); });
 
+  let activeBtn = chatBtn;
   if (mode === 'tab') {
-    if (pill) pill.style.transform = 'translateX(100%)';
+    activeBtn = tabBtn;
     if (tabView) {
       tabView.style.display = 'block';
       void tabView.offsetWidth;
       tabView.classList.add('smp-preview-pane-anim');
     }
-    if (tabBtn) tabBtn.classList.add('active');
   } else if (mode === 'tag') {
-    if (pill) pill.style.transform = 'translateX(200%)';
+    activeBtn = tagBtn;
     if (tagView) {
       tagView.style.display = 'flex';
       void tagView.offsetWidth;
       tagView.classList.add('smp-preview-pane-anim');
     }
-    if (tagBtn) tagBtn.classList.add('active');
   } else {
-    if (pill) pill.style.transform = 'translateX(0)';
+    activeBtn = chatBtn;
     if (chatView) {
       chatView.style.display = 'flex';
       void chatView.offsetWidth;
       chatView.classList.add('smp-preview-pane-anim');
     }
-    if (chatBtn) chatBtn.classList.add('active');
   }
+
+  if (activeBtn) activeBtn.classList.add('active');
+  updateSmpModePill(activeBtn);
+}
+
+function updateSmpModePill(targetBtn) {
+  const container = document.querySelector('.smp-preview-modes');
+  const pill = document.getElementById('smp-mode-pill');
+  const btn = targetBtn || container?.querySelector('.smp-mode-btn.active') || document.getElementById('smp-mode-chat-btn');
+  if (!container || !pill || !btn) return;
+  const cRect = container.getBoundingClientRect();
+  const bRect = btn.getBoundingClientRect();
+  if (bRect.width === 0) return;
+  const left = bRect.left - cRect.left;
+  pill.style.width = `${bRect.width}px`;
+  pill.style.transform = `translateX(${left}px)`;
 }
 
 // Live /cc color selector in the preview
@@ -1840,12 +1868,12 @@ function toggleMediaPreviewRank(type) {
   const plusBtn = document.getElementById('media-prev-plus-btn');
   const badge = document.getElementById('media-preview-prefix-badge');
   const msg = document.getElementById('media-preview-chat-msg');
-  const pill = document.getElementById('media-toggle-pill');
 
+  let activeBtn = singleBtn;
   if (type === 'media_plus') {
     if (singleBtn) singleBtn.classList.remove('active');
     if (plusBtn) plusBtn.classList.add('active');
-    if (pill) pill.style.transform = 'translateX(100%)';
+    activeBtn = plusBtn;
     if (badge) {
       badge.innerHTML = '<span class="media-prefix-cam">📹</span><span class="smp-preview-plus">+</span>';
     }
@@ -1853,12 +1881,27 @@ function toggleMediaPreviewRank(type) {
   } else {
     if (singleBtn) singleBtn.classList.add('active');
     if (plusBtn) plusBtn.classList.remove('active');
-    if (pill) pill.style.transform = 'translateX(0)';
+    activeBtn = singleBtn;
     if (badge) {
       badge.innerHTML = '<span class="media-prefix-cam">📹 </span>';
     }
     if (msg) msg.textContent = 'Ahoj, nové video z MYCHAL SMP je online!';
   }
+
+  updateMediaTogglePill(activeBtn);
+}
+
+function updateMediaTogglePill(targetBtn) {
+  const container = document.querySelector('.media-preview-toggle-wrap');
+  const pill = document.getElementById('media-toggle-pill');
+  const btn = targetBtn || container?.querySelector('.media-preview-toggle-btn.active');
+  if (!container || !pill || !btn) return;
+  const cRect = container.getBoundingClientRect();
+  const bRect = btn.getBoundingClientRect();
+  if (bRect.width === 0) return;
+  const left = bRect.left - cRect.left;
+  pill.style.width = `${bRect.width}px`;
+  pill.style.transform = `translateX(${left}px)`;
 }
 
 // ---- SUBMIT MEDIA APPLICATION (WITH ADVANCED ANIMATION) ----
@@ -3183,11 +3226,11 @@ function initStatsModule() {
   initMycoWayStream();
   if (!isStatsModuleInitialized) {
     isStatsModuleInitialized = true;
-    window.addEventListener('resize', renderStatsChart);
-    const timeframePill = document.getElementById('timeframe-pill');
-    if (timeframePill) {
-      timeframePill.style.transform = 'translateX(100%)';
-    }
+    window.addEventListener('resize', () => {
+      renderStatsChart();
+      updateTimeframePill();
+    });
+    updateTimeframePill();
     setInterval(() => {
       if (currentActiveTab === 'stats') {
         if (!mycoWaySocket || mycoWaySocket.readyState !== WebSocket.OPEN) {
@@ -3273,14 +3316,7 @@ function switchTimeframe(timeframe) {
   const targetBtn = document.getElementById('timeframe-btn-' + timeframe);
   if (targetBtn) targetBtn.classList.add('active');
 
-  const pill = document.getElementById('timeframe-pill');
-  if (pill) {
-    const timeframes = ['1h', '1d', '1w', '1m'];
-    const idx = timeframes.indexOf(timeframe);
-    if (idx !== -1) {
-      pill.style.transform = `translateX(${idx * 100}%)`;
-    }
-  }
+  updateTimeframePill(targetBtn);
 
   const periodLabels = {
     '1h': 'Poslední hodina',
@@ -3294,6 +3330,25 @@ function switchTimeframe(timeframe) {
   }
 
   fetchLiveServerStats();
+}
+
+function updateTimeframePill(targetBtn) {
+  const container = document.getElementById('stats-timeframe-selector');
+  const pill = document.getElementById('timeframe-pill');
+  const btn = targetBtn || container?.querySelector('.timeframe-btn.active') || document.getElementById('timeframe-btn-' + currentStatsTimeframe);
+  if (!container || !pill || !btn) return;
+  const cRect = container.getBoundingClientRect();
+  const bRect = btn.getBoundingClientRect();
+  if (bRect.width === 0) return;
+  const left = bRect.left - cRect.left;
+  pill.style.width = `${bRect.width}px`;
+  pill.style.transform = `translateX(${left}px)`;
+
+  const metricObj = statsData[currentStatsMetric] || statsData.players;
+  if (metricObj) {
+    pill.style.backgroundColor = metricObj.color;
+    pill.style.boxShadow = `inset 0 1px 0 0 rgba(255, 255, 255, 0.35), 0 2px 12px ${metricObj.glowColor || metricObj.color}`;
+  }
 }
 
 function renderStatsChart() {
@@ -3321,18 +3376,12 @@ function renderStatsChart() {
     stop.setAttribute('stop-color', metricObj.color);
   });
 
-  // Update active timeframe button background to match active metric color
+  // Synchronize timeframe sliding pill with active metric color & geometry (no duplicate button box)
   document.querySelectorAll('.timeframe-btn').forEach(btn => {
-    if (btn.classList.contains('active')) {
-      btn.style.backgroundColor = metricObj.color;
-      btn.style.color = '#0a0a0c';
-      btn.style.boxShadow = `0 2px 12px ${metricObj.glowColor || metricObj.color}`;
-    } else {
-      btn.style.backgroundColor = '';
-      btn.style.color = '';
-      btn.style.boxShadow = '';
-    }
+    btn.style.backgroundColor = '';
+    btn.style.boxShadow = '';
   });
+  updateTimeframePill();
 
   const values = seriesData.values || [0];
   const labels = seriesData.labels || [''];
@@ -5120,5 +5169,21 @@ window.handleArchiveDownload = handleArchiveDownload;
   setInterval(updatePermafrostCountdown, 1000);
 })();
 
+// ─── UNIFIED SEGMENTED TABS & SLIDING PILLS GEOMETRY ─────────────────
+function updateAllSegmentedPills() {
+  if (typeof updateSmpModePill === 'function') updateSmpModePill();
+  if (typeof updateTimeframePill === 'function') updateTimeframePill();
+  if (typeof updateTierSliderPosition === 'function') updateTierSliderPosition();
+  if (typeof updateLauncherOsPill === 'function') updateLauncherOsPill();
+  if (typeof updateMediaTogglePill === 'function') updateMediaTogglePill();
+}
+
+window.addEventListener('resize', updateAllSegmentedPills);
+window.addEventListener('load', () => {
+  setTimeout(updateAllSegmentedPills, 60);
+});
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(updateAllSegmentedPills, 20);
+});
 
 

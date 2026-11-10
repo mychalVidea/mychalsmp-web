@@ -1049,8 +1049,20 @@ function selectSmpTier(tierKey) {
   // Update checkout header badge indicator
   const activeNameEl = document.getElementById('checkout-active-tier-name');
   const activePriceEl = document.getElementById('checkout-active-tier-price');
-  if (activeNameEl) activeNameEl.textContent = cfg.name;
-  if (activePriceEl) activePriceEl.textContent = `${cfg.price} € / měsíc`;
+  if (activeNameEl) {
+    activeNameEl.textContent = cfg.name;
+    activeNameEl.className = 'smp-checkout-tier-name ' + (
+      tierKey === 'smp_ppp' ? 'smp-shimmer-text--ppp' :
+      tierKey === 'smp_pp' ? 'smp-shimmer-text--pp' : 'smp-shimmer-text--plus'
+    );
+  }
+  if (activePriceEl) {
+    activePriceEl.textContent = `${cfg.price} € / měsíc`;
+    activePriceEl.className = 'smp-checkout-tier-price ' + (
+      tierKey === 'smp_ppp' ? 'smp-shimmer-price smp-shimmer-price--ppp' :
+      tierKey === 'smp_pp' ? 'smp-shimmer-price smp-shimmer-price--pp' : 'smp-shimmer-price'
+    );
+  }
 
   // Update tabs if legacy slider is present
   document.querySelectorAll('.smp-tier-btn').forEach(btn => {
@@ -1096,14 +1108,25 @@ function selectSmpTier(tierKey) {
 
 function selectSmpTierAndScroll(tierKey) {
   selectSmpTier(tierKey);
-  const checkoutSection = document.querySelector('.smp-checkout-section');
-  if (checkoutSection) {
-    checkoutSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const checkoutTarget = document.querySelector('.smp-unified-checkout-card') || document.querySelector('.smp-checkout-section');
+  if (checkoutTarget) {
+    const nav = document.querySelector('.navbar');
+    const navHeight = nav ? nav.offsetHeight : 70;
+    const rect = checkoutTarget.getBoundingClientRect();
+    const targetY = window.pageYOffset + rect.top - navHeight - 20;
+    window.scrollTo({
+      top: Math.max(0, targetY),
+      behavior: 'smooth'
+    });
   }
   const nickInput = document.getElementById('mc-username');
   if (nickInput) {
     setTimeout(() => {
-      nickInput.focus();
+      try {
+        nickInput.focus({ preventScroll: true });
+      } catch (e) {
+        nickInput.focus();
+      }
     }, 450);
   }
 }
@@ -1193,11 +1216,7 @@ async function checkoutSMP() {
 
     if (!response.ok) {
       const errMsg = data?.message || `Chyba při komunikaci s pokladnou (${response.status}).`;
-      if (typeof showToast === 'function') {
-        showToast('❌ ' + errMsg);
-      } else {
-        alert(errMsg);
-      }
+      showToast('❌ ' + errMsg);
 
       // If user wasn't found on official Mojang store, auto-toggle cracked option
       if (errMsg.includes('nebyl na Tebexu nalezen') || errMsg.toLowerCase().includes('username') || data?.isInvalidUser) {
@@ -1225,22 +1244,14 @@ async function checkoutSMP() {
       }
     } else {
       const errMsg = data?.message || 'Nepodařilo se vytvořit platební odkaz.';
-      if (typeof showToast === 'function') {
-        showToast('❌ ' + errMsg);
-      } else {
-        alert(errMsg);
-      }
+      showToast('❌ ' + errMsg);
     }
   } catch (err) {
     console.error('[CHECKOUT ERR]', err);
     const fallbackMsg = (err && err.message && !err.message.startsWith('HTTP'))
       ? err.message
       : 'Herní pokladna je momentálně nedostupná. Zkus to prosím za chvíli.';
-    if (typeof showToast === 'function') {
-      showToast('❌ ' + fallbackMsg);
-    } else {
-      alert(fallbackMsg);
-    }
+    showToast('❌ ' + fallbackMsg);
   } finally {
     if (btn) {
       btn.innerHTML = originalText;
@@ -1469,10 +1480,34 @@ async function checkSmpPlusStatus() {
   if (!token) {
     container.innerHTML = `
       <div class="smp-manage-unauth">
-        <p class="smp-manage-desc">Pro zrušení nebo správu svého SMP+ členství se musíš nejprve přihlásit přes Discord.</p>
+        <div class="smp-manage-status-strip">
+          <span class="smp-status-pill smp-status-pill--neutral">
+            <span class="smp-status-dot"></span>
+            Vyžaduje ověření
+          </span>
+          <span class="smp-manage-secure-badge">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Discord OAuth2
+          </span>
+        </div>
+
+        <p class="smp-manage-desc">Pro zrušení nebo kontrolu stavu předplatného se přihlas přes Discord účet propojený s tvým herním nickem.</p>
+        
         <button type="button" onclick="loginViaDiscord()" class="btn-discord-login" style="width: 100%; justify-content: center;">
-          <i class="fa-brands fa-discord"></i> Přihlásit se přes Discord
+          <svg class="ui-icon-svg" style="width: 16px; height: 16px; vertical-align: -2px; margin-right: 6px;" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          <span>Přihlásit se přes Discord</span>
         </button>
+
+        <div class="smp-manage-guarantees">
+          <div class="smp-guarantee-line">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Zrušení na 1 kliknutí bez sankcí</span>
+          </div>
+          <div class="smp-guarantee-line">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Výhody zůstávají aktivní do konce předplatného</span>
+          </div>
+        </div>
       </div>
     `;
     return;
@@ -1496,7 +1531,7 @@ async function checkSmpPlusStatus() {
         <div class="smp-manage-unauth">
           <p class="smp-manage-desc">Tvé přihlášení vypršelo. Přihlas se prosím znovu přes Discord.</p>
           <button type="button" onclick="loginViaDiscord()" class="btn-discord-login" style="width: 100%; justify-content: center;">
-            <i class="fa-brands fa-discord"></i> Přihlásit se přes Discord
+            <svg class="ui-icon-svg" style="width: 16px; height: 16px; vertical-align: -2px; margin-right: 6px;" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg> Přihlásit se přes Discord
           </button>
         </div>
       `;
@@ -1579,11 +1614,11 @@ async function checkSmpPlusStatus() {
                 <span style="display: block; font-size: 0.8rem; color: #94a3b8;">${expiryText}</span>
               </div>
             </div>
-            <span class="smp-badge-active"><i class="fa-solid fa-crown" style="color: #0a67e5;"></i> ${escapeHtml(tierDisplayName)}</span>
+            <span class="smp-badge-active"><svg class="ui-icon-svg" style="width: 14px; height: 14px; color: #0a67e5; vertical-align: -2px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> ${escapeHtml(tierDisplayName)}</span>
           </div>
           <p class="smp-manage-desc">Tvé předplatné <strong>${escapeHtml(tierDisplayName)}</strong> je aktivní. Pokud si přeješ členství ukončit a odebrat výhody, můžeš ho níže zrušit.</p>
           <button type="button" class="btn-cancel-smpplus" onclick="confirmCancelSmpPlus('${escapeHtml(tierDisplayName)}')">
-            <i class="fa-solid fa-ban"></i> Zrušit ${escapeHtml(tierDisplayName)} členství
+            <svg class="ui-icon-svg" style="width: 14px; height: 14px; vertical-align: -2px; margin-right: 6px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg> Zrušit ${escapeHtml(tierDisplayName)} členství
           </button>
         </div>
       `;
@@ -1941,21 +1976,21 @@ async function submitMediaApplication(event) {
   const ageConfirm = document.getElementById('media-age-confirm')?.checked;
 
   if (!mcNick) {
-    alert('Vyplň svůj Minecraft nick!');
+    showToast('⚠️ Vyplň svůj Minecraft nick!');
     return;
   }
   if (!yt && !tt && !twitch && !kick) {
-    alert('Vyplň aspoň jeden kanál k ověření!');
+    showToast('⚠️ Vyplň aspoň jeden kanál k ověření!');
     return;
   }
   if (!ageConfirm) {
-    alert('Pro podání žádosti potvrď, že je ti více než 10 let.');
+    showToast('⚠️ Pro podání žádosti potvrď, že je ti více než 10 let.');
     return;
   }
 
   const termsConfirm = document.getElementById('media-terms-confirm')?.checked;
   if (!termsConfirm) {
-    alert('Pro odeslání žádosti potvrď souhlas s pravidly serveru a ochranou údajů.');
+    showToast('⚠️ Pro odeslání žádosti potvrď souhlas s pravidly serveru a ochranou údajů.');
     return;
   }
 
@@ -2584,7 +2619,7 @@ async function loadIdeasTab() {
         userBar.className = 'ideas-user-bar';
         userBar.innerHTML = `
           <div class="ideas-user-info-compact" title="${u.pendingCount}/10 neschválených nápadů">
-            <img src="${u.avatar}" class="ideas-user-avatar-sm" alt="${u.username}" />
+            <img src="${u.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="ideas-user-avatar-sm" alt="${u.username}" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';" />
             <span class="ideas-user-name-sm">${u.username}</span>
             <span class="ideas-user-badge-sm"><i class="fa-solid fa-star"></i> ${u.points}</span>
             ${u.isMajitel ? '<span style="color:#f59e0b; font-size:0.8rem; margin-left:2px;">👑</span>' : ''}
@@ -2667,7 +2702,7 @@ function renderIdeaCardHtml(idea, isMajitel) {
     <div class="idea-card" id="idea-card-${idea.id}" style="--card-rotation: ${idea.rotation || 0}deg;">
       <div class="idea-card-pin"><i class="fa-solid fa-thumbtack"></i></div>
       <div class="idea-card-header">
-        <img src="${idea.author_avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="idea-card-avatar" alt="${idea.author_name}" />
+        <img src="${idea.author_avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="idea-card-avatar" alt="${idea.author_name}" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';" />
         <span class="idea-card-author">
           ${escapeHtml(idea.author_name)}
           <span class="idea-author-stars" title="Autor má ${authorPoints} hvězdiček">
@@ -4905,7 +4940,7 @@ async function handleModTestAnswer(optId, btnElement) {
     isModTestFlipping = false;
     allBtns.forEach(b => b.disabled = false);
     btnElement.classList.remove('selected-loading');
-    alert('Chyba spojení se serverem: ' + (err.message || err));
+    showToast('❌ Chyba spojení se serverem při ověření odpovědi.');
   }
 }
 
@@ -4936,7 +4971,7 @@ async function submitModeratorApplication(event) {
   const discord = discordInput ? discordInput.value.trim() : '';
 
   if (!nick || !discord) {
-    alert('Prosím vyplň svůj Minecraft nick i Discord.');
+    showToast('⚠️ Prosím vyplň svůj Minecraft nick i Discord.');
     return;
   }
 
@@ -4974,7 +5009,7 @@ async function submitModeratorApplication(event) {
     finalCertCode = data.certCode;
   } catch (err) {
     console.warn('[MODTEST SUBMIT ERR]', err);
-    alert('Chyba odeslání přihlášky: ' + (err.message || err));
+    showToast('❌ Nepodařilo se odeslat přihlášku. Zkus to prosím za chvíli.');
     if (btnSubmit) {
       btnSubmit.disabled = false;
       btnSubmit.innerHTML = `
@@ -5067,7 +5102,7 @@ function copyModTestResult() {
       setTimeout(() => { btn.textContent = orig; }, 2000);
     }
   }).catch(() => {
-    alert('Kód certifikátu: ' + text);
+    showToast('📋 Kód certifikátu: ' + text);
   });
 }
 
@@ -5107,8 +5142,8 @@ window.restartModTest = restartModTest;
 // Survival backup archive was retired per owner specifications (Closed · RIP).
 window.openArchiveModal = function() {};
 window.closeArchiveModal = function() {};
-window.closeArchiveModalOutside = closeArchiveModalOutside;
-window.handleArchiveDownload = handleArchiveDownload;
+window.closeArchiveModalOutside = function() {};
+window.handleArchiveDownload = function() {};
 
 // ─── PERMAFROST LAUNCH COUNTDOWN (10. 10. 2026 V 20:00) ──────────────
 (function () {
@@ -5157,6 +5192,137 @@ window.addEventListener('load', () => {
 });
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(updateAllSegmentedPills, 20);
+  initTombstoneCandle();
 });
+
+// ─── TOMBSTONE MEMORIAL CANDLE TRIBUTE (Live API Tracked) ─────────────────
+let isTombstoneCandleSubmitting = false;
+
+async function initTombstoneCandle() {
+  const btn = document.getElementById('tombstone-candle-btn');
+  const countEl = document.getElementById('tombstone-candle-count');
+  const textEl = document.getElementById('tombstone-candle-text');
+  if (!btn || !countEl) return;
+
+  // 1. Okamžitý lokální render bez probliknutí
+  const baseCount = 43;
+  const localLit = localStorage.getItem('smp_tombstone_candle_lit') === 'true';
+  const localBonus = parseInt(localStorage.getItem('smp_tombstone_candle_bonus') || '0', 10);
+  const initialCount = baseCount + (localBonus > 0 ? 1 : 0);
+
+  countEl.textContent = `${initialCount.toLocaleString('cs-CZ')} 🕯️`;
+  if (localLit) {
+    btn.classList.add('lit');
+    if (textEl) textEl.textContent = 'Svíčka hoří · Odpočívej v pokoji';
+  } else {
+    btn.classList.remove('lit');
+    if (textEl) textEl.textContent = 'Vzdát úctu · Zapálit svíčku';
+  }
+
+  // 2. Asynchronní synchronizace s reálnou databází
+  try {
+    const res = await apiFetch('/api/tombstone/candles', {}, 4000);
+    if (res && res.ok) {
+      const data = await res.json();
+      if (data && typeof data.count === 'number') {
+        countEl.textContent = `${data.count.toLocaleString('cs-CZ')} 🕯️`;
+        if (data.userLit) {
+          btn.classList.add('lit');
+          if (textEl) textEl.textContent = 'Svíčka hoří · Odpočívej v pokoji';
+          localStorage.setItem('smp_tombstone_candle_lit', 'true');
+          localStorage.setItem('smp_tombstone_candle_bonus', '1');
+        } else {
+          btn.classList.remove('lit');
+          if (textEl) textEl.textContent = 'Vzdát úctu · Zapálit svíčku';
+          localStorage.setItem('smp_tombstone_candle_lit', 'false');
+          localStorage.setItem('smp_tombstone_candle_bonus', '0');
+        }
+      }
+    }
+  } catch (err) {
+    // Tichý fallback na lokální data
+    console.debug('[Tombstone Candle] API offline, používám lokální data');
+  }
+}
+
+async function tributeTombstone(btn) {
+  if (!btn || isTombstoneCandleSubmitting) return;
+
+  const textEl = document.getElementById('tombstone-candle-text');
+  const countEl = document.getElementById('tombstone-candle-count');
+  const wasLit = btn.classList.contains('lit');
+  const currentCountText = countEl ? countEl.textContent.replace(/\D/g, '') : '43';
+  let curCount = parseInt(currentCountText, 10) || 43;
+
+  // Klientský debounce / ochrana proti spamu
+  isTombstoneCandleSubmitting = true;
+  setTimeout(() => { isTombstoneCandleSubmitting = false; }, 1200);
+
+  // Optimistický okamžitý update v UI
+  if (wasLit) {
+    btn.classList.remove('lit');
+    curCount = Math.max(43, curCount - 1);
+    if (textEl) textEl.textContent = 'Vzdát úctu · Zapálit svíčku';
+    if (countEl) countEl.textContent = `${curCount.toLocaleString('cs-CZ')} 🕯️`;
+    localStorage.setItem('smp_tombstone_candle_lit', 'false');
+    localStorage.setItem('smp_tombstone_candle_bonus', '0');
+  } else {
+    btn.classList.add('lit');
+    curCount += 1;
+    if (textEl) textEl.textContent = 'Svíčka hoří · Odpočívej v pokoji';
+    if (countEl) countEl.textContent = `${curCount.toLocaleString('cs-CZ')} 🕯️`;
+    localStorage.setItem('smp_tombstone_candle_lit', 'true');
+    localStorage.setItem('smp_tombstone_candle_bonus', '1');
+    if (typeof showToast === 'function') {
+      showToast('🕯️ Zapálil jsi svíčku na památku původního Survival světa.');
+    }
+  }
+
+  // Reálné odeslání do API s rate limitem
+  try {
+    const res = await apiFetch('/api/tombstone/candle', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: wasLit ? 'extinguish' : 'light' })
+    }, 5000);
+
+    if (res) {
+      if (res.status === 429) {
+        if (typeof showToast === 'function') {
+          showToast('⏳ Počkej chvíli před dalším zapálením svíčky.');
+        }
+        // Rollback
+        if (wasLit) {
+          btn.classList.add('lit');
+          if (textEl) textEl.textContent = 'Svíčka hoří · Odpočívej v pokoji';
+        } else {
+          btn.classList.remove('lit');
+          if (textEl) textEl.textContent = 'Vzdát úctu · Zapálit svíčku';
+        }
+        return;
+      }
+      if (res.ok) {
+        const data = await res.json();
+        if (data && typeof data.count === 'number') {
+          if (countEl) countEl.textContent = `${data.count.toLocaleString('cs-CZ')} 🕯️`;
+          if (data.lit) {
+            btn.classList.add('lit');
+            if (textEl) textEl.textContent = 'Svíčka hoří · Odpočívej v pokoji';
+            localStorage.setItem('smp_tombstone_candle_lit', 'true');
+            localStorage.setItem('smp_tombstone_candle_bonus', '1');
+          } else {
+            btn.classList.remove('lit');
+            if (textEl) textEl.textContent = 'Vzdát úctu · Zapálit svíčku';
+            localStorage.setItem('smp_tombstone_candle_lit', 'false');
+            localStorage.setItem('smp_tombstone_candle_bonus', '0');
+          }
+        }
+      }
+    }
+  } catch (err) {
+    // V případě síťové chyby zůstává optimistický stav v localStorage
+    console.debug('[Tombstone Candle] API request se nezdařil, zachovávám lokální stav');
+  }
+}
 
 

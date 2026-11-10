@@ -1248,31 +1248,6 @@ async function checkoutSMP() {
     }
   }
 }
-    } else {
-      const errMsg = data?.message || 'Nepodařilo se vytvořit platební odkaz.';
-      if (typeof showToast === 'function') {
-        showToast('❌ ' + errMsg);
-      } else {
-        alert(errMsg);
-      }
-    }
-  } catch (err) {
-    console.error('[CHECKOUT ERR]', err);
-    const fallbackMsg = (err && err.message && !err.message.startsWith('HTTP'))
-      ? err.message
-      : 'Herní pokladna je momentálně nedostupná. Zkus to prosím za chvíli.';
-    if (typeof showToast === 'function') {
-      showToast('❌ ' + fallbackMsg);
-    } else {
-      alert(fallbackMsg);
-    }
-  } finally {
-    if (btn) {
-      btn.innerHTML = originalText;
-      btn.disabled = false;
-    }
-  }
-}
 
 // ---- APPLE-GRADE INTERACTIVE VECTOR SPOTLIGHT ----
 function initVectorSpotlight() {

@@ -968,9 +968,44 @@ const TEBEX_TIER_CONFIG = {
   }
 };
 
+// ---- TEBEX WAREZ / OFFLINE CONFIG (smp+ v2) ----
+const TEBEX_WAREZ_TIER_CONFIG = {
+  smp_plus: {
+    id: '7786829',
+    name: 'SMP+',
+    price: '1.99',
+    prefix: '+',
+    tierClass: 'tier-plus',
+    btnLabel: 'Aktivovat SMP+ (Warez)',
+    btnSub: '1.99 € / měsíc · Okamžitá aktivace (Offline nick)'
+  },
+  smp_pp: {
+    id: '7786831',
+    name: 'SMP++',
+    price: '3.79',
+    prefix: '++',
+    tierClass: 'tier-plusplus',
+    btnLabel: 'Aktivovat SMP++ (Warez)',
+    btnSub: '3.79 € / měsíc · Okamžitá aktivace (Offline nick)'
+  },
+  smp_ppp: {
+    id: '7786832',
+    name: 'SMP+++',
+    price: '3.99',
+    prefix: '+++',
+    tierClass: 'tier-plusplusplus',
+    btnLabel: 'Aktivovat SMP+++ (Warez)',
+    btnSub: '3.99 € / měsíc · Okamžitá aktivace (Offline nick)'
+  }
+};
+
 let currentSmpTier = 'smp_ppp';
 
 function getTebexStoreUrl(tierKey) {
+  const isCracked = document.getElementById('smp-cracked-check')?.checked;
+  if (isCracked) {
+    return 'https://smp-v2.tebex.store/';
+  }
   const tier = TEBEX_TIER_CONFIG[tierKey || currentSmpTier] || TEBEX_TIER_CONFIG.smp_ppp;
   return `https://mychalsmp.tebex.store/package/${tier.slug || tier.id}`;
 }
@@ -1043,15 +1078,13 @@ function selectSmpTier(tierKey) {
 
   // Update button texts
   const isCracked = document.getElementById('smp-cracked-check')?.checked;
+  const activeCfg = (isCracked ? TEBEX_WAREZ_TIER_CONFIG : TEBEX_TIER_CONFIG)[tierKey] || cfg;
   const btnLabel = document.getElementById('btn-purchase-label');
   const btnSub = document.getElementById('btn-purchase-sub');
 
-  if (isCracked) {
-    if (btnLabel) btnLabel.textContent = `Přejít do obchodu (${cfg.name})`;
-    if (btnSub) btnSub.textContent = `Oficiální Tebex store · ${cfg.price} € / měsíc`;
-  } else {
-    if (btnLabel) btnLabel.textContent = cfg.btnLabel;
-    if (btnSub) btnSub.textContent = cfg.btnSub;
+  if (btnLabel && btnSub) {
+    btnLabel.textContent = activeCfg.btnLabel;
+    btnSub.textContent = activeCfg.btnSub;
   }
 
   // Highlight column in comparison table
@@ -1077,7 +1110,7 @@ function selectSmpTierAndScroll(tierKey) {
 
 function handleCrackedToggle(isCracked) {
   const hint = document.getElementById('smp-cracked-hint');
-  const cfg = TEBEX_TIER_CONFIG[currentSmpTier] || TEBEX_TIER_CONFIG.smp_ppp;
+  const activeCfg = (isCracked ? TEBEX_WAREZ_TIER_CONFIG : TEBEX_TIER_CONFIG)[currentSmpTier] || TEBEX_TIER_CONFIG.smp_ppp;
   const btnLabel = document.getElementById('btn-purchase-label');
   const btnSub = document.getElementById('btn-purchase-sub');
 
@@ -1086,19 +1119,13 @@ function handleCrackedToggle(isCracked) {
   }
 
   if (btnLabel && btnSub) {
-    if (isCracked) {
-      btnLabel.textContent = `Přejít do obchodu (${cfg.name})`;
-      btnSub.textContent = `Oficiální Tebex store · ${cfg.price} € / měsíc`;
-    } else {
-      btnLabel.textContent = cfg.btnLabel;
-      btnSub.textContent = cfg.btnSub;
-    }
+    btnLabel.textContent = activeCfg.btnLabel;
+    btnSub.textContent = activeCfg.btnSub;
   }
 }
 
 async function checkoutSMP() {
-  const isCracked = document.getElementById('smp-cracked-check')?.checked;
-  const storeUrl = getTebexStoreUrl(currentSmpTier);
+  const isCracked = Boolean(document.getElementById('smp-cracked-check')?.checked);
 
   // Check mandatory terms and immediate delivery consent
   const consentCb = document.getElementById('smp-consent-terms');
@@ -1111,16 +1138,6 @@ async function checkoutSMP() {
       consentWrapper.classList.add('shake-input');
     }
     consentCb.focus();
-    return;
-  }
-
-  // If player indicated they have warez / cracked launcher without official Mojang account
-  if (isCracked) {
-    showToast('↗️ Přesměrovávám do obchodu Tebex...');
-    const newWin = window.open(storeUrl, '_blank');
-    if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
-      window.location.href = storeUrl;
-    }
     return;
   }
 
@@ -1146,6 +1163,7 @@ async function checkoutSMP() {
       void nickInput.offsetWidth;
       nickInput.classList.add('shake-input');
     }
+    return;
   }
 
   const btn = document.querySelector('.btn-purchase');
@@ -1155,7 +1173,8 @@ async function checkoutSMP() {
     btn.disabled = true;
   }
 
-  const cfg = TEBEX_TIER_CONFIG[currentSmpTier] || TEBEX_TIER_CONFIG.smp_ppp;
+  const activeMap = isCracked ? TEBEX_WAREZ_TIER_CONFIG : TEBEX_TIER_CONFIG;
+  const cfg = activeMap[currentSmpTier] || activeMap.smp_ppp;
   try {
     const response = await apiFetch('https://api.6767111.xyz/api/tebex/checkout', {
       method: 'POST',
@@ -1165,6 +1184,7 @@ async function checkoutSMP() {
       body: JSON.stringify({
         nickname,
         tier: currentSmpTier,
+        isCracked,
         packageId: cfg.id
       })
     }, 15000);
@@ -1179,8 +1199,13 @@ async function checkoutSMP() {
         alert(errMsg);
       }
 
-      // If user wasn't found (cracked account or typo), shake the cracked toggle to draw attention
+      // If user wasn't found on official Mojang store, auto-toggle cracked option
       if (errMsg.includes('nebyl na Tebexu nalezen') || errMsg.toLowerCase().includes('username') || data?.isInvalidUser) {
+        const crackedCheck = document.getElementById('smp-cracked-check');
+        if (crackedCheck && !crackedCheck.checked) {
+          crackedCheck.checked = true;
+          handleCrackedToggle(true);
+        }
         const crackedToggle = document.getElementById('smp-cracked-toggle');
         if (crackedToggle) {
           crackedToggle.classList.remove('shake-input');
@@ -1198,6 +1223,31 @@ async function checkoutSMP() {
       if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
         window.location.href = data.url;
       }
+    } else {
+      const errMsg = data?.message || 'Nepodařilo se vytvořit platební odkaz.';
+      if (typeof showToast === 'function') {
+        showToast('❌ ' + errMsg);
+      } else {
+        alert(errMsg);
+      }
+    }
+  } catch (err) {
+    console.error('[CHECKOUT ERR]', err);
+    const fallbackMsg = (err && err.message && !err.message.startsWith('HTTP'))
+      ? err.message
+      : 'Herní pokladna je momentálně nedostupná. Zkus to prosím za chvíli.';
+    if (typeof showToast === 'function') {
+      showToast('❌ ' + fallbackMsg);
+    } else {
+      alert(fallbackMsg);
+    }
+  } finally {
+    if (btn) {
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }
+  }
+}
     } else {
       const errMsg = data?.message || 'Nepodařilo se vytvořit platební odkaz.';
       if (typeof showToast === 'function') {

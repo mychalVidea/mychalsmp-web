@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# MYCHAL SMPClient - Univerzální 1-click instalátor pro Linux
+# MYCHAL SMP Launcher - Univerzální 1-click instalátor pro Linux
 # Oficiální web: https://mychalsmp.xyz
 # ==============================================================================
 
@@ -11,7 +11,7 @@ BIN_DIR="$HOME/.local/bin"
 DESKTOP_DIR="$HOME/.local/share/applications"
 ICON_DIR="$HOME/.local/share/icons/hicolor/512x512/apps"
 
-echo "⚡ [MYCHAL SMP] Zahajuji instalaci SMPClient..."
+echo "⚡ [MYCHAL SMP] Zahajuji instalaci launcheru..."
 
 mkdir -p "$INSTALL_DIR"
 mkdir -p "$BIN_DIR"
@@ -40,9 +40,9 @@ else
 fi
 
 echo "📦 Rozbaluji herního klienta do $INSTALL_DIR..."
-# Pokusíme se o rozbalení s odstraněním nadřazené složky (--strip-components=1)
-if tar -xzf "$TEMP_TAR" -C "$INSTALL_DIR" --strip-components=1 2>/dev/null; then
-    :
+rm -f "$INSTALL_DIR/mychalsmp-launcher" "$INSTALL_DIR/SMPClient"
+if tar -tf "$TEMP_TAR" 2>/dev/null | grep -q "^mychalsmp-launcher/"; then
+    tar -xzf "$TEMP_TAR" -C "$INSTALL_DIR" --strip-components=1
 else
     tar -xzf "$TEMP_TAR" -C "$INSTALL_DIR"
 fi
@@ -60,28 +60,67 @@ if [ ! -f "$INSTALL_DIR/mychalsmp-launcher" ]; then
     fi
 fi
 
+if [ ! -f "$INSTALL_DIR/mychalsmp-launcher" ] && [ -f "$INSTALL_DIR/SMPClient" ]; then
+    ln -sf "$INSTALL_DIR/SMPClient" "$INSTALL_DIR/mychalsmp-launcher"
+fi
+
 if [ ! -f "$INSTALL_DIR/mychalsmp-launcher" ]; then
     echo "❌ Chyba: Spustitelný soubor mychalsmp-launcher nebyl v archivu nalezen."
     exit 1
 fi
 
-# Vytvoření symlinku do ~/.local/bin a nastavení oprávnění
-chmod +x "$INSTALL_DIR/mychalsmp-launcher"
-ln -sf "$INSTALL_DIR/mychalsmp-launcher" "$BIN_DIR/mychalsmp-launcher"
+# Kontrola a automatická doinstalace systémových knihoven (WebKit2GTK 4.1 a AppIndicator pro Tray) pro CachyOS/Arch, Fedoru i Ubuntu/Debian
+NEED_DEPS=0
+if ! ldconfig -p 2>/dev/null | grep -q "libwebkit2gtk-4.1.so"; then
+    NEED_DEPS=1
+fi
+if ! ldconfig -p 2>/dev/null | grep -qE "libayatana-appindicator3\.so|libappindicator3\.so"; then
+    NEED_DEPS=1
+fi
 
-# Zajištění ikony aplikace (klientské logo launcheru)
+if [ "$NEED_DEPS" = "1" ]; then
+    echo "📦 Doinstalovávám chybějící systémové knihovny (WebKit2GTK 4.1 / AppIndicator) pro tvou distribuci..."
+    if command -v pacman >/dev/null 2>&1; then
+        sudo pacman -S --needed --noconfirm webkit2gtk-4.1 gtk3 libayatana-appindicator 2>/dev/null || sudo pacman -S --needed --noconfirm webkit2gtk-4.1 gtk3 || true
+    elif command -v dnf >/dev/null 2>&1; then
+        sudo dnf install -y webkit2gtk4.1 gtk3 libappindicator-gtk3 || true
+    elif command -v apt-get >/dev/null 2>&1; then
+        sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-0 libgtk-3-0 libayatana-appindicator3-1 || true
+    elif command -v zypper >/dev/null 2>&1; then
+        sudo zypper install -y libwebkit2gtk-4_1-0 gtk3 || true
+    fi
+fi
+
+# Nastavení oprávnění a vytvoření spouštěcího wrapperu v ~/.local/bin
+chmod +x "$INSTALL_DIR/mychalsmp-launcher"
+[ -f "$INSTALL_DIR/SMPClient" ] && chmod +x "$INSTALL_DIR/SMPClient" || true
+
+rm -f "$BIN_DIR/mychalsmp-launcher"
+cat <<EOF > "$BIN_DIR/mychalsmp-launcher"
+#!/usr/bin/env bash
+export WEBKIT_DISABLE_DMABUF_RENDERER=1
+export WEBKIT_DISABLE_COMPOSITING_MODE=1
+exec "$INSTALL_DIR/mychalsmp-launcher" "\$@"
+EOF
+chmod +x "$BIN_DIR/mychalsmp-launcher"
+
+# Zajištění ikony aplikace
 if [ -f "$INSTALL_DIR/resources/app/src/renderer/assets/logo.png" ]; then
     cp "$INSTALL_DIR/resources/app/src/renderer/assets/logo.png" "$ICON_DIR/mychalsmp-launcher.png"
+elif [ -f "$INSTALL_DIR/resources/app/src/renderer/assets/server-icon.png" ]; then
+    cp "$INSTALL_DIR/resources/app/src/renderer/assets/server-icon.png" "$ICON_DIR/mychalsmp-launcher.png"
 elif [ -f "$INSTALL_DIR/resources/logo.png" ]; then
     cp "$INSTALL_DIR/resources/logo.png" "$ICON_DIR/mychalsmp-launcher.png"
+elif [ -f "$INSTALL_DIR/resources/server-icon.png" ]; then
+    cp "$INSTALL_DIR/resources/server-icon.png" "$ICON_DIR/mychalsmp-launcher.png"
 fi
 
 # Vytvoření zástupce v menu aplikací (.desktop)
 cat <<EOF > "$DESKTOP_DIR/mychalsmp-launcher.desktop"
 [Desktop Entry]
 Name=SMPClient
-Comment=Oficiální Minecraft klient pro MYCHAL SMP
-Exec=$INSTALL_DIR/mychalsmp-launcher %U
+Comment=Oficiální Minecraft klient sítě MYCHAL SMP
+Exec=$BIN_DIR/mychalsmp-launcher %U
 Icon=mychalsmp-launcher
 Terminal=false
 Type=Application

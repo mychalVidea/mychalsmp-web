@@ -48,7 +48,10 @@ try {
     $release = $json | ConvertFrom-Json
 
     if ($release -and $release.assets) {
-        $asset = $release.assets | Where-Object { $_.name -like "*setup*.exe" -or $_.name -like "*.exe" } | Select-Object -First 1
+        $asset = $release.assets | Where-Object { $_.name -like "*setup*.exe" } | Select-Object -First 1
+        if (-not $asset) {
+            $asset = $release.assets | Where-Object { $_.name -like "*.exe" } | Select-Object -First 1
+        }
         if ($asset -and $asset.browser_download_url) {
             $downloadUrl = $asset.browser_download_url
             $expectedSize = [int64]$asset.size

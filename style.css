@@ -408,8 +408,7 @@ button:active,
 .nav-logo-img {
   width: 38px;
   height: 38px;
-  border-radius: 8px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .nav-logo-text {
@@ -2080,8 +2079,7 @@ button:active,
 .footer-logo {
   width: 42px;
   height: 42px;
-  border-radius: 8px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .footer-title {

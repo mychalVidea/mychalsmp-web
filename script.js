@@ -395,7 +395,7 @@ async function resolveLatestLauncherDownloads() {
 
     // Setup exe pro Windows
     const winAsset = assets.find(a => /setup.*\.exe$/i.test(a.name)) ||
-                     assets.find(a => /\.exe$/i.test(a.name));
+      assets.find(a => /\.exe$/i.test(a.name));
     if (winAsset && winBtn) {
       winBtn.href = winAsset.browser_download_url;
     }
@@ -1053,14 +1053,14 @@ function selectSmpTier(tierKey) {
     activeNameEl.textContent = cfg.name;
     activeNameEl.className = 'smp-checkout-tier-name ' + (
       tierKey === 'smp_ppp' ? 'smp-shimmer-text--ppp' :
-      tierKey === 'smp_pp' ? 'smp-shimmer-text--pp' : 'smp-shimmer-text--plus'
+        tierKey === 'smp_pp' ? 'smp-shimmer-text--pp' : 'smp-shimmer-text--plus'
     );
   }
   if (activePriceEl) {
     activePriceEl.textContent = `${cfg.price} € / měsíc`;
     activePriceEl.className = 'smp-checkout-tier-price ' + (
       tierKey === 'smp_ppp' ? 'smp-shimmer-price smp-shimmer-price--ppp' :
-      tierKey === 'smp_pp' ? 'smp-shimmer-price smp-shimmer-price--pp' : 'smp-shimmer-price'
+        tierKey === 'smp_pp' ? 'smp-shimmer-price smp-shimmer-price--pp' : 'smp-shimmer-price'
     );
   }
 
@@ -1836,7 +1836,7 @@ async function checkMediaStatus() {
             </div>
             <h3>Žádost Zamítnuta</h3>
             <p>Tvoje žádost o Media Rank byla zamítnuta.</p>
-            <div class="reject-reason"><strong>Důvod zamítnutí:</strong> ${reason || 'Neuveden'}</div>
+            <div class="reject-reason"><strong>Důvod zamítnutí:</strong> ${escapeHtml(reason) || 'Neuveden'}</div>
             <div style="margin-top:12px; color: var(--text-muted);">Znovu můžeš požádat za <strong>${daysLeft} dní</strong>.</div>
           </div>
         `;
@@ -1856,7 +1856,7 @@ async function checkMediaStatus() {
           </div>
           <h3 style="color: #f59e0b;">Media Rank Odebrán</h3>
           <p>Tvůj Media rank byl odebrán administrátorem.</p>
-          ${reason ? `<div class="reject-reason"><strong>Důvod:</strong> ${reason}</div>` : ''}
+          ${reason ? `<div class="reject-reason"><strong>Důvod:</strong> ${escapeHtml(reason)}</div>` : ''}
           <div style="margin-top:16px;">
             <button class="btn-primary" onclick="
               document.getElementById('media-status-box').style.display='none';
@@ -2092,20 +2092,20 @@ async function submitMediaApplication(event) {
       document.getElementById('step-scrape').className = 'verification-step-item failed';
       await sleep(1000);
       const checksDetails = (data.checks || []).map(check => {
-        const countLabel = check.count === null ? 'neznámý' : check.count.toString();
+        const countLabel = check.count === null ? 'neznámý' : escapeHtml(check.count);
         const ok = (check.count !== null && check.count >= check.required);
         const statusLabel = ok ? 'OK' : 'Nesplněno';
         const color = ok ? '#16a34a' : '#ef4444';
-        return `<div class="media-check-detail"><strong>${check.platform}:</strong> <span style="color:${color};">${countLabel} / ${check.required} — ${statusLabel}</span></div>`;
+        return `<div class="media-check-detail"><strong>${escapeHtml(check.platform)}:</strong> <span style="color:${color};">${countLabel} / ${escapeHtml(check.required)} — ${statusLabel}</span></div>`;
       }).join('');
       statusBox.innerHTML = `
         <div class="media-status-card">
           <div class="status-icon">❌</div>
           <h3>Ověření selhalo</h3>
-          <p style="color: #ef4444; font-weight: bold; margin-bottom: 15px;">${data.error || 'Nebyly splněny požadavky pro Media Rank.'}</p>
+          <p style="color: #ef4444; font-weight: bold; margin-bottom: 15px;">${escapeHtml(data.error) || 'Nebyly splněny požadavky pro Media Rank.'}</p>
           <p>Ujisti se, že máš dostatečný počet odběratelů/sledujících a zadal jsi správné odkazy.</p>
           ${checksDetails ? `<div class="media-checks-list" style="margin-top: 12px; text-align:left;">${checksDetails}</div>` : ''}
-          ${data && data.raw ? `<pre style="text-align:left; margin-top:10px; background:rgba(0,0,0,0.12); padding:10px; border-radius:8px; overflow:auto; max-height:180px;">${JSON.stringify(data.raw, null, 2)}</pre>` : ''}
+          ${data && data.raw ? `<pre style="text-align:left; margin-top:10px; background:rgba(0,0,0,0.12); padding:10px; border-radius:8px; overflow:auto; max-height:180px;">${escapeHtml(JSON.stringify(data.raw, null, 2))}</pre>` : ''}
           <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zpět na formulář</button>
         </div>
       `;
@@ -2636,10 +2636,10 @@ async function loadIdeasTab() {
         const canAdd = u.pendingCount < 10;
         userBar.className = 'ideas-user-bar';
         userBar.innerHTML = `
-          <div class="ideas-user-info-compact" title="${u.pendingCount}/10 neschválených nápadů">
-            <img src="${u.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="ideas-user-avatar-sm" alt="${u.username}" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';" />
-            <span class="ideas-user-name-sm">${u.username}</span>
-            <span class="ideas-user-badge-sm"><i class="fa-solid fa-star"></i> ${u.points}</span>
+          <div class="ideas-user-info-compact" title="${Number(u.pendingCount) || 0}/10 neschválených nápadů">
+            <img src="${escapeHtml(u.avatar) || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="ideas-user-avatar-sm" alt="${escapeHtml(u.username)}" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';" />
+            <span class="ideas-user-name-sm">${escapeHtml(u.username)}</span>
+            <span class="ideas-user-badge-sm"><i class="fa-solid fa-star"></i> ${escapeHtml(u.points)}</span>
             ${u.isMajitel ? '<span style="color:#f59e0b; font-size:0.8rem; margin-left:2px;">👑</span>' : ''}
           </div>
           <div class="ideas-inline-input-wrapper">
@@ -2717,10 +2717,10 @@ function renderIdeaCardHtml(idea, isMajitel) {
   const scoreClass = score > 0 ? 'score-positive' : (score < 0 ? 'score-negative' : '');
 
   return `
-    <div class="idea-card" id="idea-card-${idea.id}" style="--card-rotation: ${idea.rotation || 0}deg;">
+    <div class="idea-card" id="idea-card-${Number(idea.id) || 0}" style="--card-rotation: ${Number(idea.rotation) || 0}deg;">
       <div class="idea-card-pin"><i class="fa-solid fa-thumbtack"></i></div>
       <div class="idea-card-header">
-        <img src="${idea.author_avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="idea-card-avatar" alt="${idea.author_name}" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';" />
+        <img src="${escapeHtml(idea.author_avatar) || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="idea-card-avatar" alt="${escapeHtml(idea.author_name)}" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';" />
         <span class="idea-card-author">
           ${escapeHtml(idea.author_name)}
           <span class="idea-author-stars" title="Autor má ${authorPoints} hvězdiček">
@@ -2942,8 +2942,8 @@ function sortAndReorderIdeasDOM() {
 }
 
 function escapeHtml(str) {
-  if (!str) return '';
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  if (str === null || str === undefined) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
 function openIdeaModal() {
@@ -3083,14 +3083,53 @@ async function aiProcessIdea(id) {
   }
 }
 
-async function approveIdea(id) {
-  if (!confirm('Opravdu chceš tento nápad SCHVÁLIT? Udělí autorovi +1 bod a pošle oznámení do Discordu.')) return;
+let pendingApproveIdeaId = null;
+
+function approveIdea(id) {
+  pendingApproveIdeaId = id;
+  const modal = document.getElementById('idea-approve-modal');
+  const textarea = document.getElementById('idea-approve-reason');
+  if (textarea) {
+    textarea.value = '';
+    setTimeout(() => textarea.focus(), 50);
+  }
+  if (modal) {
+    modal.classList.add('active');
+  } else {
+    const note = prompt('Napiš krátce vlastními slovy, co bylo implementováno (AI odpověď uhladí se zachováním tvé myšlenky):');
+    if (note === null) return;
+    executeApproveIdea(id, note.trim());
+  }
+}
+
+function closeApproveIdeaModal() {
+  pendingApproveIdeaId = null;
+  const modal = document.getElementById('idea-approve-modal');
+  if (modal) modal.classList.remove('active');
+}
+
+async function confirmApproveIdea() {
+  if (!pendingApproveIdeaId) return;
+  const textarea = document.getElementById('idea-approve-reason');
+  const note = textarea ? textarea.value.trim() : '';
+  const ideaId = pendingApproveIdeaId;
+  closeApproveIdeaModal();
+  await executeApproveIdea(ideaId, note);
+}
+
+async function executeApproveIdea(id, note) {
+  const btn = document.getElementById('btn-confirm-approve-idea');
+  if (btn) btn.disabled = true;
 
   try {
     const res = await apiFetch(`https://api.6767111.xyz/api/napady/approve/${id}`, {
       method: 'POST',
-      headers: getAuthHeaders()
-    }, 10000);
+      headers: {
+        ...getAuthHeaders(),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ note })
+    }, 15000);
 
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}`);
@@ -3098,7 +3137,7 @@ async function approveIdea(id) {
 
     const data = await res.json();
     if (data.success) {
-      showToast('🎉 Nápad byl schválen a autor získal +1 bod!');
+      showToast('🎉 Nápad byl schválen, autor získal +1 bod a oznámení se odeslalo do Discordu!');
       loadIdeasTab();
     } else {
       showToast('❌ ' + (data.message || 'Chyba při schvalování nápadu.'));
@@ -3106,6 +3145,8 @@ async function approveIdea(id) {
   } catch (e) {
     console.error('Error approving idea:', e);
     showToast('❌ Server je dočasně nedostupný.');
+  } finally {
+    if (btn) btn.disabled = false;
   }
 }
 
@@ -3122,7 +3163,7 @@ function rejectIdea(id) {
   if (modal) {
     modal.classList.add('active');
   } else {
-    const reason = prompt('Zadej důvod zamítnutí nápadu (bude odeslán autorovi do DM na Discordu):');
+    const reason = prompt('Zadej důvod zamítnutí nápadu (AI formulaci uhladí se zachováním důvodu):');
     if (reason === null) return;
     if (!reason.trim()) {
       showToast('❌ Musíš uvést důvod zamítnutí.');
@@ -3153,6 +3194,9 @@ async function confirmRejectIdea() {
 }
 
 async function executeRejectIdea(id, reason) {
+  const btn = document.getElementById('btn-confirm-reject-idea');
+  if (btn) btn.disabled = true;
+
   try {
     const res = await apiFetch(`https://api.6767111.xyz/api/napady/reject/${id}`, {
       method: 'POST',
@@ -3161,7 +3205,7 @@ async function executeRejectIdea(id, reason) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ reason })
-    }, 10000);
+    }, 15000);
 
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}`);
@@ -3169,7 +3213,7 @@ async function executeRejectIdea(id, reason) {
 
     const data = await res.json();
     if (data.success) {
-      showToast(data.dmSent ? '🗑️ Nápad byl zamítnut a důvod odeslán autorovi do DM.' : '🗑️ Nápad byl zamítnut (autor má uzavřené DM).');
+      showToast(data.dmSent ? '🗑️ Nápad byl zamítnut a odeslán do #nápady i autorovi do DM.' : '🗑️ Nápad byl zamítnut a odeslán do #nápady (autor má uzavřené DM).');
       loadIdeasTab();
     } else {
       showToast('❌ ' + (data.message || 'Chyba při zamítání nápadu.'));
@@ -3177,6 +3221,8 @@ async function executeRejectIdea(id, reason) {
   } catch (e) {
     console.error('Error rejecting idea:', e);
     showToast('❌ Server je dočasně nedostupný.');
+  } finally {
+    if (btn) btn.disabled = false;
   }
 }
 
@@ -3880,14 +3926,18 @@ function renderOnlinePlayersData(data) {
     const avatarUrl = player.avatar || `https://mc-heads.net/avatar/${encodeURIComponent(player.name)}/64`;
     const playtime = player.playtime_hours !== undefined ? `${player.playtime_hours} hod.` : 'Nové';
 
+    const safeName = escapeHtml(player.name);
+    const safeRank = escapeHtml(player.rank || 'Hráč');
+    const safeAvatar = escapeHtml(avatarUrl);
+
     return `
       <div class="player-card">
-        <img src="${avatarUrl}" alt="${player.name}" class="player-card-avatar" loading="lazy" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+        <img src="${safeAvatar}" alt="${safeName}" class="player-card-avatar" loading="lazy" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
         <div class="player-card-info">
-          <span class="player-card-name" title="${player.name}">${player.name}</span>
+          <span class="player-card-name" title="${safeName}">${safeName}</span>
           <div class="player-card-meta">
-            <span class="player-badge ${badgeClass}">${badgeIcon}${player.rank || 'Hráč'}</span>
-            <span class="player-playtime"><i class="fa-regular fa-clock"></i> ${playtime}</span>
+            <span class="player-badge ${badgeClass}">${badgeIcon}${safeRank}</span>
+            <span class="player-playtime"><i class="fa-regular fa-clock"></i> ${escapeHtml(playtime)}</span>
           </div>
         </div>
       </div>
@@ -5158,10 +5208,10 @@ window.copyModTestResult = copyModTestResult;
 window.restartModTest = restartModTest;
 
 // Survival backup archive was retired per owner specifications (Closed · RIP).
-window.openArchiveModal = function() {};
-window.closeArchiveModal = function() {};
-window.closeArchiveModalOutside = function() {};
-window.handleArchiveDownload = function() {};
+window.openArchiveModal = function () { };
+window.closeArchiveModal = function () { };
+window.closeArchiveModalOutside = function () { };
+window.handleArchiveDownload = function () { };
 
 // ─── PERMAFROST LAUNCH COUNTDOWN (10. 10. 2026 V 20:00) ──────────────
 (function () {

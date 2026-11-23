@@ -1668,7 +1668,7 @@ function confirmCancelSmpPlus(tierDisplayName = 'SMP+') {
   const modal = document.getElementById('smp-cancel-modal');
   const desc = document.getElementById('smp-cancel-modal-desc');
   if (desc && cachedSmpNick) {
-    desc.innerHTML = `Opravdu si přeješ zrušit ${escapeHtml(tierDisplayName)} členství pro hráče <strong>${escapeHtml(cachedSmpNick)}</strong>?<br><br>Okamžitě přijdeš o všechny výhody ${escapeHtml(tierDisplayName)} (větší Ender truhla, barva nicku, rychlejší teleporty, domovy) ve hře i na Discordu.`;
+    desc.innerHTML = `Opravdu si přeješ zrušit ${escapeHtml(tierDisplayName)} členství pro hráče <strong>${escapeHtml(cachedSmpNick)}</strong>?<br><br>Okamžitě přijdeš o výhody ${escapeHtml(tierDisplayName)} ve hře i na Discordu a <strong>opakované strhávání plateb na Tebexu i PayPalu bude trvale zrušeno</strong>.`;
   }
   if (modal) modal.style.display = 'flex';
 }
@@ -1741,7 +1741,23 @@ async function checkMediaStatus() {
   statusBox.style.display = 'block';
   applyForm.style.display = 'none';
   loginBox.style.display = 'none';
-  statusBox.innerHTML = '<div class="media-status-center"><div class="status-pending-icon"><span class="status-question">?</span><div class="status-spinner"></div></div><p style="text-align:center; margin-top:12px;">Ověřuji stav tvé žádosti...</p></div>';
+  statusBox.innerHTML = `
+    <div class="media-status-loading-center">
+      <div class="media-pending-spinner-wrap">
+        <svg class="media-pending-svg" viewBox="0 0 88 88" width="88" height="88">
+          <circle class="media-spinner-track" cx="44" cy="44" r="38" />
+          <circle class="media-spinner-arc" cx="44" cy="44" r="38" />
+        </svg>
+        <div class="media-pending-icon-inner">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+      </div>
+      <p style="text-align:center; color: var(--text-muted); font-size: 0.94rem;">Ověřuji stav tvé žádosti...</p>
+    </div>
+  `;
 
   try {
     const res = await apiFetch('https://api.6767111.xyz/api/media/status', {
@@ -1761,7 +1777,6 @@ async function checkMediaStatus() {
     }
 
     const data = await res.json();
-    // If user has no request — show the form
     // If user has no request — show the form
     if (!data.success || !data.hasRequest) {
       statusBox.style.display = 'none';
@@ -1789,17 +1804,94 @@ async function checkMediaStatus() {
     if (status === 'pending') {
       statusBox.innerHTML = `
         <div class="media-status-card media-status--pending">
-          <div class="media-status-center">
-            <div class="status-pending-icon"><span class="status-question">?</span><div class="status-spinner"></div></div>
+          <div class="media-pending-spinner-wrap">
+            <svg class="media-pending-svg" viewBox="0 0 88 88" width="88" height="88">
+              <circle class="media-spinner-track" cx="44" cy="44" r="38" />
+              <circle class="media-spinner-arc" cx="44" cy="44" r="38" />
+            </svg>
+            <div class="media-pending-icon-inner">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
           </div>
           <h3>Žádost se posuzuje</h3>
           <p>Tvoje žádost o Media Rank byla odeslána a čeká na schválení administrátorem.</p>
-          <div class="status-details">
-            ${mcNick ? `<div><strong>Minecraft Nick:</strong> ${escapeHtml(mcNick)}</div>` : ''}
-            <div><strong>YouTube:</strong> ${escapeHtml(youtubeUrl || 'Nepřipojeno')}</div>
-            <div><strong>Kick:</strong> ${escapeHtml(kickUrl || 'Nepřipojeno')}</div>
-            <div><strong>TikTok:</strong> ${escapeHtml(tiktokUrl || 'Nepřipojeno')}</div>
-            <div><strong>Twitch:</strong> ${escapeHtml(twitchUrl || 'Nepřipojeno')}</div>
+          
+          <div class="media-pending-details-card">
+            <div class="media-pending-head-row">
+              <div class="media-pending-user">
+                <img src="https://mc-heads.net/avatar/${encodeURIComponent(mcNick || 'MHF_Steve')}/36" class="media-pending-avatar" alt="${escapeHtml(mcNick || 'Nick')}" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/36'">
+                <div class="media-pending-user-info">
+                  <span class="media-pending-user-label">Minecraft Účet</span>
+                  <strong class="media-pending-nick">${escapeHtml(mcNick || 'Nezadáno')}</strong>
+                </div>
+              </div>
+              <div class="media-pending-status-pill">
+                <span class="media-pending-pulse-dot"></span>
+                <span>Ve frontě</span>
+              </div>
+            </div>
+
+            <div class="media-pending-socials-grid">
+              <div class="media-social-spec-item ${youtubeUrl ? 'is-connected' : 'is-empty'}">
+                <div class="media-social-spec-left">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="#ff0000">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                  <span>YouTube</span>
+                </div>
+                <div class="media-social-spec-val">
+                  ${youtubeUrl ? `<a href="${escapeHtml(youtubeUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(youtubeUrl)}</a>` : '<span class="text-muted">Nepřipojeno</span>'}
+                </div>
+              </div>
+
+              <div class="media-social-spec-item ${kickUrl ? 'is-connected' : 'is-empty'}">
+                <div class="media-social-spec-left">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#53fc18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                  <span>Kick</span>
+                </div>
+                <div class="media-social-spec-val">
+                  ${kickUrl ? `<a href="${escapeHtml(kickUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(kickUrl)}</a>` : '<span class="text-muted">Nepřipojeno</span>'}
+                </div>
+              </div>
+
+              <div class="media-social-spec-item ${tiktokUrl ? 'is-connected' : 'is-empty'}">
+                <div class="media-social-spec-left">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="#00f2fe">
+                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.98v8.63c-.02 2.45-.99 4.88-2.73 6.6-1.74 1.72-4.18 2.69-6.63 2.73-2.45-.02-4.89-.99-6.62-2.73C.34 21.52-.63 19.09-.61 16.64c.02-2.45.99-4.88 2.73-6.61 1.73-1.73 4.17-2.7 6.62-2.73.54.01 1.09.07 1.62.19v4.12c-.39-.12-.8-.19-1.21-.19-1.35-.01-2.69.52-3.66 1.48-.96.97-1.49 2.31-1.48 3.66.01 1.35.54 2.69 1.5 3.65.97.96 2.31 1.48 3.66 1.48 1.35-.01 2.69-.53 3.65-1.49.97-.96 1.49-2.3 1.48-3.65V.02z"/>
+                  </svg>
+                  <span>TikTok</span>
+                </div>
+                <div class="media-social-spec-val">
+                  ${tiktokUrl ? `<a href="${escapeHtml(tiktokUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(tiktokUrl)}</a>` : '<span class="text-muted">Nepřipojeno</span>'}
+                </div>
+              </div>
+
+              <div class="media-social-spec-item ${twitchUrl ? 'is-connected' : 'is-empty'}">
+                <div class="media-social-spec-left">
+                  <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="#a970ff">
+                    <path d="M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.269h-2.149V6.269h2.149zm-5.731 0v6.269H9.851V6.269h2.149z"/>
+                  </svg>
+                  <span>Twitch</span>
+                </div>
+                <div class="media-social-spec-val">
+                  ${twitchUrl ? `<a href="${escapeHtml(twitchUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(twitchUrl)}</a>` : '<span class="text-muted">Nepřipojeno</span>'}
+                </div>
+              </div>
+            </div>
+
+            <div class="media-pending-footer-note">
+              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Administrátoři prověřují žádosti obvykle do 24–48 hodin.</span>
+            </div>
           </div>
         </div>
       `;
@@ -1815,8 +1907,8 @@ async function checkMediaStatus() {
           </div>
           <h3>Žádost Schválena!</h3>
           <p>Gratulujeme! Tvoje žádost o Media Rank byla schválena. Rank máš aktivní ve hře i na Discordu.</p>
-          <div style="margin-top: 20px; padding: 15px; background: rgba(10, 167, 100, 0.06); border-left: 4px solid #16a34a; border-radius: 4px; text-align: left;">
-            <strong style="color: #16a34a; display: block; margin-bottom: 8px;">UPOZORNĚNÍ:</strong>
+          <div style="margin-top: 20px; padding: 15px; background: rgba(33, 222, 0, 0.06); border-left: 4px solid var(--green, #21DE00); border-radius: 8px; text-align: left;">
+            <strong style="color: var(--green, #21DE00); display: block; margin-bottom: 8px;">UPOZORNĚNÍ:</strong>
             Pro udržení Media ranku uváděj v popiscích IP <strong>mychalsmp.xyz</strong> a používej hashtag <strong>#mychalsmp</strong>.
           </div>
         </div>
@@ -1852,7 +1944,13 @@ async function checkMediaStatus() {
       statusBox.innerHTML = `
         <div class="media-status-card media-status--rejected">
           <div class="media-status-center">
-            <div class="status-rejected-icon" style="background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.5); color: #f59e0b; font-size: 1.8rem;">!</div>
+            <div class="status-rejected-icon" style="background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.5); color: #f59e0b; font-size: 1.8rem;">
+              <svg class="ui-icon-svg ui-icon-svg--lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
           </div>
           <h3 style="color: #f59e0b;">Media Rank Odebrán</h3>
           <p>Tvůj Media rank byl odebrán administrátorem.</p>
@@ -1861,7 +1959,12 @@ async function checkMediaStatus() {
             <button class="btn-primary" onclick="
               document.getElementById('media-status-box').style.display='none';
               document.getElementById('media-apply-form').style.display='block';
-            " style="background: linear-gradient(135deg, #f59e0b, #d97706); border: none; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1rem;"><i class="fa-solid fa-arrows-rotate" style="margin-right: 6px;"></i> Podat žádost znovu</button>
+            " style="padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem;">
+              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+              </svg>
+              <span>Podat žádost znovu</span>
+            </button>
           </div>
         </div>
       `;
@@ -1880,7 +1983,10 @@ async function checkMediaStatus() {
         <h3>Ověření je dočasně nedostupné</h3>
         <p style="color: #94a3b8; margin: 10px 0 18px 0;">Nepodařilo se navázat spojení s ověřovacím serverem. Zkus to prosím za okamžik.</p>
         <button type="button" onclick="checkMediaStatus()" class="btn-primary" style="padding: 10px 20px;">
-          <i class="fa-solid fa-arrows-rotate"></i> Obnovit stav
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+          <span>Obnovit stav</span>
         </button>
       </div>
     `;
@@ -2013,9 +2119,20 @@ async function submitMediaApplication(event) {
   // Render step-by-step checking animation
   statusBox.innerHTML = `
     <div class="verification-progress-box">
-      <div class="spinner-circle"></div>
+      <div class="media-pending-spinner-wrap" style="width: 72px; height: 72px; margin-bottom: 16px;">
+        <svg class="media-pending-svg" viewBox="0 0 88 88" width="72" height="72">
+          <circle class="media-spinner-track" cx="44" cy="44" r="38" />
+          <circle class="media-spinner-arc" cx="44" cy="44" r="38" />
+        </svg>
+        <div class="media-pending-icon-inner" style="width: 48px; height: 48px;">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="23 7 16 12 23 17 23 7" />
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+          </svg>
+        </div>
+      </div>
       <h3>Ověřování kanálů</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">Scrapuji sociální sítě a načítám data...</p>
+      <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">Automaticky prověřuji sociální sítě a načítám data...</p>
       
       <div class="verification-steps">
         <div id="step-connect" class="verification-step-item checking">
@@ -2081,11 +2198,19 @@ async function submitMediaApplication(event) {
       await sleep(800);
 
       statusBox.innerHTML = `
-        <div class="media-status-card">
-          <div class="status-icon success"><svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+        <div class="media-status-card media-status--approved">
+          <div class="media-status-center">
+            <div class="status-approved-icon">
+              <svg class="ui-icon-svg ui-icon-svg--lg ui-icon-svg--green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+          </div>
           <h3>Žádost odeslána!</h3>
-          <p>Tvoje kanály byly úspěšně ověřeny. Žádost byla odeslána administrátorům ke schválení.</p>
-          <button onclick="checkMediaStatus()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zobrazit stav</button>
+          <p>Tvoje kanály byly úspěšně ověřeny. Žádost byla předána administrátorům ke schválení.</p>
+          <button onclick="checkMediaStatus()" class="btn-primary" style="margin-top: 25px; width: 100%;">
+            <span>Zobrazit stav žádosti</span>
+          </button>
         </div>
       `;
     } else {
@@ -2095,18 +2220,27 @@ async function submitMediaApplication(event) {
         const countLabel = check.count === null ? 'neznámý' : escapeHtml(check.count);
         const ok = (check.count !== null && check.count >= check.required);
         const statusLabel = ok ? 'OK' : 'Nesplněno';
-        const color = ok ? '#16a34a' : '#ef4444';
+        const color = ok ? '#21DE00' : '#ef4444';
         return `<div class="media-check-detail"><strong>${escapeHtml(check.platform)}:</strong> <span style="color:${color};">${countLabel} / ${escapeHtml(check.required)} — ${statusLabel}</span></div>`;
       }).join('');
       statusBox.innerHTML = `
-        <div class="media-status-card">
-          <div class="status-icon">❌</div>
+        <div class="media-status-card media-status--rejected">
+          <div class="media-status-center">
+            <div class="status-rejected-icon">
+              <svg class="ui-icon-svg ui-icon-svg--lg ui-icon-svg--red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </div>
+          </div>
           <h3>Ověření selhalo</h3>
-          <p style="color: #ef4444; font-weight: bold; margin-bottom: 15px;">${escapeHtml(data.error) || 'Nebyly splněny požadavky pro Media Rank.'}</p>
-          <p>Ujisti se, že máš dostatečný počet odběratelů/sledujících a zadal jsi správné odkazy.</p>
-          ${checksDetails ? `<div class="media-checks-list" style="margin-top: 12px; text-align:left;">${checksDetails}</div>` : ''}
-          ${data && data.raw ? `<pre style="text-align:left; margin-top:10px; background:rgba(0,0,0,0.12); padding:10px; border-radius:8px; overflow:auto; max-height:180px;">${escapeHtml(JSON.stringify(data.raw, null, 2))}</pre>` : ''}
-          <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zpět na formulář</button>
+          <p style="color: #ef4444; font-weight: 600; margin-bottom: 12px;">${escapeHtml(data.error) || 'Nebyly splněny požadavky pro Media Rank.'}</p>
+          <p style="color: var(--text-muted); font-size: 0.92rem;">Ujisti se, že máš dostatečný počet odběratelů / sledujících a zadal jsi správné odkazy.</p>
+          ${checksDetails ? `<div class="media-checks-list" style="margin-top: 14px; text-align:left;">${checksDetails}</div>` : ''}
+          ${data && data.raw ? `<pre style="text-align:left; margin-top:10px; background:rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); padding:10px; border-radius:8px; overflow:auto; max-height:180px; font-size:0.8rem;">${escapeHtml(JSON.stringify(data.raw, null, 2))}</pre>` : ''}
+          <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">
+            <span>Zpět na formulář</span>
+          </button>
         </div>
       `;
     }
@@ -2115,14 +2249,39 @@ async function submitMediaApplication(event) {
     document.getElementById('step-scrape').className = 'verification-step-item failed';
     await sleep(1000);
     statusBox.innerHTML = `
-      <div class="media-status-card">
-        <div class="status-icon">❌</div>
+      <div class="media-status-card" style="text-align: center;">
+        <div class="status-icon" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #f59e0b; font-size: 1.5rem; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; margin-bottom: 12px;">
+          <svg class="ui-icon-svg ui-icon-svg--md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+            <line x1="12" y1="9" x2="12"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
         <h3>Chyba spojení</h3>
-        <p style="color: #94a3b8;">Ověřovací server momentálně neodpovídá. Žádost nebyla ztracena, zkus ji prosím odeslat za chvíli.</p>
-        <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">Zpět na formulář</button>
+        <p style="color: #94a3b8; margin: 10px 0 18px 0;">Ověřovací server momentálně neodpovídá. Žádost nebyla ztracena, zkus ji prosím odeslat za chvíli.</p>
+        <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 15px; width: 100%;">
+          <span>Zpět na formulář</span>
+        </button>
       </div>
     `;
   }
+}
+
+// ---- NAVIGATE FROM MEDIA TO SMP+ COMPARISON TABLE ----
+function openSmpMediaComparison() {
+  executeTabSwitch('smp-plus', true);
+  setTimeout(() => {
+    const compSection = document.getElementById('smp-comparison');
+    if (compSection) {
+      compSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const mediaCols = compSection.querySelectorAll('.col-media');
+      mediaCols.forEach(col => {
+        col.classList.remove('col-media-pulse');
+        void col.offsetWidth;
+        col.classList.add('col-media-pulse');
+      });
+    }
+  }, 180);
 }
 
 // ---- PC INTERACTIVE PARTICLES (Disabled for clean, premium performance) ----

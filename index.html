@@ -17,8 +17,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20261124_anti_slop_v6" />
+  <link rel="stylesheet" href="style.css?v=20261124_anti_slop_full_v1" />
 </head>
 
 <body>
@@ -27,10 +26,11 @@
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
       <a href="#" class="nav-logo" onclick="showTab('home'); return false;">
-        <img src="imgs/logo.webp?v=20261119" alt="MYCHAL SMP Logo" class="nav-logo-img" />
+        <img src="imgs/logo.webp?v=20261119" alt="MYCHAL SMP Logo" class="nav-logo-img" width="36" height="36" />
         <span class="nav-logo-text">MYCHAL <span class="nav-logo-accent">SMP</span></span>
       </a>
       <div class="nav-links">
+        <div class="nav-indicator" id="nav-active-pill" aria-hidden="true"></div>
         <button id="tab-btn-home" class="nav-link active" onclick="showTab('home')">
           <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
             stroke-linecap="round" stroke-linejoin="round">
@@ -212,15 +212,15 @@
   <section id="tab-home" class="tab-section active">
     <div class="hero">
       <div class="hero-bg">
-        <img src="imgs/2026-07-03_00.51.06.webp" alt="MYCHAL SMP server" class="hero-bg-img" />
+        <img src="imgs/2026-07-03_00.51.06.webp" alt="MYCHAL SMP server" class="hero-bg-img" width="1920" height="1080" />
         <div class="hero-overlay"></div>
       </div>
       <div class="hero-content">
         <h1 class="sr-only">MYCHAL SMP</h1>
-        <img src="imgs/logo-hero.webp?v=20261119" alt="MYCHAL SMP Logo" class="hero-logo" />
+        <img src="imgs/logo-hero.webp?v=20261119" alt="MYCHAL SMP Logo" class="hero-logo" width="420" height="140" />
 
         <!-- Redesigned High-Visibility Interactive IP Bar -->
-        <div class="hero-ip-bar" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP adresu">
+        <div class="hero-ip-bar" onclick="copyIP(event)" title="Zkopírovat IP adresu">
           <div class="hero-ip-left">
             <span class="hero-ip-dot"></span>
             <span class="hero-ip-label">SERVER IP:</span>
@@ -268,7 +268,10 @@
             <span>Výhody SMP+</span>
           </button>
           <a href="https://discord.gg/HwZUGWGVD9" target="_blank" rel="noopener" class="btn-hero-discord">
-            <i class="fa-brands fa-discord"></i> Discord
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+            </svg>
+            <span>Discord</span>
           </a>
         </div>
       </div>
@@ -282,31 +285,36 @@
       <div class="container">
         <div class="stats-row">
           <div class="stat-card">
-            <img src="imgs/icons/minecraft-world-icon-14.webp" alt="World" class="stat-card-icon">
+            <img src="imgs/icons/minecraft-world-icon-14.webp" alt="World" class="stat-card-icon" width="32" height="32">
             <span class="stat-num" id="stat-whitelist" data-target="80">0</span>
             <span class="stat-label">Návštěvníků</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-card">
-            <img src="imgs/icons/Discord2.webp" alt="Discord" class="stat-card-icon stat-card-icon--discord">
+            <img src="imgs/icons/Discord2.webp" alt="Discord" class="stat-card-icon stat-card-icon--discord" width="32" height="32">
             <span class="stat-num" id="stat-discord" data-target="300">0</span>
             <span class="stat-label">Discord členů</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-card">
-            <img src="imgs/icons/trophy.webp" alt="Trophy" class="stat-card-icon">
+            <img src="imgs/icons/trophy.webp" alt="Trophy" class="stat-card-icon" width="32" height="32">
             <span class="stat-num" id="stat-playtime" data-target="1500">0</span>
             <span class="stat-label">Odehraných hodin</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-card">
-            <img src="imgs/icons/Heart.webp" alt="Heart" class="stat-card-icon">
+            <img src="imgs/icons/Heart.webp" alt="Heart" class="stat-card-icon" width="32" height="32">
             <span class="stat-num" id="stat-deaths" data-target="100">0</span>
             <span class="stat-label">Úmrtí</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-card">
-            <i class="fa-solid fa-coins stat-card-icon" style="color: #21DE00; font-size: 2rem;"></i>
+            <svg class="ui-icon-svg stat-card-icon" style="color: #21DE00; width: 32px; height: 32px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="8" cy="8" r="6" />
+              <path d="M18.09 10.37A6 6 0 1 1 10.34 18" />
+              <path d="M7 6h1v4" />
+              <path d="m16.71 13.88.7.71-2.82 2.82" />
+            </svg>
             <span class="stat-num" id="stat-money" data-target="644000000" style="color: #21DE00;">$644M</span>
             <span class="stat-label">Peněz</span>
           </div>
@@ -330,14 +338,20 @@
           <div class="gamemode-card gamemode-card--smp gamemode-card--architectural">
             <div class="gm-arch-crown">
               <div class="gm-arch-pediment gm-arch-pediment--smp">
-                <span class="gm-pediment-symbol">⚔</span>
+                <span class="gm-pediment-symbol" aria-hidden="true">
+                  <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+                    <line x1="13" y1="19" x2="19" y2="13" />
+                    <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5" />
+                  </svg>
+                </span>
                 <span class="gm-arch-tag">S M P · V A N I L L A</span>
               </div>
             </div>
 
             <div class="gm-arch-viewport" onclick="openLightbox('imgs/smp-card.jpg')"
-              title="Kliknutím zvětšíš screenshot">
-              <img src="imgs/smp-card.jpg" alt="SMP – Hlavní herní svět" class="gm-arch-img" />
+              title="Zvětšit náhled">
+              <img src="imgs/smp-card.jpg" alt="SMP – Hlavní herní svět" class="gm-arch-img" width="640" height="360" />
               <div class="gm-arch-overlay gm-arch-overlay--smp"></div>
               <div class="gm-arch-status-badge">
                 <span class="badge-live-pulse-blue"></span> Java 26.3 · 24/7
@@ -351,12 +365,18 @@
               </div>
 
               <div class="gm-arch-divider">
-                <span class="gm-arch-divider-dot">⚔</span>
+                <span class="gm-arch-divider-dot" aria-hidden="true">
+                  <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+                    <line x1="13" y1="19" x2="19" y2="13" />
+                    <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5" />
+                  </svg>
+                </span>
               </div>
 
               <p class="gm-arch-desc">
-                Autentický survival bez umělých ochran a pay-to-win výhod. Postav si základnu, obchoduj na tržnici v
-                <code>/shop</code> a ubraň své bohatství.
+                Survival bez umělých ochran a pay-to-win výhod. Postav základnu, obchoduj v
+                <code>/shop</code> a ubraň své zásoby.
               </p>
 
               <div class="gm-metric-tablets">
@@ -376,7 +396,7 @@
 
               <div class="gm-arch-foot">
                 <button class="btn-gm-action btn-gm--smp" onclick="copyIP(event)"
-                  title="Kliknutím zkopíruješ IP serveru">
+                  title="Zkopírovat IP serveru">
                   <span class="btn-copy-icon-wrap">
                     <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -398,14 +418,23 @@
           <div class="gamemode-card gamemode-card--stray gamemode-card--architectural">
             <div class="gm-arch-crown">
               <div class="gm-arch-pediment gm-arch-pediment--stray">
-                <span class="gm-pediment-symbol">❄</span>
+                <span class="gm-pediment-symbol" aria-hidden="true">
+                  <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <line x1="12" y1="2" x2="12" y2="22" />
+                    <path d="m20 16-4-4 4-4" />
+                    <path d="m4 8 4 4-4 4" />
+                    <path d="m16 4-4 4-4-4" />
+                    <path d="m8 20 4-4 4 4" />
+                  </svg>
+                </span>
                 <span class="gm-arch-tag">P E R M A F R O S T</span>
               </div>
             </div>
 
             <div class="gm-arch-viewport" onclick="openLightbox('imgs/permafrost-card.jpg')"
-              title="Kliknutím zvětšíš screenshot">
-              <img src="imgs/permafrost-card.jpg" alt="Permafrost – Arktický survival svět" class="gm-arch-img" />
+              title="Zvětšit náhled">
+              <img src="imgs/permafrost-card.jpg" alt="Permafrost – Arktický survival svět" class="gm-arch-img" width="640" height="360" />
               <div class="gm-arch-overlay gm-arch-overlay--stray"></div>
               <div class="gm-arch-status-badge">
                 <span class="badge-live-pulse-cyan"></span> Arktická tundra · Noční bestie
@@ -419,12 +448,21 @@
               </div>
 
               <div class="gm-arch-divider">
-                <span class="gm-arch-divider-dot">❄</span>
+                <span class="gm-arch-divider-dot" aria-hidden="true">
+                  <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <line x1="12" y1="2" x2="12" y2="22" />
+                    <path d="m20 16-4-4 4-4" />
+                    <path d="m4 8 4 4-4 4" />
+                    <path d="m16 4-4 4-4-4" />
+                    <path d="m8 20 4-4 4 4" />
+                  </svg>
+                </span>
               </div>
 
               <p class="gm-arch-desc">
-                Nekompromisní survival v sevření věčného ledu. Bojuj s termodynamikou chladu, udržuj táborák základny
-                při životě a ubraň se před nočními bestiemi.
+                Survival v sevření věčného ledu. Hlídáš teplotu těla, udržuješ táborák základny
+                při životě a bráníš se nočním bestiím.
               </p>
 
               <div class="gm-metric-tablets">
@@ -444,7 +482,7 @@
 
               <div class="gm-arch-foot">
                 <button type="button" class="btn-gm-action btn-gm--stray" onclick="copyCommand('/permafrost', this)"
-                  title="Kliknutím zkopíruješ příkaz do schránky">
+                  title="Zkopírovat příkaz /permafrost">
                   <span class="btn-copy-icon-wrap">
                     <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -474,8 +512,8 @@
 
             <!-- Carved Relic Photo in Stone Frame -->
             <div class="tombstone-relic-frame" onclick="openLightbox('imgs/survival-card.jpg')"
-              title="Kliknutím zvětšíš historický screenshot">
-              <img src="imgs/survival-card.jpg" alt="Původní Survival – 1. generace" class="tombstone-relic-img" />
+              title="Zvětšit náhled">
+              <img src="imgs/survival-card.jpg" alt="Původní Survival – 1. generace" class="tombstone-relic-img" width="640" height="360" />
               <div class="tombstone-relic-overlay"></div>
               <div class="tombstone-dates-badge">
                 <span>3. 6. 2024 — 28. 9. 2024</span>
@@ -493,8 +531,7 @@
               </div>
 
               <p class="tombstone-epitaph">
-                Zde odpočívá svět, který položil základy celého <strong>MYCHAL SMP</strong>. Vyrostly zde první hrady,
-                proběhly první války a vznikla komunita. Děkujeme za 117 dní nezapomenutelných dobrodružství.
+                První svět, který položil základy <strong>MYCHAL SMP</strong>. Za 117 dní zde vyrostly první stavby a vznikla komunita.
               </p>
 
               <!-- Stone Inscription Tablets (Pamětní destičky) -->
@@ -508,15 +545,15 @@
                   <span class="tombstone-plaque-lbl">První mapa</span>
                 </div>
                 <div class="tombstone-plaque">
-                  <span class="tombstone-plaque-val">Legenda</span>
-                  <span class="tombstone-plaque-lbl">V paměti</span>
+                  <span class="tombstone-plaque-val">Archiv</span>
+                  <span class="tombstone-plaque-lbl">Historie</span>
                 </div>
               </div>
 
               <!-- Interactive Stone Foot / Memorial Candle Tribute -->
               <div class="tombstone-foot">
                 <button type="button" class="tombstone-candle-btn" id="tombstone-candle-btn"
-                  onclick="tributeTombstone(this)" title="Kliknutím zapálíš svíčku a vzdáš úctu původnímu světu">
+                  onclick="tributeTombstone(this)" title="Zapálit svíčku">
                   <span class="candle-flame-icon" id="tombstone-candle-flame">
                     <svg class="ui-icon-svg flame-svg" viewBox="0 0 24 24" fill="currentColor">
                       <path
@@ -527,7 +564,7 @@
                     </svg>
                   </span>
                   <span class="candle-btn-text" id="tombstone-candle-text">Vzdát úctu · Zapálit svíčku</span>
-                  <span class="candle-counter-badge" id="tombstone-candle-count">43 🕯️</span>
+                  <span class="candle-counter-badge" id="tombstone-candle-count">43</span>
                 </button>
               </div>
             </div>
@@ -542,17 +579,16 @@
         <div class="section-title-box text-center">
           <h2 class="section-heading">Vlastní <span class="accent-blue">pluginy na míru</span></h2>
           <p class="section-subheading">
-            Místo desítek balastních pluginů stažených z internetu vyvíjíme vlastní pluginy na míru. Server běží na
-            jádru LeafMC s formátem Linear V2, které brutálně šetří výkon i místo na disku – nulový zbytečný bloatware a
-            stabilních 20 TPS.
+            Místo desítek cizích pluginů vyvíjíme vlastní jádro na míru. Server běží na jádru LeafMC s formátem
+            Linear V2 pro nižší nároky na disk a stabilních 20 TPS.
           </p>
         </div>
 
         <!-- Tech Highlights Bar -->
         <div class="tech-specs-bar">
           <div class="tech-spec-item">
-            <img src="imgs/icons/leaf.svg" alt="LeafMC" class="tech-spec-icon-img" />
-            <span>Brutální výkon & 20 TPS (LeafMC)</span>
+            <img src="imgs/icons/leaf.svg" alt="LeafMC" class="tech-spec-icon-img" width="18" height="18" />
+            <span>LeafMC · 20 TPS</span>
           </div>
           <div class="tech-spec-item">
             <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -563,14 +599,14 @@
               <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
               <line x1="12" y1="22.08" x2="12" y2="12"></line>
             </svg>
-            <span>Masivní úspora místa na disku (Linear V2)</span>
+            <span>Linear V2 · Komprese světa</span>
           </div>
           <div class="tech-spec-item">
             <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             </svg>
-            <span>Vlastní pluginy šité na míru</span>
+            <span>Vlastní modulární pluginy</span>
           </div>
         </div>
 
@@ -582,14 +618,13 @@
               <div class="tech-plugin-title-group">
                 <span class="tech-plugin-name">Beacon</span>
                 <div class="tech-plugin-avatar-peek">
-                  <img src="imgs/icons/beacon.webp" alt="Beacon" class="tech-plugin-avatar-img" />
+                  <img src="imgs/icons/beacon.webp" alt="Beacon" class="tech-plugin-avatar-img" width="48" height="48" />
                 </div>
               </div>
               <span class="tech-plugin-tag">Centrální jádro</span>
             </div>
             <p class="tech-plugin-desc">
-              Hlavní páteř sítě propojující veškeré subsystémy. Zajišťuje plynulý chod ekonomiky, moderní GUI rozhraní,
-              synchronizaci dat a správu světa.
+              Páteř sítě propojující ekonomiku, GUI rozhraní, synchronizaci dat a správu světa.
             </p>
           </div>
 
@@ -599,14 +634,13 @@
               <div class="tech-plugin-title-group">
                 <span class="tech-plugin-name">Warden</span>
                 <div class="tech-plugin-avatar-peek">
-                  <img src="imgs/icons/warden.webp" alt="Warden" class="tech-plugin-avatar-img" />
+                  <img src="imgs/icons/warden.webp" alt="Warden" class="tech-plugin-avatar-img" width="48" height="48" />
                 </div>
               </div>
               <span class="tech-plugin-tag">Anticheat & Bezpečnost</span>
             </div>
             <p class="tech-plugin-desc">
-              Vlastní bezpečnostní modul chránící integritu hry a férovost soubojů bez zbytečné zátěže na hlavní herní
-              vlákno.
+              Vlastní bezpečnostní modul chránící integritu hry a férovost soubojů bez zátěže pro hlavní herní vlákno.
             </p>
           </div>
 
@@ -616,14 +650,13 @@
               <div class="tech-plugin-title-group">
                 <span class="tech-plugin-name">Iron Golem</span>
                 <div class="tech-plugin-avatar-peek">
-                  <img src="imgs/icons/iron_golem.webp" alt="Iron Golem" class="tech-plugin-avatar-img" />
+                  <img src="imgs/icons/iron_golem.webp" alt="Iron Golem" class="tech-plugin-avatar-img" width="48" height="48" />
                 </div>
               </div>
               <span class="tech-plugin-tag">Autentizace</span>
             </div>
             <p class="tech-plugin-desc">
-              Bezpečnostní brána vstupu na server s hybridním přihlašováním pro maximální ochranu hráčských profilů a
-              propojení s Discordem.
+              Autentizační brána s hybridním přihlašováním pro originální i warez účty a propojením s Discordem.
             </p>
           </div>
 
@@ -633,14 +666,13 @@
               <div class="tech-plugin-title-group">
                 <span class="tech-plugin-name">Enderman</span>
                 <div class="tech-plugin-avatar-peek">
-                  <img src="imgs/icons/enderman.webp" alt="Enderman" class="tech-plugin-avatar-img" />
+                  <img src="imgs/icons/enderman.webp" alt="Enderman" class="tech-plugin-avatar-img" width="48" height="48" />
                 </div>
               </div>
               <span class="tech-plugin-tag">Správa území</span>
             </div>
             <p class="tech-plugin-desc">
-              Vysoko-rychlostní perzistence a střežení chunků optimalizované pro formát Linear V2, eliminující lag spiky
-              při ukládání a načítání světa.
+              Rychlá perzistence a správa chunků pro formát Linear V2 bez lag spiků při ukládání světa.
             </p>
           </div>
 
@@ -650,14 +682,13 @@
               <div class="tech-plugin-title-group">
                 <span class="tech-plugin-name">Wither</span>
                 <div class="tech-plugin-avatar-peek">
-                  <img src="imgs/icons/wither.webp" alt="Wither" class="tech-plugin-avatar-img" />
+                  <img src="imgs/icons/wither.webp" alt="Wither" class="tech-plugin-avatar-img" width="48" height="48" />
                 </div>
               </div>
               <span class="tech-plugin-tag">Bojový systém</span>
             </div>
             <p class="tech-plugin-desc">
-              Bojový engine zajišťující okamžitou odezvu hitů, arény, duely a čisté PvP bez kompromisů a paketového
-              zpoždění.
+              Bojový systém pro arény, duely a PvP s přímou odezvou.
             </p>
           </div>
 
@@ -667,14 +698,13 @@
               <div class="tech-plugin-title-group">
                 <span class="tech-plugin-name">Evoker</span>
                 <div class="tech-plugin-avatar-peek">
-                  <img src="imgs/icons/evoker.webp" alt="Evoker" class="tech-plugin-avatar-img" />
+                  <img src="imgs/icons/evoker.webp" alt="Evoker" class="tech-plugin-avatar-img" width="48" height="48" />
                 </div>
               </div>
               <span class="tech-plugin-tag">Vlastní magie</span>
             </div>
             <p class="tech-plugin-desc">
-              Soustava vlastních vyvážených enchantů (Harvester, Delving, Dampening, Resurgence), rifts a totemů
-              obohacující zážitek z přežití.
+              Vlastní vyvážené enchanty (Harvester, Delving, Dampening, Resurgence), rifts a totemy.
             </p>
           </div>
 
@@ -684,14 +714,13 @@
               <div class="tech-plugin-title-group">
                 <span class="tech-plugin-name">Stray</span>
                 <div class="tech-plugin-avatar-peek">
-                  <img src="imgs/icons/stray.webp" alt="Stray" class="tech-plugin-avatar-img" />
+                  <img src="imgs/icons/stray.webp" alt="Stray" class="tech-plugin-avatar-img" width="48" height="48" />
                 </div>
               </div>
               <span class="tech-plugin-tag">Mrazivé přežití</span>
             </div>
             <p class="tech-plugin-desc">
-              Specializovaný subsystém pro extrémní tundru, reálnou termodynamiku mrazu, výzkumné laboratoře a
-              adaptované noční bytosti.
+              Subsystém pro arktickou tundru s termodynamikou chladu, laboratořemi a nočními bytostmi.
             </p>
           </div>
         </div>
@@ -718,9 +747,9 @@
                   d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                 <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
               </svg>
-              <span>Java Edition • <strong>26.1 – 26.3</strong> (Doporučeno <strong>26.3</strong>)</span>
+              <span>Java Edition · <strong>26.1 – 26.3</strong> · Doporučeno <strong>26.3</strong></span>
             </span>
-            <div class="join-quick-ip-address" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP adresu">
+            <div class="join-quick-ip-address" onclick="copyIP(event)" title="Zkopírovat IP adresu">
               <code class="join-ip-code-text">mychalsmp.xyz</code>
               <button class="join-quick-copy-btn" aria-label="Zkopírovat IP">
                 <span class="btn-copy-icon-wrap">
@@ -785,9 +814,7 @@
             </div>
             <h3 class="join-step-title">Spusť Minecraft ve verzi 26.3</h3>
             <p class="join-step-text">
-              Server běží na verzi <strong>26.3</strong> s plnou multi-version podporou
-              pro verze <strong>26.1 až 26.3</strong> přes ProtocolBridge. Pro maximální plynulost,
-              nejnovější mechaniky a bezchybnou stabilitu doporučujeme verzi <strong>26.3</strong>.
+              Server běží na verzi <strong>26.3</strong> s multi-version podporou pro <strong>26.1 až 26.3</strong> přes ProtocolBridge. Doporučujeme verzi <strong>26.3</strong>.
             </p>
             <div class="join-step-action-bar">
               <span class="join-step-chip">
@@ -796,12 +823,12 @@
                   <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
                   <path d="M13 13l6 6" />
                 </svg>
-                <span>V hlavním menu klikni na <strong>Hra více hráčů (Multiplayer)</strong></span>
+                <span>V hlavním menu klikni na <strong>Hra více hráčů / Multiplayer</strong></span>
               </span>
             </div>
           </div>
           <div class="join-step-media" onclick="openLightbox('imgs/screenshot/multiplayer.png')"
-            title="Kliknutím zvětšíš screenshot">
+            title="Zvětšit náhled">
             <div class="join-media-window-bar">
               <div class="join-window-dots">
                 <span class="dot dot--red"></span>
@@ -812,7 +839,7 @@
             </div>
             <div class="join-media-canvas">
               <img src="imgs/screenshot/multiplayer.png" alt="Otevření Multiplayeru v Minecraftu" class="join-media-img"
-                loading="lazy" />
+                width="800" height="450" loading="lazy" />
             </div>
           </div>
         </div>
@@ -824,10 +851,9 @@
               <span class="join-step-index">02</span>
               <span class="join-step-tag">Seznam serverů</span>
             </div>
-            <h3 class="join-step-title">Klikni na Přidat server (Add Server)</h3>
+            <h3 class="join-step-title">Přidej server do seznamu</h3>
             <p class="join-step-text">
-              V dolní liště seznamu serverů klikni na tlačítko <strong>Přidej server (Add Server)</strong>. Název
-              serveru si zadej libovolně (např. <code>MYCHAL SMP</code>), abys server v seznamu snadno poznal.
+              V dolní liště seznamu serverů vyber <strong>Přidat server / Add Server</strong>. Název zadej libovolně, například <code>MYCHAL SMP</code>.
             </p>
             <div class="join-step-action-bar">
               <span class="join-step-chip">
@@ -836,12 +862,12 @@
                   <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
                   <path d="M13 13l6 6" />
                 </svg>
-                <span>Klikni na <strong>Přidej server</strong> dole v liště</span>
+                <span>Klikni na <strong>Přidat server</strong> dole v liště</span>
               </span>
             </div>
           </div>
           <div class="join-step-media" onclick="openLightbox('imgs/screenshot/addsrvr.png')"
-            title="Kliknutím zvětšíš screenshot">
+            title="Zvětšit náhled">
             <div class="join-media-window-bar">
               <div class="join-window-dots">
                 <span class="dot dot--red"></span>
@@ -851,8 +877,8 @@
               <span class="join-media-title">Výběr serveru</span>
             </div>
             <div class="join-media-canvas">
-              <img src="imgs/screenshot/addsrvr.png" alt="Tlačítko Přidej server (Add Server)" class="join-media-img"
-                loading="lazy" />
+              <img src="imgs/screenshot/addsrvr.png" alt="Tlačítko Přidat server" class="join-media-img"
+                width="800" height="450" loading="lazy" />
             </div>
           </div>
         </div>
@@ -866,14 +892,13 @@
             </div>
             <h3 class="join-step-title">Zadej IP adresu a zapni textury</h3>
             <p class="join-step-text">
-              Do pole <em>Adresa serveru (Server Address)</em> zadej <code>mychalsmp.xyz</code>. Položku <strong>Server
-                Resource Packs</strong> nastav na <strong>Enabled (Povoleno)</strong> pro správné načtení serverových
-              modelů.
+              Do pole <em>Adresa serveru</em> zadej <code>mychalsmp.xyz</code>. Položku <strong>Server
+                Resource Packs</strong> nastav na <strong>Povoleno</strong> pro načtení serverových modelů.
             </p>
             <div class="join-step-action-bar">
-              <div class="join-compact-ip-box" onclick="copyIP(event)" title="Kliknutím zkopíruješ IP adresu">
+              <div class="join-compact-ip-box" onclick="copyIP(event)" title="Zkopírovat IP adresu">
                 <code class="join-compact-ip-code">mychalsmp.xyz</code>
-                <button class="join-compact-copy-btn">
+                <button type="button" class="join-compact-copy-btn" aria-label="Kopírovat IP">
                   <span class="btn-copy-icon-wrap">
                     <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -891,7 +916,7 @@
             </div>
           </div>
           <div class="join-step-media" onclick="openLightbox('imgs/screenshot/nameippack.png')"
-            title="Kliknutím zvětšíš screenshot">
+            title="Zvětšit náhled">
             <div class="join-media-window-bar">
               <div class="join-window-dots">
                 <span class="dot dot--red"></span>
@@ -902,7 +927,7 @@
             </div>
             <div class="join-media-canvas">
               <img src="imgs/screenshot/nameippack.png" alt="Nastavení IP adresy a textur" class="join-media-img"
-                loading="lazy" />
+                width="800" height="450" loading="lazy" />
             </div>
           </div>
         </div>
@@ -929,7 +954,7 @@
                   </svg>
                   <strong>Originální Minecraft</strong>
                 </div>
-                <p>Automatický Mojang Auto-Login bez nutnosti zadávat jakékoliv heslo.</p>
+                <p>Automatický Mojang Auto-Login bez nutnosti zadávat heslo.</p>
               </div>
               <div class="join-auth-mini-card join-auth-mini--warez">
                 <div class="join-auth-mini-head">
@@ -943,9 +968,9 @@
                   </svg>
                   <strong>Warez klient</strong>
                 </div>
-                <p>Při prvním vstupu se jednorázově zaregistruj:</p>
+                <p>Při prvním vstupu se zaregistruj:</p>
                 <div class="join-mini-cmd" onclick="copyCommand('/register heslo123 heslo123', this)"
-                  title="Kliknutím zkopíruješ příkaz">
+                  title="Zkopírovat příkaz">
                   <code>/register &lt;heslo&gt; &lt;heslo&gt;</code>
                   <span class="btn-copy-icon-wrap">
                     <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -963,7 +988,7 @@
             </div>
           </div>
           <div class="join-step-media" onclick="openLightbox('imgs/screenshot/registerhesloheslo.png')"
-            title="Kliknutím zvětšíš screenshot">
+            title="Zvětšit náhled">
             <div class="join-media-window-bar">
               <div class="join-window-dots">
                 <span class="dot dot--red"></span>
@@ -974,7 +999,7 @@
             </div>
             <div class="join-media-canvas join-media-canvas--chat">
               <img src="imgs/screenshot/registerhesloheslo.png" alt="Registrace v chatu serveru"
-                class="join-media-img join-media-img--chat" loading="lazy" />
+                class="join-media-img join-media-img--chat" width="800" height="450" loading="lazy" />
             </div>
           </div>
         </div>
@@ -985,8 +1010,7 @@
             <span class="smp-spec-label">KOMUNITA & PODPORA</span>
             <h3 class="join-community-title">Připoj se k nám na Discord</h3>
             <p class="join-community-desc">
-              Nejčerstvější novinky, komunitní události, pokec s hráči, přímý ticket systém pro řešení dotazů a náš
-              Discord bot pro okamžitou pomoc.
+              Novinky, komunitní události, ticket systém podpory a Discord bot.
             </p>
           </div>
           <div class="join-community-right">
@@ -1019,8 +1043,8 @@
             </svg>
           </button>
           <div class="faq-content">
-            <p>Není potřeba žádný whitelist. Náš server je plně veřejný pro všechny hráče. Stačí v Minecraftu zadat IP
-              <code>mychalsmp.xyz</code> a připojit se ve verzi 26.1 až 26.3 (doporučena 26.3).
+            <p>Whitelist není potřeba. Server je veřejný — zadej IP <code>mychalsmp.xyz</code> ve verzi 26.1 až 26.3,
+              doporučená je 26.3.
             </p>
           </div>
         </div>
@@ -1033,8 +1057,8 @@
             </svg>
           </button>
           <div class="faq-content">
-            <p>Server běží na verzi <strong>26.3</strong> a díky ProtocolBridge plně podporuje verze <strong>26.1,
-                26.1.1, 26.1.2</strong> až <strong>26.3</strong>. Doporučujeme verzi <strong>26.3</strong>.</p>
+            <p>Server běží na verzi <strong>26.3</strong> a díky ProtocolBridge podporuje verze <strong>26.1 až
+                26.3</strong>. Doporučujeme verzi <strong>26.3</strong>.</p>
           </div>
         </div>
         <div class="faq-card">
@@ -1046,8 +1070,7 @@
             </svg>
           </button>
           <div class="faq-content">
-            <p>Ano, server běží nepřetržitě 24/7. Krátké plánované odstávky probíhají výhradně při noční údržbě či
-              aktualizacích, o kterých předem informujeme na našem Discordu.</p>
+            <p>Ano, server běží 24/7. Plánované odstávky při údržbě oznamujeme předem na Discordu.</p>
           </div>
         </div>
         <div class="faq-card">
@@ -1110,7 +1133,7 @@
           </div>
           <div class="rules-pillar-info">
             <span class="rules-pillar-title">Odměny za bugy</span>
-            <span class="rules-pillar-desc">Našel jsi chybu? Nahlas ji a získej diamantové bloky!</span>
+            <span class="rules-pillar-desc">Nahlášené chyby odměňujeme diamantovými bloky, kritické exploity Netherite bloky.</span>
           </div>
         </div>
       </div>
@@ -1127,7 +1150,7 @@
                 </svg>
                 <span>CO JE POVOLENO & VÍTÁNO</span>
               </div>
-              <h3 class="rules-compare-title">Hraj svobodně a užívej si hru</h3>
+              <h3 class="rules-compare-title">Povolené mody a herní mechaniky</h3>
             </div>
 
             <ul class="rules-compare-items">
@@ -1153,7 +1176,7 @@
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Informační a HUD doplňky</strong>
-                  <p>Ukazatel FPS, pingu, stavu zbroje (Armor HUD) a souřadnice na klávese F3.</p>
+                  <p>Ukazatel FPS, pingu, stavu zbroje a souřadnic na klávese F3.</p>
                 </div>
               </li>
 
@@ -1165,8 +1188,8 @@
                   </svg>
                 </div>
                 <div class="rules-compare-item-body">
-                  <strong>Boj, pasti a ničení na SMP světě (/smp)</strong>
-                  <p>Na novém SMP světě jsou přepady, pasti a ničení legální herní mechanikou!</p>
+                  <strong>Boj, pasti a ničení na SMP světě</strong>
+                  <p>Na SMP světě jsou přepady, pasti a ničení běžnou herní mechanikou.</p>
                 </div>
               </li>
 
@@ -1259,7 +1282,7 @@
                   </svg>
                 </div>
                 <div class="rules-compare-item-body">
-                  <strong>Ničení staveb na Survivalu (/survival)</strong>
+                  <strong>Ničení staveb na Survivalu</strong>
                   <p>Na klasickém Survivalu je griefing a krádež v claimu zakázána.</p>
                 </div>
               </li>
@@ -1274,7 +1297,7 @@
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Duplikace itemů a bug abuse</strong>
-                  <p>Zneužití chyb vede k okamžitému banu a smazání inventáře. Chyby hlásíme!</p>
+                  <p>Zneužití chyb vede k okamžitému banu a smazání inventáře. Chyby nahlas.</p>
                 </div>
               </li>
 
@@ -1298,6 +1321,7 @@
 
       <!-- INTERACTIVE CATEGORY FILTER -->
       <div class="rules-filter-bar" role="tablist" aria-label="Filtrovat pravidla podle kategorie">
+        <div class="rules-filter-indicator" id="rules-filter-pill" aria-hidden="true"></div>
         <button class="rules-filter-btn active" onclick="filterRules('all', this)" role="tab" aria-selected="true">
           <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2">
@@ -1305,7 +1329,7 @@
             <line x1="12" y1="8" x2="12" y2="12" />
             <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
-          <span>Všechna pravidla (8)</span>
+          <span>Všechna pravidla</span>
         </button>
         <button class="rules-filter-btn" onclick="filterRules('fairplay', this)" role="tab" aria-selected="false">
           <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2">
@@ -1440,11 +1464,11 @@
               <li>Zakázány jsou hack klienti (Meteor, Wurst apod.), Killaura, Fly, Speed, Jesus, Reach, Auto-totem a
                 Baritone.</li>
               <li><strong>Zákaz všech minimap:</strong> Xaero's Minimap, JourneyMap i veškeré modifikace zobrazující
-                minimapu či vestavěné waypointy jsou přísně zakázány!</li>
+                minimapu či vestavěné waypointy jsou přísně zakázány.</li>
               <li>Cheaty ani minimapy nesmějí být ve složce s mody ani v paměti klienta, i když jsou momentálně vypnuté.
               </li>
               <li><strong>Spoluúčast se trestá:</strong> Pomoc cheaterům, krytí viníků a přechovávání nelegálních věcí
-                se trestá BANEM!</li>
+                se trestá banem.</li>
               <li><strong>Replay Mod:</strong> Je povolen výhradně pro schválené tvůrce s Media rankem.</li>
             </ul>
           </div>
@@ -1464,7 +1488,7 @@
               <li>X-Ray modifikace i průhledné texture packy pro odhalování diamantů, netheritu či jiných rud.</li>
               <li>Cave findery, vyhledávače dungeonů a vyhledávače pevných struktur.</li>
               <li>Entity ESP, tracery a neférové zaměřování hráčů přes stěny.</li>
-              <li>Anticheat a personál automaticky analyzují statistiky těžby a neobvyklé trajektorie.</li>
+              <li>Bezpečnostní systém chrání integritu hry a férovou těžbu.</li>
             </ul>
           </div>
         </article>
@@ -1481,8 +1505,8 @@
           <div class="rule-details">
             <ul class="rule-bullet-list">
               <li>Zákaz duplikování předmětů, coinů a využívání chyb v pluginech či generaci světa.</li>
-              <li><strong>Odměna za poctivost:</strong> Našel jsi bug? Nahlaste ho do ticketu na Discordu nebo přes
-                /report – poctivost odměňujeme diamantovými bloky!</li>
+              <li><strong>Odměna za poctivost:</strong> Našel jsi bug? Nahlas ho přes Discord ticket nebo
+                <code>/report</code> — ověřená hlášení odměňujeme diamantovými bloky.</li>
               <li>Krytí duperů, braní dupovaných itemů a zamlčování chyb se trestá úplným wipem.</li>
             </ul>
           </div>
@@ -1501,7 +1525,7 @@
             <ul class="rule-bullet-list">
               <li>Můžeš ničit základny, stavět pasti, loupit suroviny a vést války s ostatními hráči.</li>
               <li>Žádné bezpečné claimy ani ochrana truhel – musíš si postavit tajnou a nedobytnou bázi.</li>
-              <li>Stále však platí zákaz cheatů, lag machin a IRL obchodu!</li>
+              <li>Stále však platí zákaz cheatů, lag machin a IRL obchodu.</li>
             </ul>
           </div>
         </article>
@@ -1512,16 +1536,16 @@
             <span class="rule-penalty-badge rule-penalty-badge--ban">SURVIVAL: ZÁKAZ GRIEFU</span>
             <span class="rule-category-chip">Světy & Ničení</span>
           </div>
-          <h3 class="rule-title">Klasický Survival (/survival): Klid a stavění</h3>
+          <h3 class="rule-title">Klasický Survival: Klid a stavění</h3>
           <p class="rule-summary">Na klasickém Survivalu je ničení cizích staveb, krádeže a neoprávněné zasahování
             zakázáno.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
-              <li>Chraň své stavby zlatou lopatou nebo příkazem pro claim (/claim). Důvěru kamarádům udělíš přes /trust.
+              <li>Chraň své stavby zlatou lopatou nebo příkazem <code>/claim</code>. Důvěru kamarádům udělíš přes <code>/trust</code>.
               </li>
               <li>Ničení v těsné blízkosti cizích pozemků a krádeže nechráněných truhel se trestá banem a rollbackem.
               </li>
-              <li>Chceme mít místo, kde můžeš v klidu stavět své vysněné stavitelské projekty.</li>
+              <li>Chceme mít místo, kde můžeš v klidu stavět své projekty.</li>
             </ul>
           </div>
         </article>
@@ -1538,7 +1562,7 @@
           <div class="rule-details">
             <ul class="rule-bullet-list">
               <li>Extrémní redstone hodiny bez vypínače, hromadné odpalování stovek TNT a spawner spam.</li>
-              <li>Neomezené množení mobů a zvířat na jednom bloku (entity cramming lag).</li>
+              <li>Neomezené množení mobů a zvířat na jednom bloku.</li>
               <li>Automatické farmy stavěj ohleduplně a při odchodu od stroje jej vždy vypni.</li>
             </ul>
           </div>
@@ -1556,7 +1580,7 @@
           <div class="rule-details">
             <ul class="rule-bullet-list">
               <li>Zákaz hrubých vulgarismů, osobních útoků, šikany a provokací v herním chatu i na Discordu.</li>
-              <li>Zákaz spamu, velkých písmen (CAPS-LOCK) a posílání nevhodného (NSFW) obsahu.</li>
+              <li>Zákaz spamu, psaní velkými písmeny a nevhodného obsahu.</li>
               <li><strong>Zákaz reklamy:</strong> Propagace cizích Minecraft serverů, Discordů či webů znamená okamžitý
                 mute.</li>
               <li>Žádosti o unban/unmute se řeší výhradně přes tickety na Discordu, ne v herním chatu.</li>
@@ -1636,9 +1660,9 @@
               <polyline points="16 9 10 15 8 13" />
             </svg>
           </div>
-          <h4 class="quiz-success-title">Skvělá práce! Jsi oficiálně prověřený hráč</h4>
+          <h4 class="quiz-success-title">Test splněn. Pravidla ovládáš.</h4>
           <p class="quiz-success-desc" id="quiz-success-desc">
-            Zvládl jsi všechny herní situace na 100 %! Přesně víš, co je na serveru fér a na co si dát pozor.
+            Zvládl jsi všechny herní situace bez chyby.
           </p>
           <div class="quiz-success-actions">
             <button class="btn-primary" onclick="copyIP(event)">
@@ -1657,7 +1681,7 @@
               <span>Vyzkoušet další náhodné situace</span>
             </button>
             <button class="btn-secondary" onclick="showTab('join')">
-              <span>Jak se připojit do 1 minuty →</span>
+              <span>Jak se připojit →</span>
             </button>
           </div>
         </div>
@@ -1667,7 +1691,7 @@
       <div class="rules-footer-box">
         <div class="rules-footer-left">
           <div class="rules-footer-badge">
-            <img src="imgs/icons/Heart.webp" alt="Minecraft Heart" class="inline-game-icon animate-pulse" />
+            <img src="imgs/icons/Heart.webp" alt="Minecraft Heart" class="inline-game-icon animate-pulse" width="20" height="20" />
             <span>ZLATÉ PRAVIDLO SERVERU</span>
           </div>
           <h3>Chovej se k ostatním tak, jak chceš, aby se oni chovali k tobě</h3>
@@ -1748,7 +1772,7 @@
           <div class="modtest-form-grid">
             <div class="modtest-input-group">
               <label class="modtest-label" for="modtest-nick">Tvůj Minecraft Nick</label>
-              <input type="text" id="modtest-nick" class="modtest-input" placeholder="např. MychalVidea" required
+              <input type="text" id="modtest-nick" class="modtest-input" placeholder="např. mychalVidea" required
                 autocomplete="off" />
             </div>
             <div class="modtest-input-group">
@@ -2135,7 +2159,7 @@
               <!-- Chat View -->
               <div class="smp-chat-preview" id="smp-view-chat">
                 <img id="smp-preview-head" src="https://mc-heads.net/avatar/Steve/28" class="mc-avatar-head"
-                  alt="Skin Head">
+                  alt="Skin Head" width="28" height="28">
                 <span class="mc-chat-flag" title="Česká republika">🇨🇿</span>
                 <span class="smp-preview-plus tier-plusplusplus">+++</span><span class="smp-preview-name"
                   id="smp-preview-name">Hrac</span><span class="smp-chat-colon">:</span>
@@ -2146,7 +2170,7 @@
               <div class="smp-tablist-preview" id="smp-view-tab" style="display: none;">
                 <div class="smp-tab-player-item">
                   <img id="smp-preview-head-tab" src="https://mc-heads.net/avatar/Steve/24" class="mc-avatar-head-sm"
-                    alt="Skin Head">
+                    alt="Skin Head" width="24" height="24">
                   <span class="mc-chat-flag">🇨🇿</span>
                   <span class="smp-preview-plus tier-plusplusplus">+++</span><span class="smp-preview-name"
                     id="smp-preview-name-tab">Hrac</span>
@@ -2168,7 +2192,7 @@
                       id="smp-preview-name-tag">Hrac</span>
                   </div>
                   <img id="smp-preview-head-tag" src="https://mc-heads.net/avatar/Steve/42" class="mc-avatar-nametag"
-                    alt="Skin Head">
+                    alt="Skin Head" width="42" height="42">
                 </div>
               </div>
             </div>
@@ -2214,7 +2238,7 @@
               <label for="mc-username" class="smp-unified-label">TVŮJ MINECRAFT NICK:</label>
               <div class="nickname-input-wrapper">
                 <img id="nickname-input-head" src="https://mc-heads.net/avatar/Steve/24" class="nickname-input-head"
-                  alt="Head">
+                  alt="Head" width="24" height="24">
                 <input type="text" id="mc-username" class="nickname-input nickname-input--with-head"
                   placeholder="Zadej svůj herní nick..." required oninput="updatePreviewName(this.value)"
                   autocomplete="off" />
@@ -2860,9 +2884,9 @@
                 <circle cx="12" cy="12" r="4"></circle>
               </svg>
             </div>
-            <h4>24 prémiových barev jména (/cc)</h4>
-            <p>Výběr z 24 barevných odstínů pro tvůj nick v chatu, tablistu i nad postavou v moderním Paper Dialogu. U
-              SMP++ a SMP+++ navíc možnost složit si unikátní dvoubarevný gradient z libovolných 2 barev!</p>
+            <h4>24 barev jména (/cc)</h4>
+            <p>Výběr z 24 barevných odstínů pro tvůj nick v chatu, tablistu i nad postavou v Paper Dialogu. U
+              SMP++ a SMP+++ navíc možnost složit dvoubarevný gradient z libovolných 2 barev.</p>
           </div>
 
           <!-- 6. 16 barev postelí a vlastní ikony -->
@@ -2952,12 +2976,18 @@
           <!-- Rank: Default Player -->
           <div class="rank-card">
             <div class="rank-card-header">
-              <span class="rank-card-name"><i class="fa-solid fa-user"></i> Hráč (Základní)</span>
-              <span class="rank-card-tag rank-tag--player">Zdarma pro všechny</span>
+              <span class="rank-card-name">
+                <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                Hráč
+              </span>
+              <span class="rank-card-tag rank-tag--player">Zdarma</span>
             </div>
             <div class="rank-card-preview">
               <span class="mc-chat-flag">🇨🇿</span> <span class="rank-p-name">Hrac</span><span
-                class="smp-chat-colon">:</span> <span class="smp-chat-text">Ahoj všem na serveru!</span>
+                class="smp-chat-colon">:</span> <span class="smp-chat-text">Ahoj všem na serveru</span>
             </div>
             <div class="rank-card-foot">Vlajka hráče, čisté bílé jméno bez rušivých prefixů.</div>
           </div>
@@ -2966,13 +2996,18 @@
           <div class="rank-card rank-card--smp" style="cursor: pointer;"
             onclick="showTab('smp-plus'); selectSmpTierAndScroll('smp_plus');">
             <div class="rank-card-header">
-              <span class="rank-card-name"><i class="fa-solid fa-bolt text-blue"></i> SMP+ Člen</span>
+              <span class="rank-card-name">
+                <svg class="ui-icon-svg ui-icon-svg--sm text-blue" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+                SMP+ Člen
+              </span>
               <span class="rank-card-tag rank-tag--smp">1.99 € / měsíc</span>
             </div>
             <div class="rank-card-preview">
               <span class="mc-chat-flag">🇨🇿</span> <span class="smp-preview-plus tier-plus">+</span><span
                 class="rank-p-name text-cyan">Hrac</span><span class="smp-chat-colon">:</span> <span
-                class="smp-chat-text">Ahoj, mám aktivní SMP+!</span>
+                class="smp-chat-text">Ahoj, mám aktivní SMP+</span>
             </div>
             <div class="rank-card-foot">Modrý symbol <code>+</code> před nickem, 14 domovů, okamžitý /home, 54 slotů /ec, 10 nabídek v /ah, 14 chunků
               dohled a 24 barev <code>/cc</code>.</div>
@@ -2983,7 +3018,7 @@
             onclick="showTab('smp-plus'); selectSmpTierAndScroll('smp_pp');">
             <div class="rank-card-header">
               <span class="rank-card-name"><svg class="ui-icon-svg" style="width:16px;height:16px;color:#0a67e5;"
-                  viewBox="0 0 24 24" fill="currentColor">
+                  viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                 </svg> SMP++ Člen</span>
               <span class="rank-card-tag rank-tag--smppp">3.79 € / měsíc</span>
@@ -2991,7 +3026,7 @@
             <div class="rank-card-preview">
               <span class="mc-chat-flag">🇨🇿</span> <span class="smp-preview-plus tier-plus">++</span><span
                 class="rank-p-name text-cyan">Hrac</span><span class="smp-chat-colon">:</span> <span
-                class="smp-chat-text">Ahoj, mám aktivní SMP++!</span>
+                class="smp-chat-text">Ahoj, mám aktivní SMP++</span>
             </div>
             <div class="rank-card-foot">Symbol <code>++</code> s volbou barvy, 21 domovů, dvoubarevný gradient, 10 nabídek v /ah, rychlý
               Shift výkup a 15 chunků dohled.</div>
@@ -3002,7 +3037,7 @@
             onclick="showTab('smp-plus'); selectSmpTierAndScroll('smp_ppp');">
             <div class="rank-card-header">
               <span class="rank-card-name"><svg class="ui-icon-svg" style="width:16px;height:16px;color:#0a67e5;"
-                  viewBox="0 0 24 24" fill="currentColor">
+                  viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                 </svg> SMP+++ Člen</span>
               <span class="rank-card-tag rank-tag--smpppp">3.99 € / měsíc</span>
@@ -3010,68 +3045,90 @@
             <div class="rank-card-preview">
               <span class="mc-chat-flag">🇨🇿</span> <span class="smp-preview-plus tier-plus">+++</span><span
                 class="rank-p-name text-gold">Hrac</span><span class="smp-chat-colon">:</span> <span
-                class="smp-chat-text">Mám kompletní balík SMP+++!</span>
+                class="smp-chat-text">Mám kompletní balík SMP+++</span>
             </div>
-            <div class="rank-card-foot">Symbol <code>+++</code>, plných 28 domovů, okamžitý /rtp (0s), 15 nabídek v /ah, vlastní ikona v /homes, předvádění [i],
+            <div class="rank-card-foot">Symbol <code>+++</code>, 28 domovů, okamžitý /rtp, 15 nabídek v /ah, vlastní ikona v /homes, předvádění [i],
               anonymní /nick a 16 chunků dohled.</div>
           </div>
 
           <!-- Rank: Media -->
           <div class="rank-card rank-card--media">
             <div class="rank-card-header">
-              <span class="rank-card-name"><i class="fa-solid fa-video text-magenta"></i> Media Rank</span>
+              <span class="rank-card-name">
+                <svg class="ui-icon-svg ui-icon-svg--sm text-magenta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="23 7 16 12 23 17 23 7" />
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+                </svg>
+                Media Rank
+              </span>
               <span class="rank-card-tag rank-tag--media">Ověřený tvůrce</span>
             </div>
             <div class="rank-card-preview">
-              <span class="mc-chat-flag">🇨🇿</span> <span class="media-prefix-cam">📹 </span><span
+              <span class="mc-chat-flag">🇨🇿</span> <span class="media-prefix-cam"><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg></span><span
                 class="rank-p-name">Tvurce</span><span class="smp-chat-colon">:</span> <span
-                class="smp-chat-text">Zrovna streamuju na YouTube!</span>
+                class="smp-chat-text">Zrovna streamuju na YouTube</span>
             </div>
-            <div class="rank-card-foot">Ikonická fialová kamera <code>📹</code> před jménem, anonymní <code>/nick</code>, 10 nabídek v /ah,
+            <div class="rank-card-foot">Fialový symbol kamery před jménem, anonymní <code>/nick</code>, 10 nabídek v /ah,
               14 chunků dohled a Replay Mod výjimka.</div>
           </div>
 
           <!-- Rank: Media+ -->
           <div class="rank-card rank-card--mediaplus">
             <div class="rank-card-header">
-              <span class="rank-card-name"><i class="fa-solid fa-star text-gold"></i> Media+ (SMP+ + Media)</span>
+              <span class="rank-card-name">
+                <svg class="ui-icon-svg ui-icon-svg--sm text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+                Media+ · SMP+ & Media
+              </span>
               <span class="rank-card-tag rank-tag--gold">Kombinovaný rank</span>
             </div>
             <div class="rank-card-preview">
-              <span class="mc-chat-flag">🇨🇿</span> <span class="media-prefix-cam">📹</span><span
+              <span class="mc-chat-flag">🇨🇿</span> <span class="media-prefix-cam"><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg></span><span
                 class="smp-preview-plus">+</span><span class="rank-p-name text-gold">Tvurce</span><span
-                class="smp-chat-colon">:</span> <span class="smp-chat-text">Dnes točíme další velký projekt!</span>
+                class="smp-chat-colon">:</span> <span class="smp-chat-text">Dnes točíme další projekt</span>
             </div>
-            <div class="rank-card-foot">Kombinovaný prefix <code>📹+</code>, okamžitý /home, 14–28 domovů a kompletní balík výhod obou světů.</div>
+            <div class="rank-card-foot">Kombinovaný prefix kamery se symbolem <code>+</code>, okamžitý /home, 14–28 domovů a všechny výhody obou rolí.</div>
           </div>
 
           <!-- Rank: Moderátor / Admin -->
           <div class="rank-card">
             <div class="rank-card-header">
-              <span class="rank-card-name"><i class="fa-solid fa-shield-halved text-green"></i> Moderátor a Admin</span>
+              <span class="rank-card-name">
+                <svg class="ui-icon-svg ui-icon-svg--sm text-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <polyline points="9 12 11 14 15 10" />
+                </svg>
+                Moderátor a Admin
+              </span>
               <span class="rank-card-tag rank-tag--staff">Vedení serveru</span>
             </div>
             <div class="rank-card-preview">
-              <span class="mc-chat-flag">🇨🇿</span> <span class="staff-prefix-mod">🛡 </span><span
+              <span class="mc-chat-flag">🇨🇿</span> <span class="staff-prefix-mod"><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg></span><span
                 class="rank-p-name">Moderator</span><span class="smp-chat-colon">:</span> <span
-                class="smp-chat-text">Hrajte prosím podle pravidel!</span>
+                class="smp-chat-text">Hrajte prosím podle pravidel</span>
             </div>
-            <div class="rank-card-foot">Štít <code>🛡</code> (Mod) nebo ozubené kolo <code>⚙</code> (Admin) v barvě
-              role.</div>
+            <div class="rank-card-foot">Symbol štítu pro Moderátora nebo ozubeného kola pro Admina v barvě role.</div>
           </div>
 
           <!-- Rank: Majitel -->
           <div class="rank-card">
             <div class="rank-card-header">
-              <span class="rank-card-name"><i class="fa-solid fa-crown text-gold"></i> Majitel</span>
+              <span class="rank-card-name">
+                <svg class="ui-icon-svg ui-icon-svg--sm text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2 5l3.5 11a1 1 0 0 0 1 .5h11a1 1 0 0 0 1-.5L22 5l-5.5 4.5L12 3 7.5 9.5 2 5z" />
+                  <line x1="4.5" y1="20" x2="19.5" y2="20" />
+                </svg>
+                Majitel
+              </span>
               <span class="rank-card-tag rank-tag--gold">Správce serveru</span>
             </div>
             <div class="rank-card-preview">
-              <span class="mc-chat-flag">🇨🇿</span> <span class="staff-prefix-owner">👑 </span><span
+              <span class="mc-chat-flag">🇨🇿</span> <span class="staff-prefix-owner"><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5l3.5 11a1 1 0 0 0 1 .5h11a1 1 0 0 0 1-.5L22 5l-5.5 4.5L12 3 7.5 9.5 2 5z" /></svg></span><span
                 class="rank-p-name">mychalVidea</span><span class="smp-chat-colon">:</span> <span
                 class="smp-chat-text">senk ju</span>
             </div>
-            <div class="rank-card-foot">Zlatá koruna <code>👑</code> přímo v chatu, tablistu i nad postavou.</div>
+            <div class="rank-card-foot">Zlatý symbol koruny v chatu, tablistu i nad postavou.</div>
           </div>
         </div>
       </div>
@@ -3079,25 +3136,43 @@
       <!-- 3 Core Guarantees -->
       <div class="smp-guarantee-grid">
         <div class="smp-guar-card">
-          <div class="smp-guar-icon"><i class="fa-solid fa-vault"></i></div>
+          <div class="smp-guar-icon">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="16" rx="2" />
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 9v6" />
+              <path d="M9 12h6" />
+            </svg>
+          </div>
           <h3>Trezor pro tvé itemy</h3>
-          <p>Když ti členství někdy vyprší, žádné itemy z druhé půlky Ender truhly nezmizí. Automaticky se přesunou do
-            tvého osobního Trezoru v <code>/ah</code>, odkud si je můžeš kdykoliv bezpečně vyzvednout.</p>
+          <p>Když ti členství někdy vyprší, itemy z druhé půlky Ender truhly nezmizí. Automaticky se přesunou do
+            tvého osobního Trezoru v <code>/ah</code>, odkud si je můžeš kdykoliv vyzvednout.</p>
         </div>
 
         <div class="smp-guar-card">
-          <div class="smp-guar-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+          <div class="smp-guar-icon">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+              <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+              <path d="M7 21h10" />
+              <path d="M12 3v18" />
+              <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
+            </svg>
+          </div>
           <h3>100% Čistá a férová hra</h3>
           <p>Žádný Pay-to-Win. Žádný fly mód, žádná nesmrtelnost ani zbraně s cheatovanými enchanty. Všechny výhody
             slouží čistě pro pohodlí, časovou úsporu a estetiku.</p>
         </div>
 
         <div class="smp-guar-card">
-          <div class="smp-guar-icon"><i class="fa-solid fa-heart"></i></div>
+          <div class="smp-guar-icon">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+            </svg>
+          </div>
           <h3>Podpora komunitního světa</h3>
-          <p>Předplatné od 1.99 € jde přímo na financování herního serveru, stabilní hardware, ochranu proti DDoS útokům
-            a
-            kontinuální vývoj unikátních pluginů pro všechny hráče.</p>
+          <p>Předplatné od 1.99 € jde přímo na financování serveru, stabilní hardware, ochranu proti DDoS útokům a
+            vývoj vlastních pluginů pro všechny hráče.</p>
         </div>
       </div>
 
@@ -3159,7 +3234,7 @@
                     <span class="smp-step-title">Napiš příkaz do chatu</span>
                     <div class="smp-step-action">
                       <button type="button" class="smp-cmd-copy-btn" onclick="copyDlinkCmd(this)"
-                        title="Kliknutím zkopíruješ příkaz">
+                        title="Zkopírovat příkaz /dlink">
                         <code>/dlink</code>
                         <svg class="ui-icon-svg copy-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                           stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -3253,8 +3328,8 @@
 
           <h1 class="media-hero-title">Žádost o <span>Media</span> Rank</h1>
           <p class="media-hero-subtitle">
-            Tvoříš videa nebo streamuješ z Minecraftu? Získej oficiální status na <strong>MYCHAL SMP</strong>, prestižní
-            fialový odznak tvůrce, propagační podporu serveru a prémiové herní nástroje pro ničím nerušenou tvorbu.
+            Tvoříš videa nebo streamuješ z Minecraftu? Získej Media rank na <strong>MYCHAL SMP</strong>, fialový
+            prefix ve hře a nástroje pro natáčení.
           </p>
 
           <!-- Platforms Criteria Bento -->
@@ -3443,7 +3518,7 @@
                 <div class="media-nick-input-wrap">
                   <div class="media-avatar-container" id="media-avatar-container">
                     <img id="media-nick-avatar" src="https://mc-heads.net/avatar/MHF_Steve/48" alt="Minecraft skin"
-                      class="media-nick-avatar-img">
+                      class="media-nick-avatar-img" width="48" height="48">
                   </div>
                   <input type="text" id="media-mc-nick" class="media-input media-input--nick"
                     placeholder="Zadej svůj přesný nick ve hře..." required autocomplete="off"
@@ -3471,13 +3546,13 @@
                 </div>
                 <div class="smp-chat-preview media-chat-preview">
                   <img id="media-preview-chat-head" src="https://mc-heads.net/avatar/MHF_Steve/28"
-                    class="mc-avatar-head" alt="Skin Head">
+                    class="mc-avatar-head" alt="Skin Head" width="28" height="28">
                   <span class="mc-chat-flag">🇨🇿</span>
-                  <span id="media-preview-prefix-badge" class="media-prefix-cam">📹 </span><span
+                  <span id="media-preview-prefix-badge" class="media-prefix-cam"><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg></span><span
                     class="smp-preview-name" id="media-preview-chat-nick">TvujNick</span><span
                     class="smp-chat-colon">:</span>
                   <span class="smp-chat-text" id="media-preview-chat-msg">Ahoj, nové video z MYCHAL SMP je
-                    online!</span>
+                    online</span>
                 </div>
               </div>
 
@@ -3555,7 +3630,7 @@
     <div class="container media-benefits-container">
       <div class="media-section-head text-center">
         <h2 class="media-section-title">Detailní přehled výhod pro <span>Media</span> rank</h2>
-        <p class="media-section-subtitle">Exkluzivní herní nástroje navržené přímo pro pohodlné a kvalitní natáčení.</p>
+        <p class="media-section-subtitle">Herní nástroje pro natáčení a streamování.</p>
       </div>
 
       <div class="media-benefits-grid">
@@ -3567,8 +3642,7 @@
             </svg>
           </div>
           <h3>Oficiálně povolený Replay Mod</h3>
-          <p>Exkluzivní výjimka z anticheatu! Můžeš bezpečně natáčet dechberoucí filmové záběry, průlety a časosběry
-            (pro běžné hráče je Replay Mod přísně blokován).</p>
+          <p>Oficiální výjimka z anticheatu pro natáčení filmových záběrů, průletů a časosběrů.</p>
         </div>
 
         <div class="media-benefit-card">
@@ -3579,8 +3653,7 @@
             </svg>
           </div>
           <h3>Náhodný Nickname (/nick)</h3>
-          <p>Příkaz <code>/nick</code> vybere náhodnou českou přezdívku ze schváleného seznamu (např. Kolovratek,
-            Okurka). Maximální ochrana proti stream sniperům, cílenému stalkingu a nechtěným rušitelům.</p>
+          <p>Příkaz <code>/nick</code> vybere náhodnou českou přezdívku ze schváleného seznamu. Ochrana proti stream sniperům a odhalení polohy.</p>
         </div>
 
         <div class="media-benefit-card">
@@ -3591,9 +3664,8 @@
               <path d="M2 12h20" />
             </svg>
           </div>
-          <h3>Zvýšený Render Distance (14 chunků)</h3>
-          <p>Vidíš dále než běžní hráči. Server ti renderuje 14 chunků, což zaručuje krásné a dalekonosné scenérie pro
-            tvé záběry.</p>
+          <h3>Zvýšený Render Distance · 14 chunků</h3>
+          <p>Server renderuje 14 chunků pro širší záběry krajiny.</p>
         </div>
 
         <div class="media-benefit-card">
@@ -3602,9 +3674,8 @@
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
             </svg>
           </div>
-          <h3>Exkluzivní Media Prefix</h3>
-          <p>Získáš nepřehlédnutelný fialový odznak kamery před jménem v herním chatu, v tablistu i nad postavou.
-            Žádné hranaté závorky – pouze čistý, elegantní prefix.</p>
+          <h3>Media Prefix</h3>
+          <p>Fialový symbol kamery před jménem v herním chatu, tablistu i nad postavou.</p>
         </div>
 
         <div class="media-benefit-card">
@@ -3616,8 +3687,7 @@
             </svg>
           </div>
           <h3>Rozšířená aukce (/ah)</h3>
-          <p>Do <code>/ah</code> můžeš vložit až <strong>10 současných nabídek</strong> naráz pro rychlý a
-            bezproblémový obchod se svými diváky i hráči.</p>
+          <p>Až <strong>10 současných nabídek</strong> v <code>/ah</code> pro obchodování s hráči a diváky.</p>
         </div>
 
         <div class="media-benefit-card">
@@ -3627,8 +3697,8 @@
             </svg>
           </div>
           <h3>Volný pohyb při teleportaci</h3>
-          <p>Když blízko tebe nikdo nehraje, můžeš se při 5s odpočtech na <code>/home</code>, <code>/rtp</code> a
-            <code>/tpa</code> volně hýbat bez zrušení teleportu!
+          <p>Když poblíž nikdo není, můžeš se při odpočtu na <code>/home</code>, <code>/rtp</code> a
+            <code>/tpa</code> volně pohybovat bez zrušení teleportu.
           </p>
         </div>
 
@@ -3638,11 +3708,9 @@
               <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
             </svg>
           </div>
-          <h3>Synergie s SMP+ (Media+, Media++, Media+++)</h3>
-          <p>Dokoupením libovolného <strong>SMP+</strong>, <strong>SMP++</strong> nebo <strong>SMP+++</strong> k roli
-            Media se tvůj prefix automaticky spojí do unikátní kombinace
-            <code>📹+Nick</code>, <code>📹++Nick</code> nebo <code>📹+++Nick</code> a odemkne se ti kompletní balík
-            výhod obou členství.
+          <h3>Kombinace s SMP+</h3>
+          <p>S aktivním <strong>SMP+</strong>, <strong>SMP++</strong> nebo <strong>SMP+++</strong> se prefix spojí do
+            kombinace kamery a symbolů <code>+</code>, <code>++</code> nebo <code>+++</code> a získáš výhody obou rolí.
           </p>
         </div>
       </div>
@@ -3734,6 +3802,7 @@
         <div class="bug-card-face bug-card-front" id="bug-card-front">
           <!-- 1-CLICK CATEGORY SELECTOR -->
           <div class="bug-category-chips" id="bug-category-chips">
+            <div class="segmented-indicator bug-cat-indicator" id="bug-cat-pill" aria-hidden="true"></div>
             <button type="button" class="bug-cat-chip active" data-cat="game" onclick="selectBugCategory('game')">
               <svg class="ui-icon-svg ui-icon-svg--inline" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -3794,7 +3863,7 @@
               <div class="bug-nick-field-wrap">
                 <div class="bug-avatar-container" id="bug-avatar-container">
                   <img id="bug-nick-avatar" src="https://mc-heads.net/avatar/MHF_Steve/48" alt="Minecraft skin"
-                    class="bug-nick-avatar-img">
+                    class="bug-nick-avatar-img" width="48" height="48">
                 </div>
                 <input type="text" id="bug-nick" class="bug-modern-input" placeholder="Zadej svůj přesný nick ve hře..."
                   required autocomplete="off" oninput="handleBugNickInput(this.value)">
@@ -3829,7 +3898,7 @@
                     <circle cx="8.5" cy="8.5" r="1.5" />
                     <polyline points="21 15 16 10 5 21" />
                   </svg>
-                  Snímky obrazovky <span class="bug-optional-badge">(volitelné)</span>
+                  Snímky obrazovky <span class="bug-optional-badge">volitelné</span>
                 </span>
               </label>
               <div class="bug-dropzone" id="bug-dropzone" onclick="document.getElementById('bug-images').click()">
@@ -3882,10 +3951,10 @@
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <h3 class="ticket-heading" id="ticket-success-title">Nahlášení bylo úspěšně odesláno!</h3>
+            <h3 class="ticket-heading" id="ticket-success-title">Nahlášení bylo odesláno</h3>
             <p class="ticket-subheading">Zpráva byla předána admin týmu na Discordu.</p>
 
-            <div class="ticket-id-chip" onclick="copyTicketId(event)" title="Kliknutím zkopíruješ číslo tiketu">
+            <div class="ticket-id-chip" onclick="copyTicketId(event)" title="Zkopírovat číslo tiketu">
               <span class="ticket-id-label">ČÍSLO TIKETU:</span>
               <span class="ticket-id-value" id="ticket-id-display">#BUG-1000</span>
               <button type="button" class="ticket-copy-btn" aria-label="Kopírovat">
@@ -3904,16 +3973,16 @@
                 <line x1="12" y1="22" x2="8" y2="9" />
                 <line x1="12" y1="22" x2="16" y2="9" />
               </svg>
-              <span>Odměna v podobě <strong>diamantových bloků</strong> (u kritických chyb i <strong>Netherite
-                  bloků</strong>) ti bude předána přímo ve hře po ověření adminem!</span>
+              <span>Odměna v <strong>diamantových blocích</strong>, u kritických exploitů v <strong>Netherite
+                  blocích</strong>, ti bude předána ve hře po ověření.</span>
             </div>
 
             <div class="ticket-user-preview">
               <img id="ticket-user-avatar" src="https://mc-heads.net/avatar/MHF_Steve/48" alt="Player avatar"
-                class="ticket-user-avatar-img">
+                class="ticket-user-avatar-img" width="48" height="48">
               <div class="ticket-user-text">
                 <strong id="ticket-user-name">Player</strong>
-                <span>Díky za pomoc serveru! Po ověření chybky tě ve hře čeká herní odměna podle závažnosti.</span>
+                <span>Díky za nahlášení. Po ověření chyby dostaneš ve hře odměnu podle závažnosti.</span>
               </div>
             </div>
 
@@ -3969,20 +4038,26 @@
         <div class="stats-chart-topbar">
           <!-- Metric Selectors (Tabs) -->
           <div class="stats-metric-selector">
+            <div class="segmented-indicator stats-metric-indicator" id="stats-metric-pill" aria-hidden="true"></div>
             <button class="stats-metric-btn active" onclick="switchChartMetric('players')" id="metric-btn-players">
-              <i class="fa-solid fa-users"></i> <span>Počet hráčů</span>
+              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+              <span>Počet hráčů</span>
             </button>
             <button class="stats-metric-btn" onclick="switchChartMetric('playtime')" id="metric-btn-playtime">
-              <i class="fa-solid fa-clock"></i> <span>Playtime</span>
+              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+              <span>Playtime</span>
             </button>
             <button class="stats-metric-btn" onclick="switchChartMetric('money')" id="metric-btn-money">
-              <i class="fa-solid fa-coins"></i> <span>Celkem peněz</span>
+              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6" /><path d="M18.09 10.37A6 6 0 1 1 10.34 18" /><path d="M7 6h1v4" /><path d="m16.71 13.88.7.71-2.82 2.82" /></svg>
+              <span>Celkem peněz</span>
             </button>
             <button class="stats-metric-btn" onclick="switchChartMetric('visitors')" id="metric-btn-visitors">
-              <i class="fa-solid fa-user-check"></i> <span>Unikátní návštěvníci</span>
+              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><polyline points="16 11 18 13 22 9" /></svg>
+              <span>Unikátní návštěvníci</span>
             </button>
             <button class="stats-metric-btn" onclick="switchChartMetric('deaths')" id="metric-btn-deaths">
-              <i class="fa-solid fa-skull"></i> <span>Počet úmrtí</span>
+              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="1" /><circle cx="15" cy="12" r="1" /><path d="M8 20v2h8v-2" /><path d="m12.5 17-.5-1-.5 1h1z" /><path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20" /></svg>
+              <span>Počet úmrtí</span>
             </button>
           </div>
 
@@ -4004,8 +4079,10 @@
               <span class="chart-metric-value" id="chart-current-value">0 hráčů</span>
             </div>
             <div class="chart-info-right">
-              <span class="chart-period-badge" id="chart-period-text"><i class="fa-regular fa-calendar-days"></i>
-                Posledních 24 hodin</span>
+              <span class="chart-period-badge" id="chart-period-text">
+                <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                Posledních 24 hodin
+              </span>
             </div>
           </div>
 
@@ -4079,47 +4156,57 @@
       <!-- METRICS OVERVIEW CARDS GRID (Below Chart) -->
       <div class="stats-overview-grid">
         <div class="stat-detail-card" onclick="switchChartMetric('players')">
-          <div class="stat-detail-icon icon-blue"><i class="fa-solid fa-users"></i></div>
+          <div class="stat-detail-icon icon-blue">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+          </div>
           <div class="stat-detail-info">
             <span class="stat-detail-label">Počet hráčů</span>
             <span class="stat-detail-value" id="val-players">0 / 50</span>
-            <span class="stat-detail-sub"><i class="fa-solid fa-signal"></i> Živý stav ze serveru</span>
+            <span class="stat-detail-sub">Živý stav ze serveru</span>
           </div>
         </div>
 
         <div class="stat-detail-card" onclick="switchChartMetric('playtime')">
-          <div class="stat-detail-icon icon-amber"><i class="fa-solid fa-clock"></i></div>
+          <div class="stat-detail-icon icon-amber">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+          </div>
           <div class="stat-detail-info">
             <span class="stat-detail-label">Playtime</span>
             <span class="stat-detail-value" id="val-playtime">1 842 hod.</span>
-            <span class="stat-detail-sub"><i class="fa-solid fa-gamepad"></i> Odehraný čas</span>
+            <span class="stat-detail-sub">Odehraný čas</span>
           </div>
         </div>
 
         <div class="stat-detail-card" onclick="switchChartMetric('money')">
-          <div class="stat-detail-icon icon-green"><i class="fa-solid fa-coins"></i></div>
+          <div class="stat-detail-icon icon-green">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6" /><path d="M18.09 10.37A6 6 0 1 1 10.34 18" /><path d="M7 6h1v4" /><path d="m16.71 13.88.7.71-2.82 2.82" /></svg>
+          </div>
           <div class="stat-detail-info">
             <span class="stat-detail-label">Celkem peněz</span>
             <span class="stat-detail-value" id="val-money">$4 250 800</span>
-            <span class="stat-detail-sub"><i class="fa-solid fa-vault"></i> Ekonomika</span>
+            <span class="stat-detail-sub">Ekonomika</span>
           </div>
         </div>
 
         <div class="stat-detail-card" onclick="switchChartMetric('visitors')">
-          <div class="stat-detail-icon icon-purple"><i class="fa-solid fa-user-check"></i></div>
+          <div class="stat-detail-icon icon-purple">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><polyline points="16 11 18 13 22 9" /></svg>
+          </div>
           <div class="stat-detail-info">
             <span class="stat-detail-label">Unikátní návštěvníci</span>
             <span class="stat-detail-value" id="val-visitors">1 240 hráčů</span>
-            <span class="stat-detail-sub"><i class="fa-solid fa-passport"></i> Unikátních hráčů</span>
+            <span class="stat-detail-sub">Unikátních hráčů</span>
           </div>
         </div>
 
         <div class="stat-detail-card" onclick="switchChartMetric('deaths')">
-          <div class="stat-detail-icon icon-red"><i class="fa-solid fa-skull"></i></div>
+          <div class="stat-detail-icon icon-red">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="1" /><circle cx="15" cy="12" r="1" /><path d="M8 20v2h8v-2" /><path d="m12.5 17-.5-1-.5 1h1z" /><path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20" /></svg>
+          </div>
           <div class="stat-detail-info">
             <span class="stat-detail-label">Počet úmrtí</span>
             <span class="stat-detail-value" id="val-deaths">18 940</span>
-            <span class="stat-detail-sub"><i class="fa-solid fa-cross"></i> Celkem úmrtí na serveru</span>
+            <span class="stat-detail-sub">Celkem úmrtí na serveru</span>
           </div>
         </div>
       </div>
@@ -4138,20 +4225,26 @@
             </div>
           </div>
           <div class="online-players-header-right">
-            <span class="online-count-pill" id="online-players-badge"><i class="fa-solid fa-users"></i> 0 / 50</span>
+            <span class="online-count-pill" id="online-players-badge">
+              <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+              0 / 50
+            </span>
           </div>
         </div>
 
         <!-- Players Grid Container -->
         <div class="online-players-grid" id="online-players-grid">
           <div class="online-players-empty" id="online-players-empty">
-            <div class="empty-icon"><i class="fa-solid fa-moon"></i></div>
+            <div class="empty-icon">
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
+            </div>
             <div class="empty-text">
               <h4>Na serveru zrovna nikdo nehraje</h4>
-              <p>Buď první a připoj se na <strong>mychalsmp.xyz</strong>!</p>
+              <p>Buď první a připoj se na <strong>mychalsmp.xyz</strong>.</p>
             </div>
             <button class="btn-copy-ip-mini" onclick="copyIP(event)">
-              <i class="fa-solid fa-copy"></i> Zkopírovat IP
+              <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+              <span>Zkopírovat IP</span>
             </button>
           </div>
         </div>
@@ -4172,9 +4265,14 @@
 
             <div class="legal-nav-switch">
               <div class="legal-nav-indicator" style="transform: translateX(0);"></div>
-              <button class="legal-nav-btn active"><i class="fa-solid fa-shield-halved"></i> Ochrana údajů</button>
-              <button class="legal-nav-btn" onclick="showTab('terms')"><i class="fa-solid fa-scale-balanced"></i>
-                Obchodní podmínky</button>
+              <button class="legal-nav-btn active">
+                <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
+                Ochrana údajů
+              </button>
+              <button class="legal-nav-btn" onclick="showTab('terms')">
+                <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /><path d="M7 21h10" /><path d="M12 3v18" /><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" /></svg>
+                Obchodní podmínky
+              </button>
             </div>
 
             <!-- Reading Progress Bar -->
@@ -4209,15 +4307,18 @@
 
             <!-- Executive Summary (TL;DR) -->
             <div class="legal-summary-card">
-              <div class="legal-summary-title"><i class="fa-solid fa-bolt"></i> Shrnutí v kostce</div>
+              <div class="legal-summary-title">
+                <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
+                Shrnutí v kostce
+              </div>
               <ul class="legal-summary-list">
-                <li><i class="fa-solid fa-check"></i> <strong>0 % trackerů:</strong> Žádný Google Analytics ani Meta
+                <li><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg> <strong>0 % trackerů:</strong> Žádný Google Analytics ani Meta
                   Pixel.</li>
-                <li><i class="fa-solid fa-check"></i> <strong>Hashovaná hesla:</strong> Hesla nelze z databáze přečíst
+                <li><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg> <strong>Hashovaná hesla:</strong> Hesla nelze z databáze přečíst
                   (Argon2id standard).</li>
-                <li><i class="fa-solid fa-check"></i> <strong>SMPClient launcher:</strong> Lokální data na disku hráče;
+                <li><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg> <strong>SMPClient launcher:</strong> Lokální data na disku hráče;
                   žádné telemetrické odesílání.</li>
-                <li><i class="fa-solid fa-check"></i> <strong>Platby chrání Tebex:</strong> K platebním kartám nemáme
+                <li><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg> <strong>Platby chrání Tebex:</strong> K platebním kartám nemáme
                   přístup.</li>
               </ul>
             </div>
@@ -4431,7 +4532,7 @@
                 <strong>Hesla k hernímu účtu (Kryptografický standard Argon2id):</strong>
                 Vaše heslo nikdy neukládáme v čitelné podobě (plaintext). Autentizační jádro serveru (MychalAuth)
                 využívá moderní standard <strong>Argon2id</strong> s vysokou paměťovou a výpočetní náročností
-                (3 iterace, 64 MB alokované paměti, 2 paralelní vlákna), který poskytuje špičkovou ochranu proti
+                (3 iterace, 64 MB alokované paměti, 2 paralelní vlákna), který poskytuje silnou kryptografickou ochranu proti
                 slovníkovým, duhovým (rainbow tables) i hardwarovým GPU/ASIC brute-force útokům. Pro účely zpětné
                 kompatibility starších účtů je podporován bezpečně solený formát AuthMe SHA-256 ($SHA$salt$hash s
                 8bajtovou
@@ -4767,9 +4868,14 @@
 
             <div class="legal-nav-switch">
               <div class="legal-nav-indicator" style="transform: translateX(100%);"></div>
-              <button class="legal-nav-btn" onclick="showTab('privacy')"><i class="fa-solid fa-shield-halved"></i>
-                Ochrana údajů</button>
-              <button class="legal-nav-btn active"><i class="fa-solid fa-scale-balanced"></i> Obchodní podmínky</button>
+              <button class="legal-nav-btn" onclick="showTab('privacy')">
+                <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
+                Ochrana údajů
+              </button>
+              <button class="legal-nav-btn active">
+                <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /><path d="M7 21h10" /><path d="M12 3v18" /><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" /></svg>
+                Obchodní podmínky
+              </button>
             </div>
 
             <!-- Reading Progress Bar -->
@@ -4811,15 +4917,18 @@
 
             <!-- Executive Summary (TL;DR) -->
             <div class="legal-summary-card">
-              <div class="legal-summary-title"><i class="fa-solid fa-bolt"></i> Shrnutí v kostce</div>
+              <div class="legal-summary-title">
+                <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
+                Shrnutí v kostce
+              </div>
               <ul class="legal-summary-list">
-                <li><i class="fa-solid fa-check"></i> <strong>Prodejce:</strong> Tebex Limited (Merchant of Record).
+                <li><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg> <strong>Prodejce:</strong> Tebex Limited (Merchant of Record).
                 </li>
-                <li><i class="fa-solid fa-check"></i> <strong>Herní svět:</strong> Trvalý, žádné pravidelné sezónní
+                <li><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg> <strong>Herní svět:</strong> Trvalý, žádné pravidelné sezónní
                   wipy.</li>
-                <li><i class="fa-solid fa-check"></i> <strong>Váš účet:</strong> Za heslo plně odpovídá hráč (výmluvy na
+                <li><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg> <strong>Váš účet:</strong> Za heslo plně odpovídá hráč (výmluvy na
                   kamaráda neplatí).</li>
-                <li><i class="fa-solid fa-check"></i> <strong>SMPClient launcher:</strong> Volně stažitelný, MIT
+                <li><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg> <strong>SMPClient launcher:</strong> Volně stažitelný, MIT
                   licence,
                   bez skrytých podmínek.</li>
               </ul>
@@ -5231,7 +5340,7 @@
                 hardwarem či konfigurací operačního systému uživatele, ačkoliv vyvíjí maximální úsilí pro stabilitu a
                 plynulý běh.</li>
               <li><strong>Doporučená herní verze:</strong> Klient je primárně optimalizován a přednastaven pro verzi
-                Java Edition <strong>26.2</strong> s integrovanými moduly pro zvýšení výkonu, správu paměti a ochranu
+                Java Edition <strong>26.3</strong> s integrovanými moduly pro zvýšení výkonu, správu paměti a ochranu
                 integrity hry.</li>
             </ul>
           </article>
@@ -5249,22 +5358,24 @@
   <section id="tab-launcher" class="tab-section launcher-section-ambient">
     <div class="join-hero-header text-center">
       <div class="container">
-        <h1 class="join-main-title">Stáhnout <span class="accent-gradient-text">SMPClient</span></h1>
-        <p class="join-main-sub">Rychlý Minecraft klient se zabudovaným Modrinth katalogem módů, anticheatem Warden, 3D
-          skiny s plášti a Crash Analyzerem pro automatickou opravu chyb.</p>
+        <h1 class="join-main-title">Stáhnout <span class="accent-blue">SMPClient</span></h1>
+        <p class="join-main-sub">Minecraft klient se zabudovaným Modrinth katalogem módů, modulem Warden, 3D
+          skiny s plášti a Crash Analyzerem pro opravu chyb.</p>
 
-        <!-- Launcher Meta Pills -->
+        <!-- Launcher Meta Inline Spec Bar -->
         <div class="launcher-meta-badge-row">
           <div class="launcher-release-pill">
             <span class="pill-dot"></span>
             <span id="launcher-version-tag">Verze 1.5.8</span>
           </div>
+          <span class="join-spec-divider" aria-hidden="true"></span>
           <div class="launcher-auto-pill">
-            <i class="fa-solid fa-arrows-rotate"></i>
-            <span>Auto-Update systém</span>
+            <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10" /><polyline points="1 20 1 14 7 14" /><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" /></svg>
+            <span>Auto-Update</span>
           </div>
+          <span class="join-spec-divider" aria-hidden="true"></span>
           <div class="launcher-downloads-pill" id="launcher-downloads-pill">
-            <i class="fa-solid fa-download"></i>
+            <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
             <span id="launcher-downloads-count">6 stažení</span>
           </div>
         </div>
@@ -5275,7 +5386,7 @@
           <div class="os-selector-nav">
             <div class="os-nav-indicator" id="os-nav-pill"></div>
             <button class="os-nav-tab active" data-os="windows" onclick="switchLauncherOS('windows', this)">
-              <svg class="ui-icon-svg ui-icon-win11" viewBox="0 0 24 24" fill="currentColor">
+              <svg class="ui-icon-svg ui-icon-win11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <rect x="2.5" y="2.5" width="8.5" height="8.5" rx="0.75" />
                 <rect x="13" y="2.5" width="8.5" height="8.5" rx="0.75" />
                 <rect x="2.5" y="13" width="8.5" height="8.5" rx="0.75" />
@@ -5284,7 +5395,7 @@
               <span>Windows</span>
             </button>
             <button class="os-nav-tab" data-os="linux" onclick="switchLauncherOS('linux', this)">
-              <i class="fa-brands fa-linux"></i>
+              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></svg>
               <span>Linux</span>
             </button>
           </div>
@@ -5310,7 +5421,7 @@
                 </a>
                 <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases" target="_blank" rel="noopener"
                   class="btn-launcher-secondary">
-                  <i class="fa-brands fa-github"></i>
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
                   <span>GitHub Releases</span>
                 </a>
               </div>
@@ -5323,7 +5434,7 @@
                   <span class="term-dot yellow"></span>
                   <span class="term-dot green"></span>
                 </div>
-                <span class="os-terminal-title">Rychlá instalace přes PowerShell (1 příkaz)</span>
+                <span class="os-terminal-title">Instalace přes PowerShell</span>
                 <span class="os-terminal-tag">POWERSHELL</span>
               </div>
               <div class="os-terminal-code-row">
@@ -5347,8 +5458,8 @@
                 </button>
               </div>
               <p class="os-terminal-hint">
-                Stáhne a automaticky odblokuje SMPClient bez varování prohlížeče. Stačí otevřít
-                <strong>PowerShell</strong> (nabídka Start ➔ PowerShell) a vložit příkaz.
+                Stáhne a odblokuje SMPClient bez varování prohlížeče. Otevři
+                <strong>PowerShell</strong> (Start → PowerShell) a vlož příkaz.
               </p>
             </div>
 
@@ -5370,10 +5481,9 @@
                 </div>
               </div>
               <div class="os-warning-explainer">
-                <strong>Proč toto varování vzniká:</strong> Každá nově vydaná verze open-source softwaru nemá placený
-                komerční certifikát Microsoftu ($400+/rok). Prohlížeče Google Chrome, Microsoft Edge a Windows
-                SmartScreen proto automaticky zobrazují preventivní varování, dokud si soubor nestáhne velké množství
-                uživatelů. <strong>Kód launcheru je 100% čistý, bezpečný a veřejně ověřitelný na GitHubu.</strong>
+                <strong>Proč toto varování vzniká:</strong> Nově vydané verze open-source softwaru nemají placený
+                certifikát Microsoftu ($400+/rok). Chrome, Edge a Windows SmartScreen proto zobrazují preventivní
+                varování. <strong>Zdrojový kód launcheru je veřejně ověřitelný na GitHubu.</strong>
               </div>
               <div class="os-steps-grid">
                 <div class="os-step-card">
@@ -5382,8 +5492,8 @@
                     <span class="os-step-name">Prohlížeč (Chrome / Edge)</span>
                   </div>
                   <p class="os-step-desc">
-                    V bublině stahování vpravo nahoře klikni na <strong>Zobrazit více</strong> (nebo ikonu tří teček
-                    <kbd>···</kbd>) ➔ vyber <kbd>Ponechat</kbd> ➔ a potvrď <kbd>Ponechat i přesto</kbd>.
+                    V bublině stahování vpravo nahoře klikni na <strong>Zobrazit více</strong> nebo ikonu tří teček
+                    <kbd>···</kbd> → <kbd>Ponechat</kbd> → <kbd>Ponechat i přesto</kbd>.
                   </p>
                 </div>
                 <div class="os-step-card">
@@ -5392,9 +5502,8 @@
                     <span class="os-step-name">Windows SmartScreen</span>
                   </div>
                   <p class="os-step-desc">
-                    Pokud se při spuštění zobrazí modré okno <em>„Systém Windows ochránil váš počítač“</em>, klikni na
-                    nenápadný odkaz <strong>Další informace</strong> a poté klikni na tlačítko <kbd>Přesto
-                      spustit</kbd>.
+                    Pokud se při spuštění zobrazí okno <em>„Systém Windows ochránil váš počítač“</em>, klikni na
+                    <strong>Další informace</strong> a poté na <kbd>Přesto spustit</kbd>.
                   </p>
                 </div>
               </div>
@@ -5422,7 +5531,7 @@
                 </a>
                 <a href="https://github.com/mychalVidea/mychalsmp-launcher/releases" target="_blank" rel="noopener"
                   class="btn-launcher-secondary">
-                  <i class="fa-brands fa-github"></i>
+                  <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
                   <span>GitHub Releases</span>
                 </a>
               </div>
@@ -5436,7 +5545,7 @@
                   <span class="term-dot yellow"></span>
                   <span class="term-dot green"></span>
                 </div>
-                <span class="os-terminal-title">Rychlá instalace do terminálu (1 příkaz)</span>
+                <span class="os-terminal-title">Instalace přes terminál</span>
                 <span class="os-terminal-tag">BASH</span>
               </div>
               <div class="os-terminal-code-row">
@@ -5479,8 +5588,8 @@
               </svg>
             </div>
             <h3 class="feature-card-title">Integrovaný Modrinth Katalog</h3>
-            <p class="feature-card-desc">Procházej, vyhledávej a instaluj módy přímo v klientu bez nutnosti otevírat
-              prohlížeč. Automatická filtrace a garance kompatibility pro verze 26.2 i 26.3 Fabric.</p>
+            <p class="feature-card-desc">Vyhledávání a instalace módů přímo v klientu bez prohlížeče. Automatická
+              kontrola kompatibility pro Fabric 26.1 až 26.3.</p>
           </div>
 
           <div class="launcher-feature-card">
@@ -5490,10 +5599,9 @@
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
-            <h3 class="feature-card-title">Bezpečnostní Štít Warden</h3>
-            <p class="feature-card-desc">Žádné riziko nechtěného banu. Integrovaný bezpečnostní modul Warden
-              automaticky
-              detekuje a varuje před zakázanými módy (Freecam, X-Ray, Baritone) ještě před spuštěním hry.</p>
+            <h3 class="feature-card-title">Bezpečnostní modul Warden</h3>
+            <p class="feature-card-desc">Před spuštěním hry zkontroluje profil a upozorní na zakázané modifikace,
+              abys neriskoval nechtěný trest.</p>
           </div>
 
           <div class="launcher-feature-card">
@@ -5504,8 +5612,7 @@
               </svg>
             </div>
             <h3 class="feature-card-title">Crash Analyzer & Auto-Fix</h3>
-            <p class="feature-card-desc">Spadla ti hra? Konec luštění nesrozumitelných chybových hlášek. Vestavěný
-              analyzátor detekuje přesný důvod kolize módů a nabídne automatickou opravu na 1 kliknutí.</p>
+            <p class="feature-card-desc">Při pádu hry určí příčinu kolize módů a nabídne opravu na jedno kliknutí.</p>
           </div>
 
           <div class="launcher-feature-card">
@@ -5517,8 +5624,8 @@
               </svg>
             </div>
             <h3 class="feature-card-title">1-Click Upgrade Profilů</h3>
-            <p class="feature-card-desc">Chceš přejít z verze 26.2 na 26.3? Jediným kliknutím přenes herní nastavení
-              options.txt, configy módů a texture packy. SMPClient za tebe sám dohledá novější verze všech módů.</p>
+            <p class="feature-card-desc">Přechod na verzi 26.3 přenese options.txt, configy módů i texture packy a
+              dohledá aktuální verze módů.</p>
           </div>
 
           <div class="launcher-feature-card">
@@ -5530,9 +5637,8 @@
               </svg>
             </div>
             <h3 class="feature-card-title">3D Skiny & Oficiální Pláště</h3>
-            <p class="feature-card-desc">Živý 3D náhled postavy pro Microsoft účty (přímý upload na Mojang servery a
-              volba oficiálních plášťů) i pro offline hráče (trvalý lokální skin i vlastní plášť nezávislý na nicku).
-            </p>
+            <p class="feature-card-desc">3D náhled postavy s přímým nahráním skinu pro Microsoft účty i lokálním
+              skinem a pláštěm pro offline hráče.</p>
           </div>
 
           <div class="launcher-feature-card">
@@ -5543,9 +5649,9 @@
                 <polyline points="12 6 12 12 16 14" />
               </svg>
             </div>
-            <h3 class="feature-card-title">Maximální FPS & Živý Tracker</h3>
-            <p class="feature-card-desc">Žádný bloatware, bleskový start a optimalizované parametry paměti RAM pro
-              stabilní FPS. Přímé bleskové napojení na <code>mychalsmp.xyz</code> s živým sledováním online hráčů.</p>
+            <h3 class="feature-card-title">Výkon JVM & Živý Tracker</h3>
+            <p class="feature-card-desc">Vyladěné parametry JVM a správa RAM pro stabilní FPS. Přímé připojení na
+              <code>mychalsmp.xyz</code> s přehledem online hráčů.</p>
           </div>
         </div>
       </div>
@@ -5571,10 +5677,10 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-left">
-        <img src="imgs/logo.webp?v=20261119" alt="Logo" class="footer-logo" />
+        <img src="imgs/logo.webp?v=20261119" alt="Logo" class="footer-logo" width="40" height="40" />
         <div>
           <p class="footer-title">MYCHAL SMP</p>
-          <p class="footer-ip">ᴍʏᴄʜᴀʟꜱᴍᴘ.xʏᴢ</p>
+          <p class="footer-ip">mychalsmp.xyz</p>
         </div>
       </div>
       <div class="footer-links">
@@ -5627,10 +5733,14 @@
           </svg>
           <span>SMPClient</span>
         </button>
-        <button onclick="showTab('privacy')" class="footer-link-btn"><i class="fa-solid fa-shield-halved"></i> Ochrana
-          údajů</button>
-        <button onclick="showTab('terms')" class="footer-link-btn"><i class="fa-solid fa-scale-balanced"></i> Obchodní
-          podmínky</button>
+        <button onclick="showTab('privacy')" class="footer-link-btn">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
+          <span>Ochrana údajů</span>
+        </button>
+        <button onclick="showTab('terms')" class="footer-link-btn">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /><path d="M7 21h10" /><path d="M12 3v18" /><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" /></svg>
+          <span>Obchodní podmínky</span>
+        </button>
       </div>
       <p class="footer-copy">© 2026 mychalVidea &nbsp;·&nbsp; Tento server/web není oficiálním produktem Minecraftu a
         není schválen ani spojen se společností Mojang Studios.</p>
@@ -5640,39 +5750,39 @@
   <!-- MOBILE BOTTOM NAVIGATION -->
   <div class="bottom-nav" id="bottom-nav">
     <button class="bottom-nav-item active" id="btn-nav-home" onclick="showTab('home')">
-      <i class="fa-solid fa-house"></i>
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
       <span>Domů</span>
     </button>
     <button class="bottom-nav-item" id="btn-nav-launcher" onclick="showTab('launcher')">
-      <i class="fa-solid fa-download"></i>
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
       <span>SMPClient</span>
     </button>
     <button class="bottom-nav-item" id="btn-nav-join" onclick="showTab('join')">
-      <i class="fa-solid fa-link"></i>
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" /></svg>
       <span>Připojit</span>
     </button>
     <button class="bottom-nav-item" id="btn-nav-smp-plus" onclick="showTab('smp-plus')">
-      <i class="fa-solid fa-crown"></i>
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5l3.5 11a1 1 0 0 0 1 .5h11a1 1 0 0 0 1-.5L22 5l-5.5 4.5L12 3 7.5 9.5 2 5z" /><line x1="4.5" y1="20" x2="19.5" y2="20" /></svg>
       <span>SMP+</span>
     </button>
     <button class="bottom-nav-item" id="btn-nav-stats" onclick="showTab('stats')">
-      <i class="fa-solid fa-chart-line"></i>
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="9" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg>
       <span>Stats</span>
     </button>
     <button class="bottom-nav-item" id="btn-nav-napady" onclick="showTab('napady')">
-      <i class="fa-solid fa-lightbulb"></i>
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6" /><path d="M10 22h4" /><path d="M12 2a7 7 0 0 0-4.5 12.3c.6.6.9 1.4 1 2.2h7c.1-.8.4-1.6 1-2.2A7 7 0 0 0 12 2z" /></svg>
       <span>Nápady</span>
     </button>
     <button class="bottom-nav-item" id="btn-nav-bugs" onclick="showTab('bugs')">
-      <i class="fa-solid fa-bug"></i>
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="14" x="8" y="6" rx="4" /><path d="m19 7-3 2" /><path d="m5 7 3 2" /><path d="m19 19-3-2" /><path d="m5 19 3-2" /><path d="M20 13h-4" /><path d="M4 13h4" /></svg>
       <span>Bugy</span>
     </button>
     <button class="bottom-nav-item" id="btn-nav-media" onclick="showTab('media')">
-      <i class="fa-solid fa-video"></i>
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="13" height="14" rx="3" /><path d="m15 10 5.5-3.5a1 1 0 0 1 1.5.85v9.3a1 1 0 0 1-1.5.85L15 14" /></svg>
       <span>Media</span>
     </button>
     <button class="bottom-nav-item" id="btn-nav-rules" onclick="showTab('rules')">
-      <i class="fa-solid fa-scroll"></i>
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
       <span>Pravidla</span>
     </button>
   </div>
@@ -5690,7 +5800,7 @@
           </svg>
           <span>Přidat nový nápad</span>
         </h3>
-        <button class="idea-modal-close" onclick="closeIdeaModal()">&times;</button>
+        <button class="idea-modal-close" onclick="closeIdeaModal()" aria-label="Zavřít">&times;</button>
       </div>
       <div class="idea-modal-body">
         <p class="idea-modal-sub">Popiš svůj nápad co nejsrozumitelněji. Po přidání ho uvidí ostatní hráči i vedení
@@ -5701,8 +5811,10 @@
       </div>
       <div class="idea-modal-footer">
         <button class="btn btn-secondary" onclick="closeIdeaModal()">Zrušit</button>
-        <button class="btn btn-primary" onclick="submitNewIdea()"><i class="fa-solid fa-paper-plane"></i> Odeslat
-          nápad</button>
+        <button class="btn btn-primary" onclick="submitNewIdea()">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
+          <span>Odeslat nápad</span>
+        </button>
       </div>
     </div>
   </div>
@@ -5719,7 +5831,7 @@
           </svg>
           <span style="color: #f8fafc;">Schválit nápad</span>
         </h3>
-        <button class="idea-modal-close" onclick="closeApproveIdeaModal()">&times;</button>
+        <button class="idea-modal-close" onclick="closeApproveIdeaModal()" aria-label="Zavřít">&times;</button>
       </div>
       <div class="idea-modal-body">
         <p class="idea-modal-sub">Napiš krátce vlastními slovy, co bylo implementováno nebo jak jsi nápad vyřešil. AI
@@ -5752,7 +5864,7 @@
           </svg>
           <span style="color: #f8fafc;">Zamítnout nápad</span>
         </h3>
-        <button class="idea-modal-close" onclick="closeRejectIdeaModal()">&times;</button>
+        <button class="idea-modal-close" onclick="closeRejectIdeaModal()" aria-label="Zavřít">&times;</button>
       </div>
       <div class="idea-modal-body">
         <p class="idea-modal-sub">Zadej důvod zamítnutí nápadu. AI formulaci uhladí se zachováním přesného důvodu a
@@ -5773,7 +5885,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261124_anti_slop_v6"></script>
+  <script src="script.js?v=20261124_anti_slop_full_v1"></script>
 </body>
 
 </html>

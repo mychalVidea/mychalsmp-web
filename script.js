@@ -96,6 +96,142 @@ function handleUrlRouting() {
   }
 }
 
+// ---- INLINE SVG ICON LIBRARY (Rule 53: Zero System Emojis, stroke-width 1.75) ----
+const UI_ICONS = {
+  info: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  check: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>',
+  x: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+  alert: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  clock: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  refresh: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>',
+  video: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
+  crown: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>',
+  lock: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  star: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  send: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>',
+  lightbulb: '<svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
+  user: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  users: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  sparkles: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>',
+  pin: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>',
+  thumbsUp: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>',
+  thumbsDown: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22h0a3.13 3.13 0 0 1-3-3.88Z"/></svg>',
+  calendar: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+  bolt: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+  moon: '<svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+  copy: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+  gem: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>',
+  candle: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c1.5 2 3 3.8 3 6a3 3 0 1 1-6 0c0-2.2 1.5-4 3-6Z"/><rect x="9" y="12" width="6" height="10" rx="1"/></svg>',
+  question: '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+};
+
+const APPLE_SPRING_EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+function prefersReducedMotion() {
+  return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+/**
+ * Smooth state visibility transition (Rule 35, 116: Zero Hard-Cut display: none -> block).
+ * Animates opacity + micro translateY on GPU without jarring layout snaps.
+ */
+function transitionPanelVisibility(el, show, displayType = 'block') {
+  if (!el) return;
+  if (el._visTimer) {
+    clearTimeout(el._visTimer);
+    el._visTimer = null;
+  }
+
+  if (prefersReducedMotion()) {
+    el.style.display = show ? displayType : 'none';
+    el.style.opacity = show ? '1' : '0';
+    el.style.transform = 'none';
+    el.classList.toggle('is-panel-visible', show);
+    return;
+  }
+
+  if (show) {
+    const alreadyVisible = el.style.display === displayType && el.style.opacity === '1';
+    el.style.display = displayType;
+    el.classList.add('is-panel-visible');
+    if (alreadyVisible) return;
+    el.style.opacity = '0';
+    el.style.transform = 'translate3d(0, 6px, 0)';
+    el.style.transition = `opacity 220ms ${APPLE_SPRING_EASE}, transform 220ms ${APPLE_SPRING_EASE}`;
+    void el.offsetWidth;
+    el.style.opacity = '1';
+    el.style.transform = 'translate3d(0, 0, 0)';
+  } else {
+    if (el.style.display === 'none') return;
+    el.classList.remove('is-panel-visible');
+    el.style.transition = `opacity 150ms ${APPLE_SPRING_EASE}, transform 150ms ${APPLE_SPRING_EASE}`;
+    el.style.opacity = '0';
+    el.style.transform = 'translate3d(0, 4px, 0)';
+    el._visTimer = setTimeout(() => {
+      el.style.display = 'none';
+      el._visTimer = null;
+    }, 155);
+  }
+}
+
+/**
+ * Local inline feedback right beside the triggering form/control (Rules 24, 25).
+ */
+function showInlineFeedback(anchorEl, message, type = 'error', autoHideMs = 4500) {
+  if (!anchorEl) return;
+  const host = anchorEl.closest('form') || anchorEl.parentElement || anchorEl;
+  if (!host) return;
+
+  let slot = host.querySelector(':scope > .inline-feedback-msg');
+  if (!slot) {
+    slot = document.createElement('div');
+    slot.className = 'inline-feedback-msg';
+    slot.setAttribute('role', 'status');
+    slot.setAttribute('aria-live', 'polite');
+    host.appendChild(slot);
+  }
+
+  const iconMap = {
+    error: UI_ICONS.x,
+    warning: UI_ICONS.alert,
+    success: UI_ICONS.check,
+    info: UI_ICONS.info
+  };
+
+  slot.className = `inline-feedback-msg is-${type} is-visible`;
+  slot.innerHTML = `<span class="inline-feedback-icon">${iconMap[type] || UI_ICONS.info}</span><span>${escapeHtml(message)}</span>`;
+
+  if (slot._hideTimer) clearTimeout(slot._hideTimer);
+  if (autoHideMs > 0) {
+    slot._hideTimer = setTimeout(() => {
+      slot.classList.remove('is-visible');
+      slot._hideTimer = null;
+    }, autoHideMs);
+  }
+}
+
+function updateMainNavPill(targetBtn) {
+  const container = document.querySelector('.nav-links');
+  const pill = document.getElementById('nav-links-pill') || document.getElementById('nav-active-pill');
+  const btn = targetBtn || container?.querySelector('.nav-link.active');
+  if (!container || !pill) return;
+  if (!btn) {
+    pill.style.opacity = '0';
+    return;
+  }
+  const cRect = container.getBoundingClientRect();
+  const bRect = btn.getBoundingClientRect();
+  if (bRect.width === 0) {
+    pill.style.opacity = '0';
+    return;
+  }
+  container.classList.add('has-indicator');
+  const left = bRect.left - cRect.left;
+  pill.style.opacity = '1';
+  pill.style.width = `${bRect.width}px`;
+  pill.style.transform = `translate3d(${left}px, 0, 0)`;
+}
+
 let currentActiveTab = 'home';
 
 function executeTabSwitch(name, updateUrl = true) {
@@ -117,7 +253,6 @@ function executeTabSwitch(name, updateUrl = true) {
     // Force browser reflow to register opacity/transform transition start state
     section.offsetHeight;
     section.classList.add('animate-in');
-    initVectorSpotlight();
   }
 
   // Activate matching buttons on desktop, top mobile, and bottom mobile navigation
@@ -128,7 +263,9 @@ function executeTabSwitch(name, updateUrl = true) {
   if (topMobileBtn) topMobileBtn.classList.add('active');
   if (bottomNavBtn) bottomNavBtn.classList.add('active');
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  updateMainNavPill(desktopBtn);
+
+  window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
 
   const footer = document.querySelector('footer.footer');
   if (footer) {
@@ -242,35 +379,33 @@ function fallbackCopyTextToClipboard(text) {
   });
 }
 
-// ---- TACTILE BUTTON FEEDBACK HELPER (APPLE-GRADE SPRING MOTION) ----
-function triggerButtonFeedback(btnElement, copiedText = 'Zkopírováno!') {
+// ---- TACTILE BUTTON FEEDBACK HELPER (CRITICALLY DAMPED APPLE SPRING) ----
+function triggerButtonFeedback(btnElement, copiedText = 'Zkopírováno') {
   if (!btnElement) return;
 
   btnElement.classList.add('copied', 'is-copied');
 
-  // Apple-grade physical tactile spring bounce on the element
-  if (typeof btnElement.animate === 'function') {
+  // Critically damped tactile press feedback (no cartoon overshoot)
+  if (!prefersReducedMotion() && typeof btnElement.animate === 'function') {
     btnElement.animate([
       { transform: 'scale(1)' },
-      { transform: 'scale(0.965)' },
-      { transform: 'scale(1.025)' },
+      { transform: 'scale(0.975)' },
       { transform: 'scale(1)' }
     ], {
-      duration: 380,
-      easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+      duration: 180,
+      easing: APPLE_SPRING_EASE
     });
   }
 
-  // Dynamic vector checkmark spring bounce
+  // Subtle icon morph into confirmation state
   const iconWrap = btnElement.querySelector('.btn-copy-icon-wrap');
-  if (iconWrap && typeof iconWrap.animate === 'function') {
+  if (iconWrap && !prefersReducedMotion() && typeof iconWrap.animate === 'function') {
     iconWrap.animate([
-      { transform: 'scale(0.7) rotate(-15deg)' },
-      { transform: 'scale(1.15) rotate(0deg)' },
-      { transform: 'scale(1) rotate(0deg)' }
+      { transform: 'scale(0.85)', opacity: 0.6 },
+      { transform: 'scale(1)', opacity: 1 }
     ], {
-      duration: 400,
-      easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+      duration: 200,
+      easing: APPLE_SPRING_EASE
     });
   }
 
@@ -278,7 +413,10 @@ function triggerButtonFeedback(btnElement, copiedText = 'Zkopírováno!') {
   const label = btnElement.querySelector('.btn-copy-label') || btnElement.querySelector('.btn-gm-label');
   let origLabel = null;
   if (label) {
-    origLabel = label.textContent;
+    if (!label.dataset.origLabel) {
+      label.dataset.origLabel = label.textContent;
+    }
+    origLabel = label.dataset.origLabel;
     label.textContent = copiedText;
   }
 
@@ -293,7 +431,7 @@ function triggerButtonFeedback(btnElement, copiedText = 'Zkopírováno!') {
       label.textContent = origLabel;
     }
     btnElement._resetTimer = null;
-  }, 2000);
+  }, 1800);
 }
 
 // ---- LAUNCHER OS SWITCHER & TERMINAL COPY ----
@@ -307,17 +445,30 @@ function switchLauncherOS(os, btn) {
   if (os !== 'linux' && os !== 'windows') {
     os = 'windows';
   }
-  document.querySelectorAll('.os-nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.os-nav-tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
   const activeBtn = btn || document.querySelector(`.os-nav-tab[data-os="${os}"]`);
-  if (activeBtn) activeBtn.classList.add('active');
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+    activeBtn.setAttribute('aria-selected', 'true');
+  }
 
   updateLauncherOsPill(activeBtn);
 
-  document.querySelectorAll('.os-panel').forEach(p => p.classList.remove('active'));
-  const targetPanel = document.getElementById(`os-panel-${os}`);
-  if (targetPanel) {
-    targetPanel.classList.add('active');
-  }
+  document.querySelectorAll('.os-panel').forEach(p => {
+    const isTarget = p.id === `os-panel-${os}`;
+    p.classList.toggle('active', isTarget);
+    if (isTarget && !prefersReducedMotion()) {
+      p.style.opacity = '0';
+      p.style.transform = 'translate3d(0, 6px, 0)';
+      p.style.transition = `opacity 220ms ${APPLE_SPRING_EASE}, transform 220ms ${APPLE_SPRING_EASE}`;
+      void p.offsetWidth;
+      p.style.opacity = '1';
+      p.style.transform = 'translate3d(0, 0, 0)';
+    }
+  });
 }
 
 function updateLauncherOsPill(targetBtn) {
@@ -330,7 +481,7 @@ function updateLauncherOsPill(targetBtn) {
   if (bRect.width === 0) return;
   const left = bRect.left - cRect.left;
   pill.style.width = `${bRect.width}px`;
-  pill.style.transform = `translateX(${left}px)`;
+  pill.style.transform = `translate3d(${left}px, 0, 0)`;
 }
 
 // ---- DYNAMIC LAUNCHER RELEASES & DOWNLOADS TRACKER ----
@@ -386,9 +537,14 @@ async function resolveLatestLauncherDownloads() {
     // Fallback na přímý GitHub API
   }
 
-  // 2. Fallback na přímé GitHub API
+  // 2. Fallback na přímé GitHub API s AbortController timeoutem
+  const ghController = new AbortController();
+  const ghTimer = setTimeout(() => ghController.abort(), 6000);
   try {
-    const res = await fetch('https://api.github.com/repos/mychalVidea/mychalsmp-launcher/releases/latest');
+    const res = await fetch('https://api.github.com/repos/mychalVidea/mychalsmp-launcher/releases/latest', {
+      credentials: 'omit',
+      signal: ghController.signal
+    });
     if (!res.ok) return;
     const data = await res.json();
     const assets = data.assets || [];
@@ -406,7 +562,7 @@ async function resolveLatestLauncherDownloads() {
       linBtn.href = linAsset.browser_download_url;
     }
 
-    // Automatická aktualizace zobrazené verze v badge
+    // Automatická aktualizace zobrazené verze
     if (verTag && data.tag_name) {
       verTag.textContent = `Verze ${data.tag_name}`;
     }
@@ -418,6 +574,8 @@ async function resolveLatestLauncherDownloads() {
     updateLauncherDownloadsUI(totalDl);
   } catch (_err) {
     // Tichý fallback - tlačítka již mají výchozí fallback odkazy v HTML
+  } finally {
+    clearTimeout(ghTimer);
   }
 }
 
@@ -430,9 +588,9 @@ if (typeof window !== 'undefined') {
 
 function copyTermCommand(commandText, btn) {
   copyTextToClipboard(commandText).then(() => {
-    triggerButtonFeedback(btn, 'Zkopírováno!');
+    triggerButtonFeedback(btn, 'Zkopírováno');
   }).catch(() => {
-    triggerButtonFeedback(btn, 'Zkopírováno!');
+    triggerButtonFeedback(btn, 'Zkopírováno');
   });
 }
 
@@ -475,13 +633,13 @@ function copyIP(event) {
     btnToFeedback = document.getElementById('copy-btn');
   }
 
-  // 2. Okamžitá hmatová reakce a morph ikon v tlačítku (žádné čekání na asynchronní operaci)
+  // 2. Okamžitá lokální hmatová reakce a morph ikon v tlačítku
   if (btnToFeedback) {
-    triggerButtonFeedback(btnToFeedback, 'Zkopírováno!');
+    triggerButtonFeedback(btnToFeedback, 'Zkopírováno');
   }
   if (barToHighlight) {
     barToHighlight.classList.add('copied');
-    setTimeout(() => barToHighlight.classList.remove('copied'), 2000);
+    setTimeout(() => barToHighlight.classList.remove('copied'), 1800);
   }
 
   // 3. Kopírování do schránky s automatickým fallbackem pro file:///
@@ -494,11 +652,11 @@ function copyIP(event) {
 function copyCommand(cmd, el) {
   if (!cmd) return;
   if (el) {
-    triggerButtonFeedback(el, 'Zkopírováno!');
+    triggerButtonFeedback(el, 'Zkopírováno');
     el.classList.add('command-copied', 'copied');
     setTimeout(() => {
       el.classList.remove('command-copied', 'copied');
-    }, 2000);
+    }, 1800);
   }
   copyTextToClipboard(cmd).catch(err => {
     console.warn('Failed to copy command:', err);
@@ -512,69 +670,70 @@ function copyTicketId(e) {
   const text = ticketIdEl.textContent.trim();
   const btn = document.querySelector('.ticket-copy-btn');
   if (btn) {
-    triggerButtonFeedback(btn, 'Zkopírováno!');
+    triggerButtonFeedback(btn, 'Zkopírováno');
   }
   copyTextToClipboard(text).catch(err => {
     console.warn('Failed to copy ticket ID:', err);
   });
 }
 
-// ---- FLOATING TOAST NOTIFICATION ----
-function showToast(message) {
-  let container = document.getElementById('toast-container');
-  if (!container) {
-    container = document.createElement('div');
-    container.id = 'toast-container';
-    document.body.appendChild(container);
-  }
+// ---- CALM STATUS FALLBACK (Rules 24, 25: Local inline feedback preferred; zero corner slop toasts) ----
+function showToast(message, anchorEl = null) {
+  const raw = String(message || '').trim();
+  if (!raw) return;
 
-  const raw = String(message || '');
   let toastType = 'info';
-  let iconSvg = '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="#0a67e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>';
-
-  if (/^[❌🚫]|chyba|selhal|neplatn/iu.test(raw)) {
+  if (/chyba|selhal|neplatn|nedostupn|nepodař|musíš uvést/iu.test(raw)) {
     toastType = 'error';
-    iconSvg = '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="#f51515" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
-  } else if (/^[✅✓]|úspěšně|zkopírován|schválen/iu.test(raw)) {
+  } else if (/úspěšně|zkopírován|schválen|odeslán|zpracován/iu.test(raw)) {
     toastType = 'success';
-    iconSvg = '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-  } else if (/^[⚠️⚠]|upozornění|musíš/iu.test(raw)) {
+  } else if (/upozornění|musíš|vyplň|potvrď|maximálně|počkej/iu.test(raw)) {
     toastType = 'warning';
-    iconSvg = '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
-  } else if (/^[⏳⌛]|počkej|odesílám|nahráv/iu.test(raw)) {
-    toastType = 'progress';
-    iconSvg = '<svg class="ui-icon-svg ui-icon-svg--xs ui-icon-spin" viewBox="0 0 24 24" fill="none" stroke="#0a67e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"></circle></svg>';
   }
 
-  const cleanMessage = raw.replace(/^[✓⚠️ℹ️🚀🎮🧹📌❌⚡🟢🟡⚪⏳⌛⬇▶✅🚫🔒🎉🤖🗑️❓]+\s*/gu, '');
+  if (anchorEl) {
+    showInlineFeedback(anchorEl, raw, toastType);
+    return;
+  }
 
-  const toast = document.createElement('div');
-  toast.className = `toast-notification toast--${toastType}`;
-  toast.innerHTML = `<span class="toast-icon">${iconSvg}</span><span class="toast-msg">${cleanMessage}</span>`;
+  // Fallback: render subtle top-center inline status bar inside active section instead of corner floating toast
+  const activeSection = document.querySelector('.tab-section.active') || document.body;
+  let bar = document.getElementById('inline-status-fallback');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'inline-status-fallback';
+    bar.className = 'inline-feedback-msg';
+    bar.setAttribute('role', 'status');
+    bar.setAttribute('aria-live', 'polite');
+  }
+  if (bar.parentElement !== activeSection) {
+    activeSection.prepend(bar);
+  }
 
-  container.appendChild(toast);
+  const iconMap = {
+    error: UI_ICONS.x,
+    warning: UI_ICONS.alert,
+    success: UI_ICONS.check,
+    info: UI_ICONS.info
+  };
 
-  // Trigger animations in next frames
-  requestAnimationFrame(() => {
-    toast.classList.add('show');
-  });
+  bar.className = `inline-feedback-msg is-${toastType} is-visible`;
+  bar.innerHTML = `<span class="inline-feedback-icon">${iconMap[toastType] || UI_ICONS.info}</span><span>${escapeHtml(raw)}</span>`;
 
-  // Transition out and cleanup
-  setTimeout(() => {
-    toast.classList.remove('show');
-    toast.classList.add('hide');
-    setTimeout(() => {
-      toast.remove();
-    }, 250);
-  }, 2400);
+  if (bar._hideTimer) clearTimeout(bar._hideTimer);
+  bar._hideTimer = setTimeout(() => {
+    bar.classList.remove('is-visible');
+    bar._hideTimer = null;
+  }, 3600);
 }
 
 function copyText(text, el) {
-  navigator.clipboard.writeText(text).then(() => {
+  copyTextToClipboard(text).then(() => {
+    if (!el) return;
     const origHTML = el.innerHTML;
-    el.innerHTML = '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-    setTimeout(() => el.innerHTML = origHTML, 1800);
-  });
+    el.innerHTML = '<svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    setTimeout(() => { el.innerHTML = origHTML; }, 1800);
+  }).catch(() => {});
 }
 
 // ---- FAQ TOGGLE ----
@@ -642,11 +801,39 @@ function lightboxNext(e) {
   document.getElementById('lightbox-img').src = lightboxImages[lightboxIndex];
 }
 
-// Keyboard nav for lightbox
+// Keyboard nav for lightbox & modals (Rule 32: Esc closes any open overlay)
 document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const lb = document.getElementById('lightbox');
+    if (lb && lb.classList.contains('open')) {
+      closeLightbox();
+      return;
+    }
+    const cancelModal = document.getElementById('smp-cancel-modal');
+    if (cancelModal && cancelModal.style.display !== 'none' && cancelModal.style.display !== '') {
+      closeCancelModal();
+      return;
+    }
+    const ideaModal = document.getElementById('idea-modal');
+    if (ideaModal && ideaModal.classList.contains('active')) {
+      closeIdeaModal();
+      return;
+    }
+    const approveModal = document.getElementById('idea-approve-modal');
+    if (approveModal && approveModal.classList.contains('active')) {
+      closeApproveIdeaModal();
+      return;
+    }
+    const rejectModal = document.getElementById('idea-reject-modal');
+    if (rejectModal && rejectModal.classList.contains('active')) {
+      closeRejectIdeaModal();
+      return;
+    }
+    return;
+  }
+
   const lb = document.getElementById('lightbox');
-  if (!lb.classList.contains('open')) return;
-  if (e.key === 'Escape') closeLightbox();
+  if (!lb || !lb.classList.contains('open')) return;
   if (e.key === 'ArrowLeft') lightboxPrev(e);
   if (e.key === 'ArrowRight') lightboxNext(e);
 });
@@ -654,26 +841,30 @@ document.addEventListener('keydown', (e) => {
 // ---- NAVBAR SCROLL EFFECT ----
 window.addEventListener('scroll', () => {
   const nav = document.getElementById('navbar');
+  if (!nav) return;
   if (window.scrollY > 40) nav.classList.add('scrolled');
   else nav.classList.remove('scrolled');
 }, { passive: true });
 
-// ---- INTERSECTION OBSERVER (animate cards) ----
+// ---- INTERSECTION OBSERVER (subtle optical reveal) ----
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.style.opacity = '1';
-      e.target.style.transform = 'translateY(0)';
+      e.target.style.transform = 'translate3d(0, 0, 0)';
+      observer.unobserve(e.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.08 });
 
-document.querySelectorAll('.feature-card, .step-card, .rule-card, .gallery-item, .join-step, .smp-card, .smp-checkout-card, .smp-hero-left').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(24px)';
-  el.style.transition = 'opacity .5s ease, transform .5s ease';
-  observer.observe(el);
-});
+if (!prefersReducedMotion()) {
+  document.querySelectorAll('.feature-card, .step-card, .rule-card, .gallery-item, .join-step, .smp-card, .smp-checkout-card, .smp-hero-left').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translate3d(0, 8px, 0)';
+    el.style.transition = `opacity 260ms ${APPLE_SPRING_EASE}, transform 260ms ${APPLE_SPRING_EASE}`;
+    observer.observe(el);
+  });
+}
 
 function formatCompactNumber(num) {
   if (!num || isNaN(num)) return '0';
@@ -712,7 +903,6 @@ async function loadStats() {
     }
 
     if (data) {
-      console.log('[PUBLIC STATS] loaded:', data);
       if (data.whitelist_count !== undefined) {
         updateStat('stat-whitelist', data.whitelist_count);
       }
@@ -853,7 +1043,6 @@ function switchSmpPreviewMode(mode) {
   const chatBtn = document.getElementById('smp-mode-chat-btn');
   const tabBtn = document.getElementById('smp-mode-tab-btn');
   const tagBtn = document.getElementById('smp-mode-tag-btn');
-  const pill = document.getElementById('smp-mode-pill');
 
   [chatView, tabView, tagView].forEach(v => {
     if (v) {
@@ -864,27 +1053,21 @@ function switchSmpPreviewMode(mode) {
   [chatBtn, tabBtn, tagBtn].forEach(b => { if (b) b.classList.remove('active'); });
 
   let activeBtn = chatBtn;
+  let targetView = chatView;
+  let displayType = 'flex';
   if (mode === 'tab') {
     activeBtn = tabBtn;
-    if (tabView) {
-      tabView.style.display = 'block';
-      void tabView.offsetWidth;
-      tabView.classList.add('smp-preview-pane-anim');
-    }
+    targetView = tabView;
+    displayType = 'block';
   } else if (mode === 'tag') {
     activeBtn = tagBtn;
-    if (tagView) {
-      tagView.style.display = 'flex';
-      void tagView.offsetWidth;
-      tagView.classList.add('smp-preview-pane-anim');
-    }
-  } else {
-    activeBtn = chatBtn;
-    if (chatView) {
-      chatView.style.display = 'flex';
-      void chatView.offsetWidth;
-      chatView.classList.add('smp-preview-pane-anim');
-    }
+    targetView = tagView;
+    displayType = 'flex';
+  }
+
+  if (targetView) {
+    transitionPanelVisibility(targetView, true, displayType);
+    targetView.classList.add('smp-preview-pane-anim');
   }
 
   if (activeBtn) activeBtn.classList.add('active');
@@ -901,7 +1084,7 @@ function updateSmpModePill(targetBtn) {
   if (bRect.width === 0) return;
   const left = bRect.left - cRect.left;
   pill.style.width = `${bRect.width}px`;
-  pill.style.transform = `translateX(${left}px)`;
+  pill.style.transform = `translate3d(${left}px, 0, 0)`;
 }
 
 // Live /cc color selector in the preview
@@ -915,11 +1098,7 @@ function setPreviewNickColor(color, swatchEl) {
   names.forEach(el => {
     if (el) {
       el.style.color = color;
-      if (color !== '#ffffff' && color !== '#f1f5f9') {
-        el.style.textShadow = `0 0 8px ${color}80`;
-      } else {
-        el.style.textShadow = 'none';
-      }
+      el.style.textShadow = 'none';
     }
   });
 
@@ -976,8 +1155,8 @@ const TEBEX_WAREZ_TIER_CONFIG = {
     price: '1.99',
     prefix: '+',
     tierClass: 'tier-plus',
-    btnLabel: 'Aktivovat SMP+ (Warez)',
-    btnSub: '1.99 € / měsíc · Okamžitá aktivace (Offline nick)'
+    btnLabel: 'Aktivovat SMP+ · Offline',
+    btnSub: '1.99 € / měsíc · Offline účet'
   },
   smp_pp: {
     id: '7786831',
@@ -985,8 +1164,8 @@ const TEBEX_WAREZ_TIER_CONFIG = {
     price: '3.79',
     prefix: '++',
     tierClass: 'tier-plusplus',
-    btnLabel: 'Aktivovat SMP++ (Warez)',
-    btnSub: '3.79 € / měsíc · Okamžitá aktivace (Offline nick)'
+    btnLabel: 'Aktivovat SMP++ · Offline',
+    btnSub: '3.79 € / měsíc · Offline účet'
   },
   smp_ppp: {
     id: '7786832',
@@ -994,8 +1173,8 @@ const TEBEX_WAREZ_TIER_CONFIG = {
     price: '3.99',
     prefix: '+++',
     tierClass: 'tier-plusplusplus',
-    btnLabel: 'Aktivovat SMP+++ (Warez)',
-    btnSub: '3.99 € / měsíc · Okamžitá aktivace (Offline nick)'
+    btnLabel: 'Aktivovat SMP+++ · Offline',
+    btnSub: '3.99 € / měsíc · Offline účet'
   }
 };
 
@@ -1018,10 +1197,11 @@ function updateTierSliderPosition() {
 
   const selectorRect = selector.getBoundingClientRect();
   const btnRect = activeBtn.getBoundingClientRect();
+  if (btnRect.width === 0) return;
   const leftOffset = btnRect.left - selectorRect.left;
 
   indicator.style.width = `${btnRect.width}px`;
-  indicator.style.transform = `translateX(${leftOffset}px)`;
+  indicator.style.transform = `translate3d(${leftOffset}px, 0, 0)`;
 }
 
 function selectSmpTier(tierKey) {
@@ -1042,7 +1222,7 @@ function selectSmpTier(tierKey) {
     if (btn && tCfg) {
       const isSelected = key === tierKey;
       btn.classList.toggle('active', isSelected);
-      btn.textContent = isSelected ? `Vybráno (${tCfg.name})` : `Zvolit ${tCfg.name}`;
+      btn.textContent = isSelected ? `Vybráno · ${tCfg.name}` : `Zvolit ${tCfg.name}`;
     }
   });
 
@@ -1075,11 +1255,11 @@ function selectSmpTier(tierKey) {
   // Animate price display if legacy element exists
   const priceNumEl = document.getElementById('smp-display-price');
   if (priceNumEl) {
-    priceNumEl.style.transform = 'scale(0.92)';
+    priceNumEl.style.transform = 'scale(0.96)';
     setTimeout(() => {
       priceNumEl.textContent = cfg.price;
       priceNumEl.style.transform = 'scale(1)';
-    }, 120);
+    }, 100);
   }
 
   // Update in-game rank preview plus sign (in preview box only)
@@ -1116,7 +1296,7 @@ function selectSmpTierAndScroll(tierKey) {
     const targetY = window.pageYOffset + rect.top - navHeight - 20;
     window.scrollTo({
       top: Math.max(0, targetY),
-      behavior: 'smooth'
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth'
     });
   }
   const nickInput = document.getElementById('mc-username');
@@ -1127,7 +1307,7 @@ function selectSmpTierAndScroll(tierKey) {
       } catch (e) {
         nickInput.focus();
       }
-    }, 450);
+    }, 320);
   }
 }
 
@@ -1138,7 +1318,7 @@ function handleCrackedToggle(isCracked) {
   const btnSub = document.getElementById('btn-purchase-sub');
 
   if (hint) {
-    hint.style.display = isCracked ? 'block' : 'none';
+    transitionPanelVisibility(hint, Boolean(isCracked), 'block');
   }
 
   if (btnLabel && btnSub) {
@@ -1149,11 +1329,13 @@ function handleCrackedToggle(isCracked) {
 
 async function checkoutSMP() {
   const isCracked = Boolean(document.getElementById('smp-cracked-check')?.checked);
+  const btn = document.querySelector('.btn-purchase');
+  const feedbackAnchor = btn || document.getElementById('mc-username');
 
   // Check mandatory terms and immediate delivery consent
   const consentCb = document.getElementById('smp-consent-terms');
   if (consentCb && !consentCb.checked) {
-    showToast('⚠️ Pro nákup musíš potvrdit souhlas s Podmínkami služby a okamžitým plněním!');
+    showInlineFeedback(feedbackAnchor, 'Pro nákup potvrď souhlas s Podmínkami služby a okamžitým plněním.', 'warning');
     const consentWrapper = document.getElementById('smp-consent-wrapper');
     if (consentWrapper) {
       consentWrapper.classList.remove('shake-input');
@@ -1168,7 +1350,7 @@ async function checkoutSMP() {
   const nickname = nickInput ? nickInput.value.trim() : '';
 
   if (!nickname) {
-    showToast('⚠️ Zadej nejprve svůj Minecraft nick!');
+    showInlineFeedback(feedbackAnchor, 'Zadej svůj Minecraft nick.', 'warning');
     if (nickInput) {
       nickInput.focus();
       nickInput.classList.remove('shake-input');
@@ -1180,7 +1362,7 @@ async function checkoutSMP() {
 
   // Simple nick format check
   if (!/^[a-zA-Z0-9_]{2,16}$/.test(nickname)) {
-    showToast('⚠️ Neplatný nick! Použij 2-16 znaků (a-z, 0-9, _).');
+    showInlineFeedback(feedbackAnchor, 'Neplatný nick. Použij 2 až 16 znaků: písmena, čísla nebo podtržítko.', 'warning');
     if (nickInput) {
       nickInput.classList.remove('shake-input');
       void nickInput.offsetWidth;
@@ -1189,7 +1371,6 @@ async function checkoutSMP() {
     return;
   }
 
-  const btn = document.querySelector('.btn-purchase');
   const originalText = btn ? btn.innerHTML : '';
   if (btn) {
     btn.innerHTML = '<span class="btn-spinner"></span> Načítám košík...';
@@ -1216,7 +1397,7 @@ async function checkoutSMP() {
 
     if (!response.ok) {
       const errMsg = data?.message || `Chyba při komunikaci s pokladnou (${response.status}).`;
-      showToast('❌ ' + errMsg);
+      showInlineFeedback(feedbackAnchor, errMsg, 'error');
 
       // If user wasn't found on official Mojang store, auto-toggle cracked option
       if (errMsg.includes('nebyl na Tebexu nalezen') || errMsg.toLowerCase().includes('username') || data?.isInvalidUser) {
@@ -1244,14 +1425,14 @@ async function checkoutSMP() {
       }
     } else {
       const errMsg = data?.message || 'Nepodařilo se vytvořit platební odkaz.';
-      showToast('❌ ' + errMsg);
+      showInlineFeedback(feedbackAnchor, errMsg, 'error');
     }
   } catch (err) {
-    console.error('[CHECKOUT ERR]', err);
+    console.warn('[CHECKOUT ERR]', err);
     const fallbackMsg = (err && err.message && !err.message.startsWith('HTTP'))
       ? err.message
-      : 'Herní pokladna je momentálně nedostupná. Zkus to prosím za chvíli.';
-    showToast('❌ ' + fallbackMsg);
+      : 'Herní pokladna je momentálně nedostupná. Zkus to za chvíli.';
+    showInlineFeedback(feedbackAnchor, fallbackMsg, 'error');
   } finally {
     if (btn) {
       btn.innerHTML = originalText;
@@ -1260,41 +1441,15 @@ async function checkoutSMP() {
   }
 }
 
-// ---- APPLE-GRADE INTERACTIVE VECTOR SPOTLIGHT ----
+// ---- CURSOR SPOTLIGHT DISABLED (Rules 86, 107: Zero cursor tricks or redundant mousemove listeners) ----
 function initVectorSpotlight() {
-  const cards = document.querySelectorAll(
-    '.gamemode-card, .command-card, .hero-ip-bar, .join-quick-ip-card, .join-step-row, .smp-card, .smp-showcase-card, .stat-card, .gm-feat-tile, .media-crit-chip, .media-perk-item, .rule-card, .bug-interactive-card, .trust-badge-item, .join-auth-mini-card, .modtest-card'
-  );
-
-  cards.forEach(card => {
-    if (card._spotlightInit) return;
-    card._spotlightInit = true;
-
-    let ticking = false;
-    card.addEventListener('mousemove', (e) => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          card.style.setProperty('--mouse-x', `${x}px`);
-          card.style.setProperty('--mouse-y', `${y}px`);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.removeProperty('--mouse-x');
-      card.style.removeProperty('--mouse-y');
-    });
-  });
+  // Intentionally disabled for calm native-software feel and zero main-thread mousemove overhead.
 }
 
-// ---- APPLE-GRADE TACTILE MICRO-INTERACTIONS LISTENER ----
+// ---- CRITICALLY DAMPED TACTILE PRESS FEEDBACK (Rules 4, 7, 12) ----
 function initMicroInteractions() {
   document.addEventListener('click', (e) => {
+    if (prefersReducedMotion()) return;
     const target = e.target.closest(
       'button, .btn, .nav-link, .rules-filter-btn, .bug-cat-chip, .smp-mode-btn, .gm-card-cmd-chip, .bottom-nav-item, .join-pill, .rules-banner-banned-btn'
     );
@@ -1303,12 +1458,11 @@ function initMicroInteractions() {
     if (typeof target.animate === 'function') {
       target.animate([
         { transform: 'scale(1)' },
-        { transform: 'scale(0.965)' },
-        { transform: 'scale(1.02)' },
+        { transform: 'scale(0.975)' },
         { transform: 'scale(1)' }
       ], {
-        duration: 320,
-        easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+        duration: 140,
+        easing: APPLE_SPRING_EASE
       });
     }
   }, { passive: true });
@@ -1565,12 +1719,12 @@ async function checkSmpPlusStatus() {
               <line x1="12" y1="16" x2="12.01" y2="16"></line>
             </svg>
             <div>
-              <strong style="color: #ffffff; display: block; margin-bottom: 4px;">Nemáš propojený Minecraft účet!</strong>
-              <p class="smp-manage-desc">Pro získání role na Discordu a pro jakoukoliv správu či zrušení SMP+ musíš mít účet propojený. Zrušení předplatného probíhá výhradně přes ověřený Discord. Připoj se na server <strong>mychalsmp.xyz</strong> a napiš do chatu:</p>
+              <strong style="color: #ffffff; display: block; margin-bottom: 4px;">Nemáš propojený Minecraft účet</strong>
+              <p class="smp-manage-desc">Pro získání role na Discordu a správu předplatného SMP+ musíš mít propojený účet. Připoj se na server <strong>mychalsmp.xyz</strong> a napiš do chatu:</p>
             </div>
           </div>
           <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06);">
-            <code class="dlink-code-badge" onclick="copyDlinkCmd(this)" title="Kliknutím zkopíruješ" style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+            <code class="dlink-code-badge" onclick="copyDlinkCmd(this)" aria-label="Zkopírovat příkaz /dlink" style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
               <span>/dlink</span>
               <svg class="ui-icon-svg" style="width: 13px; height: 13px; color: #0a67e5;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -1647,12 +1801,13 @@ async function checkSmpPlusStatus() {
       `;
     }
   } catch (err) {
-    console.error('[CHECK SMP+ STATUS ERR]', err);
+    console.warn('[CHECK SMP+ STATUS ERR]', err);
     container.innerHTML = `
       <div class="smp-manage-status-box" style="text-align: center; padding: 20px;">
         <p class="smp-manage-desc" style="color: #94a3b8; margin-bottom: 12px;">Herní server nebo API je momentálně nedostupné. Tvé členství ve hře stále běží.</p>
-        <button type="button" onclick="checkSmpPlusStatus()" class="btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;">
-          <i class="fa-solid fa-arrows-rotate"></i> Zkusit znovu
+        <button type="button" onclick="checkSmpPlusStatus()" class="btn-secondary" style="padding: 8px 16px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px;">
+          ${UI_ICONS.refresh}
+          <span>Zkusit znovu</span>
         </button>
       </div>
     `;
@@ -1661,7 +1816,8 @@ async function checkSmpPlusStatus() {
 
 function copyDlinkCmd(btn) {
   const el = btn || (typeof event !== 'undefined' && event ? event.currentTarget : null);
-  triggerButtonFeedback(el, '/dlink');
+  copyTextToClipboard('/dlink').catch(() => {});
+  triggerButtonFeedback(el, 'Zkopírováno');
 }
 
 function confirmCancelSmpPlus(tierDisplayName = 'SMP+') {
@@ -1670,17 +1826,18 @@ function confirmCancelSmpPlus(tierDisplayName = 'SMP+') {
   if (desc && cachedSmpNick) {
     desc.innerHTML = `Opravdu si přeješ zrušit ${escapeHtml(tierDisplayName)} členství pro hráče <strong>${escapeHtml(cachedSmpNick)}</strong>?<br><br>Okamžitě přijdeš o výhody ${escapeHtml(tierDisplayName)} ve hře i na Discordu a <strong>opakované strhávání plateb na Tebexu i PayPalu bude trvale zrušeno</strong>.`;
   }
-  if (modal) modal.style.display = 'flex';
+  if (modal) transitionPanelVisibility(modal, true, 'flex');
 }
 
 function closeCancelModal() {
   const modal = document.getElementById('smp-cancel-modal');
-  if (modal) modal.style.display = 'none';
+  if (modal) transitionPanelVisibility(modal, false, 'flex');
 }
 
 async function executeCancelSmpPlus() {
   const btn = document.getElementById('btn-confirm-cancel-smpplus');
   const spinner = document.getElementById('cancel-btn-spinner');
+  const manageContainer = document.getElementById('smp-manage-content');
   if (btn) btn.disabled = true;
   if (spinner) spinner.style.display = 'inline-block';
 
@@ -1701,21 +1858,15 @@ async function executeCancelSmpPlus() {
     closeCancelModal();
 
     if (data.success) {
-      if (typeof showToast === 'function') {
-        showToast('✅ ' + data.message);
-      }
+      showInlineFeedback(manageContainer, data.message || 'Předplatné bylo zrušeno.', 'success');
       checkSmpPlusStatus();
     } else {
-      if (typeof showToast === 'function') {
-        showToast('❌ ' + (data.message || 'Chyba při rušení členství.'));
-      }
+      showInlineFeedback(manageContainer, data.message || 'Chyba při rušení členství.', 'error');
     }
   } catch (err) {
-    console.error('[CANCEL SMP+ ERR]', err);
+    console.warn('[CANCEL SMP+ ERR]', err);
     closeCancelModal();
-    if (typeof showToast === 'function') {
-      showToast('❌ Server je dočasně nedostupný. Zkus to prosím za chvíli.');
-    }
+    showInlineFeedback(manageContainer, 'Server je dočasně nedostupný. Zkus to za chvíli.', 'error');
   } finally {
     if (btn) btn.disabled = false;
     if (spinner) spinner.style.display = 'none';
@@ -1723,6 +1874,15 @@ async function executeCancelSmpPlus() {
 }
 
 // ---- CHECK MEDIA STATUS ----
+function showMediaView(activeKey) {
+  const statusBox = document.getElementById('media-status-box');
+  const applyForm = document.getElementById('media-apply-form');
+  const loginBox = document.getElementById('media-login-box');
+  if (statusBox) transitionPanelVisibility(statusBox, activeKey === 'status', 'block');
+  if (applyForm) transitionPanelVisibility(applyForm, activeKey === 'form', 'block');
+  if (loginBox) transitionPanelVisibility(loginBox, activeKey === 'login', 'block');
+}
+
 async function checkMediaStatus() {
   const token = localStorage.getItem('auth_token');
   const statusBox = document.getElementById('media-status-box');
@@ -1732,15 +1892,11 @@ async function checkMediaStatus() {
   if (!statusBox || !applyForm || !loginBox) return;
 
   if (!token) {
-    statusBox.style.display = 'none';
-    applyForm.style.display = 'none';
-    loginBox.style.display = 'block';
+    showMediaView('login');
     return;
   }
 
-  statusBox.style.display = 'block';
-  applyForm.style.display = 'none';
-  loginBox.style.display = 'none';
+  showMediaView('status');
   statusBox.innerHTML = `
     <div class="media-status-loading-center">
       <div class="media-pending-spinner-wrap">
@@ -1749,13 +1905,13 @@ async function checkMediaStatus() {
           <circle class="media-spinner-arc" cx="44" cy="44" r="38" />
         </svg>
         <div class="media-pending-icon-inner">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
             <polyline points="12 6 12 12 16 14"/>
           </svg>
         </div>
       </div>
-      <p style="text-align:center; color: var(--text-muted); font-size: 0.94rem;">Ověřuji stav tvé žádosti...</p>
+      <p style="text-align:center; color: var(--text-muted); font-size: 0.94rem;">Ověřuji stav žádosti...</p>
     </div>
   `;
 
@@ -1766,9 +1922,7 @@ async function checkMediaStatus() {
 
     if (res.status === 401 || res.status === 403) {
       localStorage.removeItem('auth_token');
-      statusBox.style.display = 'none';
-      applyForm.style.display = 'none';
-      loginBox.style.display = 'block';
+      showMediaView('login');
       return;
     }
 
@@ -1779,9 +1933,7 @@ async function checkMediaStatus() {
     const data = await res.json();
     // If user has no request — show the form
     if (!data.success || !data.hasRequest) {
-      statusBox.style.display = 'none';
-      applyForm.style.display = 'block';
-      loginBox.style.display = 'none';
+      showMediaView('form');
       if (data.mcNick) {
         const mcInput = document.getElementById('media-mc-nick');
         if (mcInput && !mcInput.value) {
@@ -1905,8 +2057,8 @@ async function checkMediaStatus() {
               </svg>
             </div>
           </div>
-          <h3>Žádost Schválena!</h3>
-          <p>Gratulujeme! Tvoje žádost o Media Rank byla schválena. Rank máš aktivní ve hře i na Discordu.</p>
+          <h3>Žádost schválena</h3>
+          <p>Tvoje žádost o Media Rank byla schválena. Rank je aktivní ve hře i na Discordu.</p>
           <div style="margin-top: 20px; padding: 15px; background: rgba(33, 222, 0, 0.06); border-left: 4px solid var(--green, #21DE00); border-radius: 8px; text-align: left;">
             <strong style="color: var(--green, #21DE00); display: block; margin-bottom: 8px;">UPOZORNĚNÍ:</strong>
             Pro udržení Media ranku uváděj v popiscích IP <strong>mychalsmp.xyz</strong> a používej hashtag <strong>#mychalsmp</strong>.
@@ -1920,13 +2072,13 @@ async function checkMediaStatus() {
           <div class="media-status-card media-status--rejected">
             <div class="media-status-center">
               <div class="status-rejected-icon">
-                <svg class="ui-icon-svg ui-icon-svg--lg ui-icon-svg--red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="ui-icon-svg ui-icon-svg--lg ui-icon-svg--red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
               </div>
             </div>
-            <h3>Žádost Zamítnuta</h3>
+            <h3>Žádost zamítnuta</h3>
             <p>Tvoje žádost o Media Rank byla zamítnuta.</p>
             <div class="reject-reason"><strong>Důvod zamítnutí:</strong> ${escapeHtml(reason) || 'Neuveden'}</div>
             <div style="margin-top:12px; color: var(--text-muted);">Znovu můžeš požádat za <strong>${daysLeft} dní</strong>.</div>
@@ -1934,9 +2086,7 @@ async function checkMediaStatus() {
         `;
       } else {
         // allow reapply
-        statusBox.style.display = 'none';
-        applyForm.style.display = 'block';
-        loginBox.style.display = 'none';
+        showMediaView('form');
         return;
       }
     } else if (status === 'removed') {
@@ -1945,22 +2095,19 @@ async function checkMediaStatus() {
         <div class="media-status-card media-status--rejected">
           <div class="media-status-center">
             <div class="status-rejected-icon" style="background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.5); color: #f59e0b; font-size: 1.8rem;">
-              <svg class="ui-icon-svg ui-icon-svg--lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="ui-icon-svg ui-icon-svg--lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="8" x2="12" y2="12"></line>
                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
               </svg>
             </div>
           </div>
-          <h3 style="color: #f59e0b;">Media Rank Odebrán</h3>
+          <h3 style="color: #f59e0b;">Media Rank odebrán</h3>
           <p>Tvůj Media rank byl odebrán administrátorem.</p>
           ${reason ? `<div class="reject-reason"><strong>Důvod:</strong> ${escapeHtml(reason)}</div>` : ''}
           <div style="margin-top:16px;">
-            <button class="btn-primary" onclick="
-              document.getElementById('media-status-box').style.display='none';
-              document.getElementById('media-apply-form').style.display='block';
-            " style="padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem;">
-              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+            <button type="button" class="btn-primary" onclick="showMediaView('form')" style="padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem;">
+              <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
                 <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
               </svg>
               <span>Podat žádost znovu</span>
@@ -1970,20 +2117,20 @@ async function checkMediaStatus() {
       `;
     }
   } catch (err) {
-    console.error('[CHECK MEDIA STATUS ERR]', err);
+    console.warn('[CHECK MEDIA STATUS ERR]', err);
     statusBox.innerHTML = `
       <div class="media-status-card" style="text-align: center;">
-        <div class="status-icon" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #f59e0b; font-size: 1.5rem; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; margin-bottom: 12px;">
-          <svg class="ui-icon-svg ui-icon-svg--md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="status-icon" style="color: #f59e0b; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+          <svg class="ui-icon-svg ui-icon-svg--md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
             <line x1="12" y1="9" x2="12" y2="13"></line>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
         </div>
         <h3>Ověření je dočasně nedostupné</h3>
-        <p style="color: #94a3b8; margin: 10px 0 18px 0;">Nepodařilo se navázat spojení s ověřovacím serverem. Zkus to prosím za okamžik.</p>
+        <p style="color: #94a3b8; margin: 10px 0 18px 0;">Nepodařilo se navázat spojení s ověřovacím serverem. Zkus to za okamžik.</p>
         <button type="button" onclick="checkMediaStatus()" class="btn-primary" style="padding: 10px 20px;">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
           </svg>
           <span>Obnovit stav</span>
@@ -1994,11 +2141,9 @@ async function checkMediaStatus() {
 }
 
 function resetMediaForm() {
-  const statusBox = document.getElementById('media-status-box');
   const applyForm = document.getElementById('media-apply-form');
-  if (statusBox && applyForm) {
-    statusBox.style.display = 'none';
-    applyForm.style.display = 'block';
+  if (applyForm) {
+    showMediaView('form');
     applyForm.reset();
     handleMediaNickInput('');
   }
@@ -2024,7 +2169,7 @@ function handleMediaNickInput(val) {
       if (avatarImg) avatarImg.src = skinUrl48;
       if (previewChatHead) previewChatHead.src = skinUrl28;
       if (greeting) {
-        greeting.textContent = `Ahoj, ${nick}!`;
+        greeting.textContent = nick;
         greeting.style.opacity = '1';
       }
     } else {
@@ -2038,7 +2183,7 @@ function handleMediaNickInput(val) {
   }, 250);
 }
 
-// Toggle between Media (📹) and Media+ (📹+) prefix in the live preview
+// Toggle between Media and Media+ prefix in the live preview
 function toggleMediaPreviewRank(type) {
   const singleBtn = document.getElementById('media-prev-single-btn');
   const plusBtn = document.getElementById('media-prev-plus-btn');
@@ -2051,17 +2196,17 @@ function toggleMediaPreviewRank(type) {
     if (plusBtn) plusBtn.classList.add('active');
     activeBtn = plusBtn;
     if (badge) {
-      badge.innerHTML = '<span class="media-prefix-cam">📹</span><span class="smp-preview-plus">+</span>';
+      badge.innerHTML = `<span class="media-prefix-cam">${UI_ICONS.video}</span><span class="smp-preview-plus">+</span>`;
     }
-    if (msg) msg.textContent = 'Dnes točíme velký projekt na MYCHAL SMP! (Media+)';
+    if (msg) msg.textContent = 'Dnes točíme nový projekt na mychalsmp.xyz.';
   } else {
     if (singleBtn) singleBtn.classList.add('active');
     if (plusBtn) plusBtn.classList.remove('active');
     activeBtn = singleBtn;
     if (badge) {
-      badge.innerHTML = '<span class="media-prefix-cam">📹 </span>';
+      badge.innerHTML = `<span class="media-prefix-cam">${UI_ICONS.video}</span>`;
     }
-    if (msg) msg.textContent = 'Ahoj, nové video z MYCHAL SMP je online!';
+    if (msg) msg.textContent = 'Nové video z mychalsmp.xyz je online.';
   }
 
   updateMediaTogglePill(activeBtn);
@@ -2077,13 +2222,14 @@ function updateMediaTogglePill(targetBtn) {
   if (bRect.width === 0) return;
   const left = bRect.left - cRect.left;
   pill.style.width = `${bRect.width}px`;
-  pill.style.transform = `translateX(${left}px)`;
+  pill.style.transform = `translate3d(${left}px, 0, 0)`;
 }
 
-// ---- SUBMIT MEDIA APPLICATION (WITH ADVANCED ANIMATION) ----
+// ---- SUBMIT MEDIA APPLICATION ----
 async function submitMediaApplication(event) {
   event.preventDefault();
 
+  const applyForm = document.getElementById('media-apply-form');
   const mcNick = document.getElementById('media-mc-nick')?.value.trim();
   const yt = document.getElementById('media-yt').value.trim();
   const tt = document.getElementById('media-tt').value.trim();
@@ -2092,31 +2238,28 @@ async function submitMediaApplication(event) {
   const ageConfirm = document.getElementById('media-age-confirm')?.checked;
 
   if (!mcNick) {
-    showToast('⚠️ Vyplň svůj Minecraft nick!');
+    showInlineFeedback(applyForm, 'Vyplň svůj Minecraft nick.', 'warning');
     return;
   }
   if (!yt && !tt && !twitch && !kick) {
-    showToast('⚠️ Vyplň aspoň jeden kanál k ověření!');
+    showInlineFeedback(applyForm, 'Vyplň alespoň jeden kanál k ověření.', 'warning');
     return;
   }
   if (!ageConfirm) {
-    showToast('⚠️ Pro podání žádosti potvrď, že je ti více než 10 let.');
+    showInlineFeedback(applyForm, 'Potvrď, že je ti více než 10 let.', 'warning');
     return;
   }
 
   const termsConfirm = document.getElementById('media-terms-confirm')?.checked;
   if (!termsConfirm) {
-    showToast('⚠️ Pro odeslání žádosti potvrď souhlas s pravidly serveru a ochranou údajů.');
+    showInlineFeedback(applyForm, 'Potvrď souhlas s pravidly serveru a ochranou údajů.', 'warning');
     return;
   }
 
   const statusBox = document.getElementById('media-status-box');
-  const applyForm = document.getElementById('media-apply-form');
+  showMediaView('status');
 
-  applyForm.style.display = 'none';
-  statusBox.style.display = 'block';
-
-  // Render step-by-step checking animation
+  // Render step-by-step checking progress
   statusBox.innerHTML = `
     <div class="verification-progress-box">
       <div class="media-pending-spinner-wrap" style="width: 72px; height: 72px; margin-bottom: 16px;">
@@ -2125,14 +2268,14 @@ async function submitMediaApplication(event) {
           <circle class="media-spinner-arc" cx="44" cy="44" r="38" />
         </svg>
         <div class="media-pending-icon-inner" style="width: 48px; height: 48px;">
-          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="ui-icon-svg ui-icon-svg--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="23 7 16 12 23 17 23 7" />
             <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
           </svg>
         </div>
       </div>
       <h3>Ověřování kanálů</h3>
-      <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">Automaticky prověřuji sociální sítě a načítám data...</p>
+      <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">Ověřuji zadané odkazy a načítám data...</p>
       
       <div class="verification-steps">
         <div id="step-connect" class="verification-step-item checking">
@@ -2141,7 +2284,7 @@ async function submitMediaApplication(event) {
         </div>
         <div id="step-scrape" class="verification-step-item pending">
           <span class="step-icon-status"></span>
-          <span>Analýza zadaných odkazů...</span>
+          <span>Kontrola zadaných odkazů...</span>
         </div>
         <div id="step-db" class="verification-step-item pending">
           <span class="step-icon-status"></span>
@@ -2153,11 +2296,13 @@ async function submitMediaApplication(event) {
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  await sleep(1200);
-  document.getElementById('step-connect').className = 'verification-step-item success';
-  document.getElementById('step-scrape').className = 'verification-step-item checking';
+  await sleep(600);
+  const stepConnect = document.getElementById('step-connect');
+  const stepScrape = document.getElementById('step-scrape');
+  if (stepConnect) stepConnect.className = 'verification-step-item success';
+  if (stepScrape) stepScrape.className = 'verification-step-item checking';
 
-  await sleep(1500);
+  await sleep(600);
 
   try {
     const res = await apiFetch('https://api.6767111.xyz/api/media/apply', {
@@ -2178,9 +2323,7 @@ async function submitMediaApplication(event) {
 
     if (res.status === 401 || res.status === 403) {
       localStorage.removeItem('auth_token');
-      statusBox.style.display = 'none';
-      applyForm.style.display = 'none';
-      document.getElementById('media-login-box').style.display = 'block';
+      showMediaView('login');
       return;
     }
 
@@ -2191,75 +2334,79 @@ async function submitMediaApplication(event) {
     const data = await res.json();
 
     if (data.success) {
-      document.getElementById('step-scrape').className = 'verification-step-item success';
-      document.getElementById('step-db').className = 'verification-step-item checking';
-      await sleep(1200);
-      document.getElementById('step-db').className = 'verification-step-item success';
-      await sleep(800);
+      const sScrape = document.getElementById('step-scrape');
+      const sDb = document.getElementById('step-db');
+      if (sScrape) sScrape.className = 'verification-step-item success';
+      if (sDb) sDb.className = 'verification-step-item checking';
+      await sleep(500);
+      if (sDb) sDb.className = 'verification-step-item success';
+      await sleep(300);
 
       statusBox.innerHTML = `
         <div class="media-status-card media-status--approved">
           <div class="media-status-center">
             <div class="status-approved-icon">
-              <svg class="ui-icon-svg ui-icon-svg--lg ui-icon-svg--green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="ui-icon-svg ui-icon-svg--lg ui-icon-svg--green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
             </div>
           </div>
-          <h3>Žádost odeslána!</h3>
-          <p>Tvoje kanály byly úspěšně ověřeny. Žádost byla předána administrátorům ke schválení.</p>
-          <button onclick="checkMediaStatus()" class="btn-primary" style="margin-top: 25px; width: 100%;">
+          <h3>Žádost odeslána</h3>
+          <p>Kanály byly ověřeny. Žádost byla předána administrátorům ke schválení.</p>
+          <button type="button" onclick="checkMediaStatus()" class="btn-primary" style="margin-top: 25px; width: 100%;">
             <span>Zobrazit stav žádosti</span>
           </button>
         </div>
       `;
     } else {
-      document.getElementById('step-scrape').className = 'verification-step-item failed';
-      await sleep(1000);
+      const sScrape = document.getElementById('step-scrape');
+      if (sScrape) sScrape.className = 'verification-step-item failed';
+      await sleep(400);
       const checksDetails = (data.checks || []).map(check => {
         const countLabel = check.count === null ? 'neznámý' : escapeHtml(check.count);
         const ok = (check.count !== null && check.count >= check.required);
         const statusLabel = ok ? 'OK' : 'Nesplněno';
-        const color = ok ? '#21DE00' : '#ef4444';
+        const color = ok ? '#21DE00' : '#f51515';
         return `<div class="media-check-detail"><strong>${escapeHtml(check.platform)}:</strong> <span style="color:${color};">${countLabel} / ${escapeHtml(check.required)} — ${statusLabel}</span></div>`;
       }).join('');
       statusBox.innerHTML = `
         <div class="media-status-card media-status--rejected">
           <div class="media-status-center">
             <div class="status-rejected-icon">
-              <svg class="ui-icon-svg ui-icon-svg--lg ui-icon-svg--red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="ui-icon-svg ui-icon-svg--lg ui-icon-svg--red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
             </div>
           </div>
           <h3>Ověření selhalo</h3>
-          <p style="color: #ef4444; font-weight: 600; margin-bottom: 12px;">${escapeHtml(data.error) || 'Nebyly splněny požadavky pro Media Rank.'}</p>
-          <p style="color: var(--text-muted); font-size: 0.92rem;">Ujisti se, že máš dostatečný počet odběratelů / sledujících a zadal jsi správné odkazy.</p>
+          <p style="color: #f51515; font-weight: 600; margin-bottom: 12px;">${escapeHtml(data.error) || 'Nebyly splněny požadavky pro Media Rank.'}</p>
+          <p style="color: var(--text-muted); font-size: 0.92rem;">Zkontroluj počet odběratelů nebo sledujících a správnost odkazů.</p>
           ${checksDetails ? `<div class="media-checks-list" style="margin-top: 14px; text-align:left;">${checksDetails}</div>` : ''}
           ${data && data.raw ? `<pre style="text-align:left; margin-top:10px; background:rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); padding:10px; border-radius:8px; overflow:auto; max-height:180px; font-size:0.8rem;">${escapeHtml(JSON.stringify(data.raw, null, 2))}</pre>` : ''}
-          <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">
+          <button type="button" onclick="resetMediaForm()" class="btn-primary" style="margin-top: 25px; width: 100%;">
             <span>Zpět na formulář</span>
           </button>
         </div>
       `;
     }
   } catch (err) {
-    console.error('[APPLY MEDIA ERR]', err);
-    document.getElementById('step-scrape').className = 'verification-step-item failed';
-    await sleep(1000);
+    console.warn('[APPLY MEDIA ERR]', err);
+    const sScrape = document.getElementById('step-scrape');
+    if (sScrape) sScrape.className = 'verification-step-item failed';
+    await sleep(400);
     statusBox.innerHTML = `
       <div class="media-status-card" style="text-align: center;">
-        <div class="status-icon" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #f59e0b; font-size: 1.5rem; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; margin-bottom: 12px;">
-          <svg class="ui-icon-svg ui-icon-svg--md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="status-icon" style="color: #f59e0b; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+          <svg class="ui-icon-svg ui-icon-svg--md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
-            <line x1="12" y1="9" x2="12"></line>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
         </div>
         <h3>Chyba spojení</h3>
-        <p style="color: #94a3b8; margin: 10px 0 18px 0;">Ověřovací server momentálně neodpovídá. Žádost nebyla ztracena, zkus ji prosím odeslat za chvíli.</p>
-        <button onclick="resetMediaForm()" class="btn-primary" style="margin-top: 15px; width: 100%;">
+        <p style="color: #94a3b8; margin: 10px 0 18px 0;">Ověřovací server momentálně neodpovídá. Zkus žádost odeslat za chvíli.</p>
+        <button type="button" onclick="resetMediaForm()" class="btn-primary" style="margin-top: 15px; width: 100%;">
           <span>Zpět na formulář</span>
         </button>
       </div>
@@ -2273,7 +2420,7 @@ function openSmpMediaComparison() {
   setTimeout(() => {
     const compSection = document.getElementById('smp-comparison');
     if (compSection) {
-      compSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      compSection.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
       const mediaCols = compSection.querySelectorAll('.col-media');
       mediaCols.forEach(col => {
         col.classList.remove('col-media-pulse');
@@ -2286,42 +2433,12 @@ function openSmpMediaComparison() {
 
 // ---- PC INTERACTIVE PARTICLES (Disabled for clean, premium performance) ----
 function initHeroParticles() {
-  // Disabled to eliminate visual noise, save battery/CPU, and avoid generic AI template look.
+  // Disabled to eliminate visual noise, save battery/CPU, and keep idle state calm (Rule 20).
 }
 
-// ---- CASCADE FALLING GAME ICONS ----
-function spawnFallingIcons(container) {
-  if (!container) return;
-  const iconUrls = [
-    'imgs/icons/minecraft-world-icon-14.webp',
-    'imgs/icons/Heart.webp',
-    'imgs/icons/trophy.webp',
-    'imgs/icons/blue_speed particles.webp',
-    'imgs/icons/White_Particles.webp'
-  ];
-
-  const count = 30;
-  for (let i = 0; i < count; i++) {
-    const img = document.createElement('img');
-    img.src = iconUrls[Math.floor(Math.random() * iconUrls.length)];
-    img.className = 'falling-web-icon';
-
-    // Set random position, speed and rotation
-    img.style.left = Math.random() * 85 + 5 + '%';
-    img.style.top = -30 - Math.random() * 80 + 'px';
-    const size = Math.random() * 20 + 16;
-    img.style.width = size + 'px';
-    img.style.height = size + 'px';
-
-    img.style.animationDelay = Math.random() * 1.5 + 's';
-    img.style.animationDuration = (Math.random() * 2 + 2) + 's';
-
-    container.appendChild(img);
-
-    img.addEventListener('animationend', () => {
-      img.remove();
-    });
-  }
+// ---- CASCADE FALLING GAME ICONS (Disabled per Rule 20 & 50) ----
+function spawnFallingIcons() {
+  // Intentionally disabled.
 }
 
 function triggerEpicVipTransition(callback) {
@@ -2355,9 +2472,9 @@ function renderBugImagesPreview() {
     chip.className = 'bug-image-chip';
     const objectUrl = URL.createObjectURL(file);
     chip.innerHTML = `
-      <img src="${objectUrl}" alt="Snímek" class="bug-chip-preview-img">
-      <span title="${file.name}">${file.name.length > 16 ? file.name.substring(0, 13) + '...' : file.name}</span>
-      <button type="button" class="bug-chip-remove-btn" onclick="removeBugImage(${idx})" title="Odstranit">✕</button>
+      <img src="${objectUrl}" alt="Snímek" class="bug-chip-preview-img" width="28" height="28">
+      <span title="${escapeHtml(file.name)}">${escapeHtml(file.name.length > 16 ? file.name.substring(0, 13) + '...' : file.name)}</span>
+      <button type="button" class="bug-chip-remove-btn" onclick="removeBugImage(${idx})" aria-label="Odstranit snímek" title="Odstranit">${UI_ICONS.x}</button>
     `;
     container.appendChild(chip);
   });
@@ -2428,15 +2545,16 @@ function processBugImage(file) {
 
 function handleBugImagesChange(input) {
   if (!input.files || input.files.length === 0) return;
+  const bugForm = document.getElementById('bug-report-form') || input;
 
   const newFiles = Array.from(input.files);
   for (const file of newFiles) {
     if (bugSelectedFiles.length >= 3) {
-      showToast('⚠️ Můžeš přiložit maximálně 3 fotky!');
+      showInlineFeedback(bugForm, 'Přiložit lze maximálně 3 snímky.', 'warning');
       break;
     }
     if (file.size > 20 * 1024 * 1024) {
-      showToast(`Obrázek "${file.name}" je příliš velký (max 20 MB).`);
+      showInlineFeedback(bugForm, `Obrázek "${file.name}" překračuje limit 20 MB.`, 'warning');
       continue;
     }
     bugSelectedFiles.push(file);
@@ -2448,12 +2566,13 @@ function handleBugImagesChange(input) {
 
 // Paste support for screenshots on bug report
 document.addEventListener('paste', (e) => {
-  const activeTab = document.querySelector('.tab-content.active');
+  const activeTab = document.querySelector('.tab-section.active') || document.querySelector('.tab-content.active');
   const isBugTab = activeTab && (activeTab.id === 'tab-bugs' || activeTab.querySelector('#bug-report-form'));
   if (!isBugTab) return;
 
-  const items = (e.clipboardData || e.originalEvent.clipboardData)?.items;
+  const items = (e.clipboardData || e.originalEvent?.clipboardData)?.items;
   if (!items) return;
+  const bugForm = document.getElementById('bug-report-form');
 
   let pastedAny = false;
   for (const item of items) {
@@ -2461,7 +2580,7 @@ document.addEventListener('paste', (e) => {
       const file = item.getAsFile();
       if (file) {
         if (bugSelectedFiles.length >= 3) {
-          showToast('Můžeš přiložit maximálně 3 snímky.');
+          showInlineFeedback(bugForm, 'Přiložit lze maximálně 3 snímky.', 'warning');
           break;
         }
         bugSelectedFiles.push(file);
@@ -2471,7 +2590,6 @@ document.addEventListener('paste', (e) => {
   }
 
   if (pastedAny) {
-    showToast('Snímek byl vložen ze schránky.');
     renderBugImagesPreview();
   }
 });
@@ -2481,11 +2599,30 @@ let currentBugCategory = 'game';
 let bugNickTimeout = null;
 let bugCooldownInterval = null;
 
+function updateBugCatPill(targetBtn) {
+  const container = document.querySelector('.bug-category-chips');
+  const pill = document.getElementById('bug-cat-pill');
+  const btn = targetBtn || container?.querySelector('.bug-cat-chip.active');
+  if (!container || !pill || !btn) return;
+  const cRect = container.getBoundingClientRect();
+  const bRect = btn.getBoundingClientRect();
+  if (bRect.width === 0) return;
+  const left = bRect.left - cRect.left;
+  const top = bRect.top - cRect.top;
+  pill.style.width = `${bRect.width}px`;
+  pill.style.height = `${bRect.height}px`;
+  pill.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+}
+
 function selectBugCategory(cat) {
   currentBugCategory = cat;
+  let activeBtn = null;
   document.querySelectorAll('.bug-cat-chip').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.cat === cat);
+    const isMatch = btn.dataset.cat === cat;
+    btn.classList.toggle('active', isMatch);
+    if (isMatch) activeBtn = btn;
   });
+  updateBugCatPill(activeBtn);
 
   const descLabel = document.getElementById('bug-desc-label');
   const descInput = document.getElementById('bug-desc');
@@ -2493,7 +2630,7 @@ function selectBugCategory(cat) {
 
   if (cat === 'unban') {
     if (descLabel) descLabel.innerHTML = '<span><svg class="ui-icon-svg ui-icon-svg--inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> Proč žádáš o unban?</span>';
-    if (descInput) descInput.placeholder = 'Vysvětli situaci, za co jsi dostal trest a proč bys měl dostat unban...';
+    if (descInput) descInput.placeholder = 'Vysvětli situaci, za co jsi dostal trest a proč žádáš o unban...';
     if (submitText) submitText.innerHTML = '<svg class="ui-icon-svg ui-icon-svg--inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> <span>Odeslat žádost o unban</span>';
   } else {
     if (descLabel) descLabel.innerHTML = '<span><svg class="ui-icon-svg ui-icon-svg--inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Co se přesně stalo?</span>';
@@ -2523,7 +2660,7 @@ function handleBugNickInput(val) {
         avatarImg.src = `https://mc-heads.net/avatar/${encodeURIComponent(nick)}/48`;
       }
       if (greeting) {
-        greeting.textContent = `Ahoj, ${nick}!`;
+        greeting.textContent = nick;
         greeting.style.opacity = '1';
       }
     } else {
@@ -2547,7 +2684,7 @@ function startBugCooldownTimer(seconds) {
   let remaining = seconds;
   submitBtn.disabled = true;
 
-  if (submitText) submitText.innerHTML = `Další odeslání za ${remaining}s`;
+  if (submitText) submitText.textContent = `Další odeslání za ${remaining}s`;
 
   bugCooldownInterval = setInterval(() => {
     remaining--;
@@ -2557,13 +2694,14 @@ function startBugCooldownTimer(seconds) {
       submitBtn.disabled = false;
       selectBugCategory(currentBugCategory);
     } else {
-      if (submitText) submitText.innerHTML = `Další odeslání za ${remaining}s`;
+      if (submitText) submitText.textContent = `Další odeslání za ${remaining}s`;
     }
   }, 1000);
 }
 
 async function submitBugReport(e) {
   if (e && e.preventDefault) e.preventDefault();
+  const bugForm = document.getElementById('bug-report-form');
   const nickInput = document.getElementById('bug-nick');
   const descInput = document.getElementById('bug-desc');
   const imagesInput = document.getElementById('bug-images');
@@ -2573,7 +2711,7 @@ async function submitBugReport(e) {
   if (!nickInput || !descInput || !submitBtn) return;
 
   if (bugCooldownInterval) {
-    showToast('⏳ Počkej prosím chvíli před odesláním dalšího hlášení.');
+    showInlineFeedback(bugForm || submitBtn, 'Počkej chvíli před odesláním dalšího hlášení.', 'warning');
     return;
   }
 
@@ -2582,24 +2720,24 @@ async function submitBugReport(e) {
   const isUnban = (currentBugCategory === 'unban');
 
   if (!nick || !bug) {
-    showToast('⚠️ Vyplň prosím svůj herní nick a popis!');
+    showInlineFeedback(bugForm || submitBtn, 'Vyplň herní nick a popis.', 'warning');
     return;
   }
 
   if (nick.length < 2) {
-    showToast('❌ Zadej platný herní nick (min. 2 znaky).');
+    showInlineFeedback(bugForm || submitBtn, 'Zadej platný herní nick s alespoň 2 znaky.', 'error');
     nickInput.focus();
     return;
   }
   if (bug.length < 5) {
-    showToast(isUnban ? '❌ Popiš svou žádost o unban podrobněji (min. 5 znaků).' : '❌ Popiš chybu podrobněji (min. 5 znaků).');
+    showInlineFeedback(bugForm || submitBtn, isUnban ? 'Popiš žádost o unban podrobněji, alespoň 5 znaky.' : 'Popiš chybu podrobněji, alespoň 5 znaky.', 'error');
     descInput.focus();
     return;
   }
 
   const bugConsent = document.getElementById('bug-consent');
   if (bugConsent && !bugConsent.checked) {
-    showToast('⚠️ Potvrď prosím souhlas.');
+    showInlineFeedback(bugForm || submitBtn, 'Potvrď souhlas před odesláním.', 'warning');
     bugConsent.focus();
     return;
   }
@@ -2616,7 +2754,7 @@ async function submitBugReport(e) {
 
   if (filesToUpload.length > 0) {
     if (filesToUpload.length > 3) {
-      showToast('⚠️ Můžeš přiložit maximálně 3 obrázky!');
+      showInlineFeedback(bugForm || submitBtn, 'Přiložit lze maximálně 3 obrázky.', 'warning');
       return;
     }
     for (let i = 0; i < filesToUpload.length; i++) {
@@ -2627,15 +2765,15 @@ async function submitBugReport(e) {
           images.push(processed);
         }
       } catch (err) {
-        console.error('Error processing image:', err);
-        showToast(`❌ Chyba při načítání obrázku "${file.name}".`);
+        console.warn('Error processing image:', err);
+        showInlineFeedback(bugForm || submitBtn, `Nepodařilo se načíst obrázek "${file.name}".`, 'error');
         return;
       }
     }
   }
 
   submitBtn.disabled = true;
-  if (submitText) submitText.innerHTML = isUnban ? '⏳ Odesílám žádost...' : '⏳ Odesílám nahlášení...';
+  if (submitText) submitText.innerHTML = isUnban ? '<span class="btn-spinner"></span> <span>Odesílám žádost...</span>' : '<span class="btn-spinner"></span> <span>Odesílám nahlášení...</span>';
 
   try {
     const endpoints = ['/api/report-bug', 'https://api.6767111.xyz/api/report-bug'];
@@ -2660,7 +2798,7 @@ async function submitBugReport(e) {
         }
 
         if (res.status === 413) {
-          resErrorMsg = 'Obrázky jsou příliš velké. Zkus nahrát menší snímek nebo jen 1 fotku.';
+          resErrorMsg = 'Obrázky jsou příliš velké. Nahraj menší snímek nebo méně souborů.';
           break;
         }
 
@@ -2678,7 +2816,6 @@ async function submitBugReport(e) {
 
     if (successRes && data && data.success) {
       const ticketNum = (isUnban ? '#UNBAN-' : '#BUG-') + Math.floor(1000 + Math.random() * 9000);
-      showToast(isUnban ? '✅ Žádost o unban byla úspěšně odeslána!' : '✅ Nahlášení bylo úspěšně odesláno!');
 
       // Populate confirmation ticket card
       const ticketIdEl = document.getElementById('ticket-id-display');
@@ -2689,28 +2826,28 @@ async function submitBugReport(e) {
       if (ticketIdEl) ticketIdEl.textContent = ticketNum;
       if (ticketUserAvatar) ticketUserAvatar.src = `https://mc-heads.net/avatar/${encodeURIComponent(nick)}/48`;
       if (ticketUserName) ticketUserName.textContent = nick;
-      if (ticketTitle) ticketTitle.textContent = isUnban ? 'Žádost o unban byla úspěšně odeslána!' : 'Nahlášení bylo úspěšně odesláno!';
+      if (ticketTitle) ticketTitle.textContent = isUnban ? 'Žádost o unban byla odeslána' : 'Nahlášení bylo odesláno';
 
       // Smooth switch to ticket confirmation
       const cardFront = document.getElementById('bug-card-front');
       const cardBack = document.getElementById('bug-card-back');
-      if (cardFront) cardFront.style.display = 'none';
+      if (cardFront) transitionPanelVisibility(cardFront, false, 'block');
       if (cardBack) {
-        cardBack.style.display = 'block';
-        cardBack.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        transitionPanelVisibility(cardBack, true, 'block');
+        cardBack.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
       }
 
       startBugCooldownTimer(60);
     } else {
-      const errMsg = resErrorMsg || (data && data.error) || 'Systém pro nahlášení je momentálně nedostupný. Zkus to prosím za chvíli.';
-      showToast(`❌ ${errMsg}`);
+      const errMsg = resErrorMsg || (data && data.error) || 'Systém pro nahlášení je momentálně nedostupný. Zkus to za chvíli.';
+      showInlineFeedback(bugForm || submitBtn, errMsg, 'error');
       if (resRetryAfter || (data && data.retryAfter)) {
         startBugCooldownTimer(resRetryAfter || data.retryAfter);
       }
     }
   } catch (err) {
-    console.error('Error submitting bug:', err);
-    showToast('❌ Spojení se serverem selhalo. Zkus to prosím za chvíli.');
+    console.warn('Error submitting bug:', err);
+    showInlineFeedback(bugForm || submitBtn, 'Spojení se serverem selhalo. Zkus to za chvíli.', 'error');
   } finally {
     if (!bugCooldownInterval) {
       submitBtn.disabled = false;
@@ -2722,8 +2859,8 @@ async function submitBugReport(e) {
 function resetBugCardState() {
   const cardFront = document.getElementById('bug-card-front');
   const cardBack = document.getElementById('bug-card-back');
-  if (cardFront) cardFront.style.display = 'block';
-  if (cardBack) cardBack.style.display = 'none';
+  if (cardBack) transitionPanelVisibility(cardBack, false, 'block');
+  if (cardFront) transitionPanelVisibility(cardFront, true, 'block');
 
   const descInput = document.getElementById('bug-desc');
   const imagesInput = document.getElementById('bug-images');
@@ -2732,7 +2869,7 @@ function resetBugCardState() {
   bugSelectedFiles = [];
   renderBugImagesPreview();
   selectBugCategory('game');
-  cardFront.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  if (cardFront) cardFront.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
 }
 
 window.addEventListener('popstate', handleUrlRouting);
@@ -2743,28 +2880,10 @@ let currentIdeasData = null;
 async function loadIdeasTab() {
   const userBar = document.getElementById('ideas-user-bar');
   const surface = document.getElementById('whiteboard-surface');
-  const board = document.getElementById('whiteboard-board');
-
-  if (board && !board.dataset.mouseTracked) {
-    board.dataset.mouseTracked = 'true';
-    let mouseAnimFrame = null;
-    board.addEventListener('mousemove', (e) => {
-      const rect = board.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      if (!mouseAnimFrame) {
-        mouseAnimFrame = requestAnimationFrame(() => {
-          board.style.setProperty('--mouse-x', `${x}px`);
-          board.style.setProperty('--mouse-y', `${y}px`);
-          mouseAnimFrame = null;
-        });
-      }
-    });
-  }
 
   if (!surface) return;
 
-  surface.innerHTML = '<div class="whiteboard-empty"><i class="fa-solid fa-spinner fa-spin"></i><p>Načítám nápady...</p></div>';
+  surface.innerHTML = '<div class="whiteboard-empty"><span class="btn-spinner"></span><p>Načítám nápady...</p></div>';
 
   try {
     const res = await apiFetch('https://api.6767111.xyz/api/napady/list', {
@@ -2784,10 +2903,10 @@ async function loadIdeasTab() {
         userBar.className = 'ideas-user-bar ideas-user-bar-guest';
         userBar.innerHTML = `
           <div class="ideas-guest-hint">
-            <i class="fa-solid fa-lock"></i> Pro přidání nápadu se musíte přihlásit přes Discord:
+            ${UI_ICONS.lock} Pro přidání nápadu se přihlas přes Discord:
           </div>
-          <button class="btn btn-discord btn-sm" onclick="loginViaDiscord()">
-            <i class="fa-brands fa-discord"></i> Přihlásit přes Discord
+          <button type="button" class="btn btn-discord btn-sm" onclick="loginViaDiscord()">
+            <span>Přihlásit přes Discord</span>
           </button>
         `;
       } else {
@@ -2796,29 +2915,31 @@ async function loadIdeasTab() {
         userBar.className = 'ideas-user-bar';
         userBar.innerHTML = `
           <div class="ideas-user-info-compact" title="${Number(u.pendingCount) || 0}/10 neschválených nápadů">
-            <img src="${escapeHtml(u.avatar) || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="ideas-user-avatar-sm" alt="${escapeHtml(u.username)}" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';" />
+            <img src="${escapeHtml(u.avatar) || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="ideas-user-avatar-sm" alt="${escapeHtml(u.username)}" width="28" height="28" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';" />
             <span class="ideas-user-name-sm">${escapeHtml(u.username)}</span>
-            <span class="ideas-user-badge-sm"><i class="fa-solid fa-star"></i> ${escapeHtml(u.points)}</span>
-            ${u.isMajitel ? '<span style="color:#f59e0b; font-size:0.8rem; margin-left:2px;">👑</span>' : ''}
+            <span class="ideas-user-badge-sm">${UI_ICONS.star} ${escapeHtml(u.points)}</span>
+            ${u.isMajitel ? `<span style="color:#f59e0b; display:inline-flex; align-items:center; margin-left:2px;" title="Majitel">${UI_ICONS.crown}</span>` : ''}
           </div>
           <div class="ideas-inline-input-wrapper">
             <input 
               type="text" 
               id="idea-inline-input" 
               class="ideas-inline-input" 
-              placeholder="${canAdd ? 'Napiš svojí myšlenku nebo nápad... (Stiskni Enter pro odeslání)' : 'Máš již 10 neschválených nápadů...'}" 
+              placeholder="${canAdd ? 'Napiš svůj návrh nebo nápad...' : 'Máš 10 neschválených nápadů'}" 
               maxlength="800"
               ${!canAdd ? 'disabled' : ''}
               onkeydown="handleIdeaInlineKeydown(event)"
             />
             <button 
+              type="button"
               id="btn-submit-inline-idea" 
               class="ideas-inline-send-btn" 
               onclick="submitInlineIdea()" 
+              aria-label="Odeslat nápad"
               title="Odeslat nápad"
               ${!canAdd ? 'disabled' : ''}
             >
-              <i class="fa-solid fa-paper-plane"></i>
+              ${UI_ICONS.send}
             </button>
           </div>
         `;
@@ -2829,8 +2950,8 @@ async function loadIdeasTab() {
     if (!data.ideas || data.ideas.length === 0) {
       surface.innerHTML = `
         <div class="whiteboard-empty">
-          <i class="fa-solid fa-lightbulb"></i>
-          <p>Zatím tu nejsou žádné nápady. Buď první a přidej svůj nápad pro MYCHAL SMP!</p>
+          ${UI_ICONS.lightbulb}
+          <p>Zatím tu nejsou žádné nápady. Přidej první návrh pro MYCHAL SMP.</p>
         </div>
       `;
       return;
@@ -2852,13 +2973,13 @@ async function loadIdeasTab() {
     setupIdeasSilentInterval();
 
   } catch (err) {
-    console.error('Error loading ideas tab:', err);
+    console.warn('Error loading ideas tab:', err);
     surface.innerHTML = `
       <div class="whiteboard-empty">
-        <i class="fa-solid fa-lightbulb" style="opacity: 0.4;"></i>
+        <span style="opacity: 0.4;">${UI_ICONS.lightbulb}</span>
         <p style="color: #94a3b8; margin: 8px 0 14px 0;">Nástěnka nápadů je dočasně nedostupná.</p>
         <button type="button" class="btn btn-secondary btn-sm" onclick="loadIdeasTab()">
-          <i class="fa-solid fa-arrows-rotate"></i> Zkusit znovu
+          ${UI_ICONS.refresh} Zkusit znovu
         </button>
       </div>
     `;
@@ -2877,13 +2998,13 @@ function renderIdeaCardHtml(idea, isMajitel) {
 
   return `
     <div class="idea-card" id="idea-card-${Number(idea.id) || 0}" style="--card-rotation: ${Number(idea.rotation) || 0}deg;">
-      <div class="idea-card-pin"><i class="fa-solid fa-thumbtack"></i></div>
+      <div class="idea-card-pin">${UI_ICONS.pin}</div>
       <div class="idea-card-header">
-        <img src="${escapeHtml(idea.author_avatar) || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="idea-card-avatar" alt="${escapeHtml(idea.author_name)}" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';" />
+        <img src="${escapeHtml(idea.author_avatar) || 'https://cdn.discordapp.com/embed/avatars/0.png'}" class="idea-card-avatar" alt="${escapeHtml(idea.author_name)}" width="28" height="28" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';" />
         <span class="idea-card-author">
           ${escapeHtml(idea.author_name)}
           <span class="idea-author-stars" title="Autor má ${authorPoints} hvězdiček">
-            <i class="fa-solid fa-star"></i> ${authorPoints}
+            ${UI_ICONS.star} ${authorPoints}
           </span>
         </span>
         <span class="idea-card-time">${createdDate}</span>
@@ -2892,10 +3013,10 @@ function renderIdeaCardHtml(idea, isMajitel) {
         ${hasAi ? `
           <div class="idea-card-top-bar">
             <div class="idea-mode-indicator idea-mode-user">
-              <i class="fa-solid fa-user"></i> <span class="idea-mode-label">Návrh hráče</span>
+              ${UI_ICONS.user} <span class="idea-mode-label">Návrh hráče</span>
             </div>
-            <button class="idea-mode-switch-btn btn-is-ai" onclick="toggleIdeaView(${idea.id}, event)" title="Přepnout na AI vylepšení">
-              <i class="fa-solid fa-wand-magic-sparkles"></i> AI
+            <button type="button" class="idea-mode-switch-btn btn-is-ai" onclick="toggleIdeaView(${idea.id}, event)" title="Přepnout na AI rozpracování">
+              ${UI_ICONS.sparkles} AI
             </button>
           </div>
           <div class="idea-text-content idea-text-original">${escapeHtml(idea.original_text)}</div>
@@ -2907,26 +3028,30 @@ function renderIdeaCardHtml(idea, isMajitel) {
       <div class="idea-card-footer">
         <div class="idea-vote-box" id="idea-vote-box-${idea.id}">
           <button 
+            type="button"
             class="idea-vote-btn idea-vote-up ${userVote === 1 ? 'voted-up' : ''}" 
             onclick="voteIdea(${idea.id}, 'up', event)" 
-            title="Líbí se mi nápad (+1)"
+            aria-label="Hlasovat pro nápad"
+            title="Podpořit nápad"
           >
-            <i class="fa-solid fa-thumbs-up"></i>
+            ${UI_ICONS.thumbsUp}
           </button>
           <span class="idea-vote-score ${scoreClass}" id="idea-score-${idea.id}">${scoreFormatted}</span>
           <button 
+            type="button"
             class="idea-vote-btn idea-vote-down ${userVote === -1 ? 'voted-down' : ''}" 
             onclick="voteIdea(${idea.id}, 'down', event)" 
-            title="Nelíbí se mi nápad (-1)"
+            aria-label="Hlasovat proti nápadu"
+            title="Nesouhlasit s nápadem"
           >
-            <i class="fa-solid fa-thumbs-down"></i>
+            ${UI_ICONS.thumbsDown}
           </button>
         </div>
         ${isMajitel ? `
           <div class="idea-card-actions">
-            <button class="idea-btn-action idea-btn-ai" onclick="aiProcessIdea(${idea.id})" title="Rozpracovat a vylepšit pomocí AI Gemini"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
-            <button class="idea-btn-action idea-btn-approve" onclick="approveIdea(${idea.id})" title="Schválit nápad (+1 bod autorovi)"><i class="fa-solid fa-check"></i></button>
-            <button class="idea-btn-action idea-btn-reject" onclick="rejectIdea(${idea.id})" title="Zamítnout nápad (smaže z nástěnky)"><i class="fa-solid fa-xmark"></i></button>
+            <button type="button" class="idea-btn-action idea-btn-ai" onclick="aiProcessIdea(${idea.id})" aria-label="Zpracovat pomocí AI" title="Zpracovat pomocí AI">${UI_ICONS.sparkles}</button>
+            <button type="button" class="idea-btn-action idea-btn-approve" onclick="approveIdea(${idea.id})" aria-label="Schválit nápad" title="Schválit nápad">${UI_ICONS.check}</button>
+            <button type="button" class="idea-btn-action idea-btn-reject" onclick="rejectIdea(${idea.id})" aria-label="Zamítnout nápad" title="Zamítnout nápad">${UI_ICONS.x}</button>
           </div>
         ` : ''}
       </div>
@@ -2977,7 +3102,7 @@ async function silentUpdateIdeas() {
         updateCardVoteState(idea.id, idea.score, idea.user_vote);
         const starsSpan = cardEl.querySelector('.idea-author-stars');
         if (starsSpan) {
-          starsSpan.innerHTML = `<i class="fa-solid fa-star"></i> ${idea.author_points || 0}`;
+          starsSpan.innerHTML = `${UI_ICONS.star} ${idea.author_points || 0}`;
         }
         if (idea.ai_text && !cardEl.querySelector('.idea-card-top-bar')) {
           const bodyEl = cardEl.querySelector('.idea-card-body');
@@ -2985,10 +3110,10 @@ async function silentUpdateIdeas() {
             bodyEl.innerHTML = `
               <div class="idea-card-top-bar">
                 <div class="idea-mode-indicator idea-mode-user">
-                  <i class="fa-solid fa-user"></i> <span class="idea-mode-label">Návrh hráče</span>
+                  ${UI_ICONS.user} <span class="idea-mode-label">Návrh hráče</span>
                 </div>
-                <button class="idea-mode-switch-btn btn-is-ai" onclick="toggleIdeaView(${idea.id}, event)" title="Přepnout na AI vylepšení">
-                  <i class="fa-solid fa-wand-magic-sparkles"></i> AI
+                <button type="button" class="idea-mode-switch-btn btn-is-ai" onclick="toggleIdeaView(${idea.id}, event)" title="Přepnout na AI rozpracování">
+                  ${UI_ICONS.sparkles} AI
                 </button>
               </div>
               <div class="idea-text-content idea-text-original">${escapeHtml(idea.original_text)}</div>
@@ -3016,13 +3141,13 @@ async function silentUpdateIdeas() {
 
 async function voteIdea(ideaId, type, event) {
   if (event) event.stopPropagation();
+  const box = document.getElementById(`idea-vote-box-${ideaId}`);
 
   if (!currentIdeasData || !currentIdeasData.isLoggedIn) {
-    showToast('🔒 Pro hlasování o nápadech se musíš přihlásit.');
+    showInlineFeedback(document.getElementById('ideas-user-bar') || box, 'Pro hlasování o nápadech se přihlas přes Discord.', 'warning');
     return;
   }
 
-  const box = document.getElementById(`idea-vote-box-${ideaId}`);
   if (box) box.classList.add('voting-busy');
 
   try {
@@ -3043,11 +3168,11 @@ async function voteIdea(ideaId, type, event) {
     if (data.success) {
       updateCardVoteState(ideaId, data.score, data.userVote);
     } else {
-      showToast('❌ ' + (data.message || 'Chyba při hlasování.'));
+      showToast(data.message || 'Chyba při hlasování.');
     }
   } catch (e) {
-    console.error('Error voting on idea:', e);
-    showToast('❌ Spojení se serverem je dočasně nedostupné.');
+    console.warn('Error voting on idea:', e);
+    showToast('Spojení se serverem je dočasně nedostupné.');
   } finally {
     if (box) box.classList.remove('voting-busy');
   }
@@ -3136,10 +3261,11 @@ function handleIdeaInlineKeydown(event) {
 async function submitInlineIdea() {
   const input = document.getElementById('idea-inline-input');
   const btn = document.getElementById('btn-submit-inline-idea');
+  const userBar = document.getElementById('ideas-user-bar');
   const text = input ? input.value.trim() : '';
 
   if (text.length < 5) {
-    showToast('❌ Napiš prosím podrobnější nápad (min. 5 znaků).');
+    showInlineFeedback(userBar || input, 'Napiš podrobnější nápad, alespoň 5 znaků.', 'warning');
     return;
   }
 
@@ -3161,15 +3287,15 @@ async function submitInlineIdea() {
 
     const data = await res.json();
     if (data.success) {
-      showToast('✅ ' + data.message);
+      showInlineFeedback(userBar, data.message || 'Nápad byl odeslán.', 'success');
       if (input) input.value = '';
       loadIdeasTab();
     } else {
-      showToast('❌ ' + (data.message || 'Chyba při přidávání nápadu.'));
+      showInlineFeedback(userBar, data.message || 'Chyba při přidávání nápadu.', 'error');
     }
   } catch (e) {
-    console.error('Error submitting inline idea:', e);
-    showToast('❌ Server je dočasně nedostupný. Zkus to prosím za okamžik.');
+    console.warn('Error submitting inline idea:', e);
+    showInlineFeedback(userBar, 'Server je dočasně nedostupný. Zkus to za okamžik.', 'error');
   } finally {
     if (btn) btn.disabled = false;
   }
@@ -3180,7 +3306,7 @@ async function submitNewIdea() {
   const text = textarea ? textarea.value.trim() : '';
 
   if (text.length < 5) {
-    showToast('❌ Napiš prosím podrobnější nápad (min. 5 znaků).');
+    showInlineFeedback(textarea, 'Napiš podrobnější nápad, alespoň 5 znaků.', 'warning');
     return;
   }
 
@@ -3200,22 +3326,22 @@ async function submitNewIdea() {
 
     const data = await res.json();
     if (data.success) {
-      showToast('✅ ' + data.message);
       closeIdeaModal();
+      showToast(data.message || 'Nápad byl odeslán.');
       loadIdeasTab();
     } else {
-      showToast('❌ ' + (data.message || 'Chyba při přidávání nápadu.'));
+      showInlineFeedback(textarea, data.message || 'Chyba při přidávání nápadu.', 'error');
     }
   } catch (e) {
-    console.error('Error submitting modal idea:', e);
-    showToast('❌ Server je dočasně nedostupný. Zkus to prosím za okamžik.');
+    console.warn('Error submitting modal idea:', e);
+    showInlineFeedback(textarea, 'Server je dočasně nedostupný. Zkus to za okamžik.', 'error');
   }
 }
 
 async function aiProcessIdea(id) {
   const card = document.getElementById(`idea-card-${id}`);
   const btn = card ? card.querySelector('.idea-btn-ai') : null;
-  if (btn) btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+  if (btn) btn.innerHTML = '<span class="btn-spinner"></span>';
 
   try {
     const res = await apiFetch(`https://api.6767111.xyz/api/napady/ai-process/${id}`, {
@@ -3229,16 +3355,16 @@ async function aiProcessIdea(id) {
 
     const data = await res.json();
     if (data.success) {
-      showToast('🤖 Nápad byl zpracován AI a odeslán do Discord roomky!');
+      showToast('Nápad byl zpracován a odeslán do Discordu.');
       loadIdeasTab();
     } else {
-      showToast('❌ ' + (data.message || 'Chyba při zpracování AI.'));
-      if (btn) btn.innerHTML = '❓';
+      showToast(data.message || 'Chyba při zpracování nápadu.');
+      if (btn) btn.innerHTML = UI_ICONS.question;
     }
   } catch (e) {
-    console.error('Error AI processing idea:', e);
-    showToast('❌ Server je dočasně nedostupný.');
-    if (btn) btn.innerHTML = '❓';
+    console.warn('Error AI processing idea:', e);
+    showToast('Server je dočasně nedostupný.');
+    if (btn) btn.innerHTML = UI_ICONS.question;
   }
 }
 
@@ -3255,7 +3381,7 @@ function approveIdea(id) {
   if (modal) {
     modal.classList.add('active');
   } else {
-    const note = prompt('Napiš krátce vlastními slovy, co bylo implementováno (AI odpověď uhladí se zachováním tvé myšlenky):');
+    const note = prompt('Napiš krátce, co bylo implementováno:');
     if (note === null) return;
     executeApproveIdea(id, note.trim());
   }
@@ -3296,14 +3422,14 @@ async function executeApproveIdea(id, note) {
 
     const data = await res.json();
     if (data.success) {
-      showToast('🎉 Nápad byl schválen, autor získal +1 bod a oznámení se odeslalo do Discordu!');
+      showToast('Nápad byl schválen, autor získal bod a oznámení se odeslalo na Discord.');
       loadIdeasTab();
     } else {
-      showToast('❌ ' + (data.message || 'Chyba při schvalování nápadu.'));
+      showToast(data.message || 'Chyba při schvalování nápadu.');
     }
   } catch (e) {
-    console.error('Error approving idea:', e);
-    showToast('❌ Server je dočasně nedostupný.');
+    console.warn('Error approving idea:', e);
+    showToast('Server je dočasně nedostupný.');
   } finally {
     if (btn) btn.disabled = false;
   }
@@ -3322,10 +3448,10 @@ function rejectIdea(id) {
   if (modal) {
     modal.classList.add('active');
   } else {
-    const reason = prompt('Zadej důvod zamítnutí nápadu (AI formulaci uhladí se zachováním důvodu):');
+    const reason = prompt('Zadej důvod zamítnutí nápadu:');
     if (reason === null) return;
     if (!reason.trim()) {
-      showToast('❌ Musíš uvést důvod zamítnutí.');
+      showToast('Musíš uvést důvod zamítnutí.');
       return;
     }
     executeRejectIdea(id, reason.trim());
@@ -3343,7 +3469,7 @@ async function confirmRejectIdea() {
   const textarea = document.getElementById('idea-reject-reason');
   const reason = textarea ? textarea.value.trim() : '';
   if (!reason) {
-    showToast('❌ Musíš uvést důvod zamítnutí.');
+    showInlineFeedback(textarea, 'Musíš uvést důvod zamítnutí.', 'warning');
     if (textarea) textarea.focus();
     return;
   }
@@ -3372,14 +3498,14 @@ async function executeRejectIdea(id, reason) {
 
     const data = await res.json();
     if (data.success) {
-      showToast(data.dmSent ? '🗑️ Nápad byl zamítnut a odeslán do #nápady i autorovi do DM.' : '🗑️ Nápad byl zamítnut a odeslán do #nápady (autor má uzavřené DM).');
+      showToast(data.dmSent ? 'Nápad byl zamítnut a odeslán do #nápady i autorovi do DM.' : 'Nápad byl zamítnut a odeslán do #nápady.');
       loadIdeasTab();
     } else {
-      showToast('❌ ' + (data.message || 'Chyba při zamítání nápadu.'));
+      showToast(data.message || 'Chyba při zamítání nápadu.');
     }
   } catch (e) {
-    console.error('Error rejecting idea:', e);
-    showToast('❌ Server je dočasně nedostupný.');
+    console.warn('Error rejecting idea:', e);
+    showToast('Server je dočasně nedostupný.');
   } finally {
     if (btn) btn.disabled = false;
   }
@@ -3401,46 +3527,34 @@ function toggleIdeaView(ideaId, event) {
     if (isShowingOriginal) {
       // Switch to AI mode
       originalText.style.display = 'none';
-      aiText.style.display = 'block';
+      transitionPanelVisibility(aiText, true, 'block');
       if (indicator) {
         indicator.className = 'idea-mode-indicator idea-mode-ai';
-        indicator.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> <span class="idea-mode-label">AI Rozpracováno</span>';
+        indicator.innerHTML = `${UI_ICONS.sparkles} <span class="idea-mode-label">AI rozpracováno</span>`;
       }
       if (switchBtn) {
         switchBtn.className = 'idea-mode-switch-btn btn-is-user';
-        switchBtn.innerHTML = '<i class="fa-solid fa-user"></i> Hráč';
-        switchBtn.title = 'Přepnout na původní znění od hráče';
+        switchBtn.innerHTML = `${UI_ICONS.user} Hráč`;
+        switchBtn.title = 'Přepnout na původní znění';
       }
     } else {
       // Switch to Original Player mode
       aiText.style.display = 'none';
-      originalText.style.display = 'block';
+      transitionPanelVisibility(originalText, true, 'block');
       if (indicator) {
         indicator.className = 'idea-mode-indicator idea-mode-user';
-        indicator.innerHTML = '<i class="fa-solid fa-user"></i> <span class="idea-mode-label">Návrh hráče</span>';
+        indicator.innerHTML = `${UI_ICONS.user} <span class="idea-mode-label">Návrh hráče</span>`;
       }
       if (switchBtn) {
         switchBtn.className = 'idea-mode-switch-btn btn-is-ai';
-        switchBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> AI';
-        switchBtn.title = 'Přepnout na AI vylepšení';
+        switchBtn.innerHTML = `${UI_ICONS.sparkles} AI`;
+        switchBtn.title = 'Přepnout na AI rozpracování';
       }
     }
   }
 }
 
-// ---- GLOBAL MOUSE TRACKER FOR AMBIENT GLOW & RADIAL GRID ILLUMINATION ----
-(function initGlobalMouseTracker() {
-  let mouseAnimFrame = null;
-  document.addEventListener('mousemove', (e) => {
-    if (!mouseAnimFrame) {
-      mouseAnimFrame = requestAnimationFrame(() => {
-        document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
-        document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
-        mouseAnimFrame = null;
-      });
-    }
-  });
-})();
+// ---- GLOBAL MOUSE TRACKER DISABLED (Rules 86, 107: Zero cursor cones or redundant mousemove listeners) ----
 
 // ==========================================================================
 // INTERACTIVE STATISTIKY (STATS) TAB & LINE CHART MODULE
@@ -3461,11 +3575,11 @@ const statsData = {
     '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [0, 0, 0, 0], curVal: '0 hráčů' }
   },
   playtime: {
-    title: 'Celkový nahranný čas (Playtime)',
+    title: 'Celkový nahraný čas',
     unit: 'hodin',
     color: '#f59e0b',
     glowColor: 'rgba(245, 158, 11, 0.45)',
-    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [0, 0, 0, 0, 0, 0], curVal: '0 nahranných hodin' },
+    '1h': { labels: ['50m', '40m', '30m', '20m', '10m', 'Nyní'], values: [0, 0, 0, 0, 0, 0], curVal: '0 nahraných hodin' },
     '1d': { labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Nyní'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 celkových hodin' },
     '1w': { labels: ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'], values: [0, 0, 0, 0, 0, 0, 0], curVal: '0 hodin tento týden' },
     '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [0, 0, 0, 0], curVal: '0 celkem za měsíc' }
@@ -3481,7 +3595,7 @@ const statsData = {
     '1m': { labels: ['Týden 1', 'Týden 2', 'Týden 3', 'Týden 4'], values: [0, 0, 0, 0], curVal: '$0 celkově' }
   },
   visitors: {
-    title: 'Unikátní návštěvníci (Hráči)',
+    title: 'Unikátní hráči',
     unit: 'hráčů',
     color: '#a855f7',
     glowColor: 'rgba(168, 85, 247, 0.45)',
@@ -3502,17 +3616,34 @@ const statsData = {
   }
 };
 
+function updateStatsMetricPill(targetBtn) {
+  const container = document.querySelector('.stats-metric-selector');
+  const pill = document.getElementById('stats-metric-pill');
+  const btn = targetBtn || container?.querySelector('.stats-metric-btn.active') || document.getElementById('metric-btn-' + currentStatsMetric);
+  if (!container || !pill || !btn) return;
+  const cRect = container.getBoundingClientRect();
+  const bRect = btn.getBoundingClientRect();
+  if (bRect.width === 0) return;
+  const left = bRect.left - cRect.left;
+  const top = bRect.top - cRect.top;
+  pill.style.width = `${bRect.width}px`;
+  pill.style.height = `${bRect.height}px`;
+  pill.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+}
+
 function initStatsModule() {
   renderStatsChart();
   fetchLiveServerStats();
   fetchOnlinePlayers();
   initMycoWayStream();
+  updateStatsMetricPill();
   if (!isStatsModuleInitialized) {
     isStatsModuleInitialized = true;
     window.addEventListener('resize', () => {
       renderStatsChart();
       updateTimeframePill();
-    });
+      updateStatsMetricPill();
+    }, { passive: true });
     updateTimeframePill();
     setInterval(() => {
       if (currentActiveTab === 'stats') {
@@ -3531,6 +3662,7 @@ function switchChartMetric(metric) {
   document.querySelectorAll('.stats-metric-btn').forEach(btn => btn.classList.remove('active'));
   const targetBtn = document.getElementById('metric-btn-' + metric);
   if (targetBtn) targetBtn.classList.add('active');
+  updateStatsMetricPill(targetBtn);
 
   // Highlight active bottom detail card if present
   document.querySelectorAll('.stat-detail-card').forEach(card => {
@@ -3609,7 +3741,7 @@ function switchTimeframe(timeframe) {
   };
   const periodText = document.getElementById('chart-period-text');
   if (periodText) {
-    periodText.innerHTML = `<i class="fa-regular fa-calendar-days"></i> ${periodLabels[timeframe] || 'Posledních 24 hodin'}`;
+    periodText.innerHTML = `${UI_ICONS.calendar} ${periodLabels[timeframe] || 'Posledních 24 hodin'}`;
   }
 
   fetchLiveServerStats();
@@ -3625,12 +3757,12 @@ function updateTimeframePill(targetBtn) {
   if (bRect.width === 0) return;
   const left = bRect.left - cRect.left;
   pill.style.width = `${bRect.width}px`;
-  pill.style.transform = `translateX(${left}px)`;
+  pill.style.transform = `translate3d(${left}px, 0, 0)`;
 
   const metricObj = statsData[currentStatsMetric] || statsData.players;
   if (metricObj) {
     pill.style.backgroundColor = metricObj.color;
-    pill.style.boxShadow = `inset 0 1px 0 0 rgba(255, 255, 255, 0.35), 0 2px 12px ${metricObj.glowColor || metricObj.color}`;
+    pill.style.boxShadow = 'inset 0 1px 0 0 rgba(255, 255, 255, 0.24), 0 4px 12px rgba(0, 0, 0, 0.35)';
   }
 }
 
@@ -3832,7 +3964,7 @@ function setupChartHoverInteraction(points, metricObj) {
 
       if (peakEl) {
         if (pt.peakInfo) {
-          peakEl.innerHTML = `<i class="fa-solid fa-bolt"></i> ${pt.peakInfo}`;
+          peakEl.innerHTML = `${UI_ICONS.bolt} ${escapeHtml(pt.peakInfo)}`;
           peakEl.classList.add('visible');
         } else {
           peakEl.classList.remove('visible');
@@ -4061,27 +4193,27 @@ function renderOnlinePlayersData(data) {
   const maxCount = data?.max || 50;
 
   if (!data || !data.players || data.players.length === 0) {
-    if (badge) badge.innerHTML = `<i class="fa-solid fa-users"></i> 0 / ${maxCount}`;
+    if (badge) badge.innerHTML = `${UI_ICONS.users} 0 / ${maxCount}`;
     grid.innerHTML = `
       <div class="online-players-empty">
-        <div class="empty-icon"><i class="fa-solid fa-moon"></i></div>
+        <div class="empty-icon">${UI_ICONS.moon}</div>
         <div class="empty-text">
           <h4>Na serveru zrovna nikdo nehraje</h4>
-          <p>Buď první a připoj se na <strong>mychalsmp.xyz</strong>!</p>
+          <p>Připoj se na <strong>mychalsmp.xyz</strong>.</p>
         </div>
-        <button class="btn-copy-ip-mini" onclick="copyIP(event)">
-          <i class="fa-solid fa-copy"></i> Zkopírovat IP
+        <button type="button" class="btn-copy-ip-mini" onclick="copyIP(event)">
+          ${UI_ICONS.copy} <span class="btn-copy-label">Zkopírovat IP</span>
         </button>
       </div>
     `;
     return;
   }
 
-  if (badge) badge.innerHTML = `<i class="fa-solid fa-users"></i> ${data.players.length} / ${maxCount}`;
+  if (badge) badge.innerHTML = `${UI_ICONS.users} ${data.players.length} / ${maxCount}`;
 
   grid.innerHTML = data.players.map(player => {
     const badgeClass = player.rank_badge === 'owner' ? 'badge-owner' : (player.rank_badge === 'smpplus' ? 'badge-smpplus' : 'badge-player');
-    const badgeIcon = player.rank_badge === 'owner' ? '<i class="fa-solid fa-crown"></i> ' : (player.rank_badge === 'smpplus' ? '<i class="fa-solid fa-gem"></i> ' : '<i class="fa-solid fa-user"></i> ');
+    const badgeIcon = player.rank_badge === 'owner' ? `${UI_ICONS.crown} ` : (player.rank_badge === 'smpplus' ? `${UI_ICONS.gem} ` : `${UI_ICONS.user} `);
     const avatarUrl = player.avatar || `https://mc-heads.net/avatar/${encodeURIComponent(player.name)}/64`;
     const playtime = player.playtime_hours !== undefined ? `${player.playtime_hours} hod.` : 'Nové';
 
@@ -4091,12 +4223,12 @@ function renderOnlinePlayersData(data) {
 
     return `
       <div class="player-card">
-        <img src="${safeAvatar}" alt="${safeName}" class="player-card-avatar" loading="lazy" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
+        <img src="${safeAvatar}" alt="${safeName}" class="player-card-avatar" width="40" height="40" loading="lazy" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
         <div class="player-card-info">
           <span class="player-card-name" title="${safeName}">${safeName}</span>
           <div class="player-card-meta">
             <span class="player-badge ${badgeClass}">${badgeIcon}${safeRank}</span>
-            <span class="player-playtime"><i class="fa-regular fa-clock"></i> ${escapeHtml(playtime)}</span>
+            <span class="player-playtime">${UI_ICONS.clock} ${escapeHtml(playtime)}</span>
           </div>
         </div>
       </div>
@@ -4203,11 +4335,11 @@ function initMycoWayStream() {
 
     let text = '';
     if (days > 0) {
-      text = `⏳ Zbývá ${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
+      text = `Zbývá ${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
     } else if (hours > 0) {
       text = `Zbývá ${hours}h ${pad(minutes)}m ${pad(seconds)}s`;
     } else if (minutes > 0) {
-      text = `Zbývá jen ${minutes}m ${pad(seconds)}s`;
+      text = `Zbývá ${minutes}m ${pad(seconds)}s`;
     } else {
       text = `Posledních ${pad(seconds)}s`;
     }
@@ -4291,6 +4423,21 @@ let updateLegalProgressGlobal = function () { };
 })();
 
 // ---- INTERACTIVE RULES FILTER ----
+function updateRulesFilterPill(targetBtn) {
+  const container = document.querySelector('.rules-filter-bar');
+  const pill = document.getElementById('rules-filter-pill');
+  const btn = targetBtn || container?.querySelector('.rules-filter-btn.active');
+  if (!container || !pill || !btn) return;
+  const cRect = container.getBoundingClientRect();
+  const bRect = btn.getBoundingClientRect();
+  if (bRect.width === 0) return;
+  const left = bRect.left - cRect.left;
+  const top = bRect.top - cRect.top;
+  pill.style.width = `${bRect.width}px`;
+  pill.style.height = `${bRect.height}px`;
+  pill.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+}
+
 function filterRules(category, btnElement) {
   if (btnElement) {
     const parent = btnElement.closest('.rules-filter-bar');
@@ -4302,6 +4449,7 @@ function filterRules(category, btnElement) {
     }
     btnElement.classList.add('active');
     btnElement.setAttribute('aria-selected', 'true');
+    updateRulesFilterPill(btnElement);
   }
 
   const bannedBoard = document.getElementById('banned-players-board');
@@ -4309,22 +4457,22 @@ function filterRules(category, btnElement) {
   const rulesQuiz = document.getElementById('rules-quiz');
 
   if (category === 'banned') {
-    if (rulesGrid) rulesGrid.style.display = 'none';
-    if (rulesQuiz) rulesQuiz.style.display = 'none';
+    if (rulesGrid) transitionPanelVisibility(rulesGrid, false, 'grid');
+    if (rulesQuiz) transitionPanelVisibility(rulesQuiz, false, 'block');
     if (bannedBoard) {
-      bannedBoard.style.display = 'block';
+      transitionPanelVisibility(bannedBoard, true, 'block');
       loadBannedPlayers();
       setTimeout(() => {
-        bannedBoard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        bannedBoard.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
       }, 60);
     }
     return;
   }
 
-  // Běžná kategorie pravidel: skryjeme dřevěnou nástěnku a obnovíme mřížku pravidel
-  if (bannedBoard) bannedBoard.style.display = 'none';
-  if (rulesGrid) rulesGrid.style.display = 'grid';
-  if (rulesQuiz) rulesQuiz.style.display = 'block';
+  // Běžná kategorie pravidel: skryjeme nástěnku a obnovíme mřížku pravidel
+  if (bannedBoard) transitionPanelVisibility(bannedBoard, false, 'block');
+  if (rulesGrid) transitionPanelVisibility(rulesGrid, true, 'grid');
+  if (rulesQuiz) transitionPanelVisibility(rulesQuiz, true, 'block');
 
   const cards = document.querySelectorAll('#rules-card-grid .rule-card');
   cards.forEach(card => {
@@ -4351,7 +4499,7 @@ function toggleBannedBoard(btnElement) {
   }
 }
 
-// ---- 🪵 DŘEVĚNÁ NÁSTĚNKA ZABANOVANÝCH HRÁČŮ (PAPÍROVÉ CEDULKY) ----
+// ---- NÁSTĚNKA ZABANOVANÝCH HRÁČŮ ----
 let bannedPlayersCache = null;
 let currentBannedSearchQuery = '';
 
@@ -4510,8 +4658,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Skvělá volba! Přechovávání nelegálních nebo dupnutých věcí se posuzuje stejně přísně jako samotný dupe – přísným banem (30 dní za dupe, 20 dní za spoluúčast dle sazebníku SMPAC) a smazáním účtu / wipe inventáře. Nahlášením navíc získáš oficiální odměnu v diamantových blocích!',
-    wrongFeedback: 'Pozor! Admin logy zachycují veškeré přesuny itemů, dropy na zem i obsah ender truhel. Přechovávání dupnutých itemů vede k okamžitému banu (dle sazebníku SMPAC) a kompletnímu wipu inventáře!'
+    explanation: 'Správná volba. Přechovávání dupnutých věcí se posuzuje stejně přísně jako samotná duplikace a vede k banu a vymazání inventáře. Nahlášením chyby získáš odměnu v diamantových blocích.',
+    wrongFeedback: 'Serverové logy zachycují přesuny itemů i obsah ender truhel. Přechovávání dupnutých itemů vede k banu a vymazání inventáře.'
   },
   {
     id: 'smp-raid',
@@ -4531,8 +4679,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Přesně tak! SMP svět (/smp) je stvořený pro volný boj, přepady klanů a ničení bází. Pokud preferuješ klid a ochranu staveb, stačí se přepnout na klasický Survival svět (/survival).',
-    wrongFeedback: 'Chyba! Na SMP světě (/smp) je ničení staveb a boj výslovně povoleno. Pro klidné stavění bez griefingu slouží klasický svět /survival s claimy (GriefPrevention).'
+    explanation: 'Přesně tak. SMP svět je určený pro volný boj, přepady klanů a ničení bází. Pokud preferuješ klid a ochranu staveb, přepni se na klasický Survival.',
+    wrongFeedback: 'Na SMP světě je ničení staveb a boj výslovně povoleno. Pro klidné stavění bez griefingu slouží svět /survival s ochranou pozemků.'
   },
   {
     id: 'survival-chest',
@@ -4552,8 +4700,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Výborně! Na klasickém Survivalu platí absolutní zákaz krádeží a griefingu. Serverové logy evidují každý otevřený kontejner i zásah do bloků – viník je vždy odhalen a potrestán.',
-    wrongFeedback: 'Špatně! Na Survivalu je vybírání cizích truhel i ničení staveb bez svolení majitele přísně zakázáno i mimo claim.'
+    explanation: 'Správně. Na klasickém Survivalu platí zákaz krádeží a griefingu. Serverové logy evidují každý otevřený kontejner i zásah do bloků.',
+    wrongFeedback: 'Na Survivalu je vybírání cizích truhel i ničení staveb bez svolení majitele přísně zakázáno i mimo claim.'
   },
   {
     id: 'irl-trade-psc',
@@ -4573,8 +4721,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Správně! IRL obchodování je na MYCHAL SMP zakázáno. Chráníme komunitu před podvody a scamem. Za pokus o prodej či nákup za reálné peníze dostávají obě strany trvalý ban.',
-    wrongFeedback: 'Pozor! IRL Trade (prodej za reálné peníze, PSC či krypto) je přísně zakázán. Znamená okamžitý permanentní ban pro kupujícího i prodávajícího bez výjimky!'
+    explanation: 'Správně. IRL obchodování je na MYCHAL SMP zakázáno. Za pokus o prodej či nákup za reálné peníze dostávají obě strany trvalý ban.',
+    wrongFeedback: 'IRL obchodování za reálné peníze, kupóny či kryptoměny je přísně zakázáno a vede k trvalému banu pro obě strany.'
   },
   {
     id: 'xray-texture',
@@ -4586,7 +4734,7 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       },
       {
-        text: 'Nemá pravdu, anticheat i heuristika těžby spolehlivě odhalí nepřirozené trajektorie i poměry rud. Trestem je 20denní ban a zabavení věcí.',
+        text: 'Nemá pravdu, ochranný systém serveru spolehlivě odhalí nepřirozené chování při těžbě. Trestem je ban a zabavení surovin.',
         isCorrect: true
       },
       {
@@ -4594,8 +4742,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Přesně tak! Náš server disponuje pokročilým anti-xray systémem i heuristickou analýzou těžby. Rentgenový texture pack je postaven na roveň cheatům a v sazebníku SMPAC vede k 20dennímu tempbanu a zabavení surovin.',
-    wrongFeedback: 'Chyba! X-Ray textury jsou posuzovány jako plnohodnotný cheat. Systém anomálie spolehlivě zachytí a trest je 20denní tempban dle sazebníku SMPAC!'
+    explanation: 'Přesně tak. Rentgenový texture pack je postaven na roveň cheatům a vede k dočasnému banu a zabavení surovin.',
+    wrongFeedback: 'X-Ray textury jsou posuzovány jako plnohodnotný cheat a vedou k dočasnému banu a zabavení surovin.'
   },
   {
     id: 'lag-machine',
@@ -4615,8 +4763,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Výborně! Všichni hráči mají právo na stabilní zážitek na 20 TPS. Automatické farmy a stroje jsou vítané, ale nikdy nesmí způsobovat lag celému serveru.',
-    wrongFeedback: 'Ne! Stabilita serveru pro všechny hráče je prioritou číslo jedna. Záměrné i ignorované lagování vede ke smazání mechanismu a postihu.'
+    explanation: 'Správně. Automatické farmy a stroje jsou povolené, ale nesmí snižovat výkon serveru ostatním hráčům.',
+    wrongFeedback: 'Stabilita serveru pro všechny hráče má přednost. Záměrné i nedbalostní přetěžování vede ke smazání mechanismu a postihu.'
   },
   {
     id: 'mute-evasion',
@@ -4628,7 +4776,7 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       },
       {
-        text: 'V žádném případě! Jakékoliv obcházení trestu přes alt účty, cedulky či kovadliny je přísně zakázáno a trestá se 60denním banem.',
+        text: 'V žádném případě. Jakékoliv obcházení trestu přes alt účty, cedulky či kovadliny je přísně zakázáno a trestá se dlouhodobým banem.',
         isCorrect: true
       },
       {
@@ -4636,8 +4784,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Přesně tak! Obcházení uděleného trestu je závažnější přestupek než původní prohřešek. Pokud má hráč k trestu výhrady, řeší se to slušně přes ticket na Discordu.',
-    wrongFeedback: 'Chyba! Obcházení mute (jak přes druhý účet, tak přes přejmenované itemy či cedulky) se trestá 60denním banem dle sazebníku SMPAC (/punish obchazeni).'
+    explanation: 'Přesně tak. Obcházení uděleného trestu je závažnější přestupek než původní prohřešek. Případné výhrady se řeší přes ticket na Discordu.',
+    wrongFeedback: 'Obcházení mute přes druhý účet, přejmenované itemy či cedulky se trestá dlouhodobým banem.'
   },
   {
     id: 'replay-mod',
@@ -4657,8 +4805,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Skvěle! Replay Mod má jasný schvalovací proces pro tvůrce s Media rankem. Běžným hráčům není povolen, aby byl zachován princip férovosti bez Freecamu.',
-    wrongFeedback: 'Pozor! Běžný hráč Replay Mod používat nesmí – volná kamera bez ověřeného Media ranku je brána jako zakázaný Freecam cheat.'
+    explanation: 'Správně. Replay Mod je povolen výhradně pro schválené tvůrce s Media rankem, aby zůstal zachován férový pohyb bez Freecamu.',
+    wrongFeedback: 'Běžný hráč Replay Mod používat nesmí. Volná kamera bez ověřeného Media ranku se posuzuje jako zakázaný Freecam.'
   },
   {
     id: 'shop-glitch',
@@ -4678,8 +4826,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Jednoznačně správně! Nahlášení ekonomické chyby ti přinese zaslouženou odměnu v diamantových blocích. Zneužití chyby (bug abuse) vede k okamžitému banu a resetu konta.',
-    wrongFeedback: 'Chyba! Zneužívání chyb ekonomiky (bug abuse) je nejpřísněji trestaný delikt vedoucí k perma banu a smazání veškerého majetku.'
+    explanation: 'Správně. Nahlášení ekonomické chyby přináší odměnu v diamantových blocích. Zneužití chyby vede k banu a resetu konta.',
+    wrongFeedback: 'Zneužívání chyb ekonomiky vede k trvalému banu a smazání veškerého majetku.'
   },
   {
     id: 'private-ads',
@@ -4691,7 +4839,7 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       },
       {
-        text: 'Reklama na cizí servery v jakékoliv formě včetně /msg je přísně zakázána a v sazebníku se trestá 12h mutem a při opakování banem.',
+        text: 'Reklama na cizí servery v jakékoliv formě včetně /msg je přísně zakázána a trestá se mutem, při opakování banem.',
         isCorrect: true
       },
       {
@@ -4699,8 +4847,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Správně! Zákaz reklamy na cizí servery a projekty platí bez výjimky ve všech komunikačních kanálech. V sazebníku SMPAC je trestána 12hodinovým mutem (/punish reklama).',
-    wrongFeedback: 'Špatně! Zákaz propagace cizích projektů je absolutní – platí pro globální chat, /msg, mail i herní předměty a trestá se 12h mutem dle presetů SMPAC.'
+    explanation: 'Správně. Zákaz reklamy na cizí servery a projekty platí bez výjimky ve všech komunikačních kanálech.',
+    wrongFeedback: 'Zákaz propagace cizích projektů platí pro globální chat, /msg, mail i herní předměty a trestá se mutem či banem.'
   },
   {
     id: 'minimap-ban',
@@ -4720,8 +4868,8 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       }
     ],
-    explanation: 'Přesně tak! Pravidlo 1 serveru v /rules výslovně zakazuje veškeré minimapy a waypoint mody bez výjimky. Hráči se orientují poctivě pomocí souřadnic a herních map.',
-    wrongFeedback: 'Chyba! Pravidlo 1 v /rules výslovně zakazuje všechny minimapy (Xaero\'s Minimap, JourneyMap atd.) i waypointy bez ohledu na to, jak si je v klientovi nastavíš!'
+    explanation: 'Přesně tak. Pravidlo 1 serveru v /rules výslovně zakazuje veškeré minimapy a waypoint mody bez výjimky.',
+    wrongFeedback: 'Pravidlo 1 v /rules výslovně zakazuje všechny minimapy i waypointy bez ohledu na jejich nastavení v klientovi.'
   }
 ];
 
@@ -4748,9 +4896,9 @@ function renderCurrentRulesQuestionCard(isTransition = false) {
     container.innerHTML = '';
     const successCard = document.getElementById('quiz-success-card');
     if (successCard) {
-      successCard.style.display = 'block';
+      transitionPanelVisibility(successCard, true, 'block');
       setTimeout(() => {
-        successCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        successCard.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'nearest' });
       }, 200);
     }
     return;
@@ -4939,18 +5087,18 @@ async function loadModTestQuestionsFromServer() {
   const applicantForm = document.getElementById('modtest-applicant-form');
   const certCard = document.getElementById('modtest-certificate-card');
 
-  if (applicantForm) applicantForm.style.display = 'none';
-  if (certCard) certCard.style.display = 'none';
-  if (viewport) viewport.style.display = 'block';
+  if (applicantForm) transitionPanelVisibility(applicantForm, false, 'block');
+  if (certCard) transitionPanelVisibility(certCard, false, 'block');
+  if (viewport) transitionPanelVisibility(viewport, true, 'block');
 
   if (activeCard) {
     activeCard.className = 'modtest-card';
     activeCard.innerHTML = `
       <div class="modtest-card-head" style="text-align: center; padding: 40px 20px;">
         <div class="modtest-scenario-tag">ZABEZPEČENÝ TEST</div>
-        <h3 class="modtest-question-title" style="margin-top: 15px;">Generuji náhodný test ze zabezpečeného serveru...</h3>
-        <p class="modtest-question-desc" style="color: #94a3b8; max-width: 540px; margin: 10px auto 0;">Otázky a hodnocení probíhají v reálném čase přes ověřené API MYCHAL SMP bez ukládání odpovědí v prohlížeči.</p>
-        <div style="margin-top: 25px;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #0a67e5;"></i></div>
+        <h3 class="modtest-question-title" style="margin-top: 15px;">Generuji test ze zabezpečeného serveru...</h3>
+        <p class="modtest-question-desc" style="color: #94a3b8; max-width: 540px; margin: 10px auto 0;">Otázky a hodnocení probíhají v reálném čase přes ověřené API MYCHAL SMP.</p>
+        <div style="margin-top: 25px;"><span class="btn-spinner"></span></div>
       </div>
     `;
   }
@@ -4981,8 +5129,8 @@ async function loadModTestQuestionsFromServer() {
           <div class="modtest-scenario-tag" style="background: rgba(245, 21, 21, 0.15); color: #f51515; border-color: rgba(245, 21, 21, 0.3);">CHYBA PŘIPOJENÍ</div>
           <h3 class="modtest-question-title" style="margin-top: 15px;">Nepodařilo se spojit se serverem testu</h3>
           <p class="modtest-question-desc" style="color: #94a3b8; max-width: 500px; margin: 10px auto 0;">Zkontroluj připojení k internetu nebo zkus načtení zopakovat.</p>
-          <button type="button" class="btn-primary" onclick="restartModTest()" style="margin-top: 20px; display: inline-flex;">
-            <i class="fa-solid fa-rotate-right"></i> Zkusit znovu
+          <button type="button" class="btn-primary" onclick="restartModTest()" style="margin-top: 20px; display: inline-flex; align-items: center; gap: 8px;">
+            ${UI_ICONS.refresh} <span>Zkusit znovu</span>
           </button>
         </div>
       `;
@@ -5167,7 +5315,7 @@ async function handleModTestAnswer(optId, btnElement) {
     isModTestFlipping = false;
     allBtns.forEach(b => b.disabled = false);
     btnElement.classList.remove('selected-loading');
-    showToast('❌ Chyba spojení se serverem při ověření odpovědi.');
+    showInlineFeedback(activeCard, 'Chyba spojení se serverem při ověření odpovědi.', 'error');
   }
 }
 
@@ -5183,7 +5331,7 @@ function initOrRenderModTest() {
   }
 
   if (currentModTestIndex === 0 && (!applicantForm || applicantForm.style.display === 'none') && (!certCard || certCard.style.display === 'none')) {
-    viewport.style.display = 'block';
+    transitionPanelVisibility(viewport, true, 'block');
   }
 }
 
@@ -5193,18 +5341,19 @@ async function submitModeratorApplication(event) {
   const nickInput = document.getElementById('modtest-nick');
   const discordInput = document.getElementById('modtest-discord');
   const btnSubmit = document.getElementById('btn-submit-modtest');
+  const applicantForm = document.getElementById('modtest-applicant-form');
 
   const nick = nickInput ? nickInput.value.trim() : '';
   const discord = discordInput ? discordInput.value.trim() : '';
 
   if (!nick || !discord) {
-    showToast('⚠️ Prosím vyplň svůj Minecraft nick i Discord.');
+    showInlineFeedback(applicantForm || btnSubmit, 'Vyplň svůj Minecraft nick i Discord.', 'warning');
     return;
   }
 
   if (btnSubmit) {
     btnSubmit.disabled = true;
-    btnSubmit.innerHTML = '<span>Ověřuji výsledek na serveru...</span>';
+    btnSubmit.innerHTML = '<span class="btn-spinner"></span> <span>Ověřuji výsledek na serveru...</span>';
   }
 
   let finalScore = modtestScore;
@@ -5236,11 +5385,11 @@ async function submitModeratorApplication(event) {
     finalCertCode = data.certCode;
   } catch (err) {
     console.warn('[MODTEST SUBMIT ERR]', err);
-    showToast('❌ Nepodařilo se odeslat přihlášku. Zkus to prosím za chvíli.');
+    showInlineFeedback(applicantForm || btnSubmit, 'Nepodařilo se odeslat přihlášku. Zkus to za chvíli.', 'error');
     if (btnSubmit) {
       btnSubmit.disabled = false;
       btnSubmit.innerHTML = `
-        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         <span>Vyhodnotit & Odeslat přihlášku</span>
       `;
     }
@@ -5248,17 +5397,15 @@ async function submitModeratorApplication(event) {
   }
 
   // Hide form and show certificate
-  const applicantForm = document.getElementById('modtest-applicant-form');
   const certCard = document.getElementById('modtest-certificate-card');
-  if (applicantForm) applicantForm.style.display = 'none';
+  if (applicantForm) transitionPanelVisibility(applicantForm, false, 'block');
 
   if (certCard) {
-    certCard.style.display = 'block';
+    transitionPanelVisibility(certCard, true, 'block');
 
     const statScore = document.getElementById('modtest-stat-score');
     const statStress = document.getElementById('modtest-stat-stress');
     const statStatus = document.getElementById('modtest-stat-status');
-    const certTitle = document.getElementById('modtest-cert-title');
     const certRank = document.getElementById('modtest-cert-rank');
     const certDesc = document.getElementById('modtest-cert-desc');
     const certCodeEl = document.getElementById('modtest-cert-code');
@@ -5278,16 +5425,16 @@ async function submitModeratorApplication(event) {
 
     if (certRank) {
       if (finalScore >= 19) {
-        certRank.textContent = 'LEGENDA S OCELOVÝMI NERVY (ELITNÍ MODERÁTOR)';
+        certRank.textContent = 'ELITNÍ MODERÁTOR';
         certRank.style.color = '#21DE00';
       } else if (finalScore >= 16) {
-        certRank.textContent = 'ZKUŠENÝ MODERÁTOR (PROVĚŘEN BOJEM)';
+        certRank.textContent = 'ZKUŠENÝ MODERÁTOR';
         certRank.style.color = '#0a67e5';
       } else if (finalScore >= 11) {
-        certRank.textContent = 'REKRUT V PŘÍPRAVĚ (POTŘEBUJE DOHLED)';
+        certRank.textContent = 'KANDIDÁT V PŘÍPRAVĚ';
         certRank.style.color = '#ffaa00';
       } else {
-        certRank.textContent = 'UKAMENOVÁN HRÁČI DO 5 MINUT (NEDOPORUČENO)';
+        certRank.textContent = 'NEDOPORUČENO';
         certRank.style.color = '#f51515';
       }
     }
@@ -5295,23 +5442,23 @@ async function submitModeratorApplication(event) {
     const safeNick = typeof escapeHtml === 'function' ? escapeHtml(nick) : nick;
     if (certDesc) {
       if (finalPassed) {
-        certDesc.innerHTML = `Gratulujeme, <strong>${safeNick}</strong>! Prokázal jsi neprůstřelnou znalost zákonů serveru i psychickou odolnost vůči vydírání a trollingu (${finalScore} z ${finalTotal} správně). Zkopíruj si kód níže a pošli ho do ticketu na Discordu.`;
+        certDesc.innerHTML = `<strong>${safeNick}</strong> prokázal jistou znalost pravidel i odolnost vůči manipulaci s výsledkem ${finalScore} z ${finalTotal}. Zkopíruj kód níže a pošli ho do ticketu na Discordu.`;
       } else {
-        certDesc.innerHTML = `Bohužel, <strong>${safeNick}</strong>, v několika situacích tě hráči zmanipulovali nebo jsi přehlédl klíčová pravidla serveru (${finalScore} z ${finalTotal}). Můžeš si pravidla znovu pročíst a zkusit test znovu s novými otázkami.`;
+        certDesc.innerHTML = `<strong>${safeNick}</strong> dosáhl výsledku ${finalScore} z ${finalTotal}. Projdi si pravidla serveru a zkus test znovu s novou sadou otázek.`;
       }
     }
 
     if (certCodeEl) certCodeEl.textContent = finalCertCode;
 
     setTimeout(() => {
-      certCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      certCard.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'nearest' });
     }, 200);
   }
 
   if (btnSubmit) {
     btnSubmit.disabled = false;
     btnSubmit.innerHTML = `
-      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       <span>Vyhodnotit & Odeslat přihlášku</span>
     `;
   }
@@ -5321,15 +5468,18 @@ function copyModTestResult() {
   const codeEl = document.getElementById('modtest-cert-code');
   if (!codeEl) return;
   const text = codeEl.textContent.trim();
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.btn-copy-code');
+  const btn = document.querySelector('.btn-copy-code');
+  copyTextToClipboard(text).then(() => {
     if (btn) {
-      const orig = btn.textContent;
-      btn.textContent = 'Zkopírováno!';
-      setTimeout(() => { btn.textContent = orig; }, 2000);
+      triggerButtonFeedback(btn, 'Zkopírováno');
+      if (!btn.querySelector('.btn-copy-label')) {
+        const orig = btn.textContent;
+        btn.textContent = 'Zkopírováno';
+        setTimeout(() => { btn.textContent = orig; }, 1800);
+      }
     }
   }).catch(() => {
-    showToast('📋 Kód certifikátu: ' + text);
+    showInlineFeedback(btn || codeEl, `Kód certifikátu: ${text}`, 'info');
   });
 }
 
@@ -5345,12 +5495,12 @@ function restartModTest() {
   const applicantForm = document.getElementById('modtest-applicant-form');
   const certCard = document.getElementById('modtest-certificate-card');
 
-  if (applicantForm) applicantForm.style.display = 'none';
-  if (certCard) certCard.style.display = 'none';
-  if (viewport) viewport.style.display = 'block';
+  if (applicantForm) transitionPanelVisibility(applicantForm, false, 'block');
+  if (certCard) transitionPanelVisibility(certCard, false, 'block');
+  if (viewport) transitionPanelVisibility(viewport, true, 'block');
 
   loadModTestQuestionsFromServer();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
 }
 
 // Global window exposure for inline handlers
@@ -5387,7 +5537,7 @@ window.handleArchiveDownload = function () { };
 
     if (diff <= 0) {
       timerEl.innerHTML = '<span class="badge-live-pulse-cyan"></span> OTEVŘENO · SPUŠTĚNO';
-      timerEl.style.color = '#4ade80';
+      timerEl.style.color = '#21DE00';
       return;
     }
 
@@ -5406,14 +5556,18 @@ window.handleArchiveDownload = function () { };
 
 // ─── UNIFIED SEGMENTED TABS & SLIDING PILLS GEOMETRY ─────────────────
 function updateAllSegmentedPills() {
+  if (typeof updateMainNavPill === 'function') updateMainNavPill();
   if (typeof updateSmpModePill === 'function') updateSmpModePill();
   if (typeof updateTimeframePill === 'function') updateTimeframePill();
+  if (typeof updateStatsMetricPill === 'function') updateStatsMetricPill();
   if (typeof updateTierSliderPosition === 'function') updateTierSliderPosition();
   if (typeof updateLauncherOsPill === 'function') updateLauncherOsPill();
   if (typeof updateMediaTogglePill === 'function') updateMediaTogglePill();
+  if (typeof updateRulesFilterPill === 'function') updateRulesFilterPill();
+  if (typeof updateBugCatPill === 'function') updateBugCatPill();
 }
 
-window.addEventListener('resize', updateAllSegmentedPills);
+window.addEventListener('resize', updateAllSegmentedPills, { passive: true });
 window.addEventListener('load', () => {
   setTimeout(updateAllSegmentedPills, 60);
 });
@@ -5437,7 +5591,7 @@ async function initTombstoneCandle() {
   const localBonus = parseInt(localStorage.getItem('smp_tombstone_candle_bonus') || '0', 10);
   const initialCount = baseCount + (localBonus > 0 ? 1 : 0);
 
-  countEl.textContent = `${initialCount.toLocaleString('cs-CZ')} 🕯️`;
+  countEl.textContent = initialCount.toLocaleString('cs-CZ');
   if (localLit) {
     btn.classList.add('lit');
     if (textEl) textEl.textContent = 'Svíčka hoří · Odpočívej v pokoji';
@@ -5452,7 +5606,7 @@ async function initTombstoneCandle() {
     if (res && res.ok) {
       const data = await res.json();
       if (data && typeof data.count === 'number') {
-        countEl.textContent = `${data.count.toLocaleString('cs-CZ')} 🕯️`;
+        countEl.textContent = data.count.toLocaleString('cs-CZ');
         if (data.userLit) {
           btn.classList.add('lit');
           if (textEl) textEl.textContent = 'Svíčka hoří · Odpočívej v pokoji';
@@ -5468,7 +5622,6 @@ async function initTombstoneCandle() {
     }
   } catch (err) {
     // Tichý fallback na lokální data
-    console.debug('[Tombstone Candle] API offline, používám lokální data');
   }
 }
 
@@ -5485,24 +5638,21 @@ async function tributeTombstone(btn) {
   isTombstoneCandleSubmitting = true;
   setTimeout(() => { isTombstoneCandleSubmitting = false; }, 1200);
 
-  // Optimistický okamžitý update v UI
+  // Optimistický okamžitý lokální update v UI (Rule 25: local inline state)
   if (wasLit) {
     btn.classList.remove('lit');
     curCount = Math.max(43, curCount - 1);
     if (textEl) textEl.textContent = 'Vzdát úctu · Zapálit svíčku';
-    if (countEl) countEl.textContent = `${curCount.toLocaleString('cs-CZ')} 🕯️`;
+    if (countEl) countEl.textContent = curCount.toLocaleString('cs-CZ');
     localStorage.setItem('smp_tombstone_candle_lit', 'false');
     localStorage.setItem('smp_tombstone_candle_bonus', '0');
   } else {
     btn.classList.add('lit');
     curCount += 1;
     if (textEl) textEl.textContent = 'Svíčka hoří · Odpočívej v pokoji';
-    if (countEl) countEl.textContent = `${curCount.toLocaleString('cs-CZ')} 🕯️`;
+    if (countEl) countEl.textContent = curCount.toLocaleString('cs-CZ');
     localStorage.setItem('smp_tombstone_candle_lit', 'true');
     localStorage.setItem('smp_tombstone_candle_bonus', '1');
-    if (typeof showToast === 'function') {
-      showToast('🕯️ Zapálil jsi svíčku na památku původního Survival světa.');
-    }
   }
 
   // Reálné odeslání do API s rate limitem
@@ -5515,23 +5665,23 @@ async function tributeTombstone(btn) {
 
     if (res) {
       if (res.status === 429) {
-        if (typeof showToast === 'function') {
-          showToast('⏳ Počkej chvíli před dalším zapálením svíčky.');
+        if (textEl) {
+          textEl.textContent = 'Počkej chvíli před dalším zapálením';
+          setTimeout(() => {
+            textEl.textContent = wasLit ? 'Svíčka hoří · Odpočívej v pokoji' : 'Vzdát úctu · Zapálit svíčku';
+          }, 2200);
         }
-        // Rollback
         if (wasLit) {
           btn.classList.add('lit');
-          if (textEl) textEl.textContent = 'Svíčka hoří · Odpočívej v pokoji';
         } else {
           btn.classList.remove('lit');
-          if (textEl) textEl.textContent = 'Vzdát úctu · Zapálit svíčku';
         }
         return;
       }
       if (res.ok) {
         const data = await res.json();
         if (data && typeof data.count === 'number') {
-          if (countEl) countEl.textContent = `${data.count.toLocaleString('cs-CZ')} 🕯️`;
+          if (countEl) countEl.textContent = data.count.toLocaleString('cs-CZ');
           if (data.lit) {
             btn.classList.add('lit');
             if (textEl) textEl.textContent = 'Svíčka hoří · Odpočívej v pokoji';
@@ -5548,7 +5698,6 @@ async function tributeTombstone(btn) {
     }
   } catch (err) {
     // V případě síťové chyby zůstává optimistický stav v localStorage
-    console.debug('[Tombstone Candle] API request se nezdařil, zachovávám lokální stav');
   }
 }
 

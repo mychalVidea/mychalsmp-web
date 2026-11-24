@@ -17,7 +17,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261124_anti_slop_full_v1" />
+  <link rel="stylesheet" href="style.css?v=20261124_liquid_nav_v9" />
 </head>
 
 <body>
@@ -39,6 +39,22 @@
           </svg>
           <span>Domů</span>
         </button>
+        <button id="tab-btn-smp-plus" class="nav-link nav-link--smp" onclick="showTab('smp-plus')">
+          <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 5l3.5 11a1 1 0 0 0 1 .5h11a1 1 0 0 0 1-.5L22 5l-5.5 4.5L12 3 7.5 9.5 2 5z" />
+            <line x1="4.5" y1="20" x2="19.5" y2="20" />
+          </svg>
+          <span>SMP+</span>
+        </button>
+        <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+          </svg>
+          <span>Jak se připojit</span>
+        </button>
         <button id="tab-btn-launcher" class="nav-link" onclick="showTab('launcher')">
           <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
             stroke-linecap="round" stroke-linejoin="round">
@@ -50,38 +66,13 @@
           </svg>
           <span>SMPClient</span>
         </button>
-        <button id="tab-btn-join" class="nav-link" onclick="showTab('join')">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-            stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10" />
-            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-          </svg>
-          <span>Jak se připojit</span>
-        </button>
-        <button id="tab-btn-smp-plus" class="nav-link nav-link--smp" onclick="showTab('smp-plus')">
-          <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 5l3.5 11a1 1 0 0 0 1 .5h11a1 1 0 0 0 1-.5L22 5l-5.5 4.5L12 3 7.5 9.5 2 5z" />
-            <line x1="4.5" y1="20" x2="19.5" y2="20" />
-          </svg>
-          <span>SMP+</span>
-        </button>
-        <button id="tab-btn-media" class="nav-link" onclick="showTab('media')">
+        <button id="tab-btn-media" class="nav-link nav-link--media" onclick="showTab('media')">
           <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
             stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="5" width="13" height="14" rx="3" />
             <path d="m15 10 5.5-3.5a1 1 0 0 1 1.5.85v9.3a1 1 0 0 1-1.5.85L15 14" />
           </svg>
           <span>Media</span>
-        </button>
-        <button id="tab-btn-napady" class="nav-link" onclick="showTab('napady')">
-          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 18h6" />
-            <path d="M10 22h4" />
-            <path d="M12 2a7 7 0 0 0-4.5 12.3c.6.6.9 1.4 1 2.2h7c.1-.8.4-1.6 1-2.2A7 7 0 0 0 12 2z" />
-          </svg>
-          <span>Nápady</span>
         </button>
         <button id="tab-btn-stats" class="nav-link" onclick="showTab('stats')">
           <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
@@ -91,6 +82,15 @@
             <line x1="6" y1="20" x2="6" y2="14" />
           </svg>
           <span>Statistiky</span>
+        </button>
+        <button id="tab-btn-napady" class="nav-link" onclick="showTab('napady')">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6" />
+            <path d="M10 22h4" />
+            <path d="M12 2a7 7 0 0 0-4.5 12.3c.6.6.9 1.4 1 2.2h7c.1-.8.4-1.6 1-2.2A7 7 0 0 0 12 2z" />
+          </svg>
+          <span>Nápady</span>
         </button>
         <button id="tab-btn-bugs" class="nav-link" onclick="showTab('bugs')">
           <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
@@ -129,6 +129,22 @@
         </svg>
         <span>Domů</span>
       </button>
+      <button class="nav-link nav-link--smp" id="top-nav-smp-plus" onclick="showTab('smp-plus');toggleMenu()">
+        <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 5l3.5 11a1 1 0 0 0 1 .5h11a1 1 0 0 0 1-.5L22 5l-5.5 4.5L12 3 7.5 9.5 2 5z" />
+          <line x1="4.5" y1="20" x2="19.5" y2="20" />
+        </svg>
+        <span>SMP+</span>
+      </button>
+      <button class="nav-link" id="top-nav-join" onclick="showTab('join');toggleMenu()">
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+        </svg>
+        <span>Jak se připojit</span>
+      </button>
       <button class="nav-link" id="top-nav-launcher" onclick="showTab('launcher');toggleMenu()">
         <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
           stroke-linecap="round" stroke-linejoin="round">
@@ -140,38 +156,13 @@
         </svg>
         <span>SMPClient</span>
       </button>
-      <button class="nav-link" id="top-nav-join" onclick="showTab('join');toggleMenu()">
-        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-          stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-        </svg>
-        <span>Jak se připojit</span>
-      </button>
-      <button class="nav-link" id="top-nav-smp-plus" onclick="showTab('smp-plus');toggleMenu()">
-        <svg class="ui-icon-svg ui-icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 5l3.5 11a1 1 0 0 0 1 .5h11a1 1 0 0 0 1-.5L22 5l-5.5 4.5L12 3 7.5 9.5 2 5z" />
-          <line x1="4.5" y1="20" x2="19.5" y2="20" />
-        </svg>
-        <span>SMP+</span>
-      </button>
-      <button class="nav-link" id="top-nav-media" onclick="showTab('media');toggleMenu()">
+      <button class="nav-link nav-link--media" id="top-nav-media" onclick="showTab('media');toggleMenu()">
         <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
           stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="5" width="13" height="14" rx="3" />
           <path d="m15 10 5.5-3.5a1 1 0 0 1 1.5.85v9.3a1 1 0 0 1-1.5.85L15 14" />
         </svg>
         <span>Media</span>
-      </button>
-      <button class="nav-link" id="top-nav-napady" onclick="showTab('napady');toggleMenu()">
-        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 18h6" />
-          <path d="M10 22h4" />
-          <path d="M12 2a7 7 0 0 0-4.5 12.3c.6.6.9 1.4 1 2.2h7c.1-.8.4-1.6 1-2.2A7 7 0 0 0 12 2z" />
-        </svg>
-        <span>Nápady</span>
       </button>
       <button class="nav-link" id="top-nav-stats" onclick="showTab('stats');toggleMenu()">
         <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
@@ -181,6 +172,15 @@
           <line x1="6" y1="20" x2="6" y2="14" />
         </svg>
         <span>Statistiky</span>
+      </button>
+      <button class="nav-link" id="top-nav-napady" onclick="showTab('napady');toggleMenu()">
+        <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18h6" />
+          <path d="M10 22h4" />
+          <path d="M12 2a7 7 0 0 0-4.5 12.3c.6.6.9 1.4 1 2.2h7c.1-.8.4-1.6 1-2.2A7 7 0 0 0 12 2z" />
+        </svg>
+        <span>Nápady</span>
       </button>
       <button class="nav-link" id="top-nav-bugs" onclick="showTab('bugs');toggleMenu()">
         <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
@@ -3335,12 +3335,22 @@
           <!-- Platforms Criteria Bento -->
           <div class="media-criteria-bento">
             <div class="media-criteria-head">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                <polyline points="9 14 11 16 15 12"></polyline>
-              </svg>
-              <span>Podmínka přijetí: Splň alespoň 1 platformu</span>
+              <span class="media-criteria-head-title">
+                <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                  <polyline points="9 14 11 16 15 12"></polyline>
+                </svg>
+                <span>Podmínka přijetí: Splň alespoň 1 platformu</span>
+              </span>
+              <a href="#media-requirements-spec" class="media-criteria-jump"
+                onclick="document.getElementById('media-requirements-spec')?.scrollIntoView({behavior:'smooth',block:'start'}); return false;">
+                <span>Všechny podmínky</span>
+                <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+              </a>
             </div>
             <div class="media-criteria-grid">
               <div class="media-crit-card media-crit-card--yt">
@@ -3350,7 +3360,7 @@
                   </svg>
                   <span>YouTube</span>
                 </div>
-                <strong class="media-crit-num">100+ <span>odběratelů</span></strong>
+                <strong class="media-crit-num">200+ <span>subů</span></strong>
               </div>
               <div class="media-crit-card media-crit-card--tt">
                 <div class="media-crit-platform">
@@ -3359,7 +3369,7 @@
                   </svg>
                   <span>TikTok</span>
                 </div>
-                <strong class="media-crit-num">200+ <span>sledujících</span></strong>
+                <strong class="media-crit-num">200+ <span>followerů</span></strong>
               </div>
               <div class="media-crit-card media-crit-card--twitch">
                 <div class="media-crit-platform">
@@ -3368,7 +3378,7 @@
                   </svg>
                   <span>Twitch</span>
                 </div>
-                <strong class="media-crit-num">50+ <span>sledujících</span></strong>
+                <strong class="media-crit-num">50+ <span>followerů</span></strong>
               </div>
               <div class="media-crit-card media-crit-card--kick">
                 <div class="media-crit-platform">
@@ -3377,7 +3387,7 @@
                   </svg>
                   <span>Kick</span>
                 </div>
-                <strong class="media-crit-num">50+ <span>sledujících</span></strong>
+                <strong class="media-crit-num">50+ <span>followerů</span></strong>
               </div>
             </div>
           </div>
@@ -3446,7 +3456,7 @@
               <line x1="12" y1="16" x2="12" y2="12" />
               <line x1="12" y1="8" x2="12.01" y2="8" />
             </svg>
-            <span>V popisku tvorby stačí uvést IP <code>mychalsmp.xyz</code> a hashtag <strong>#mychalsmp</strong></span>
+            <span>Do popisku vždy uveď IP <code>mychalsmp.xyz</code> a <code>#mychalsmp</code></span>
           </div>
         </div>
 
@@ -3551,8 +3561,7 @@
                   <span id="media-preview-prefix-badge" class="media-prefix-cam"><svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg></span><span
                     class="smp-preview-name" id="media-preview-chat-nick">TvujNick</span><span
                     class="smp-chat-colon">:</span>
-                  <span class="smp-chat-text" id="media-preview-chat-msg">Ahoj, nové video z MYCHAL SMP je
-                    online</span>
+                  <span class="smp-chat-text" id="media-preview-chat-msg">Nové video z mychalsmp.xyz je online #mychalsmp</span>
                 </div>
               </div>
 
@@ -3623,6 +3632,208 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <!-- Detailed Media Requirements (Streams & Videos) -->
+    <div class="container media-requirements-container" id="media-requirements-spec">
+      <div class="media-section-head text-center">
+        <h2 class="media-section-title">Co musíš splnit pro <span>Media</span> rank</h2>
+      </div>
+
+      <div class="media-req-mandate-strip">
+        <div class="media-req-mandate-cell">
+          <span class="media-req-mandate-kicker">Povinné v popisku všude</span>
+          <div class="media-req-mandate-row">
+            <div class="media-copy-inline-group">
+              <button type="button" class="media-copy-chip" onclick="copyTermCommand('mychalsmp.xyz', this)" aria-label="Zkopírovat IP adresu mychalsmp.xyz">
+                <span class="btn-copy-label">mychalsmp.xyz</span>
+                <span class="btn-copy-icon-wrap" aria-hidden="true">
+                  <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </span>
+              </button>
+              <button type="button" class="media-copy-chip" onclick="copyTermCommand('#mychalsmp', this)" aria-label="Zkopírovat hashtag #mychalsmp">
+                <span class="btn-copy-label">#mychalsmp</span>
+                <span class="btn-copy-icon-wrap" aria-hidden="true">
+                  <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="media-req-mandate-cell">
+          <span class="media-req-mandate-kicker">Před žádostí přes videa</span>
+          <p class="media-req-mandate-text">
+            Musíš už mít <strong>aspoň 1 nahrané video</strong> z <code>mychalsmp.xyz</code>
+          </p>
+        </div>
+      </div>
+
+      <div class="media-req-dual">
+        <!-- Column 1: Streams -->
+        <div class="media-req-col">
+          <div class="media-req-col-head">
+            <div class="media-req-col-title-wrap">
+              <div class="media-req-col-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"></path>
+                  <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"></path>
+                  <circle cx="12" cy="12" r="2"></circle>
+                  <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"></path>
+                  <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"></path>
+                </svg>
+              </div>
+              <div>
+                <h3>Streamy</h3>
+                <p class="media-req-col-sub">Splň Twitch / Kick, nebo YouTube</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="media-req-platform-block">
+            <div class="media-req-platform-top">
+              <div class="media-req-platform-name">
+                <svg viewBox="0 0 24 24" fill="#a970ff" aria-hidden="true">
+                  <path d="M2.149 0L.537 4.119v16.836h5.731V24h3.224l3.045-3.045h4.657l6.269-6.269V0H2.149zm19.164 13.612l-3.582 3.582H12l-3.045 3.045v-3.045H4.119V2.149h17.194v11.463zm-3.582-7.343v6.269h-2.149V6.269h2.149zm-5.731 0v6.269H9.851V6.269h2.149z"/>
+                </svg>
+                <span>Twitch / Kick</span>
+              </div>
+              <span class="media-req-platform-threshold">50+ <span>followerů</span></span>
+            </div>
+            <div class="media-spec-rows">
+              <div class="media-spec-row">
+                <span class="media-spec-key">Minimum</span>
+                <span class="media-spec-val">50 followerů</span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Diváci</span>
+                <span class="media-spec-val">Mít komunitu (ne 0 lidí)</span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Jak často</span>
+                <span class="media-spec-val">1× za 2 týdny ze serveru</span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Záznamy</span>
+                <span class="media-spec-val">Zapnuté VODs</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="media-req-platform-block">
+            <div class="media-req-platform-top">
+              <div class="media-req-platform-name">
+                <svg viewBox="0 0 24 24" fill="#ff0000" aria-hidden="true">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <span>YouTube (Streamy)</span>
+              </div>
+              <span class="media-req-platform-threshold">200+ <span>subscriberů</span></span>
+            </div>
+            <div class="media-spec-rows">
+              <div class="media-spec-row">
+                <span class="media-spec-key">Minimum</span>
+                <span class="media-spec-val">200 subscriberů</span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Diváci</span>
+                <span class="media-spec-val">Mít komunitu (ne 0 lidí)</span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Jak často</span>
+                <span class="media-spec-val">1× za 2 týdny ze serveru</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Videos -->
+        <div class="media-req-col">
+          <div class="media-req-col-head">
+            <div class="media-req-col-title-wrap">
+              <div class="media-req-col-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                </svg>
+              </div>
+              <div>
+                <h3>Videa</h3>
+                <p class="media-req-col-sub">Aspoň 1 nahrané video ze serveru předem</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="media-req-platform-block">
+            <div class="media-req-platform-top">
+              <div class="media-req-platform-name">
+                <svg viewBox="0 0 24 24" fill="#ff0000" aria-hidden="true">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <span>YouTube (Videa)</span>
+              </div>
+              <span class="media-req-platform-threshold">200+ <span>subscriberů</span></span>
+            </div>
+            <div class="media-spec-rows">
+              <div class="media-spec-row">
+                <span class="media-spec-key">Minimum</span>
+                <span class="media-spec-val">200 subscriberů</span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Jak často</span>
+                <span class="media-spec-val">1× za 2 týdny <span class="media-req-note">(velké kanály nemusí)</span></span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Views</span>
+                <span class="media-spec-val">Odpovídají odběratelům</span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Kvalita</span>
+                <span class="media-spec-val">Min. Full HD a dobrá úroveň</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="media-req-platform-block">
+            <div class="media-req-platform-top">
+              <div class="media-req-platform-name">
+                <svg viewBox="0 0 24 24" fill="#00f2fe" aria-hidden="true">
+                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.98v8.63c-.02 2.45-.99 4.88-2.73 6.6-1.74 1.72-4.18 2.69-6.63 2.73-2.45-.02-4.89-.99-6.62-2.73C.34 21.52-.63 19.09-.61 16.64c.02-2.45.99-4.88 2.73-6.61 1.73-1.73 4.17-2.7 6.62-2.73.54.01 1.09.07 1.62.19v4.12c-.39-.12-.8-.19-1.21-.19-1.35-.01-2.69.52-3.66 1.48-.96.97-1.49 2.31-1.48 3.66.01 1.35.54 2.69 1.5 3.65.97.96 2.31 1.48 3.66 1.48 1.35-.01 2.69-.53 3.65-1.49.97-.96 1.49-2.3 1.48-3.65V.02z"/>
+                </svg>
+                <span>TikTok</span>
+              </div>
+              <span class="media-req-platform-threshold">200+ <span>followerů</span></span>
+            </div>
+            <div class="media-spec-rows">
+              <div class="media-spec-row">
+                <span class="media-spec-key">Minimum</span>
+                <span class="media-spec-val">200 followerů</span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Zaměření</span>
+                <span class="media-spec-val">Herní kanál</span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Jak často</span>
+                <span class="media-spec-val">1× za týden <span class="media-req-note">(velké kanály nemusí)</span></span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Views</span>
+                <span class="media-spec-val">Odpovídají followerům</span>
+              </div>
+              <div class="media-spec-row">
+                <span class="media-spec-key">Kvalita</span>
+                <span class="media-spec-val">Min. Full HD a dobrá úroveň</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -4545,9 +4756,9 @@
                 Při podání žádosti o hodnost Media rank evidujeme váš Discord identifikátor, Minecraft nick a vámi
                 zadané odkazy na veřejné profily (YouTube, Twitch, TikTok, Kick). Náš systém provádí pravidelnou
                 automatizovanou kontrolu (cca 1× za 7 dní) veřejně přístupných metadat těchto kanálů (názvy a popisky
-                videí či streamů za posledních 30 dní za účelem ověření tvorby obsahu s tagem #mychalsmp či odkazem na
-                server). V případě zjištění dlouhodobé neaktivity systém tvůrce automaticky upozorní soukromou zprávou
-                (Discord DM) a navrhne odebrání role.
+                videí či streamů za posledních 30 dní za účelem ověření tvorby obsahu s tagem <code>#mychalsmp</code> a
+                IP adresou <code>mychalsmp.xyz</code>). V případě zjištění dlouhodobé neaktivity systém tvůrce
+                automaticky upozorní soukromou zprávou (Discord DM) a navrhne odebrání role.
               </li>
               <li>
                 <strong>YouTube kanál, vysílání a členové (/cleniyt):</strong>
@@ -5019,10 +5230,11 @@
                 tvůrci s hodností <strong>Media rank</strong>, kteří mohou sdílet odkazy na své oficiálně zaregistrované
                 a schválené profily.</li>
               <li><strong>Pravidla pro držitele Media ranku a kontrola aktivity:</strong> Získání a držení Media ranku
-                je vázáno na tvorbu tematického obsahu z projektu MYCHALSMP (videa, streamy, Shorts) s uvedením
-                serverových odkazů nebo tagu #mychalsmp. Systém provádí pravidelnou automatizovanou kontrolu aktivity na
-                kanálech tvůrce. V případě zjištění neaktivity po dobu delší než 30 dní a vyčerpání ochranné lhůty
-                (streak protection) je Media rank automaticky navržen k odebrání.</li>
+                je vázáno na tvorbu kvalitního tematického obsahu z projektu MYCHALSMP (videa min. ve Full HD, Shorts/TikTok nebo
+                streamy s aktivní komunitou a zapnutými VODs na Twitch/Kick) s uvedením správné IP adresy
+                <code>mychalsmp.xyz</code> a tagu <code>#mychalsmp</code>. Systém provádí pravidelnou automatizovanou
+                kontrolu aktivity na kanálech tvůrce. V případě neplnění požadované frekvence či dlouhodobé neaktivity
+                a vyčerpání ochranné lhůty (streak protection) je Media rank navržen k odebrání.</li>
               <li><strong>Zákaz zneužívání chyb:</strong> Nalezené technické chyby v mapě nebo pluginech je hráč povinen
                 neprodleně nahlásit do ticketu na Discordu, do hlášení chyb na webu SMP (https://mychalsmp.xyz/#bugs)
                 nebo pomocí příkazu /report přímo ve hře. Záměrné zneužití, šíření či přechovávání nelegálně získaných
@@ -5885,7 +6097,8 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261124_anti_slop_full_v1"></script>
+  <script src="nav-liquid-glass.js?v=20261124_liquid_nav_v9"></script>
+  <script src="script.js?v=20261124_liquid_nav_v9"></script>
 </body>
 
 </html>

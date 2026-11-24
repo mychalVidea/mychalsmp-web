@@ -214,6 +214,9 @@ function updateMainNavPill(targetBtn) {
   const container = document.querySelector('.nav-links');
   const pill = document.getElementById('nav-links-pill') || document.getElementById('nav-active-pill');
   const btn = targetBtn || container?.querySelector('.nav-link.active');
+  if (window.__navLiquidGlass && window.__navLiquidGlass.enabled) {
+    window.__navLiquidGlass.setActiveButton(btn);
+  }
   if (!container || !pill) return;
   if (!btn) {
     pill.style.opacity = '0';
@@ -2198,7 +2201,7 @@ function toggleMediaPreviewRank(type) {
     if (badge) {
       badge.innerHTML = `<span class="media-prefix-cam">${UI_ICONS.video}</span><span class="smp-preview-plus">+</span>`;
     }
-    if (msg) msg.textContent = 'Dnes točíme nový projekt na mychalsmp.xyz.';
+    if (msg) msg.textContent = 'Streamujeme projekt na mychalsmp.xyz #mychalsmp';
   } else {
     if (singleBtn) singleBtn.classList.add('active');
     if (plusBtn) plusBtn.classList.remove('active');
@@ -2206,7 +2209,7 @@ function toggleMediaPreviewRank(type) {
     if (badge) {
       badge.innerHTML = `<span class="media-prefix-cam">${UI_ICONS.video}</span>`;
     }
-    if (msg) msg.textContent = 'Nové video z mychalsmp.xyz je online.';
+    if (msg) msg.textContent = 'Nové video z mychalsmp.xyz je online #mychalsmp';
   }
 
   updateMediaTogglePill(activeBtn);
@@ -2246,7 +2249,7 @@ async function submitMediaApplication(event) {
     return;
   }
   if (!ageConfirm) {
-    showInlineFeedback(applyForm, 'Potvrď, že je ti více než 10 let.', 'warning');
+    showInlineFeedback(applyForm, 'Potvrď, že je ti více než 13 let.', 'warning');
     return;
   }
 

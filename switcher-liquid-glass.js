@@ -1024,6 +1024,9 @@
       if (targetBtn) {
         this.syncTargetToButton(targetBtn, false, 1.0);
       }
+      if (wasIdle) {
+        this.renderFrame();
+      }
       this.wake();
     }
 
@@ -1055,6 +1058,9 @@
       this.backdropDirty = true;
       this.bgDirty = true;
       this.syncTargetToButton(toBtn, false, 1.0);
+      if (wasIdle) {
+        this.renderFrame();
+      }
       this.wake();
     }
 
@@ -1400,6 +1406,8 @@
             this.measureAndResize();
             const focus = this.hoveredBtn || this.getActiveButton();
             if (focus) this.syncTargetToButton(focus, false, this.glass.targetMorph);
+            this.renderFrame();
+            this.wake();
           }
         });
         ro.observe(container);
@@ -1434,12 +1442,13 @@
         this.rafId = null;
       }
       this.canvas.style.display = 'none';
-      this.container.classList.remove('is-liquid-active');
+      this.container.classList.remove('is-liquid-active', 'is-liquid-away');
     }
 
     refreshRestingVisuals() {
       const wasActive = this.container.classList.contains('is-liquid-active');
-      if (wasActive) this.container.classList.remove('is-liquid-active');
+      const wasAway = this.container.classList.contains('is-liquid-away');
+      if (wasActive || wasAway) this.container.classList.remove('is-liquid-active', 'is-liquid-away');
 
       const trackColor = getEffectiveBgRgb(this.container);
       let restFill = [0.094, 0.094, 0.11, 1.0];
@@ -1448,19 +1457,29 @@
       let rawRadius = 999;
 
       if (this.indicator) {
+        const prevIndTrans = this.indicator.style.transition;
+        this.indicator.style.transition = 'none';
         const pCs = window.getComputedStyle(this.indicator);
         restFill = parseCssColor(pCs.backgroundColor);
         restBorderW = parseFloat(pCs.borderTopWidth) || 0;
         restBorder = restBorderW > 0 ? parseCssColor(pCs.borderTopColor) : [1, 1, 1, 0];
         rawRadius = parseFloat(pCs.borderTopLeftRadius) || 999;
+        this.indicator.style.transition = prevIndTrans;
       }
 
       const activeBtn = this.getActiveButton();
       const activeH = activeBtn ? activeBtn.getBoundingClientRect().height : 34;
       const restRadiusPx = Math.min(rawRadius, (activeH || 34) * 0.5);
-      const restActiveTextColor = activeBtn ? window.getComputedStyle(activeBtn).color : '#ffffff';
+      let restActiveTextColor = '#ffffff';
+      if (activeBtn) {
+        const prevBtnTrans = activeBtn.style.transition;
+        activeBtn.style.transition = 'none';
+        restActiveTextColor = window.getComputedStyle(activeBtn).color || '#ffffff';
+        activeBtn.style.transition = prevBtnTrans;
+      }
 
       if (wasActive) this.container.classList.add('is-liquid-active');
+      if (wasAway) this.container.classList.add('is-liquid-away');
 
       const focusBtn = this.hoveredBtn || activeBtn;
       const glassTint = this.spec.getTint
@@ -1852,8 +1871,28 @@
       return Math.abs(1.0 - g.morph) < 0.002 && posErr < 0.06 && velMag < 0.15 && scaleErr < 0.0008 && stretchErr < 0.0008 && tintErr < 0.004;
     }
 
+    syncAwayState() {
+      const active = this.activeBtn || this.getActiveButton();
+      if (!active || !this.container.classList.contains('is-liquid-active')) {
+        this.container.classList.remove('is-liquid-away');
+        return;
+      }
+      const cRect = this.container.getBoundingClientRect();
+      const aRect = active.getBoundingClientRect();
+      if (cRect.width === 0 || aRect.width === 0) {
+        this.container.classList.remove('is-liquid-away');
+        return;
+      }
+      const { sx } = this.getScaleFactors(cRect);
+      const cl = this.container.clientLeft || 0;
+      const activeCx = (aRect.left - cRect.left) / sx - cl + (aRect.width / sx) * 0.5 + BLEED_X;
+      const isAway = Math.abs(this.glass.x - activeCx) > 8 || Boolean(this.hoveredBtn && this.hoveredBtn !== active);
+      this.container.classList.toggle('is-liquid-away', isAway);
+    }
+
     renderFrame() {
       if (this.width === 0 || this.height === 0) return;
+      this.syncAwayState();
       if (this.bgDirty) {
         this.renderTrackBgTexture();
       }
@@ -1913,7 +1952,7 @@
           this.glass.morph = 0;
           this.glass.morphVel = 0;
           this.canvas.style.display = 'none';
-          this.container.classList.remove('is-liquid-active');
+          this.container.classList.remove('is-liquid-active', 'is-liquid-away');
           return;
         }
 

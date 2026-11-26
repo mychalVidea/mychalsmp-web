@@ -5210,7 +5210,7 @@ button:active,
   font-weight: 600;
   color: #94a3b8;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 140ms cubic-bezier(0.16, 1, 0.3, 1), transform 100ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .rules-filter-btn:hover {
@@ -8949,7 +8949,7 @@ select:focus {
   align-items: center;
   gap: 7px;
   white-space: nowrap;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 140ms cubic-bezier(0.16, 1, 0.3, 1), transform 100ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bug-cat-chip:hover {
@@ -10933,7 +10933,7 @@ body {
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 140ms cubic-bezier(0.16, 1, 0.3, 1), transform 100ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .stats-metric-btn:active {
@@ -17734,7 +17734,7 @@ body {
     height 220ms var(--ease-spring),
     background-color 220ms var(--ease-spring),
     box-shadow 220ms var(--ease-spring),
-    opacity 160ms var(--ease-spring);
+    opacity 0ms;
 }
 
 .rules-filter-indicator.is-banned,
@@ -17845,10 +17845,7 @@ body {
   .stats-metric-indicator
 ) {
   opacity: 0 !important;
-  transition: transform 220ms var(--ease-spring),
-    width 220ms var(--ease-spring),
-    height 220ms var(--ease-spring),
-    opacity 0ms !important;
+  transition: none !important;
 }
 
 :is(
@@ -17895,12 +17892,27 @@ body {
   .rules-filter-bar,
   .bug-category-chips,
   .stats-metric-selector
+).is-liquid-active > button {
+  transition: none !important;
+}
+
+:is(
+  .os-selector-nav,
+  .smp-preview-modes,
+  .media-preview-toggle-wrap,
+  .stats-timeframe-selector,
+  .legal-nav-switch,
+  .rules-filter-bar,
+  .bug-category-chips,
+  .stats-metric-selector
 ).is-liquid-active > button:active {
   transform: none !important;
 }
 
-.stats-timeframe-selector.is-liquid-active .timeframe-btn.active {
+.stats-timeframe-selector.is-liquid-away .timeframe-btn.active,
+.stats-metric-selector.is-liquid-away .stats-metric-btn.active {
   color: #ffffff !important;
+  transition: none !important;
 }
 
 @media (max-width: 1120px) {

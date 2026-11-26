@@ -1487,7 +1487,7 @@ function initMicroInteractions() {
     const target = e.target.closest(
       'button, .btn, .nav-link, .rules-filter-btn, .bug-cat-chip, .smp-mode-btn, .gm-card-cmd-chip, .bottom-nav-item, .join-pill, .rules-banner-banned-btn'
     );
-    if (!target || target.disabled || target.classList.contains('copied') || target.classList.contains('is-copied')) return;
+    if (!target || target.disabled || target.classList.contains('copied') || target.classList.contains('is-copied') || target.closest('.has-liquid-switcher')) return;
 
     if (typeof target.animate === 'function') {
       target.animate([

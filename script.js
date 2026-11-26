@@ -210,6 +210,42 @@ function showInlineFeedback(anchorEl, message, type = 'error', autoHideMs = 4500
   }
 }
 
+function positionSegmentedPill(container, pill, btn, opts = {}) {
+  if (!container || !pill || !btn) return false;
+  const cRect = container.getBoundingClientRect();
+  const bRect = btn.getBoundingClientRect();
+  if (cRect.width === 0 || bRect.width === 0) return false;
+
+  // Zrušíme případné dočasné měřítko rodičovské animace (tabPanelReveal scale), aby pilulka vždy přesně seděla
+  const scaleX = container.offsetWidth > 0 ? (cRect.width / container.offsetWidth) : 1;
+  const scaleY = container.offsetHeight > 0 ? (cRect.height / container.offsetHeight) : 1;
+  const left = (bRect.left - cRect.left) / scaleX - (container.clientLeft || 0);
+  const top = (bRect.top - cRect.top) / scaleY - (container.clientTop || 0);
+  const width = bRect.width / scaleX;
+  const height = bRect.height / scaleY;
+
+  const firstPlace = !pill.dataset.pillPlaced;
+  if (firstPlace) {
+    pill.style.transition = 'none';
+  }
+  if (opts.matchRadius) {
+    pill.style.borderRadius = window.getComputedStyle(btn).borderTopLeftRadius;
+  }
+  pill.style.width = `${width}px`;
+  if (opts.vertical) {
+    pill.style.height = `${height}px`;
+    pill.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+  } else {
+    pill.style.transform = `translate3d(${left}px, 0, 0)`;
+  }
+  if (firstPlace) {
+    pill.dataset.pillPlaced = '1';
+    pill.offsetHeight;
+    pill.style.transition = '';
+  }
+  return true;
+}
+
 function updateMainNavPill(targetBtn) {
   const container = document.querySelector('.nav-links');
   const pill = document.getElementById('nav-links-pill') || document.getElementById('nav-active-pill');
@@ -304,9 +340,14 @@ function executeTabSwitch(name, updateUrl = true) {
     }
   }
 
+  if (typeof updateAllSegmentedPills === 'function') updateAllSegmentedPills();
   setTimeout(() => {
     if (typeof updateAllSegmentedPills === 'function') updateAllSegmentedPills();
+    if (window.__switcherLiquidGlass) window.__switcherLiquidGlass.resetAllHidden();
   }, 40);
+  setTimeout(() => {
+    if (typeof updateAllSegmentedPills === 'function') updateAllSegmentedPills();
+  }, 280);
 
   if (updateUrl && window.location.protocol !== 'file:') {
     let urlPath = '/' + name;
@@ -478,13 +519,8 @@ function updateLauncherOsPill(targetBtn) {
   const container = document.querySelector('.os-selector-nav');
   const pill = document.getElementById('os-nav-pill');
   const btn = targetBtn || container?.querySelector('.os-nav-tab.active');
-  if (!container || !pill || !btn) return;
-  const cRect = container.getBoundingClientRect();
-  const bRect = btn.getBoundingClientRect();
-  if (bRect.width === 0) return;
-  const left = bRect.left - cRect.left;
-  pill.style.width = `${bRect.width}px`;
-  pill.style.transform = `translate3d(${left}px, 0, 0)`;
+  if (!positionSegmentedPill(container, pill, btn)) return;
+  if (window.__switcherLiquidGlass) window.__switcherLiquidGlass.syncContainer(container);
 }
 
 // ---- DYNAMIC LAUNCHER RELEASES & DOWNLOADS TRACKER ----
@@ -1081,13 +1117,8 @@ function updateSmpModePill(targetBtn) {
   const container = document.querySelector('.smp-preview-modes');
   const pill = document.getElementById('smp-mode-pill');
   const btn = targetBtn || container?.querySelector('.smp-mode-btn.active') || document.getElementById('smp-mode-chat-btn');
-  if (!container || !pill || !btn) return;
-  const cRect = container.getBoundingClientRect();
-  const bRect = btn.getBoundingClientRect();
-  if (bRect.width === 0) return;
-  const left = bRect.left - cRect.left;
-  pill.style.width = `${bRect.width}px`;
-  pill.style.transform = `translate3d(${left}px, 0, 0)`;
+  if (!positionSegmentedPill(container, pill, btn)) return;
+  if (window.__switcherLiquidGlass) window.__switcherLiquidGlass.syncContainer(container);
 }
 
 // Live /cc color selector in the preview
@@ -2219,13 +2250,8 @@ function updateMediaTogglePill(targetBtn) {
   const container = document.querySelector('.media-preview-toggle-wrap');
   const pill = document.getElementById('media-toggle-pill');
   const btn = targetBtn || container?.querySelector('.media-preview-toggle-btn.active');
-  if (!container || !pill || !btn) return;
-  const cRect = container.getBoundingClientRect();
-  const bRect = btn.getBoundingClientRect();
-  if (bRect.width === 0) return;
-  const left = bRect.left - cRect.left;
-  pill.style.width = `${bRect.width}px`;
-  pill.style.transform = `translate3d(${left}px, 0, 0)`;
+  if (!positionSegmentedPill(container, pill, btn)) return;
+  if (window.__switcherLiquidGlass) window.__switcherLiquidGlass.syncContainer(container);
 }
 
 // ---- SUBMIT MEDIA APPLICATION ----
@@ -2607,14 +2633,11 @@ function updateBugCatPill(targetBtn) {
   const pill = document.getElementById('bug-cat-pill');
   const btn = targetBtn || container?.querySelector('.bug-cat-chip.active');
   if (!container || !pill || !btn) return;
-  const cRect = container.getBoundingClientRect();
-  const bRect = btn.getBoundingClientRect();
-  if (bRect.width === 0) return;
-  const left = bRect.left - cRect.left;
-  const top = bRect.top - cRect.top;
-  pill.style.width = `${bRect.width}px`;
-  pill.style.height = `${bRect.height}px`;
-  pill.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+  container.classList.add('has-indicator');
+  pill.classList.add('is-ready');
+  pill.classList.toggle('is-unban', btn.classList.contains('chip-unban'));
+  if (!positionSegmentedPill(container, pill, btn, { vertical: true, matchRadius: true })) return;
+  if (window.__switcherLiquidGlass) window.__switcherLiquidGlass.syncContainer(container);
 }
 
 function selectBugCategory(cat) {
@@ -3624,14 +3647,11 @@ function updateStatsMetricPill(targetBtn) {
   const pill = document.getElementById('stats-metric-pill');
   const btn = targetBtn || container?.querySelector('.stats-metric-btn.active') || document.getElementById('metric-btn-' + currentStatsMetric);
   if (!container || !pill || !btn) return;
-  const cRect = container.getBoundingClientRect();
-  const bRect = btn.getBoundingClientRect();
-  if (bRect.width === 0) return;
-  const left = bRect.left - cRect.left;
-  const top = bRect.top - cRect.top;
-  pill.style.width = `${bRect.width}px`;
-  pill.style.height = `${bRect.height}px`;
-  pill.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+  container.classList.add('has-indicator');
+  pill.classList.add('is-ready');
+  pill.dataset.metric = (btn.id || '').replace('metric-btn-', '') || currentStatsMetric || 'players';
+  if (!positionSegmentedPill(container, pill, btn, { vertical: true, matchRadius: true })) return;
+  if (window.__switcherLiquidGlass) window.__switcherLiquidGlass.syncContainer(container);
 }
 
 function initStatsModule() {
@@ -3754,19 +3774,14 @@ function updateTimeframePill(targetBtn) {
   const container = document.getElementById('stats-timeframe-selector');
   const pill = document.getElementById('timeframe-pill');
   const btn = targetBtn || container?.querySelector('.timeframe-btn.active') || document.getElementById('timeframe-btn-' + currentStatsTimeframe);
-  if (!container || !pill || !btn) return;
-  const cRect = container.getBoundingClientRect();
-  const bRect = btn.getBoundingClientRect();
-  if (bRect.width === 0) return;
-  const left = bRect.left - cRect.left;
-  pill.style.width = `${bRect.width}px`;
-  pill.style.transform = `translate3d(${left}px, 0, 0)`;
+  if (!positionSegmentedPill(container, pill, btn)) return;
 
   const metricObj = statsData[currentStatsMetric] || statsData.players;
   if (metricObj) {
     pill.style.backgroundColor = metricObj.color;
     pill.style.boxShadow = 'inset 0 1px 0 0 rgba(255, 255, 255, 0.24), 0 4px 12px rgba(0, 0, 0, 0.35)';
   }
+  if (window.__switcherLiquidGlass) window.__switcherLiquidGlass.syncContainer(container);
 }
 
 function renderStatsChart() {
@@ -4431,14 +4446,11 @@ function updateRulesFilterPill(targetBtn) {
   const pill = document.getElementById('rules-filter-pill');
   const btn = targetBtn || container?.querySelector('.rules-filter-btn.active');
   if (!container || !pill || !btn) return;
-  const cRect = container.getBoundingClientRect();
-  const bRect = btn.getBoundingClientRect();
-  if (bRect.width === 0) return;
-  const left = bRect.left - cRect.left;
-  const top = bRect.top - cRect.top;
-  pill.style.width = `${bRect.width}px`;
-  pill.style.height = `${bRect.height}px`;
-  pill.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+  container.classList.add('has-indicator');
+  pill.classList.add('is-ready');
+  pill.classList.toggle('is-banned', btn.classList.contains('rules-filter-btn--banned'));
+  if (!positionSegmentedPill(container, pill, btn, { vertical: true, matchRadius: true })) return;
+  if (window.__switcherLiquidGlass) window.__switcherLiquidGlass.syncContainer(container);
 }
 
 function filterRules(category, btnElement) {
@@ -4729,24 +4741,24 @@ const RULES_QUIZ_SCENARIOS = [
   },
   {
     id: 'xray-texture',
-    tag: 'Fair-Play & Anticheat',
-    question: 'Kamarád tvrdí: „Když si dáš průhledný X-Ray texture pack místo hack klienta, anticheat to nepozná, protože textury jsou čistě na straně klienta.“ Má pravdu?',
+    tag: 'Fair-Play',
+    question: 'Kamarád tvrdí: „Když si dáš průhledný X-Ray texture pack místo hack klienta, je to v pohodě, protože jde jen o vzhled bloků u tebe v počítači.“ Má pravdu?',
     options: [
       {
-        text: 'Má pravdu, anticheat zachytává pouze injektované modifikace klienta a odesílané síťové pakety, samotné textury server nekontroluje.',
+        text: 'Má pravdu, změna vzhledu textur je čistě vizuální úprava klienta a pravidla ji neřeší.',
         isCorrect: false
       },
       {
-        text: 'Nemá pravdu, ochranný systém serveru spolehlivě odhalí nepřirozené chování při těžbě. Trestem je ban a zabavení surovin.',
+        text: 'Nemá pravdu, X-Ray texture packy jsou na serveru zakázané stejně jako hack klienti a vedou k banu a zabavení surovin.',
         isCorrect: true
       },
       {
-        text: 'Textury jsou tolerovány na těžbu základních surovin jako je uhlí a železo, zakázané jsou pouze při cíleném vyhledávání netheritu.',
+        text: 'Textury jsou tolerovány na běžné suroviny jako je uhlí a železo, zakázané jsou pouze na hledání netheritu.',
         isCorrect: false
       }
     ],
-    explanation: 'Přesně tak. Rentgenový texture pack je postaven na roveň cheatům a vede k dočasnému banu a zabavení surovin.',
-    wrongFeedback: 'X-Ray textury jsou posuzovány jako plnohodnotný cheat a vedou k dočasnému banu a zabavení surovin.'
+    explanation: 'Správně. X-Ray texture packy jsou postaveny na roveň cheatům a vedou k banu i zabavení surovin.',
+    wrongFeedback: 'X-Ray textury jsou posuzovány stejně jako cheaty a vedou k banu a zabavení surovin.'
   },
   {
     id: 'lag-machine',
@@ -4758,7 +4770,7 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       },
       {
-        text: 'Stroj okamžitě zastavím a upravím nebo zmenším. Vědomé i nedbalostní přetěžování serveru a shazování TPS je přísně zakázáno pravidly.',
+        text: 'Stroj okamžitě zastavím a upravím nebo zmenším. Vědomé i nedbalostní přetěžování serveru a shazování TPS je zakázáno pravidly.',
         isCorrect: true
       },
       {
@@ -4779,7 +4791,7 @@ const RULES_QUIZ_SCENARIOS = [
         isCorrect: false
       },
       {
-        text: 'V žádném případě. Jakékoliv obcházení trestu přes alt účty, cedulky či kovadliny je přísně zakázáno a trestá se dlouhodobým banem.',
+        text: 'V žádném případě. Jakékoliv obcházení trestu přes alt účty, cedulky či kovadliny je zakázáno a trestá se dlouhodobým banem.',
         isCorrect: true
       },
       {

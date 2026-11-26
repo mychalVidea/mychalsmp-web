@@ -17,7 +17,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261124_liquid_nav_v9" />
+  <link rel="stylesheet" href="style.css?v=20261126_switcher_glass_v4" />
 </head>
 
 <body>
@@ -329,8 +329,8 @@
       <div class="container">
         <div class="section-title-box text-center">
           <h2 class="section-heading">Herní světy & <span class="accent-blue">Projekty</span></h2>
-          <p class="section-subheading">Připoj se do akčního SMP světa na <strong>mychalsmp.xyz</strong>, vyzkoušej
-            drsné přežití v tundře <strong>Permafrost</strong>, nebo si stáhni kompletní archiv původní mapy.</p>
+          <p class="section-subheading">Připoj se na SMP svět na <strong>mychalsmp.xyz</strong>, vyzkoušej
+            zimní režim <strong>Permafrost</strong> nebo si prohlédni památník původní mapy.</p>
         </div>
 
         <div class="gamemodes-grid">
@@ -579,8 +579,8 @@
         <div class="section-title-box text-center">
           <h2 class="section-heading">Vlastní <span class="accent-blue">pluginy na míru</span></h2>
           <p class="section-subheading">
-            Místo desítek cizích pluginů vyvíjíme vlastní jádro na míru. Server běží na jádru LeafMC s formátem
-            Linear V2 pro nižší nároky na disk a stabilních 20 TPS.
+            Místo cizích pluginů vyvíjíme vlastní serverové jádro. Server běží na forku LeafMC s regionovým formátem
+            Linear V2 pro úspornější ukládání mapy na disk.
           </p>
         </div>
 
@@ -588,7 +588,7 @@
         <div class="tech-specs-bar">
           <div class="tech-spec-item">
             <img src="imgs/icons/leaf.svg" alt="LeafMC" class="tech-spec-icon-img" width="18" height="18" />
-            <span>LeafMC · 20 TPS</span>
+            <span>LeafMC · Linear V2</span>
           </div>
           <div class="tech-spec-item">
             <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -672,7 +672,7 @@
               <span class="tech-plugin-tag">Správa území</span>
             </div>
             <p class="tech-plugin-desc">
-              Rychlá perzistence a správa chunků pro formát Linear V2 bez lag spiků při ukládání světa.
+              Ochrana chunků, správa oblastí a ukládání dat ve formátu Linear V2.
             </p>
           </div>
 
@@ -688,7 +688,7 @@
               <span class="tech-plugin-tag">Bojový systém</span>
             </div>
             <p class="tech-plugin-desc">
-              Bojový systém pro arény, duely a PvP s přímou odezvou.
+              Správa arén, front pro duely a vlastních kitů napříč servery.
             </p>
           </div>
 
@@ -1105,7 +1105,7 @@
             </svg>
           </div>
           <div class="rules-pillar-info">
-            <span class="rules-pillar-title">100% Fair-Play</span>
+            <span class="rules-pillar-title">Fair-Play</span>
             <span class="rules-pillar-desc">Nulová tolerance pro cheaty, hacky a X-Ray modifikace.</span>
           </div>
         </div>
@@ -1162,7 +1162,7 @@
                   </svg>
                 </div>
                 <div class="rules-compare-item-body">
-                  <strong>Optimalizační a grafické mody</strong>
+                  <strong>Výkonnostní a grafické mody</strong>
                   <p>Sodium, Iris Shaders, Lithium, FerriteCore i OptiFine pro plynulý běh hry.</p>
                 </div>
               </li>
@@ -1202,7 +1202,7 @@
                 </div>
                 <div class="rules-compare-item-body">
                   <strong>Automatické farmy a stavitelské projekty</strong>
-                  <p>Stavěj cokoliv tě baví – stačí, když stroje nezpůsobují lag celému serveru.</p>
+                  <p>Stavět můžeš libovolně, pokud stroje nesnižují výkon serveru.</p>
                 </div>
               </li>
 
@@ -1457,14 +1457,13 @@
             <span class="rule-category-chip">Fair-Play</span>
           </div>
           <h3 class="rule-title">Zákaz cheatů, minimap a nepovolených modů</h3>
-          <p class="rule-summary">Jakýkoliv cheat, hack klient, minimapa či makro dávající neférovou výhodu je přísně
-            zakázáno.</p>
+          <p class="rule-summary">Cheaty, hack klienti, minimapy a makra poskytující herní výhodu jsou zakázány.</p>
           <div class="rule-details">
             <ul class="rule-bullet-list">
               <li>Zakázány jsou hack klienti (Meteor, Wurst apod.), Killaura, Fly, Speed, Jesus, Reach, Auto-totem a
                 Baritone.</li>
               <li><strong>Zákaz všech minimap:</strong> Xaero's Minimap, JourneyMap i veškeré modifikace zobrazující
-                minimapu či vestavěné waypointy jsou přísně zakázány.</li>
+                minimapu či vestavěné waypointy jsou zakázány.</li>
               <li>Cheaty ani minimapy nesmějí být ve složce s mody ani v paměti klienta, i když jsou momentálně vypnuté.
               </li>
               <li><strong>Spoluúčast se trestá:</strong> Pomoc cheaterům, krytí viníků a přechovávání nelegálních věcí
@@ -1488,7 +1487,7 @@
               <li>X-Ray modifikace i průhledné texture packy pro odhalování diamantů, netheritu či jiných rud.</li>
               <li>Cave findery, vyhledávače dungeonů a vyhledávače pevných struktur.</li>
               <li>Entity ESP, tracery a neférové zaměřování hráčů přes stěny.</li>
-              <li>Bezpečnostní systém chrání integritu hry a férovou těžbu.</li>
+              <li>Ochranný systém serveru hlídá dodržování pravidel férové hry.</li>
             </ul>
           </div>
         </article>
@@ -1806,28 +1805,28 @@
           </svg>
         </div>
         <h3 class="modtest-cert-title" id="modtest-cert-title">Oficiální vyhodnocení způsobilosti</h3>
-        <div class="modtest-cert-rank" id="modtest-cert-rank">PROVĚŘENÝ MODERÁTOR S NERVY Z OCELI</div>
+        <div class="modtest-cert-rank" id="modtest-cert-rank">VYHODNOCENÍ PO DOKONČENÍ TESTU</div>
         <p class="modtest-subtitle" id="modtest-cert-desc" style="max-width: 620px;">
-          Tvé psychické hodnocení a technické znalosti byly zaznamenány.
+          Výsledek se zobrazí po odeslání všech odpovědí.
         </p>
 
         <div class="modtest-cert-stats-grid">
           <div class="modtest-stat-box">
-            <div class="modtest-stat-val" id="modtest-stat-score">16 / 16</div>
+            <div class="modtest-stat-val" id="modtest-stat-score">— / —</div>
             <div class="modtest-stat-lbl">Úspěšnost</div>
           </div>
           <div class="modtest-stat-box">
-            <div class="modtest-stat-val" id="modtest-stat-stress">100 %</div>
+            <div class="modtest-stat-val" id="modtest-stat-stress">— %</div>
             <div class="modtest-stat-lbl">Psychická odolnost</div>
           </div>
           <div class="modtest-stat-box">
-            <div class="modtest-stat-val" id="modtest-stat-status" style="color: #21DE00;">SCHVÁLEN</div>
+            <div class="modtest-stat-val" id="modtest-stat-status">ČEKÁ</div>
             <div class="modtest-stat-lbl">Verdikt</div>
           </div>
         </div>
 
         <div class="modtest-copy-box">
-          <span id="modtest-cert-code">MYCHAL-MOD-SEC-VERIFIED-...</span>
+          <span id="modtest-cert-code">—</span>
           <button type="button" class="btn-copy-code" onclick="copyModTestResult()"
             style="background: rgba(255,255,255,0.1); border:none; color:#fff; padding:6px 12px; border-radius:6px; cursor:pointer;">
             Kopírovat kód
@@ -2030,7 +2029,7 @@
           onclick="selectSmpTierAndScroll('smp_ppp')">
           <div class="smp-pcard-head">
             <h3 class="smp-pcard-title smp-shimmer-text--ppp">SMP+++</h3>
-            <p class="smp-pcard-desc">Kompletní balík se všemi výhodami a maximálním limitem.</p>
+            <p class="smp-pcard-desc">Nejvyšší dostupné limity domovů, aukcí i dohledu chunků a všechny funkce.</p>
             <div class="smp-pcard-price-row">
               <span class="smp-pcard-price smp-shimmer-price smp-shimmer-price--ppp">3.99</span>
               <span class="smp-pcard-currency">€</span>
@@ -2709,7 +2708,7 @@
                     </svg>
                     <span>Kapacita týmu & /team home</span>
                   </div>
-                  <div class="feat-desc">Maximální počet členů ve tvém týmu a okamžitý přesun na základnu</div>
+                  <div class="feat-desc">Rozšířený limit členů týmu a přesun na týmovou základnu</div>
                 </td>
                 <td class="col-free">8–12 členů <span class="text-sub">3s čekání</span></td>
                 <td class="col-tier col-media">8–12 členů <span class="text-sub">3s čekání</span></td>
@@ -2811,160 +2810,6 @@
         </div>
       </div>
 
-      <!-- ZÁKLADNÍ VÝHODY SPOLEČNÉ PRO VŠECHNY ČLENY -->
-      <div class="smp-common-benefits-section">
-        <div class="smp-section-header text-center">
-          <h2 class="smp-details-title">Co získáš v každém <span>VIP balíčku</span></h2>
-        </div>
-
-        <div class="smp-common-grid">
-          <!-- 1. Okamžitý teleport na domov -->
-          <div class="smp-common-card">
-            <div class="smp-common-icon-wrap">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-              </svg>
-            </div>
-            <h4>Okamžitý teleport na domov (/home)</h4>
-            <p>Žádný odpočet ani čekání bez pohybu. Na svůj uložený domov se přeneseš okamžitě (0s).</p>
-          </div>
-
-          <!-- 2. 2x větší Ender Truhla -->
-          <div class="smp-common-card">
-            <div class="smp-common-icon-wrap">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                <path d="M3 10h18"></path>
-                <circle cx="12" cy="14" r="2"></circle>
-              </svg>
-            </div>
-            <h4>2x větší Ender Truhla (54 slotů)</h4>
-            <p>Plných 6 řádků kapacity (dvojtruhla). Při případném vypršení členství se věci přesunou do tvého osobního
-              trezoru (/trezor), takže o nic nepřijdeš.</p>
-          </div>
-
-          <!-- 3. Více nabídek v aukci (/ah) -->
-          <div class="smp-common-card">
-            <div class="smp-common-icon-wrap">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
-                <path d="M3 6h18"></path>
-                <path d="M16 10a4 4 0 0 1-8 0"></path>
-              </svg>
-            </div>
-            <h4>Více nabídek v aukci (/ah)</h4>
-            <p>Rozšířená kapacita nabídek v aukční síni: 10 slotů pro SMP+ a SMP++, až 15 slotů pro SMP+++ (běžný hráč
-              má limit 5 nabídek).</p>
-          </div>
-
-          <!-- 4. Poptávkové zakázky 4 sloty -->
-          <div class="smp-common-card">
-            <div class="smp-common-icon-wrap">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                <path d="M9 14l2 2 4-4"></path>
-              </svg>
-            </div>
-            <h4>4 poptávkové zakázky (/orders)</h4>
-            <p>Možnost vypsat až 4 nákupní objednávky naráz (běžný limit je 2) včetně automatického doplňování surovin
-              přímo z tvé Ender truhly.</p>
-          </div>
-
-          <!-- 5. 24 barev jména (/cc) -->
-          <div class="smp-common-card">
-            <div class="smp-common-icon-wrap">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="4"></circle>
-              </svg>
-            </div>
-            <h4>24 barev jména (/cc)</h4>
-            <p>Výběr z 24 barevných odstínů pro tvůj nick v chatu, tablistu i nad postavou v Paper Dialogu. U
-              SMP++ a SMP+++ navíc možnost složit dvoubarevný gradient z libovolných 2 barev.</p>
-          </div>
-
-          <!-- 6. 16 barev postelí a vlastní ikony -->
-          <div class="smp-common-card">
-            <div class="smp-common-icon-wrap">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 4v16"></path>
-                <path d="M2 8h18a2 2 0 0 1 2 2v10"></path>
-                <path d="M2 17h20"></path>
-                <path d="M6 8v9"></path>
-              </svg>
-            </div>
-            <h4>16 barev postelí a vlastní ikony (/homes)</h4>
-            <p>Plné přizpůsobení základen v menu domovů – výběr ze 16 barev postele. U SMP+++ navíc možnost nastavit si jako ikonu zcela libovolný herní předmět.</p>
-          </div>
-
-          <!-- 7. Větší kapacita týmu -->
-          <div class="smp-common-card">
-            <div class="smp-common-icon-wrap">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>
-            </div>
-            <h4>Až 18 členů v týmu (/team)</h4>
-            <p>Rozšířená kapacita týmu až na 18 hráčů (pro hráče bez ranku 8–12) a okamžitý teleport na týmovou základnu
-              (/team home).</p>
-          </div>
-
-          <!-- 8. Rychlý prodej ze spawnerů -->
-          <div class="smp-common-card">
-            <div class="smp-common-icon-wrap">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="1" x2="12" y2="23"></line>
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-              </svg>
-            </div>
-            <h4>Rychlý prodej ze spawnerů (SMP++ a vyšší)</h4>
-            <p>Od úrovně SMP++ můžeš pomocí Shift + kliknutí v menu spawneru okamžitě prodat veškerý nahromaděný
-              prodejný loot naráz.</p>
-          </div>
-
-          <!-- 9. Volný pohyb při odpočtu -->
-          <div class="smp-common-card">
-            <div class="smp-common-icon-wrap">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="m19 12-7-7-7 7"></path>
-                <path d="M12 19V5"></path>
-              </svg>
-            </div>
-            <h4>Volný pohyb při odpočtu teleportu</h4>
-            <p>Při čekání na veřejné warpy nebo /tpa se odpočet nezruší chůzí ani skákáním, pokud se v blízkosti
-              nepohybuje cizí hráč.</p>
-          </div>
-
-          <!-- 10. Discord VIP role a /dlink -->
-          <div class="smp-common-card">
-            <div class="smp-common-icon-wrap">
-              <svg class="ui-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-              </svg>
-            </div>
-            <h4>VIP role na Discordu & /dlink</h4>
-            <p>Získáš odpovídající roli (SMP+, SMP++, SMP+++) a barvu na našem Discordu spárováním účtu přes
-              <code>/dlink</code>. Propojený účet je také povinný pro správu a zrušení členství.
-            </p>
-          </div>
-        </div>
-      </div>
-
       <!-- Server Ranks & In-Game Formatting Showcase -->
       <div class="smp-ranks-showcase">
         <div class="smp-section-header text-center">
@@ -3009,8 +2854,7 @@
                 class="rank-p-name text-cyan">Hrac</span><span class="smp-chat-colon">:</span> <span
                 class="smp-chat-text">Ahoj, mám aktivní SMP+</span>
             </div>
-            <div class="rank-card-foot">Modrý symbol <code>+</code> před nickem, 14 domovů, okamžitý /home, 54 slotů /ec, 10 nabídek v /ah, 14 chunků
-              dohled a 24 barev <code>/cc</code>.</div>
+            <div class="rank-card-foot">Modrý symbol <code>+</code> před nickem v chatu, v Tabu i nad hlavou.</div>
           </div>
 
           <!-- Rank: SMP++ -->
@@ -3028,8 +2872,7 @@
                 class="rank-p-name text-cyan">Hrac</span><span class="smp-chat-colon">:</span> <span
                 class="smp-chat-text">Ahoj, mám aktivní SMP++</span>
             </div>
-            <div class="rank-card-foot">Symbol <code>++</code> s volbou barvy, 21 domovů, dvoubarevný gradient, 10 nabídek v /ah, rychlý
-              Shift výkup a 15 chunků dohled.</div>
+            <div class="rank-card-foot">Dvojitý symbol <code>++</code> s volitelnou barvou a gradientem nicku.</div>
           </div>
 
           <!-- Rank: SMP+++ -->
@@ -3047,8 +2890,7 @@
                 class="rank-p-name text-gold">Hrac</span><span class="smp-chat-colon">:</span> <span
                 class="smp-chat-text">Mám kompletní balík SMP+++</span>
             </div>
-            <div class="rank-card-foot">Symbol <code>+++</code>, 28 domovů, okamžitý /rtp, 15 nabídek v /ah, vlastní ikona v /homes, předvádění [i],
-              anonymní /nick a 16 chunků dohled.</div>
+            <div class="rank-card-foot">Trojitý symbol <code>+++</code>, vlastní ikona a volitelné skrytí nicku přes <code>/nick</code>.</div>
           </div>
 
           <!-- Rank: Media -->
@@ -3068,8 +2910,7 @@
                 class="rank-p-name">Tvurce</span><span class="smp-chat-colon">:</span> <span
                 class="smp-chat-text">Zrovna streamuju na YouTube</span>
             </div>
-            <div class="rank-card-foot">Fialový symbol kamery před jménem, anonymní <code>/nick</code>, 10 nabídek v /ah,
-              14 chunků dohled a Replay Mod výjimka.</div>
+            <div class="rank-card-foot">Fialový symbol kamery před jménem pro tvůrce videí a streamů.</div>
           </div>
 
           <!-- Rank: Media+ -->
@@ -3088,7 +2929,7 @@
                 class="smp-preview-plus">+</span><span class="rank-p-name text-gold">Tvurce</span><span
                 class="smp-chat-colon">:</span> <span class="smp-chat-text">Dnes točíme další projekt</span>
             </div>
-            <div class="rank-card-foot">Kombinovaný prefix kamery se symbolem <code>+</code>, okamžitý /home, 14–28 domovů a všechny výhody obou rolí.</div>
+            <div class="rank-card-foot">Kombinovaný prefix kamery se symbolem <code>+</code> podle aktivní úrovně SMP+.</div>
           </div>
 
           <!-- Rank: Moderátor / Admin -->
@@ -3159,7 +3000,7 @@
               <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
             </svg>
           </div>
-          <h3>100% Čistá a férová hra</h3>
+          <h3>Férová hra bez herní výhody</h3>
           <p>Žádný Pay-to-Win. Žádný fly mód, žádná nesmrtelnost ani zbraně s cheatovanými enchanty. Všechny výhody
             slouží čistě pro pohodlí, časovou úsporu a estetiku.</p>
         </div>
@@ -4777,10 +4618,10 @@
               <li>
                 <strong>Lokální ochrana chatu ve hře a asistenční AI na Discordu (Google Gemini & Groq – soulad s EU AI
                   Act):</strong>
-                K ochraně hráčů a komunity přistupujeme s maximálním respektem k soukromí a technické transparentnosti:
-                <br>• <strong>Herní chat Minecraftu (100% lokální zpracování):</strong> Běžná textová komunikace v
+                K ochraně hráčů a komunity přistupujeme s důrazem na soukromí a transparentní zpracování dat:
+                <br>• <strong>Herní chat Minecraftu (výhradně lokální zpracování):</strong> Běžná textová komunikace v
                 Minecraftu a nápisy na cedulkách jsou kontrolovány <strong>výhradně lokálně na našem serveru</strong>
-                (vlastní bezpečnostní modul Warden s fonetickou, leetspeak a homoglyfní normalizací). <strong>Herní chat
+                (vlastní bezpečnostní modul Warden). <strong>Herní chat
                   z Minecraftu se nikdy neposílá do žádných externích cloudových AI služeb ani třetím stranám.</strong>
                 <br>• <strong>Využití asistenční AI na Discordu:</strong> Pokročilé jazykové modely (Google Gemini API a
                 Groq API) jsou integrovány výhradně v rámci Discord bota pro specifické vyžádané funkce: konverzace s
@@ -5046,7 +4887,7 @@
                 atd.) v hardwarově a uživatelsky svázaném trezoru <strong>AES-256-GCM</strong> (PBKDF2 100&nbsp;000
                 iterací z <code>/etc/machine-id</code>). Tokeny se nepředávají do UI rozhraní a nelze je rozšifrovat na
                 jiném počítači.</li>
-              <li><strong>Herní módy a optimalizace:</strong> Launcher stahuje oficiální balíčky módů a konfigurací
+              <li><strong>Herní módy a konfigurace:</strong> Launcher stahuje oficiální balíčky módů a nastavení
                 zabezpečeným HTTPS přenosem z oficiálních distribučních sítí (Modrinth / GitHub). Launcher nekontroluje
                 ani nečte žádné soubory mimo své vyhrazené datové
                 složky (<code>~/.mychalsmp</code>).</li>
@@ -5179,7 +5020,7 @@
 
             <div class="legal-callout">
               <span class="legal-callout-label">LIDSKOU ŘEČÍ</span>
-              Hraní na serveru je 100% zdarma a nezakládá žádný skrytý finanční závazek. Připojením vstupujete do našeho
+              Hraní na serveru je zdarma a nezakládá žádný finanční závazek. Připojením vstupujete do našeho
               světa
               a souhlasíte s dodržováním pravidel fair-play. Kdo cheatuje, má nepovolené modifikace aktivní v klientu,
               nebo kazí hru
@@ -5215,14 +5056,12 @@
 
             <p class="legal-text"><strong>Závazná herní pravidla platná pro všechny hráče:</strong></p>
             <ul class="legal-list">
-              <li><strong>Zákaz podvádění a nefér výhod:</strong> Je přísně zakázáno jakékoliv aktivní i pasivní
-                používání nepovolených herních modifikací a klientů (hack klienti, X-Ray modifikace či průhledové
-                balíčky, entitní radary, neautorizované minimapy zobrazující jeskyně či hráče, automatizovaní boti,
-                externí autoclickery a neférová makra). Zákaz se vztahuje i na situace, kdy jsou jednotlivé moduly v
-                klientu dočasně vypnuty, avšak klient do herního síťového spojení odesílá nelegitimní či modifikované
-                datové pakety. Bezpečnostní a anticheat systémy serveru (Warden / SMPAC) fungují na <strong>výhradně
-                  serverové úrovni (server-side analýza paketů a herní fyziky)</strong> – anticheat neinstaluje do
-                počítače hráče žádný sledovací software ani neprovádí prohledávání lokálních souborů na disku hráče.
+              <li><strong>Zákaz podvádění a nefér výhod:</strong> Je zakázáno používání nepovolených herních
+                modifikací a klientů (hack klienti, X-Ray modifikace či průhledové balíčky, entitní radary,
+                neautorizované minimapy zobrazující jeskyně či hráče, automatizovaní boti, externí autoclickery a
+                makra), a to i v případě, že jsou v klientu dočasně vypnuty. Bezpečnostní systémy serveru (Warden /
+                SMPAC) pracují <strong>výhradně na straně serveru</strong> – neinstalují do počítače hráče žádný
+                software ani neprohledávají lokální soubory na disku hráče.
               </li>
               <li><strong>Zákaz nevyžádané reklamy a propagace sociálních sítí:</strong> Běžným hráčům je v herním
                 chatu, soukromých zprávách i na Discordu zakázána jakákoliv propagace vlastních či cizích sociálních
@@ -5379,10 +5218,10 @@
               </li>
               <li>
                 <strong>Technické chyby pluginů a desynchronizace dat:</strong>
-                Vzhledem k povaze komplexního chodu Minecraft serveru s rozsáhlou sadou vlastních i externích pluginů
+                Vzhledem k provozu Minecraft serveru s více vlastními i externími pluginy
                 může ojediněle dojít k technické chybě pluginu, desynchronizaci dat nebo načtení staršího stavu
-                hráčských dat (rollback / data desync). Provozovatel a administrátorský tým vyvíjí maximální technické
-                úsilí pro minimalizaci těchto chyb a v případě prokazatelné ztráty se snaží hráči v herním světě vyjít
+                hráčských dat (rollback / data desync). Provozovatel chyby průběžně odstraňuje
+                a v případě prokazatelné ztráty se snaží hráči v herním světě vyjít
                 vstříc. Hráč však bere na vědomí, že tyto přechodné technické jevy nezakládají právní nárok na finanční
                 refundaci za zakoupené výhody.
               </li>
@@ -5549,10 +5388,9 @@
                 Microsoft.</li>
               <li><strong>Vyloučení záruk:</strong> Software je poskytován „tak, jak je“ (AS IS), bez jakýchkoliv
                 výslovných nebo předpokládaných záruk. Provozovatel neodpovídá za případné nekompatibility s konkrétním
-                hardwarem či konfigurací operačního systému uživatele, ačkoliv vyvíjí maximální úsilí pro stabilitu a
-                plynulý běh.</li>
-              <li><strong>Doporučená herní verze:</strong> Klient je primárně optimalizován a přednastaven pro verzi
-                Java Edition <strong>26.3</strong> s integrovanými moduly pro zvýšení výkonu, správu paměti a ochranu
+                hardwarem či konfigurací operačního systému uživatele, stabilitu však průběžně udržujeme.</li>
+              <li><strong>Doporučená herní verze:</strong> Klient je přednastaven pro verzi
+                Java Edition <strong>26.3</strong> s integrovanými moduly pro úsporu výkonu, správu paměti a ochranu
                 integrity hry.</li>
             </ul>
           </article>
@@ -5617,7 +5455,7 @@
             <div class="os-panel-header">
               <div class="os-panel-info">
                 <span class="os-target-title">Microsoft Windows 10 & 11 (64-bit)</span>
-                <span class="os-target-desc">Instalátor pro Windows s automatickým nastavením a optimalizací FPS.</span>
+                <span class="os-target-desc">Instalátor pro Windows s přednastavenou konfigurací klienta.</span>
               </div>
               <div class="os-actions-row">
                 <a id="btn-win-download"
@@ -5861,8 +5699,8 @@
                 <polyline points="12 6 12 12 16 14" />
               </svg>
             </div>
-            <h3 class="feature-card-title">Výkon JVM & Živý Tracker</h3>
-            <p class="feature-card-desc">Vyladěné parametry JVM a správa RAM pro stabilní FPS. Přímé připojení na
+            <h3 class="feature-card-title">Konfigurace JVM & Živý Tracker</h3>
+            <p class="feature-card-desc">Přednastavené parametry JVM a přidělování RAM paměti. Přímé připojení na
               <code>mychalsmp.xyz</code> s přehledem online hráčů.</p>
           </div>
         </div>
@@ -6097,8 +5935,9 @@
     </div>
   </div>
 
-  <script src="nav-liquid-glass.js?v=20261124_liquid_nav_v9"></script>
-  <script src="script.js?v=20261124_liquid_nav_v9"></script>
+  <script src="nav-liquid-glass.js?v=20261126_switcher_glass_v1"></script>
+  <script src="switcher-liquid-glass.js?v=20261126_switcher_glass_v11"></script>
+  <script src="script.js?v=20261126_switcher_glass_v5"></script>
 </body>
 
 </html>

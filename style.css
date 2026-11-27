@@ -18291,6 +18291,128 @@ body {
   }
 }
 
+/* =============================================
+   NAPADY WHITEBOARD INPUT & MOBILE RESPONSIVE FIX
+   ============================================= */
+
+.ideas-user-info-compact {
+  min-width: 0;
+}
+
+.ideas-user-name-sm {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 190px;
+}
+
+.ideas-inline-input-wrapper {
+  min-width: 0;
+}
+
+.ideas-inline-input {
+  min-width: 0;
+  width: 100%;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.idea-textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.ideas-feedback-host {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.ideas-feedback-host .inline-feedback-msg {
+  margin-top: -22px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .whiteboard-board {
+    padding: 18px 14px 96px 14px !important;
+  }
+
+  .ideas-user-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    padding: 12px !important;
+    gap: 10px !important;
+    margin: 6px auto 18px auto !important;
+    border-radius: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .ideas-user-bar.ideas-user-bar-guest {
+    text-align: center;
+  }
+
+  .ideas-user-bar-guest .btn-discord {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ideas-user-info-compact {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    white-space: normal;
+    flex-wrap: nowrap;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+
+  .ideas-user-name-sm {
+    max-width: none;
+    flex: 1 1 auto;
+  }
+
+  .ideas-user-badge-sm {
+    flex-shrink: 0;
+  }
+
+  .ideas-inline-input-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: 0 0 auto !important;
+    box-sizing: border-box;
+  }
+
+  .ideas-inline-input {
+    min-width: 0 !important;
+    width: 100% !important;
+    font-size: 16px !important;
+    line-height: 1.4;
+    padding: 8px 4px;
+    user-select: text !important;
+    -webkit-user-select: text !important;
+  }
+
+  .ideas-inline-send-btn {
+    flex-shrink: 0;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .ideas-feedback-host .inline-feedback-msg {
+    margin-top: -6px;
+    margin-bottom: 18px;
+  }
+}
+
 /* Bod 104: Respektování prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
 

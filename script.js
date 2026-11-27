@@ -1533,7 +1533,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ignorováno pro restriktivní lokální prostředí
       }
     }
-    showTab('media');
+    const cleanPath = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+    if (cleanPath && cleanPath !== '/index.html') {
+      handleUrlRouting();
+    } else {
+      showTab('media');
+    }
   } else {
     const loginError = urlParams.get('error');
     if (loginError && typeof showToast === 'function') {
@@ -2912,7 +2917,7 @@ async function loadIdeasTab() {
   surface.innerHTML = '<div class="whiteboard-empty"><span class="btn-spinner"></span><p>Načítám nápady...</p></div>';
 
   try {
-    const res = await apiFetch('https://api.6767111.xyz/api/napady/list', {
+    const res = await napadyApiFetch('/api/napady/list', {
       headers: getAuthHeaders()
     }, 8000);
 
@@ -2922,6 +2927,11 @@ async function loadIdeasTab() {
 
     const data = await res.json();
     currentIdeasData = data;
+
+    // Purge stale token if backend did not authenticate the session
+    if (!data.isLoggedIn && localStorage.getItem('auth_token')) {
+      localStorage.removeItem('auth_token');
+    }
 
     // Render User Header Bar
     if (userBar) {
@@ -2953,6 +2963,8 @@ async function loadIdeasTab() {
               class="ideas-inline-input" 
               placeholder="${canAdd ? 'Napiš svůj návrh nebo nápad...' : 'Máš 10 neschválených nápadů'}" 
               maxlength="800"
+              enterkeyhint="send"
+              autocomplete="off"
               ${!canAdd ? 'disabled' : ''}
               onkeydown="handleIdeaInlineKeydown(event)"
             />
@@ -2970,6 +2982,7 @@ async function loadIdeasTab() {
           </div>
         `;
       }
+      getIdeasFeedbackAnchor(userBar);
     }
 
     // Render Idea Cards on Whiteboard
@@ -3165,19 +3178,74 @@ async function silentUpdateIdeas() {
   }
 }
 
+function getIdeasFeedbackAnchor(fallbackEl = null) {
+  const userBar = document.getElementById('ideas-user-bar');
+  if (!userBar || !userBar.parentElement) return fallbackEl;
+
+  let host = document.getElementById('ideas-feedback-host');
+  if (!host) {
+    host = document.createElement('div');
+    host.id = 'ideas-feedback-host';
+    host.className = 'ideas-feedback-host';
+    const slot = document.createElement('div');
+    slot.id = 'ideas-feedback-slot';
+    slot.hidden = true;
+    host.appendChild(slot);
+    userBar.insertAdjacentElement('afterend', host);
+  } else if (host.previousElementSibling !== userBar) {
+    userBar.insertAdjacentElement('afterend', host);
+  }
+
+  return document.getElementById('ideas-feedback-slot') || fallbackEl || userBar;
+}
+
+async function napadyApiFetch(endpointPath, options = {}, timeoutMs = 8000) {
+  const primaryUrl = `https://api.6767111.xyz${endpointPath}`;
+  try {
+    return await apiFetch(primaryUrl, options, timeoutMs);
+  } catch (primaryErr) {
+    const canSameOriginFallback =
+      typeof window !== 'undefined' &&
+      window.location &&
+      /(^|\.)mychalsmp\.xyz$/i.test(window.location.hostname);
+    if (!canSameOriginFallback) {
+      throw primaryErr;
+    }
+    return await apiFetch(`${window.location.origin}${endpointPath}`, options, timeoutMs);
+  }
+}
+
+async function parseJsonSafe(res) {
+  try {
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+function handleNapadyAuthExpired(feedbackEl) {
+  localStorage.removeItem('auth_token');
+  showInlineFeedback(
+    feedbackEl,
+    'Platnost přihlášení vypršela. Přihlas se prosím znovu přes Discord.',
+    'warning'
+  );
+  loadIdeasTab();
+}
+
 async function voteIdea(ideaId, type, event) {
   if (event) event.stopPropagation();
   const box = document.getElementById(`idea-vote-box-${ideaId}`);
 
   if (!currentIdeasData || !currentIdeasData.isLoggedIn) {
-    showInlineFeedback(document.getElementById('ideas-user-bar') || box, 'Pro hlasování o nápadech se přihlas přes Discord.', 'warning');
+    showInlineFeedback(getIdeasFeedbackAnchor(box), 'Pro hlasování o nápadech se přihlas přes Discord.', 'warning');
     return;
   }
 
   if (box) box.classList.add('voting-busy');
 
   try {
-    const res = await apiFetch(`https://api.6767111.xyz/api/napady/vote/${ideaId}`, {
+    const res = await napadyApiFetch(`/api/napady/vote/${ideaId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -3186,15 +3254,20 @@ async function voteIdea(ideaId, type, event) {
       body: JSON.stringify({ type })
     }, 8000);
 
+    const data = await parseJsonSafe(res);
+    if (res.status === 401) {
+      handleNapadyAuthExpired(getIdeasFeedbackAnchor(box));
+      return;
+    }
     if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
+      showToast((data && data.message) || 'Chyba při hlasování.');
+      return;
     }
 
-    const data = await res.json();
-    if (data.success) {
+    if (data && data.success) {
       updateCardVoteState(ideaId, data.score, data.userVote);
     } else {
-      showToast(data.message || 'Chyba při hlasování.');
+      showToast((data && data.message) || 'Chyba při hlasování.');
     }
   } catch (e) {
     console.warn('Error voting on idea:', e);
@@ -3288,17 +3361,18 @@ async function submitInlineIdea() {
   const input = document.getElementById('idea-inline-input');
   const btn = document.getElementById('btn-submit-inline-idea');
   const userBar = document.getElementById('ideas-user-bar');
+  const feedbackAnchor = getIdeasFeedbackAnchor(userBar || input);
   const text = input ? input.value.trim() : '';
 
   if (text.length < 5) {
-    showInlineFeedback(userBar || input, 'Napiš podrobnější nápad, alespoň 5 znaků.', 'warning');
+    showInlineFeedback(feedbackAnchor, 'Napiš podrobnější nápad, alespoň 5 znaků.', 'warning');
     return;
   }
 
   if (btn) btn.disabled = true;
 
   try {
-    const res = await apiFetch('https://api.6767111.xyz/api/napady/add', {
+    const res = await napadyApiFetch('/api/napady/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -3307,23 +3381,28 @@ async function submitInlineIdea() {
       body: JSON.stringify({ text })
     }, 10000);
 
+    const data = await parseJsonSafe(res);
+    if (res.status === 401) {
+      handleNapadyAuthExpired(getIdeasFeedbackAnchor(userBar || input));
+      return;
+    }
     if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
+      showInlineFeedback(feedbackAnchor, (data && data.message) || 'Chyba při přidávání nápadu.', 'error');
+      return;
     }
 
-    const data = await res.json();
-    if (data.success) {
-      showInlineFeedback(userBar, data.message || 'Nápad byl odeslán.', 'success');
+    if (data && data.success) {
+      showInlineFeedback(feedbackAnchor, data.message || 'Nápad byl odeslán.', 'success');
       if (input) input.value = '';
       loadIdeasTab();
     } else {
-      showInlineFeedback(userBar, data.message || 'Chyba při přidávání nápadu.', 'error');
+      showInlineFeedback(feedbackAnchor, (data && data.message) || 'Chyba při přidávání nápadu.', 'error');
     }
   } catch (e) {
     console.warn('Error submitting inline idea:', e);
-    showInlineFeedback(userBar, 'Server je dočasně nedostupný. Zkus to za okamžik.', 'error');
+    showInlineFeedback(feedbackAnchor, 'Server je dočasně nedostupný. Zkus to za okamžik.', 'error');
   } finally {
-    if (btn) btn.disabled = false;
+    if (btn && btn.isConnected) btn.disabled = false;
   }
 }
 
@@ -3337,7 +3416,7 @@ async function submitNewIdea() {
   }
 
   try {
-    const res = await apiFetch('https://api.6767111.xyz/api/napady/add', {
+    const res = await napadyApiFetch('/api/napady/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -3346,17 +3425,23 @@ async function submitNewIdea() {
       body: JSON.stringify({ text })
     }, 10000);
 
+    const data = await parseJsonSafe(res);
+    if (res.status === 401) {
+      closeIdeaModal();
+      handleNapadyAuthExpired(getIdeasFeedbackAnchor());
+      return;
+    }
     if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
+      showInlineFeedback(textarea, (data && data.message) || 'Chyba při přidávání nápadu.', 'error');
+      return;
     }
 
-    const data = await res.json();
-    if (data.success) {
+    if (data && data.success) {
       closeIdeaModal();
       showToast(data.message || 'Nápad byl odeslán.');
       loadIdeasTab();
     } else {
-      showInlineFeedback(textarea, data.message || 'Chyba při přidávání nápadu.', 'error');
+      showInlineFeedback(textarea, (data && data.message) || 'Chyba při přidávání nápadu.', 'error');
     }
   } catch (e) {
     console.warn('Error submitting modal idea:', e);

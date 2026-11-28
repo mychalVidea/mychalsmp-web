@@ -18413,6 +18413,261 @@ body {
   }
 }
 
+/* =============================================
+   VOTE PORTALS STRIP (Anti-AI Slop Hairline UI)
+   ============================================= */
+
+.vote-portals-block {
+  margin-top: 48px;
+}
+
+.vote-portals-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.vote-portals-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vote-portals-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+.vote-spec-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+.vote-spec-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vote-spec-item svg {
+  color: var(--blue);
+  flex-shrink: 0;
+}
+
+.vote-spec-item code {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--text);
+}
+
+.vote-spec-sep {
+  width: 1px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+.vote-cmd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  box-shadow: var(--specular-top);
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 160ms var(--ease-spring),
+    border-color 160ms var(--ease-spring),
+    color 160ms var(--ease-spring),
+    transform 100ms var(--ease-spring),
+    box-shadow 160ms var(--ease-spring);
+}
+
+.vote-cmd-btn code {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--text);
+}
+
+.vote-cmd-btn:hover {
+  background: #202026;
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+.vote-cmd-btn:active {
+  transform: scale(0.975);
+}
+
+.vote-cmd-btn.copied {
+  border-color: rgba(33, 222, 0, 0.35);
+  color: var(--green);
+}
+
+.vote-cmd-btn.copied code {
+  color: var(--green);
+}
+
+.vote-portals-shell {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.vote-portals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+}
+
+.vote-portal-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 16px;
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  transition: background-color 180ms var(--ease-spring),
+    box-shadow 180ms var(--ease-spring),
+    transform 100ms var(--ease-spring);
+}
+
+.vote-portal-btn:hover {
+  background: var(--surface2);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+}
+
+.vote-portal-btn:active {
+  transform: scale(0.985);
+}
+
+.vote-portal-btn:focus-visible {
+  z-index: 2;
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+}
+
+.vote-portal-logo-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--bg2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 180ms var(--ease-spring),
+    background-color 180ms var(--ease-spring);
+}
+
+.vote-portal-btn:hover .vote-portal-logo-wrap {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: var(--bg3);
+}
+
+.vote-portal-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+.vote-portal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.vote-portal-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.vote-portal-host {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.vote-portal-arrow {
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  transition: transform 180ms var(--ease-spring),
+    color 180ms var(--ease-spring);
+}
+
+.vote-portal-btn:hover .vote-portal-arrow {
+  color: var(--blue);
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 1024px) {
+  .vote-portals-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .vote-portals-block {
+    margin-top: 32px;
+  }
+
+  .vote-portals-header {
+    align-items: flex-start;
+  }
+
+  .vote-cmd-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .vote-portals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vote-spec-sep {
+    display: none;
+  }
+}
+
 /* Bod 104: Respektování prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
 

@@ -17,7 +17,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20261127_napady_fix_v1" />
+  <link rel="stylesheet" href="style.css?v=20261128_vote_portals_v1" />
 </head>
 
 <body>
@@ -570,6 +570,108 @@
             </div>
           </div>
         </div>
+
+        <!-- VOTE PORTALS STRIP (Anti-AI Slop Hairline Architecture) -->
+        <section class="vote-portals-block" aria-labelledby="vote-portals-heading">
+          <div class="vote-portals-header">
+            <div class="vote-portals-meta">
+              <h3 class="vote-portals-title" id="vote-portals-heading">Hlasování pro <span class="accent-blue">MYCHAL SMP</span></h3>
+              <div class="vote-spec-bar">
+                <span class="vote-spec-item">
+                  <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <span>Každé 2 hodiny</span>
+                </span>
+                <span class="vote-spec-sep" aria-hidden="true"></span>
+                <span class="vote-spec-item">
+                  <svg class="ui-icon-svg ui-icon-svg--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="20 12 20 22 4 22 4 12" />
+                    <rect x="2" y="7" width="20" height="5" />
+                    <line x1="12" y1="22" x2="12" y2="7" />
+                    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                  </svg>
+                  <span>Odměna v penězích a itemech do inventáře nebo <code>/trezor</code></span>
+                </span>
+              </div>
+            </div>
+
+            <button type="button" class="vote-cmd-btn" onclick="copyCommand('/vote', this)" aria-label="Zkopírovat herní příkaz /vote">
+              <span class="btn-copy-icon-wrap">
+                <svg class="ui-icon-svg ui-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+                <svg class="ui-icon-svg ui-icon-check" viewBox="0 0 24 24" fill="none" stroke="#21DE00" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <span class="vote-cmd-label">Příkaz ve hře: <code>/vote</code></span>
+            </button>
+          </div>
+
+          <div class="vote-portals-shell">
+            <div class="vote-portals-grid">
+              <a class="vote-portal-btn" href="https://www.minecraft-list.cz/server/mychal-smp/vote" target="_blank" rel="noopener noreferrer" aria-label="Hlasovat na Minecraft-List.cz">
+                <span class="vote-portal-logo-wrap">
+                  <img src="imgs/vote/minecraft-list.svg" alt="Minecraft-List.cz logo" class="vote-portal-logo" width="24" height="24" loading="lazy" decoding="async" />
+                </span>
+                <span class="vote-portal-info">
+                  <span class="vote-portal-name">Minecraft-List.cz</span>
+                  <span class="vote-portal-host">minecraft-list.cz</span>
+                </span>
+                <svg class="vote-portal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </a>
+
+              <a class="vote-portal-btn" href="https://craftlist.cz/mychalsmp" target="_blank" rel="noopener noreferrer" aria-label="Hlasovat na Craftlist.cz">
+                <span class="vote-portal-logo-wrap">
+                  <img src="imgs/vote/craftlist.svg" alt="Craftlist.cz logo" class="vote-portal-logo" width="24" height="24" loading="lazy" decoding="async" />
+                </span>
+                <span class="vote-portal-info">
+                  <span class="vote-portal-name">Craftlist.cz</span>
+                  <span class="vote-portal-host">craftlist.cz</span>
+                </span>
+                <svg class="vote-portal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </a>
+
+              <a class="vote-portal-btn" href="https://minecraftservery.eu/server/mychal-smp/vote" target="_blank" rel="noopener noreferrer" aria-label="Hlasovat na MinecraftServery.eu">
+                <span class="vote-portal-logo-wrap">
+                  <img src="imgs/vote/minecraftservery.png" alt="MinecraftServery.eu logo" class="vote-portal-logo" width="24" height="24" loading="lazy" decoding="async" />
+                </span>
+                <span class="vote-portal-info">
+                  <span class="vote-portal-name">MinecraftServery.eu</span>
+                  <span class="vote-portal-host">minecraftservery.eu</span>
+                </span>
+                <svg class="vote-portal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </a>
+
+              <a class="vote-portal-btn" href="https://czech-craft.eu/server/mychal-smp/vote" target="_blank" rel="noopener noreferrer" aria-label="Hlasovat na Czech-Craft.eu">
+                <span class="vote-portal-logo-wrap">
+                  <img src="imgs/vote/czech-craft.png" alt="Czech-Craft.eu logo" class="vote-portal-logo" width="24" height="24" loading="lazy" decoding="async" />
+                </span>
+                <span class="vote-portal-info">
+                  <span class="vote-portal-name">Czech-Craft.eu</span>
+                  <span class="vote-portal-host">czech-craft.eu</span>
+                </span>
+                <svg class="vote-portal-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
 
